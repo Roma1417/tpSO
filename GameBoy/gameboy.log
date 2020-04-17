@@ -1,0 +1,8 @@
+[INFO] 17:35:04:696 gameboy/(14114:14114): soy un log
+[INFO] 17:35:04:769 gameboy/(14114:14114): El IP es: 127.0.0.1
+[INFO] 17:35:04:769 gameboy/(14114:14114): El PUERTO es: 4444
+[INFO] 17:35:05:288 gameboy/(14114:14114): El mensaje recibido es: Boca Campeon!
+[INFO] 17:35:05:371 gameboy/(14118:14118): soy un log
+[INFO] 17:35:05:371 gameboy/(14118:14118): El IP es: 127.0.0.1
+[INFO] 17:35:05:371 gameboy/(14118:14118): El PUERTO es: 4444
+[INFO] 17:35:05:371 gameboy/(14118:14118): El mensaje recibido es: Boca Campeon!
