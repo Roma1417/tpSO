@@ -65,10 +65,42 @@ void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
 		switch (cod_op) {
-		case MENSAJE:
+		/*case MENSAJE:
 			msg = recibir_mensaje(cliente_fd, &size);
 			devolver_mensaje(msg, size, cliente_fd);
 			free(msg);
+			printf("Boca");
+			break;*/
+		case NEW_POKEMON:
+			printf("Recibí un mensaje de tipo NEW_POKEMON\n");
+			int size = 0;
+			recv(cliente_fd, &size, sizeof(int), MSG_WAITALL);
+			int pokemon_size;
+			recv(cliente_fd, &pokemon_size, sizeof(int), MSG_WAITALL);
+			char* pokemon_nombre = malloc(pokemon_size);
+			recv(cliente_fd, pokemon_nombre, pokemon_size, MSG_WAITALL);
+			printf("El pokémon recibido fue: %s\n", pokemon_nombre);
+			int pos_x_size;
+			recv(cliente_fd, &pos_x_size, sizeof(int), MSG_WAITALL);
+			char* pos_x = malloc(pos_x_size);
+			recv(cliente_fd, pos_x, pos_x_size, MSG_WAITALL);
+			printf("La pos_x del pokémon recibido fue: %s\n", pos_x);
+			
+			free(pokemon_nombre);
+			
+		
+			break;
+		case APPEARED_POKEMON:
+			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
+			break;
+		case CATCH_POKEMON:
+			printf("Recibí un mensaje de tipo CATCH_POKEMON\n");
+			break;
+		case CAUGHT_POKEMON:
+			printf("Recibí un mensaje de tipo CAUGHT_POKEMON\n");
+			break;
+		case GET_POKEMON:
+			printf("Recibí un mensaje de tipo GET_POKEMON\n");
 			break;
 		case 0:
 			pthread_exit(NULL);
@@ -107,7 +139,7 @@ void devolver_mensaje(void* payload, int size, int socket_cliente)
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 
-	paquete->codigo_operacion = MENSAJE;
+	paquete->codigo_operacion = NEW_POKEMON;
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = size;
 	paquete->buffer->stream = malloc(paquete->buffer->size);

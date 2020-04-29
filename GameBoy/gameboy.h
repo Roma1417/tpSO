@@ -22,5 +22,6 @@
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
 void terminar_programa(int, t_log*, t_config*);
+char* obtener_key(char* parametro, char* destino);
 
 #endif /* GAMEBOY_H_ */

@@ -1,10 +1,3 @@
-/*
- * conexiones.c
- *
- *  Created on: 2 mar. 2019
- *      Author: utnso
- */
-
 #include "utils.h"
 
 /*
@@ -52,24 +45,58 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
-void enviar_mensaje(char* mensaje, int socket_cliente){
+void enviar_mensaje(char* argv[], int socket_cliente, int tamanio){
 
+	tipo_mensaje tipo = obtener_tipo_mensaje(argv[0]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
-	paquete->codigo_operacion = MENSAJE;
+	paquete->codigo_operacion = tipo;
 	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->size = strlen(mensaje) + 1;
-	paquete->buffer->stream = mensaje;
+	int size = obtener_size(argv, tamanio) + tamanio * sizeof(int);
+	printf("El size es igual a: %d\n", size);
+	paquete->buffer->size = size;
+	void* stream = generar_stream(argv + 1, tamanio, paquete->buffer->size);
+
+	paquete->buffer->stream = stream;
+
 	int size_serializado;
 
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
+
 	send(socket_cliente, a_enviar, size_serializado, 0);
 
-	free(paquete->buffer);
-	free(paquete);
-	free(a_enviar);
+		free(paquete->buffer);
+		free(paquete);
+		free(a_enviar);
 }
 
-char* recibir_mensaje(int socket_cliente){
+void* generar_stream(char** argumentos, int tamanio, int size){
+	int offset = 0;
+	void* stream = malloc(size); 
+	printf("Tamaño: %d \n", tamanio);
+	for(int i = 0; i < tamanio; i++){
+		int tamanio_argumento = strlen(argumentos[i])+1 ;
+		printf("argumentos[%d]: %s\n", i, argumentos[i]);
+		memcpy(stream + offset, &tamanio_argumento, sizeof(int));
+		offset += sizeof(int);
+		memcpy(stream + offset, argumentos[i], tamanio_argumento);
+		offset += tamanio_argumento;
+	}
+
+	return stream;
+}
+
+
+
+int obtener_size(char* argumentos[], int tamanio){
+	int size = 0;
+	for(int i=0; i<tamanio; i++){
+		size += (strlen(argumentos[i]) + 1);
+	}
+	return size;
+}
+
+
+/*char* recibir_mensaje(int socket_cliente){
 	op_code codigo;
 	int buffer_size;
 
@@ -82,8 +109,17 @@ char* recibir_mensaje(int socket_cliente){
 
 	return buffer;
 
-}
+}*/
 
 void liberar_conexion(int socket_cliente){
 	close(socket_cliente);
+}
+
+tipo_mensaje obtener_tipo_mensaje(char* tipo){
+	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
+	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
+	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
+	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
+	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
+	return -1;
 }
