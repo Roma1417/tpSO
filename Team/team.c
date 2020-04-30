@@ -9,7 +9,7 @@
 int main (void) {
 
 	t_log* logger = iniciar_logger();
-	t_config_team* config = leer_config();
+	t_config_team* config_team = leer_config();
 
 	t_lista_pokemon* objetivo_global = get_objetivo_global();
 
@@ -32,7 +32,7 @@ t_config_team* leer_config(void) {
 	t_config_team* config_team = malloc(sizeof(t_config_team));
 	t_config* config = config_create("./team.config");
 
-	config_team -> pokemon_entrenadores = (t_lista_posicion_entrenador*) config_get_array_value(config, "POSICIONES_ENTRENADORES");
+	config_team -> posiciones_entrenadores = (t_lista_posicion_entrenador*) config_get_array_value(config, "POSICIONES_ENTRENADORES");
 	config_team -> pokemon_entrenadores = (t_lista_pokemon*) config_get_array_value(config, "POKEMON_ENTRENADORES");
 	config_team -> objetivos_entrenadores = (t_lista_pokemon*) config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	config_team -> tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
@@ -44,16 +44,25 @@ t_config_team* leer_config(void) {
 	config_team -> log_file = config_get_string_value(config, "LOG_FILE");
 
 
-	return config;
+	return config_team;
 
 }
 
 t_lista_pokemon* get_objetivo_global () {
 
 	t_lista_pokemon* objetivo_global;
+	t_lista_pokemon* aux_objetivos_entrenadores = config_team-> objetivos_entrenadores;
+	t_lista_pokemon* aux_pokemons = aux_objetivos_entrenadores -> pokemon;
 
-	while() {
-		//recorrer lista entrenadores
+	while(aux_objetivos_entrenadores -> sgte != NULL) {
+
+		while(aux_pokemons -> sgte != NULL) {
+			objetivo_global->pokemon = aux_pokemons->pokemon;
+			objetivo_global->sgte = aux_pokemons->sgte;
+		}
+
+		aux_objetivos_entrenadores = aux_objetivos_entrenadores -> sgte;
+
 	}
 
 	return objetivo_global;
