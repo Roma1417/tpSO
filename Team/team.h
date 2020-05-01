@@ -8,15 +8,19 @@
 #ifndef TEAM_H_
 #define TEAM_H_
 
-#include <utils.h>
+#include "entrenador.h"
 #include<commons/log.h>
 #include<commons/string.h>
 #include<commons/config.h>
+#include<commons/collections/list.h>
+#include<commons/string.h>
 
-t_config_team* leer_config (void);
-t_log* iniciar_logger (void);
-t_lista_pokemon* get_objetivo_global ();
+/*typedef struct {
 
+	int posicion_x;
+	int posicion_y;
+
+} t_posicion;*/
 
 typedef struct {
 
@@ -42,9 +46,10 @@ typedef struct {
 
 typedef struct {
 
-	t_lista_posicion_entrenador posiciones_entrenadores;
-	t_lista_pokemon pokemon_entrenadores;
-	t_lista_pokemon objetivos_entrenadores;
+	//t_lista_posicion_entrenador* posiciones_entrenadores;
+	char** posiciones_entrenadores;
+	char** pokemon_entrenadores;
+	char** objetivos_entrenadores;
 	int tiempo_reconexion;
 	int retardo_ciclo_cpu;
 	char* algoritmo_planificacion;
@@ -55,5 +60,10 @@ typedef struct {
 	char* log_file;
 
 }t_config_team;
+
+t_config* leer_config (void);
+t_log* iniciar_logger (void);
+t_list* get_objetivo_global ();
+t_config_team* construir_config_team(t_config* config);
 
 #endif /* TEAM_H_ */
