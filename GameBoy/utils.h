@@ -8,6 +8,7 @@
 #include<sys/socket.h>
 #include<netdb.h>
 #include<string.h>
+#include<stdbool.h>
 
 /*typedef enum
 {
@@ -22,9 +23,17 @@ typedef enum{
 	GET_POKEMON = 5,
 }tipo_mensaje;
 
+typedef struct{
+	u_int32_t nombre_size;
+	char* nombre_pokemon;
+	u_int32_t pos_x;
+	u_int32_t pos_y;
+	u_int32_t cantidad;
+}t_new_pokemon;
+
 typedef struct
 {
-	int size;
+	u_int32_t size;
 	void* stream;
 } t_buffer;
 
@@ -35,13 +44,14 @@ typedef struct
 } t_paquete;
 
 int crear_conexion(char* ip, char* puerto);
-void enviar_mensaje(char* argv[], int socket_cliente, int tamanio);
-//char* recibir_mensaje(int socket_cliente);
+void enviar_mensaje(char* argv[], u_int32_t socket_cliente, u_int32_t tamanio);
 void eliminar_paquete(t_paquete* paquete);
-void liberar_conexion(int socket_cliente);
+void liberar_conexion(u_int32_t socket_cliente);
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
-void serializar_mensaje(tipo_mensaje tipo, char** argv,int socket_cliente, int tamanio);
-int obtener_size(char* argumentos[], int tamanio);
-void* generar_stream(char** argumentos, int tamanio, int size);
+void serializar_mensaje(tipo_mensaje tipo, char** argv,u_int32_t socket_cliente, u_int32_t tamanio);
+u_int32_t obtener_size(char* argumentos[], u_int32_t tamanio, tipo_mensaje tipo);
+void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete);
+void agregar_string(int* offset, char* string, void** stream);
+void agregar_entero(int* offset, char* string, void** stream);
 
 #endif /* UTILS_H_ */

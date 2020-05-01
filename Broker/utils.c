@@ -80,11 +80,9 @@ void process_request(int cod_op, int cliente_fd) {
 			char* pokemon_nombre = malloc(pokemon_size);
 			recv(cliente_fd, pokemon_nombre, pokemon_size, MSG_WAITALL);
 			printf("El pokémon recibido fue: %s\n", pokemon_nombre);
-			int pos_x_size;
-			recv(cliente_fd, &pos_x_size, sizeof(int), MSG_WAITALL);
-			char* pos_x = malloc(pos_x_size);
-			recv(cliente_fd, pos_x, pos_x_size, MSG_WAITALL);
-			printf("La pos_x del pokémon recibido fue: %s\n", pos_x);
+			int pos_x = 0;
+			recv(cliente_fd, &pos_x, sizeof(int), MSG_WAITALL);
+			printf("La pos_x del pokémon recibido fue: %d\n", pos_x);
 			
 			free(pokemon_nombre);
 			

@@ -2,9 +2,6 @@
 
 int main(int argc, char* argv[]){
 
-
-
-
 	printf("argc es igual a: %d\n", argc);
 	for(int i=0; i<argc; i++){
 		printf("argv[%d] es igual a: %s\n", i, argv[i]);
