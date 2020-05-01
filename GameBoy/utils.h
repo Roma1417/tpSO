@@ -23,13 +23,33 @@ typedef enum{
 	GET_POKEMON = 5,
 }tipo_mensaje;
 
-typedef struct{
+/*typedef struct{
 	u_int32_t nombre_size;
 	char* nombre_pokemon;
 	u_int32_t pos_x;
 	u_int32_t pos_y;
 	u_int32_t cantidad;
 }t_new_pokemon;
+
+typedef struct{
+	u_int32_t nombre_size;
+	char* nombre_pokemon;
+	u_int32_t pos_x;
+	u_int32_t pos_y;
+	u_int32_t id_mensaje;
+}t_appeared_pokemon;
+
+typedef struct{
+	u_int32_t nombre_size;
+	char* nombre_pokemon;
+	u_int32_t pos_x;
+	u_int32_t pos_y;
+}t_catch_pokemon;
+
+typedef struct{
+	u_int32_t id_mensaje;
+	u_int32_t 
+}t_caught_pokemon;*/
 
 typedef struct
 {

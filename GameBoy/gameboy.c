@@ -26,8 +26,7 @@ int main(int argc, char* argv[]){
 
 	conexion = crear_conexion(ip,puerto);
 
-
-	char** p=argv+2;
+	char** p=argv+1;
 
 	enviar_mensaje(p, conexion, argc - 3);
 

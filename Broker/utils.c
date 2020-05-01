@@ -65,12 +65,6 @@ void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
 		switch (cod_op) {
-		/*case MENSAJE:
-			msg = recibir_mensaje(cliente_fd, &size);
-			devolver_mensaje(msg, size, cliente_fd);
-			free(msg);
-			printf("Boca");
-			break;*/
 		case NEW_POKEMON:
 			printf("Recibí un mensaje de tipo NEW_POKEMON\n");
 			int size = 0;
