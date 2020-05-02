@@ -47,9 +47,9 @@ typedef struct {
 typedef struct {
 
 	//t_lista_posicion_entrenador* posiciones_entrenadores;
-	char** posiciones_entrenadores;
-	char** pokemon_entrenadores;
-	char** objetivos_entrenadores;
+	t_list* posiciones_entrenadores;
+	t_list* pokemon_entrenadores;
+	t_list* objetivos_entrenadores;
 	int tiempo_reconexion;
 	int retardo_ciclo_cpu;
 	char* algoritmo_planificacion;

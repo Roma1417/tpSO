@@ -34,7 +34,7 @@ typedef struct {
 
 } t_entrenador;
 
-//t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos);
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos);
 t_list* get_objetivos();
 
 #endif /* ENTRENADOR_H_ */
