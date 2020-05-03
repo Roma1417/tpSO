@@ -24,3 +24,15 @@ t_list* get_objetivos(t_entrenador* entrenador){
 	return entrenador->objetivos;
 
 }
+
+void destruir_entrenador(t_entrenador* entrenador){
+
+	free(entrenador->posicion);
+
+	//Esto tira error
+	list_destroy(entrenador->pokemon_obtenidos);
+	list_destroy(entrenador->objetivos);
+
+	free(entrenador);
+
+}

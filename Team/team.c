@@ -85,8 +85,10 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 	t_list* entrenadores = list_create();
 
-	for(int i = 0; i < 3; i++){
-		t_list* objetivo = list_get(config_team->objetivos_entrenadores,i);
+	t_list* objetivos_entrenadores = config_team->objetivos_entrenadores;
+
+	for(int i = 0; i < list_size(objetivos_entrenadores); i++){
+		t_list* objetivo = list_get(objetivos_entrenadores,i);
 		t_entrenador* entrenador = entrenador_create(NULL, NULL, objetivo);
 		list_add(entrenadores, entrenador);
 
@@ -109,10 +111,26 @@ t_list* get_objetivo_global (t_list* entrenadores) {
 
 }
 
+void liberar_estructuras(t_config_team* config_team, t_list* entrenadores){
+
+	for(int i = 0; i < list_size(entrenadores); i++){
+		t_entrenador* entrenador = list_get(entrenadores,i);
+		destruir_entrenador(entrenador);
+	}
+
+	free(config_team->objetivos_entrenadores);
+
+}
+
+void terminar_programa(t_log* logger, t_config* config){
+	if (logger != NULL) log_destroy(logger);
+	if (config != NULL) config_destroy(config);
+}
+
 int main (void) {
 
 	t_list* entrenadores;
-	//t_log* logger = iniciar_logger();
+	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
 	t_config_team* config_team = construir_config_team(config);
 
@@ -124,6 +142,11 @@ int main (void) {
 	t_list* primer_objetivo = list_get(objetivo_global, 0);
 	char* primer_cadena = list_get(primer_objetivo,0);
 	printf("primer_cadena3: %s\n", primer_cadena);
+
+
+	//liberar_estructuras(config_team, entrenadores);
+
+	terminar_programa(logger, config);
 
 	return 0;
 
