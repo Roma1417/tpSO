@@ -9,11 +9,13 @@
 #define TEAM_H_
 
 #include "entrenador.h"
-#include<commons/log.h>
-#include<commons/string.h>
-#include<commons/config.h>
-#include<commons/collections/list.h>
-#include<commons/string.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <commons/log.h>
+#include <commons/string.h>
+#include <commons/config.h>
+#include <commons/collections/list.h>
+#include <commons/string.h>
 
 /*typedef struct {
 

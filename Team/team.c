@@ -25,12 +25,11 @@ t_config* leer_config(void) {
 
 }
 
-//Codigo a revisar
 t_list* convertir_string_a_lista_de_listas(char** cadenas){
 	t_list* listas = list_create();
 	char* cadena;
-	int longitud = sizeof(cadenas);
-	for(int i = 0; i < longitud - 1; i++){
+	int longitud = sizeof(cadenas) - 1;
+	for(int i = 0; i < longitud; i++){
 		t_list* sublista = list_create();
 		for(int j = 0; j < string_length(cadenas[i])+1; j++){
 			if (j == 0){
@@ -50,24 +49,52 @@ t_list* convertir_string_a_lista_de_listas(char** cadenas){
 	return listas;
 }
 
+t_list* convertir_string_a_lista_de_posiciones(char** cadenas){
+	t_list* posiciones = list_create();
+	t_posicion* posicion;
+	char* cadena;
+	int longitud = sizeof(cadenas) - 1;
+	for(int i = 0; i < longitud; i++){
+		for(int j = 0; j < string_length(cadenas[i])+1; j++){
+			if (j == 0){
+				posicion = malloc(sizeof(t_posicion));
+				cadena = string_new();
+			}
+			if (cadenas[i][j] == '|'){
+				posicion -> posicion_x = atoi(cadena);
+				free(cadena);
+				cadena = string_new();
+			}
+			if (j == string_length(cadenas[i])) {
+				posicion -> posicion_y = atoi(cadena);
+				free(cadena);
+				list_add(posiciones, posicion);
+			}
+			if(cadenas[i][j] != '|') {
+				string_append_with_format(&cadena, "%c",cadenas[i][j]);
+			}
+		}
+	}
+	return posiciones;
+}
+
 t_config_team* construir_config_team(t_config* config){
 
 	t_config_team* config_team = malloc(sizeof(t_config_team));
 
-	//config_team -> posiciones_entrenadores = (char**) config_get_array_value(config, "POSICIONES_ENTRENADORES");
-	//config_team -> pokemon_entrenadores = (char**) config_get_array_value(config, "POKEMON_ENTRENADORES");
-
+	// A revisar el config_get_array_value
 	char** objetivos = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	t_list* lista_objetivos = convertir_string_a_lista_de_listas(objetivos);
 	config_team -> objetivos_entrenadores = lista_objetivos;
 
-	//Codigo de Prueba
-	t_list* primer_lista = list_get(lista_objetivos, 0);
-	char* primer_cadena = list_get(primer_lista,0);
-	printf("primer_cadena1: %s\n", primer_cadena);
+	char** pokemons = config_get_array_value(config, "POKEMON_ENTRENADORES");
+	t_list* lista_pokemons = convertir_string_a_lista_de_listas(pokemons);
+	config_team -> pokemon_entrenadores = lista_pokemons;
 
-	config_team -> posiciones_entrenadores = NULL;
-	config_team -> pokemon_entrenadores = NULL;
+	char** posiciones = config_get_array_value(config, "POSICIONES_ENTRENADORES");
+	t_list* lista_posiciones = convertir_string_a_lista_de_posiciones(posiciones);
+	config_team -> posiciones_entrenadores = lista_posiciones;
+
 	config_team -> tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
 	config_team -> retardo_ciclo_cpu = config_get_int_value(config, "RETARDO_CICLO_CPU");
 	config_team -> algoritmo_planificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
@@ -80,25 +107,35 @@ t_config_team* construir_config_team(t_config* config){
 
 }
 
-// Codigo de prueba y a revisar (el for)
+//Codigo de prueba
+void* print_message_function(){
+
+	printf("Soy un hilo\n");
+
+	return EXIT_SUCCESS;
+}
+
 t_list* crear_entrenadores(t_config_team* config_team){
 
 	t_list* entrenadores = list_create();
 
-	t_list* objetivos_entrenadores = config_team->objetivos_entrenadores;
+	t_list* objetivos_entrenadores = config_team -> objetivos_entrenadores;
+	t_list* pokemon_entrenadores = config_team -> pokemon_entrenadores;
+	t_list* posiciones_entrenadores = config_team -> posiciones_entrenadores;
 
 	for(int i = 0; i < list_size(objetivos_entrenadores); i++){
 		t_list* objetivo = list_get(objetivos_entrenadores,i);
-		t_entrenador* entrenador = entrenador_create(NULL, NULL, objetivo);
+		t_list* pokemon_obtenidos = list_get(pokemon_entrenadores,i);
+		t_posicion* posicion = list_get(posiciones_entrenadores, i);
+
+		// Codigo en prueba
+		pthread_t hilo;
+	    int iret = pthread_create(&hilo, NULL, print_message_function, NULL);
+	    if (iret) exit(1);
+
+		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, hilo);
 		list_add(entrenadores, entrenador);
-
 	}
-
-	t_entrenador* entrenador0 = list_get(entrenadores, 0);
-
-	char* primer_cadena = list_get(entrenador0->objetivos,0);
-
-	printf("primer_cadena2: %s\n", primer_cadena);
 
 	return entrenadores;
 
@@ -111,6 +148,16 @@ t_list* get_objetivo_global (t_list* entrenadores) {
 
 }
 
+void destruir_config_team(t_config_team* config_team){
+	list_destroy(config_team->objetivos_entrenadores);
+	list_destroy(config_team->pokemon_entrenadores);
+	list_destroy(config_team->posiciones_entrenadores);
+
+	free(config_team -> algoritmo_planificacion);
+	free(config_team -> ip_broker);
+	free(config_team -> log_file);
+}
+
 void liberar_estructuras(t_config_team* config_team, t_list* entrenadores){
 
 	for(int i = 0; i < list_size(entrenadores); i++){
@@ -118,7 +165,7 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores){
 		destruir_entrenador(entrenador);
 	}
 
-	free(config_team->objetivos_entrenadores);
+	destruir_config_team(config_team);
 
 }
 
@@ -136,15 +183,9 @@ int main (void) {
 
 	entrenadores = crear_entrenadores(config_team);
 
-	t_list* objetivo_global = get_objetivo_global(entrenadores);
+	//t_list* objetivo_global = get_objetivo_global(entrenadores);
 
-	// Codigo de prueba
-	t_list* primer_objetivo = list_get(objetivo_global, 0);
-	char* primer_cadena = list_get(primer_objetivo,0);
-	printf("primer_cadena3: %s\n", primer_cadena);
-
-
-	//liberar_estructuras(config_team, entrenadores);
+	liberar_estructuras(config_team, entrenadores);
 
 	terminar_programa(logger, config);
 

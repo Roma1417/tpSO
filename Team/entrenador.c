@@ -7,13 +7,15 @@
 
 #include "entrenador.h"
 
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos){
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, pthread_t hilo){
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
 	entrenador->posicion = posicion;
 	entrenador->pokemon_obtenidos = pokemon_obtenidos;
 	entrenador->objetivos = objetivos;
+	entrenador->estado = NEW;
+	entrenador->hilo = hilo;
 
 	return entrenador;
 
@@ -29,9 +31,11 @@ void destruir_entrenador(t_entrenador* entrenador){
 
 	free(entrenador->posicion);
 
-	//Esto tira error
 	list_destroy(entrenador->pokemon_obtenidos);
 	list_destroy(entrenador->objetivos);
+
+	// Falta revisar que hacer con el hilo
+	pthread_join(entrenador->hilo,NULL);
 
 	free(entrenador);
 
