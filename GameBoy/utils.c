@@ -45,16 +45,14 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
-void enviar_mensaje(char* argv[], u_int32_t socket_cliente, u_int32_t tamanio){
-
+void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = tipo;
 	paquete->buffer = malloc(sizeof(t_buffer));
-	u_int32_t size = obtener_size(argv, tamanio, tipo);
-	printf("El size es igual a: %d\n", size);
+	u_int32_t size = obtener_size(argv, tipo);
 	paquete->buffer->size = size;
-	void* stream = generar_stream(argv, tamanio, paquete);
+	void* stream = generar_stream(argv, paquete);
 
 	paquete->buffer->stream = stream;
 
@@ -64,9 +62,10 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente, u_int32_t tamanio){
 
 	send(socket_cliente, a_enviar, size_serializado, 0);
 
-		free(paquete->buffer);
-		free(paquete);
-		free(a_enviar);
+	free(paquete->buffer->stream);
+	free(paquete->buffer);
+	free(paquete);
+	free(a_enviar);
 }
 
 void agregar_string(int* offset, char* string, void** stream){
@@ -83,7 +82,7 @@ void agregar_entero(int* offset, char* string, void** stream){
 	(*offset) += sizeof(u_int32_t);
 }
 
-void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete){
+void* generar_stream(char** argumentos, t_paquete* paquete){
 	int offset = 0;
 	int i_max = 0;
 	void* stream = malloc(paquete->buffer->size); 
@@ -96,7 +95,6 @@ void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete){
 			else i_max = 7;
 
 			for(int i=3; i<i_max; i++){
-				printf("Estoy agregando el entero: %s\n", argumentos[i]);
 				agregar_entero(&offset, argumentos[i], &stream);
 			}
 			break;
@@ -129,6 +127,10 @@ void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete){
 		case GET_POKEMON:
 			agregar_string(&offset, argumentos[2], &stream);
 			break;
+		case SUSCRIPTOR:
+			agregar_string(&offset, argumentos[2], &stream);
+			agregar_entero(&offset, argumentos[3], &stream);
+			break;
 		default:
 			break;
 	}
@@ -136,9 +138,8 @@ void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete){
 	return stream;
 }
 
-u_int32_t obtener_size(char* argumentos[], u_int32_t tamanio, tipo_mensaje tipo){
+u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	u_int32_t size = 0;
-	
 	switch(tipo){
 		case NEW_POKEMON:
 			if(string_equals_ignore_case(argumentos[0],"BROKER"))
@@ -161,6 +162,9 @@ u_int32_t obtener_size(char* argumentos[], u_int32_t tamanio, tipo_mensaje tipo)
 		case GET_POKEMON:
 			size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
 			break;
+		case SUSCRIPTOR:
+			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
+			break;
 		default:
 			break;
 	}
@@ -174,10 +178,32 @@ void liberar_conexion(u_int32_t socket_cliente){
 }
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
-	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
-	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
-	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
-	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
-	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
-	return -1;
+	tipo_mensaje tipo_mensaje;
+	if(strcasecmp(tipo,"NEW_POKEMON") == 0){tipo_mensaje = NEW_POKEMON;}
+	else if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
+	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
+	else if(strcasecmp(tipo,"CAUGHT_POKEMON") == 0) {tipo_mensaje = CAUGHT_POKEMON;}
+	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
+	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
+	else tipo_mensaje = DESCONOCIDO;
+	return tipo_mensaje;
 }
+
+void validar_argumentos(char** argumentos, int cantidad){
+	tipo_mensaje tipo = obtener_tipo_mensaje(argumentos[2]);
+	if((strcasecmp(argumentos[1],"BROKER") == 0) && (tipo == DESCONOCIDO)){
+		printf("No se puede mandar el mensaje %s al proceso Broker\n", argumentos[2]);
+		exit(1);
+	}
+	else if((strcasecmp(argumentos[1],"TEAM") == 0) && (tipo != APPEARED_POKEMON)){
+		printf("No se puede mandar el mensaje %s al proceso Team\n", argumentos[2]);
+		exit(1);
+	}
+	else if((strcasecmp(argumentos[1],"GAMECARD") == 0) && ((tipo != NEW_POKEMON) && (tipo != CATCH_POKEMON) && (tipo != GET_POKEMON))){
+		printf("No se puede mandar el mensaje %s al proceso GameCard\n", argumentos[2]);
+		exit(1);
+	}
+
+}
+
+

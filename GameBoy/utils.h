@@ -21,6 +21,8 @@ typedef enum{
 	CATCH_POKEMON = 3,
 	CAUGHT_POKEMON = 4,
 	GET_POKEMON = 5,
+	SUSCRIPTOR = 6,
+	DESCONOCIDO = 8,
 }tipo_mensaje;
 
 /*typedef struct{
@@ -64,14 +66,15 @@ typedef struct
 } t_paquete;
 
 int crear_conexion(char* ip, char* puerto);
-void enviar_mensaje(char* argv[], u_int32_t socket_cliente, u_int32_t tamanio);
+void enviar_mensaje(char* argv[], u_int32_t socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
 void liberar_conexion(u_int32_t socket_cliente);
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
 void serializar_mensaje(tipo_mensaje tipo, char** argv,u_int32_t socket_cliente, u_int32_t tamanio);
-u_int32_t obtener_size(char* argumentos[], u_int32_t tamanio, tipo_mensaje tipo);
-void* generar_stream(char** argumentos, u_int32_t tamanio, t_paquete* paquete);
+u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo);
+void* generar_stream(char** argumentos, t_paquete* paquete);
 void agregar_string(int* offset, char* string, void** stream);
 void agregar_entero(int* offset, char* string, void** stream);
+void validar_argumentos(char** argumentos, int cantidad);
 
 #endif /* UTILS_H_ */

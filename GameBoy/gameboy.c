@@ -1,15 +1,11 @@
 #include "gameboy.h"
 
 int main(int argc, char* argv[]){
-
-	printf("argc es igual a: %d\n", argc);
-	for(int i=0; i<argc; i++){
-		printf("argv[%d] es igual a: %s\n", i, argv[i]);
-	}
-
 	int conexion;
 	char* ip;
 	char* puerto;
+
+	validar_argumentos(argv, argc-3);
 
 	t_log* logger;
 	t_config* config;
@@ -18,29 +14,22 @@ int main(int argc, char* argv[]){
 
 	config = leer_config();
 
-	ip = config_get_string_value(config, obtener_key("IP_", argv[1]));
-	puerto = config_get_string_value(config, obtener_key("PUERTO_", argv[1]));
-
-	log_info(logger, "El IP es: %s", ip);
-	log_info(logger, "El PUERTO es: %s", puerto);
+	obtener_parametro(&ip, "IP_", argv[1], config);
+	obtener_parametro(&puerto, "PUERTO_", argv[1], config);
 
 	conexion = crear_conexion(ip,puerto);
+	log_info(logger, "Se realiza una conexión al proceso %s", argv[1]);
 
 	char** p=argv+1;
 
-	enviar_mensaje(p, conexion, argc - 3);
-
-	//char* unMensaje = recibir_mensaje(conexion);
-
-	//log_info(logger, "El mensaje recibido es: %s", unMensaje);
-
-	//free(unMensaje);
+	enviar_mensaje(p, conexion);
+	log_info(logger, "Se ha enviado el mensaje %s al proceso %s", argv[2], argv[1]);
 
 	terminar_programa(conexion, logger, config);
 }
 
 t_log* iniciar_logger(void){
-	t_log* logger = log_create("gameboy.log","gameboy", true, LOG_LEVEL_INFO);
+	t_log* logger = log_create("gameboy.log","gameboy", false, LOG_LEVEL_INFO);
 	if(logger == NULL){
 		 printf("No pude crear el logger\n");
 		 exit(1);
@@ -69,4 +58,10 @@ char* obtener_key(char* parametro, char* destino){
 	string_append(&string, destino);
 
 	return string;
+}
+
+void obtener_parametro(char ** parametro, char* string_parametro, char* destino, t_config* config){
+	char* parametro_key = obtener_key(string_parametro, destino);
+	*parametro = config_get_string_value(config, parametro_key);
+	free(parametro_key);
 }
