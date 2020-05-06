@@ -14,7 +14,9 @@
 #include<unistd.h>
 #include<netdb.h>
 #include<commons/log.h>
+#include<commons/config.h>
 #include<commons/collections/list.h>
+#include<commons/collections/queue.h>
 #include<string.h>
 #include<pthread.h>
 
@@ -32,7 +34,21 @@ typedef enum{
 	CATCH_POKEMON = 3,
 	CAUGHT_POKEMON = 4,
 	GET_POKEMON = 5,
+	LOCALIZED_POKEMON = 6,
+	SUSCRIPTOR = 7,
 }tipo_mensaje;
+
+typedef struct{
+	tipo_mensaje id;
+	t_queue* mensajes;
+	t_list* suscriptores;
+}cola_mensajes;
+
+typedef struct{
+	char* ip;
+	char* puerto;
+}suscriptor;
+
 
 typedef struct{
 	u_int32_t nombre_size;
@@ -67,5 +83,8 @@ void serve_client(int *socket);
 void* serializar_paquete(t_paquete* paquete, int bytes);
 void devolver_mensaje(void* payload, int size, int socket_cliente);
 
+cola_mensajes* cola_mensajes_create(tipo_mensaje id);
+void cola_mensajes_destroy(cola_mensajes* self);
+suscriptor* crear_suscriptor(char* ip, char* puerto);
 
 #endif /* CONEXIONES_H_ */

@@ -21,7 +21,7 @@ typedef enum{
 	CATCH_POKEMON = 3,
 	CAUGHT_POKEMON = 4,
 	GET_POKEMON = 5,
-	SUSCRIPTOR = 6,
+	SUSCRIPTOR = 7,
 	DESCONOCIDO = 8,
 }tipo_mensaje;
 
