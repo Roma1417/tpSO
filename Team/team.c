@@ -82,6 +82,8 @@ t_config_team* construir_config_team(t_config* config){
 
 	t_config_team* config_team = malloc(sizeof(t_config_team));
 
+	config_team -> puerto_broker = config_get_int_value(config, "PUERTO_BROKER");
+
 	// A revisar el config_get_array_value
 	char** objetivos = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	t_list* lista_objetivos = convertir_string_a_lista_de_listas(objetivos);
@@ -100,7 +102,6 @@ t_config_team* construir_config_team(t_config* config){
 	config_team -> algoritmo_planificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
 	config_team -> ip_broker = config_get_string_value(config, "IP_BROKER");
 	config_team -> estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
-	config_team -> puerto_broker = config_get_int_value(config, "PUERTO_BROKER");
 	config_team -> log_file = config_get_string_value(config, "LOG_FILE");
 
 	return config_team;
@@ -139,6 +140,47 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 	return entrenadores;
 
+}
+
+t_list* list_flatten(t_list* listas){
+
+	t_list* lista = list_create();
+
+	for(int i = 0; i < list_size(listas); i++){
+		t_list* sublista = list_get(listas,i);
+		for(int j = 0; j < list_size(sublista); j++){
+			char* pokemon = list_get(sublista,j);
+			list_add(lista, pokemon);
+		}
+	}
+
+	return lista;
+}
+
+bool list_elem(char* elemento, t_list* lista){
+	bool encontrado = false;
+	for(int i = 0; i < list_size(lista) && !encontrado; i++){
+		char* pokemon = list_get(lista, i);
+		encontrado = string_equals_ignore_case(pokemon, elemento);
+	}
+	return encontrado;
+}
+
+t_list* eliminar_repetidos(t_list* objetivo_global){
+
+	t_list* lista_aplanada = list_flatten(objetivo_global);
+	t_list* especies_requeridas = list_create();
+
+	for(int i = 0; i < list_size(lista_aplanada); i++){
+		char* pokemon = list_get(lista_aplanada, i);
+		if(!list_elem(pokemon, especies_requeridas)){
+			list_add(especies_requeridas, pokemon);
+		}
+	}
+
+	list_destroy(lista_aplanada);
+
+	return especies_requeridas;
 }
 
 // Codigo a revisar
@@ -185,9 +227,13 @@ int main (void) {
 
 	//t_list* objetivo_global = get_objetivo_global(entrenadores);
 
+	//t_list* objetivo_global_sin_repetidos = eliminar_repetidos(objetivo_global);
+
 	liberar_estructuras(config_team, entrenadores);
 
 	terminar_programa(logger, config);
+
+	//iniciar_servidor();
 
 	return 0;
 

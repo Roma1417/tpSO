@@ -34,8 +34,7 @@ void destruir_entrenador(t_entrenador* entrenador){
 	list_destroy(entrenador->pokemon_obtenidos);
 	list_destroy(entrenador->objetivos);
 
-	// Falta revisar que hacer con el hilo
-	pthread_join(entrenador->hilo,NULL);
+	pthread_cancel(entrenador->hilo);
 
 	free(entrenador);
 

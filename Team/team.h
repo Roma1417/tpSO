@@ -9,6 +9,7 @@
 #define TEAM_H_
 
 #include "entrenador.h"
+#include "utils.h"
 #include <pthread.h>
 #include <stdlib.h>
 #include <commons/log.h>
