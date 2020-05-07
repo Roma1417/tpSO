@@ -59,7 +59,7 @@ typedef struct {
 	//int quantum; por ahora tiene que ser FIFO asi que no hay quantum
 	char* ip_broker;
 	int estimacion_inicial;
-	int puerto_broker;
+	char* puerto_broker;
 	char* log_file;
 
 }t_config_team;

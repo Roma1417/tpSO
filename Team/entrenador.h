@@ -37,10 +37,7 @@ typedef struct {
 	t_list* pokemon_obtenidos;
 	t_list* objetivos;
 	t_estado estado;
-	pthread_t* hilo;
-
-	// ID
-	// Hilo
+	pthread_t hilo;
 
 } t_entrenador;
 

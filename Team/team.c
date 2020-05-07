@@ -82,7 +82,7 @@ t_config_team* construir_config_team(t_config* config){
 
 	t_config_team* config_team = malloc(sizeof(t_config_team));
 
-	config_team -> puerto_broker = config_get_int_value(config, "PUERTO_BROKER");
+	config_team -> puerto_broker = config_get_string_value(config, "PUERTO_BROKER");
 
 	// A revisar el config_get_array_value
 	char** objetivos = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
@@ -216,6 +216,27 @@ void terminar_programa(t_log* logger, t_config* config){
 	if (config != NULL) config_destroy(config);
 }
 
+void enviar_mensajes_get_pokemon(int conexion, t_list* especies_requeridas){
+
+	char** mensaje = malloc(sizeof(char*)*3);
+
+	mensaje[0] = string_new();
+	string_append(&(mensaje[0]), "BROKER");
+
+	mensaje[1] = string_new();
+	string_append(&(mensaje[1]), "GET_POKEMON");
+
+	for(int i = 0; i < list_size(especies_requeridas); i++){
+		char* pokemon = list_get(especies_requeridas, i);
+		mensaje[2] = pokemon;
+		enviar_mensaje(mensaje, conexion);
+	}
+
+	free(mensaje[0]);
+	free(mensaje[1]);
+	free(mensaje);
+}
+
 int main (void) {
 
 	t_list* entrenadores;
@@ -225,15 +246,19 @@ int main (void) {
 
 	entrenadores = crear_entrenadores(config_team);
 
-	//t_list* objetivo_global = get_objetivo_global(entrenadores);
+	t_list* objetivo_global = get_objetivo_global(entrenadores);
 
-	//t_list* objetivo_global_sin_repetidos = eliminar_repetidos(objetivo_global);
+	t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
+
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+
+	enviar_mensajes_get_pokemon(conexion, especies_requeridas);
 
 	liberar_estructuras(config_team, entrenadores);
 
 	terminar_programa(logger, config);
 
-	//iniciar_servidor();
+	iniciar_servidor();
 
 	return 0;
 

@@ -136,6 +136,18 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		case GET_POKEMON:
 			printf("Recibí un mensaje de tipo GET_POKEMON\n");
+
+			//Quiero decir en mi defensa que modifique codigo a pedido de ALE
+			// Saludos.
+
+			size = recibir_entero(cliente_fd);
+
+			int pokemon_size3;
+			char* pokemon_nombre3 = recibir_cadena(cliente_fd, &pokemon_size3);
+			printf("El pokémon recibido fue: %s\n", pokemon_nombre3);
+
+			free(pokemon_nombre3);
+
 			break;
 		case SUSCRIPTOR:
 			printf("Recibí un mensaje de tipo SUSCRIPTOR\n");
