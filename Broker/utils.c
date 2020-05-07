@@ -8,28 +8,34 @@
 #include "utils.h"
 
 
-/*cola_mensajes *colas_de_mensajes[6] =
-		[cola_mensajes_create(NEW_POKEMON),
-		cola_mensajes_create(APPEARED_POKEMON),
-		cola_mensajes_create(CATCH_POKEMON),
-		cola_mensajes_create(CAUGHT_POKEMON),
-		cola_mensajes_create(GET_POKEMON),
-		cola_mensajes_create(LOCALIZED_POKEMON)];*/
+tipo_mensaje obtener_tipo_mensaje(char* tipo){
+	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
+	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
+	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
+	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
+	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
+	if(string_equals_ignore_case(tipo,"SUSCRIPTOR")) return SUSCRIPTOR;
+	return -1;
+}
 
-void* get_cola_mensajes(){
+char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
+	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
+	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
+	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
+	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
+	if(tipo == GET_POKEMON) return "GET_POKEMON";
+	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
+	return "DESCONOCIDO";
+}
 
+void* get_cola_mensajes(char* nombre_cola){
 
 	t_config* config = config_create("colas_mensajes.config");
 
-	printf("Ward2.1\n");
-
-	char* direccion_cola = config_get_string_value(config, "NEW_POKEMON");
-
-	printf("Ward2.2\n");
-
-	printf("La direccion es %s\n", direccion_cola);
-
+	void* direccion_cola = (void*)config_get_int_value(config, nombre_cola);
+	config_destroy(config);
 	return (void*) direccion_cola;
+
 }
 
 void* recibir_cadena(int socket_cliente, int* size)
@@ -118,28 +124,6 @@ void process_request(int cod_op, int cliente_fd) {
 			
 			free(pokemon_nombre);
 
-
-			suscriptor* nuevo_suscriptor = crear_suscriptor("ip_generica","puerto_generico");
-
-			printf("Ward2\n");
-			
-			cola_mensajes* cola = get_cola_mensajes();
-
-			printf("Ward3\n");
-
-			printf("El codigo de la cola es %d\n", cola->id);
-			printf("Ward4\n");
-
-			cola_mensajes* cola_mensajes = cola;
-			printf("Ward5\n");
-
-			agregar_suscriptor(nuevo_suscriptor,cola);
-			printf("Ward6\n");
-
-			suscriptor* primer_sub = list_get(cola_mensajes->suscriptores, 0);
-
-			printf("La ip es: %s\n",  primer_sub->ip );
-
 			break;
 		case APPEARED_POKEMON:
 			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
@@ -167,13 +151,18 @@ void process_request(int cod_op, int cliente_fd) {
 			char* ip_nombre = recibir_cadena(cliente_fd, &ip_size);
 			printf("La VERDADERA ip recibida fue: %s\n", ip_nombre);
 
-
 			int puerto_size;
 			char* puerto_nombre = recibir_cadena(cliente_fd, &puerto_size);
-
 			printf("La VERDADERA puerto recibida fue: %s\n", puerto_nombre);
 
+			suscriptor* nuevo_suscriptor = crear_suscriptor(ip_nombre,puerto_nombre);
+			cola_mensajes* cola_mensajes = get_cola_mensajes(cola_nombre);
+			agregar_suscriptor(nuevo_suscriptor,cola_mensajes);
 
+			suscriptor* primer_sub = list_get(cola_mensajes->suscriptores, 0);
+
+			printf("La ip es: %s\n",  primer_sub->ip );
+			printf("El puerto es: %s\n",  primer_sub->puerto );
 
 
 			break;
@@ -256,14 +245,11 @@ void cola_mensajes_destroy(cola_mensajes* self){
 
 
 
-
-
-
 void agregar_suscriptor(suscriptor* suscriptor, cola_mensajes* cola_mensajes){
-	printf("Ward5.1\n");
+
 	list_add(cola_mensajes->suscriptores, suscriptor);
-	printf("Ward5.2\n");
 }
+
 
 
 suscriptor* crear_suscriptor(char* ip, char* puerto){
@@ -275,15 +261,26 @@ suscriptor* crear_suscriptor(char* ip, char* puerto){
 	return suscriptor;
 }
 
-tipo_mensaje obtener_tipo_mensaje(char* tipo){
-	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
-	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
-	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
-	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
-	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
-	if(string_equals_ignore_case(tipo,"SUSCRIPTOR")) return SUSCRIPTOR;
-	return -1;
+
+
+
+
+void set_cola_mensajes(char* nombre_cola){
+
+	t_config* config = config_create("colas_mensajes.config");
+	cola_mensajes* cola = cola_mensajes_create(obtener_tipo_mensaje(nombre_cola));
+	char direccion[15];
+
+	sprintf(direccion, "%d", (int)cola);
+	config_set_value(config, nombre_cola, direccion);
+	config_save(config);
+	config_destroy(config);
+
 }
+
+
+
+
 
 
 
