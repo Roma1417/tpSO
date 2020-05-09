@@ -118,8 +118,9 @@ void process_request(int cod_op, t_parametros* parametros){// int cliente_fd) {
 			size = recibir_entero(*(parametros->socket_cliente));
 
 			appeared_pokemon->pokemon = recibir_cadena(*(parametros->socket_cliente), &(appeared_pokemon->size_pokemon));
-			appeared_pokemon->posicion_x = recibir_entero(*(parametros->socket_cliente));
-			appeared_pokemon->posicion_y = recibir_entero(*(parametros->socket_cliente));
+			appeared_pokemon->posicion = malloc(sizeof(t_posicion));
+			appeared_pokemon->posicion->x = recibir_entero(*(parametros->socket_cliente));
+			appeared_pokemon->posicion->y = recibir_entero(*(parametros->socket_cliente));
 
 			parametros->appeared_pokemon = appeared_pokemon;
 

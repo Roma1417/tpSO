@@ -20,6 +20,13 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	return entrenador;
 
 }
+void cambiar_estado(t_entrenador* entrenador, t_estado estado){
+	entrenador->estado = estado;
+}
+
+bool puede_pasar_a_ready(t_entrenador* entrenador){
+	return ((entrenador->estado != READY) && (entrenador->estado != EXIT));
+}
 
 t_list* get_objetivos(t_entrenador* entrenador){
 

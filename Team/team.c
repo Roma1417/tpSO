@@ -25,58 +25,6 @@ t_config* leer_config(void) {
 
 }
 
-t_list* convertir_string_a_lista_de_listas(char** cadenas){
-	t_list* listas = list_create();
-	char* cadena;
-	int longitud = sizeof(cadenas) - 1;
-	for(int i = 0; i < longitud; i++){
-		t_list* sublista = list_create();
-		for(int j = 0; j < string_length(cadenas[i])+1; j++){
-			if (j == 0){
-				cadena = string_new();
-			}
-			if (cadenas[i][j] == '|'){
-				list_add(sublista, cadena);
-				cadena = string_new();
-			}
-			if (j == string_length(cadenas[i])) {
-				list_add(sublista, cadena);
-			}
-			if(cadenas[i][j] != '|') string_append_with_format(&cadena, "%c",cadenas[i][j]);
-		}
-		list_add(listas,sublista);
-	}
-	return listas;
-}
-
-t_list* convertir_string_a_lista_de_posiciones(char** cadenas){
-	t_list* posiciones = list_create();
-	t_posicion* posicion;
-	char* cadena;
-	int longitud = sizeof(cadenas) - 1;
-	for(int i = 0; i < longitud; i++){
-		for(int j = 0; j < string_length(cadenas[i])+1; j++){
-			if (j == 0){
-				posicion = malloc(sizeof(t_posicion));
-				cadena = string_new();
-			}
-			if (cadenas[i][j] == '|'){
-				posicion -> posicion_x = atoi(cadena);
-				free(cadena);
-				cadena = string_new();
-			}
-			if (j == string_length(cadenas[i])) {
-				posicion -> posicion_y = atoi(cadena);
-				free(cadena);
-				list_add(posiciones, posicion);
-			}
-			if(cadenas[i][j] != '|') {
-				string_append_with_format(&cadena, "%c",cadenas[i][j]);
-			}
-		}
-	}
-	return posiciones;
-}
 
 t_config_team* construir_config_team(t_config* config){
 
@@ -142,46 +90,7 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 }
 
-t_list* list_flatten(t_list* listas){
 
-	t_list* lista = list_create();
-
-	for(int i = 0; i < list_size(listas); i++){
-		t_list* sublista = list_get(listas,i);
-		for(int j = 0; j < list_size(sublista); j++){
-			char* pokemon = list_get(sublista,j);
-			list_add(lista, pokemon);
-		}
-	}
-
-	return lista;
-}
-
-bool list_elem(char* elemento, t_list* lista){
-	bool encontrado = false;
-	for(int i = 0; i < list_size(lista) && !encontrado; i++){
-		char* pokemon = list_get(lista, i);
-		encontrado = string_equals_ignore_case(pokemon, elemento);
-	}
-	return encontrado;
-}
-
-t_list* eliminar_repetidos(t_list* objetivo_global){
-
-	t_list* lista_aplanada = list_flatten(objetivo_global);
-	t_list* especies_requeridas = list_create();
-
-	for(int i = 0; i < list_size(lista_aplanada); i++){
-		char* pokemon = list_get(lista_aplanada, i);
-		if(!list_elem(pokemon, especies_requeridas)){
-			list_add(especies_requeridas, pokemon);
-		}
-	}
-
-	list_destroy(lista_aplanada);
-
-	return especies_requeridas;
-}
 
 t_list* get_objetivo_global (t_list* entrenadores) {
 
@@ -236,12 +145,33 @@ void enviar_mensajes_get_pokemon(int conexion, t_list* especies_requeridas){
 	free(mensaje);
 }
 
+void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready){
+	t_entrenador* mas_cercano = list_get(entrenadores, 0);
+	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
+	for(int i=1; i<list_size(entrenadores); i++){
+		t_entrenador* entrenador_actual = list_get(entrenadores, i);
+		if((puede_pasar_a_ready(entrenador_actual)) && (distancia(entrenador_actual,appeared_pokemon) < distancia_minima)){
+			mas_cercano = entrenador_actual;
+			distancia_minima = distancia(entrenador_actual,appeared_pokemon);
+		}
+	}
+	cambiar_estado(mas_cercano, READY);
+	queue_push(cola_ready, mas_cercano);
+}
+
+void planificar_entrenadores(t_queue* cola_ready){
+	t_entrenador* entrenador_a_ejecutar = queue_pop(cola_ready);
+
+	//Mover entrenador
+}
+
 int main (void) {
 
 	t_list* entrenadores;
 	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
 	t_config_team* config_team = construir_config_team(config);
+	t_queue* cola_ready = queue_create();
 
 	entrenadores = crear_entrenadores(config_team);
 
@@ -259,9 +189,13 @@ int main (void) {
 
 	t_appeared_pokemon* appeared_pokemon = iniciar_servidor();
 
+	enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
+
+	planificar_entrenadores(cola_ready);
+
 	printf("pokemon de appeared_pokemon: %s\n", appeared_pokemon->pokemon);
-	printf("posicion_x de appeared_pokemon: %d\n", appeared_pokemon->posicion_x);
-	printf("posicion_y de appeared_pokemon: %d\n", appeared_pokemon->posicion_y);
+	printf("posicion_x de appeared_pokemon: %d\n", appeared_pokemon->posicion->x);
+	printf("posicion_y de appeared_pokemon: %d\n", appeared_pokemon->posicion->y);
 	printf("size_pokemon de appeared_pokemon: %d\n", appeared_pokemon->size_pokemon);
 
 	return 0;
