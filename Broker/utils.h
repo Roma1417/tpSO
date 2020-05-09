@@ -17,6 +17,7 @@
 #include<commons/config.h>
 #include<commons/collections/list.h>
 #include<commons/collections/queue.h>
+#include<time.h>
 #include<string.h>
 #include<pthread.h>
 
@@ -82,5 +83,6 @@ void devolver_mensaje(void* payload, int size, int socket_cliente);
 cola_mensajes* cola_mensajes_create(tipo_mensaje id);
 void cola_mensajes_destroy(cola_mensajes* self);
 suscriptor* crear_suscriptor(char* ip, char* puerto);
+double tiempo_transcurrido(time_t);
 
 #endif /* CONEXIONES_H_ */

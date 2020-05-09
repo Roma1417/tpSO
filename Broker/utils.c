@@ -109,6 +109,7 @@ void serve_client(int* socket)
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
+
 		switch (cod_op) {
 		case NEW_POKEMON:
 			printf("Recibí un mensaje de tipo NEW_POKEMON\n");
@@ -149,7 +150,10 @@ void process_request(int cod_op, int cliente_fd) {
 			free(pokemon_nombre3);
 
 			break;
+
 		case SUSCRIPTOR:
+
+
 			printf("Recibí un mensaje de tipo SUSCRIPTOR\n");
 
 			size = recibir_entero(cliente_fd);
@@ -159,22 +163,24 @@ void process_request(int cod_op, int cliente_fd) {
 			char* cola_nombre = recibir_cadena(cliente_fd, &cola_size);
 			printf("La cola recibida fue: %s\n", cola_nombre);
 
-			int ip_size;
-			char* ip_nombre = recibir_cadena(cliente_fd, &ip_size);
-			printf("La VERDADERA ip recibida fue: %s\n", ip_nombre);
+			int segundos = recibir_entero(cliente_fd);
+			printf("La VERDADERA segundos recibida fue: %d\n", segundos);
 
-			int puerto_size;
-			char* puerto_nombre = recibir_cadena(cliente_fd, &puerto_size);
-			printf("La VERDADERA puerto recibida fue: %s\n", puerto_nombre);
-
-			suscriptor* nuevo_suscriptor = crear_suscriptor(ip_nombre,puerto_nombre);
+			//suscriptor* nuevo_suscriptor = crear_suscriptor(ip_nombre,puerto_nombre);
 			cola_mensajes* cola_mensajes = get_cola_mensajes(cola_nombre);
-			agregar_suscriptor(nuevo_suscriptor,cola_mensajes);
 
-			suscriptor* primer_sub = list_get(cola_mensajes->suscriptores, 0);
 
-			printf("La ip es: %s\n",  primer_sub->ip );
-			printf("El puerto es: %s\n",  primer_sub->puerto );
+			agregar_suscriptor(&cliente_fd,cola_mensajes); //
+			time_t tiempo_inicial;
+			time(&tiempo_inicial);
+
+			int* primer_sub = list_get(cola_mensajes->suscriptores, 0);
+
+			while(tiempo_transcurrido(tiempo_inicial)<segundos);
+
+			eliminar_suscriptor(&cliente_fd, cola_mensajes);
+
+			printf("El socket %d se ha desuscripto de la cola.\n", *primer_sub);
 
 
 			break;
@@ -255,11 +261,21 @@ void cola_mensajes_destroy(cola_mensajes* self){
 	free(self);
 }
 
+bool iguales(u_int32_t entero1, u_int32_t entero2){
+	return entero1 == entero2;
+}
 
-
-void agregar_suscriptor(suscriptor* suscriptor, cola_mensajes* cola_mensajes){
+void agregar_suscriptor(int* suscriptor, cola_mensajes* cola_mensajes){
 
 	list_add(cola_mensajes->suscriptores, suscriptor);
+}
+
+void eliminar_suscriptor(int* suscriptor, cola_mensajes* cola_mensajes){
+
+	//ist_remove_by_condition(cola_mensajes->suscriptores, iguales, suscriptor);
+
+	list_remove(cola_mensajes->suscriptores, 0);
+
 }
 
 
@@ -290,7 +306,12 @@ void set_cola_mensajes(char* nombre_cola){
 
 }
 
+double tiempo_transcurrido(time_t tiempo_inicio){
 
+	time_t tiempo_final;
+
+	return difftime(time(&tiempo_final), tiempo_inicio);
+}
 
 
 

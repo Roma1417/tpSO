@@ -32,8 +32,9 @@ void* recibir_cadena(int socket_cliente, int* size)
 	return cadena;
 }
 
-void iniciar_servidor(void)
+t_appeared_pokemon* iniciar_servidor(void)
 {
+
 	int socket_servidor;
 
     struct addrinfo hints, *servinfo, *p;
@@ -61,35 +62,51 @@ void iniciar_servidor(void)
 
     freeaddrinfo(servinfo);
 
-    while(1) // Hay que revisar condicion para que no se quede en loop
-    	esperar_cliente(socket_servidor);
+    t_parametros* parametros = malloc(sizeof(t_parametros));
+
+    parametros->appeared_pokemon = NULL;
+
+    while(parametros->appeared_pokemon == NULL){
+    	esperar_cliente(socket_servidor, parametros);
+    }
+
+    t_appeared_pokemon* appeared_pokemon = parametros->appeared_pokemon;
+
+    free(parametros);
+
+    return appeared_pokemon;
+
 }
 
-void esperar_cliente(int socket_servidor)
+void esperar_cliente(int socket_servidor, t_parametros* parametros)
 {
-	struct sockaddr_in dir_cliente; //¿Puedo sacar la ip y el ?
+	struct sockaddr_in dir_cliente;
 
 	int tam_direccion = sizeof(struct sockaddr_in);
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
+	parametros->socket_cliente = &socket_cliente;
 
-	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_detach(thread);
+	pthread_create(&thread,NULL,(void*)serve_client, parametros);
+	pthread_join(thread, NULL);
+
+	//printf("p: %s\n", parametros->appeared_pokemon->pokemon);
 
 }
 
-void serve_client(int* socket)
+void serve_client(t_parametros* parametros) // int* socket)
 {
 	int cod_op;
-	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+	if(recv(*(parametros->socket_cliente), &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
-	process_request(cod_op, *socket);
+	process_request(cod_op, parametros);//*socket);
+
 }
 
 
 
-void process_request(int cod_op, int cliente_fd) {
+void process_request(int cod_op, t_parametros* parametros){// int cliente_fd) {
 	int size;
 	void* msg;
 		switch (cod_op) {
@@ -98,13 +115,13 @@ void process_request(int cod_op, int cliente_fd) {
 
 			t_appeared_pokemon* appeared_pokemon = malloc(sizeof(t_appeared_pokemon));
 
-			size = recibir_entero(cliente_fd);
+			size = recibir_entero(*(parametros->socket_cliente));
 
-			appeared_pokemon->pokemon = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
-			appeared_pokemon->posicion_x = recibir_entero(cliente_fd);
-			appeared_pokemon->posicion_y = recibir_entero(cliente_fd);
+			appeared_pokemon->pokemon = recibir_cadena(*(parametros->socket_cliente), &(appeared_pokemon->size_pokemon));
+			appeared_pokemon->posicion_x = recibir_entero(*(parametros->socket_cliente));
+			appeared_pokemon->posicion_y = recibir_entero(*(parametros->socket_cliente));
 
-			// No hace nada con el appeared_pokemon
+			parametros->appeared_pokemon = appeared_pokemon;
 
 			break;
 		case 0:

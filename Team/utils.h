@@ -42,6 +42,13 @@ typedef struct{
 
 } t_appeared_pokemon;
 
+typedef struct{
+
+	t_appeared_pokemon* appeared_pokemon;
+	int* socket_cliente;
+
+}t_parametros;
+
 typedef struct
 {
 	tipo_mensaje codigo_operacion;
@@ -53,11 +60,11 @@ pthread_t thread;
 // Funciones Servidor
 
 void* recibir_buffer(int*, int);
-void iniciar_servidor(void);
-void esperar_cliente(int);
+t_appeared_pokemon* iniciar_servidor(void);
+void esperar_cliente(int, t_parametros*);
 void* recibir_mensaje(int socket_cliente, int* size);
-void process_request(int cod_op, int cliente_fd);
-void serve_client(int *socket);
+void process_request(int cod_op, t_parametros* parametros);
+void serve_client(t_parametros* parametros);
 int recibir_entero(int socket_cliente);
 
 // Funciones Cliente

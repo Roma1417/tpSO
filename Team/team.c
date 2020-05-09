@@ -183,7 +183,6 @@ t_list* eliminar_repetidos(t_list* objetivo_global){
 	return especies_requeridas;
 }
 
-// Codigo a revisar
 t_list* get_objetivo_global (t_list* entrenadores) {
 
 	return list_map(entrenadores, (void*) get_objetivos);
@@ -246,19 +245,24 @@ int main (void) {
 
 	entrenadores = crear_entrenadores(config_team);
 
-	t_list* objetivo_global = get_objetivo_global(entrenadores);
+	//t_list* objetivo_global = get_objetivo_global(entrenadores);
 
-	t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
+	//t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
 
-	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	//int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
-	enviar_mensajes_get_pokemon(conexion, especies_requeridas);
+	//enviar_mensajes_get_pokemon(conexion, especies_requeridas);
 
 	liberar_estructuras(config_team, entrenadores);
 
 	terminar_programa(logger, config);
 
-	iniciar_servidor();
+	t_appeared_pokemon* appeared_pokemon = iniciar_servidor();
+
+	printf("pokemon de appeared_pokemon: %s\n", appeared_pokemon->pokemon);
+	printf("posicion_x de appeared_pokemon: %d\n", appeared_pokemon->posicion_x);
+	printf("posicion_y de appeared_pokemon: %d\n", appeared_pokemon->posicion_y);
+	printf("size_pokemon de appeared_pokemon: %d\n", appeared_pokemon->size_pokemon);
 
 	return 0;
 
