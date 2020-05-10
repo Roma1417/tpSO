@@ -9,7 +9,8 @@
 u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	u_int32_t diferencia_en_x = entrenador->posicion->x - appeared_pokemon->posicion->x;
 	u_int32_t diferencia_en_y = entrenador->posicion->y - appeared_pokemon->posicion->y;
-	return sqrt(pow(diferencia_en_x, 2) + pow(diferencia_en_y, 2));
+	u_int32_t suma_de_potencias = pow(diferencia_en_x, 2) + pow(diferencia_en_y, 2);
+	return sqrt(suma_de_potencias);
 }
 
 t_list* convertir_string_a_lista_de_listas(char** cadenas){

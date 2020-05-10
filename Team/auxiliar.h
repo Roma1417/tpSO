@@ -8,7 +8,7 @@
 #ifndef AUXILIAR_H_
 #define AUXILIAR_H_
 
-#include "entrenador.h"
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <commons/log.h>
@@ -17,6 +17,8 @@
 #include <commons/collections/list.h>
 #include <commons/string.h>
 #include <math.h>
+#include "entrenador.h"
+#include "utils.h"
 
 u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
 t_list* convertir_string_a_lista_de_listas(char** cadenas);

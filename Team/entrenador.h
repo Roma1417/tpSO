@@ -13,7 +13,6 @@
 #include <commons/string.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
-#include "team.h"
 #include "posicion.h"
 
 typedef enum{
