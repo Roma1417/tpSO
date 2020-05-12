@@ -8,46 +8,8 @@
 #include "utils.h"
 
 
-tipo_mensaje obtener_tipo_mensaje(char* tipo){
-	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
-	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
-	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
-	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
-	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
-	if(string_equals_ignore_case(tipo,"SUSCRIPTOR")) return SUSCRIPTOR;
-	return -1;
-}
 
-char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
-	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
-	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
-	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
-	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
-	if(tipo == GET_POKEMON) return "GET_POKEMON";
-	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
-	return "DESCONOCIDO";
-}
 
-void* get_cola_mensajes(char* nombre_cola){
-
-	t_config* config = config_create("colas_mensajes.config");
-
-	void* direccion_cola = (void*)config_get_int_value(config, nombre_cola);
-	config_destroy(config);
-	return (void*) direccion_cola;
-
-}
-
-void* recibir_cadena(int socket_cliente, int* size)
-{
-	void * cadena;
-
-	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
-	cadena = malloc(*size);
-	recv(socket_cliente, cadena, *size, MSG_WAITALL);
-
-	return cadena;
-}
 
 void iniciar_servidor(void)
 {
@@ -60,7 +22,10 @@ void iniciar_servidor(void)
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    getaddrinfo(IP, PUERTO, &hints, &servinfo);
+    char* ip = consultar_config_por_string("./broker.config", "IP_BROKER");
+    char* puerto = consultar_config_por_string("./broker.config", "PUERTO_BROKER");
+
+    getaddrinfo(ip, puerto, &hints, &servinfo);
 
     for (p=servinfo; p != NULL; p = p->ai_next)
     {
@@ -82,6 +47,7 @@ void iniciar_servidor(void)
     	esperar_cliente(socket_servidor);
 }
 
+
 void esperar_cliente(int socket_servidor)
 {
 	struct sockaddr_in dir_cliente; //¿Puedo sacar la ip y el ?
@@ -96,6 +62,7 @@ void esperar_cliente(int socket_servidor)
 
 }
 
+
 void serve_client(int* socket)
 {
 	int cod_op;
@@ -105,39 +72,35 @@ void serve_client(int* socket)
 }
 
 
-
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
+	t_cola_mensajes* cola_mensajes;
 
 		switch (cod_op) {
 		case NEW_POKEMON:
-			printf("Recibí un mensaje de tipo NEW_POKEMON\n");
-
-			size = recibir_entero(cliente_fd);
-
-			int pokemon_size;
-			char* pokemon_nombre = recibir_cadena(cliente_fd, &pokemon_size);
-			printf("El pokémon recibido fue: %s\n", pokemon_nombre);
-
-			int pos_x = recibir_entero(cliente_fd);
-			printf("La pos_x del pokémon recibido fue: %d\n", pos_x);
-			
-			free(pokemon_nombre);
-
-			break;
 		case APPEARED_POKEMON:
-			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
-			break;
 		case CATCH_POKEMON:
-			printf("Recibí un mensaje de tipo CATCH_POKEMON\n");
-			break;
 		case CAUGHT_POKEMON:
-			printf("Recibí un mensaje de tipo CAUGHT_POKEMON\n");
-			break;
 		case GET_POKEMON:
-			printf("Recibí un mensaje de tipo GET_POKEMON\n");
+		case LOCALIZED_POKEMON:
+			printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
 
+			int size;
+			void* stream = (void*)recibir_cadena(cliente_fd, &size);
+
+			t_mensaje* mensaje = crear_mensaje(size, stream);
+			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje_string(cod_op));
+
+			agregar_mensaje(mensaje, cola_mensajes);
+			
+			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
+			t_mensaje* primer_mensaje = queue_pop(cola_mensajes->mensajes);
+			printf("El primer parametro de la cola es %s\n", primer_mensaje->stream + 4);
+
+			break;
+
+			/*
 			//Quiero decir en mi defensa que modifique codigo a pedido de ALE
 			// Saludos.
 
@@ -149,10 +112,9 @@ void process_request(int cod_op, int cliente_fd) {
 
 			free(pokemon_nombre3);
 
-			break;
+			break;*/
 
 		case SUSCRIPTOR:
-
 
 			printf("Recibí un mensaje de tipo SUSCRIPTOR\n");
 
@@ -166,9 +128,7 @@ void process_request(int cod_op, int cliente_fd) {
 			int segundos = recibir_entero(cliente_fd);
 			printf("La VERDADERA segundos recibida fue: %d\n", segundos);
 
-			//suscriptor* nuevo_suscriptor = crear_suscriptor(ip_nombre,puerto_nombre);
-			cola_mensajes* cola_mensajes = get_cola_mensajes(cola_nombre);
-
+			cola_mensajes = get_cola_mensajes(cola_nombre);
 
 			agregar_suscriptor(&cliente_fd,cola_mensajes); //
 			time_t tiempo_inicial;
@@ -176,16 +136,13 @@ void process_request(int cod_op, int cliente_fd) {
 
 			int* primer_sub = list_get(cola_mensajes->suscriptores, 0);
 
-			while(tiempo_transcurrido(tiempo_inicial)<segundos);
+			sleep(segundos);
 
 			eliminar_suscriptor(&cliente_fd, cola_mensajes);
 
 			printf("El socket %d se ha desuscripto de la cola.\n", *primer_sub);
 
-
 			break;
-
-
 
 		case 0:
 			pthread_exit(NULL);
@@ -194,10 +151,8 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 }
 
-
-
-
 int recibir_entero(int socket_cliente){
+
 	int entero;
 
 	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
@@ -205,8 +160,20 @@ int recibir_entero(int socket_cliente){
 	return entero;
 }
 
-void* serializar_paquete(t_paquete* paquete, int bytes)
+
+void* recibir_cadena(int socket_cliente, int* size)
 {
+	void * cadena;
+
+	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	cadena = malloc(*size);
+	recv(socket_cliente, cadena, *size, MSG_WAITALL);
+
+	return cadena;
+}
+
+
+void* serializar_paquete(t_paquete* paquete, int bytes){
 	void * magic = malloc(bytes);
 	int desplazamiento = 0;
 
@@ -219,6 +186,7 @@ void* serializar_paquete(t_paquete* paquete, int bytes)
 
 	return magic;
 }
+
 
 void devolver_mensaje(void* payload, int size, int socket_cliente)
 {
@@ -242,76 +210,44 @@ void devolver_mensaje(void* payload, int size, int socket_cliente)
 	free(paquete);
 }
 
-cola_mensajes* cola_mensajes_create(tipo_mensaje id){
 
-	cola_mensajes* cola_mensajes = malloc(sizeof(cola_mensajes));
-	t_queue* mensajes = queue_create();
-	t_list* suscriptores = list_create();
-	cola_mensajes -> id = id;
-	cola_mensajes -> mensajes = mensajes;
-	cola_mensajes -> suscriptores = suscriptores;
-
-		return cola_mensajes;
-}
-
-void cola_mensajes_destroy(cola_mensajes* self){
-
-	queue_destroy(self -> mensajes);
-	list_destroy(self -> suscriptores);
-	free(self);
-}
-
-bool iguales(u_int32_t entero1, u_int32_t entero2){
-	return entero1 == entero2;
-}
-
-void agregar_suscriptor(int* suscriptor, cola_mensajes* cola_mensajes){
-
-	list_add(cola_mensajes->suscriptores, suscriptor);
-}
-
-void eliminar_suscriptor(int* suscriptor, cola_mensajes* cola_mensajes){
-
-	//ist_remove_by_condition(cola_mensajes->suscriptores, iguales, suscriptor);
-
-	list_remove(cola_mensajes->suscriptores, 0);
-
+tipo_mensaje obtener_tipo_mensaje(char* tipo){
+	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
+	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
+	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
+	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
+	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
+	if(string_equals_ignore_case(tipo,"SUSCRIPTOR")) return SUSCRIPTOR;
+	return -1;
 }
 
 
-
-suscriptor* crear_suscriptor(char* ip, char* puerto){
-
-	suscriptor* suscriptor = malloc(sizeof(suscriptor));
-	suscriptor -> ip = ip;
-	suscriptor -> puerto = puerto;
-
-	return suscriptor;
+char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
+	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
+	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
+	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
+	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
+	if(tipo == GET_POKEMON) return "GET_POKEMON";
+	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
+	return "DESCONOCIDO";
 }
 
+char* consultar_config_por_string(char* path, char* key){
 
+	t_config* config = config_create(path);
 
+	char* cadena = string_from_format("%s",config_get_string_value(config, key));
 
-
-void set_cola_mensajes(char* nombre_cola){
-
-	t_config* config = config_create("colas_mensajes.config");
-	cola_mensajes* cola = cola_mensajes_create(obtener_tipo_mensaje(nombre_cola));
-	char direccion[15];
-
-	sprintf(direccion, "%d", (int)cola);
-	config_set_value(config, nombre_cola, direccion);
-	config_save(config);
 	config_destroy(config);
 
+	return cadena;
 }
 
-double tiempo_transcurrido(time_t tiempo_inicio){
 
-	time_t tiempo_final;
 
-	return difftime(time(&tiempo_final), tiempo_inicio);
-}
+
+
+
 
 
 

@@ -20,31 +20,7 @@
 #include<time.h>
 #include<string.h>
 #include<pthread.h>
-
-#define IP "127.0.0.1"
-#define PUERTO "37227"
-
-
-typedef enum{
-	NEW_POKEMON = 1,
-	APPEARED_POKEMON = 2,
-	CATCH_POKEMON = 3,
-	CAUGHT_POKEMON = 4,
-	GET_POKEMON = 5,
-	LOCALIZED_POKEMON = 6,
-	SUSCRIPTOR = 7,
-}tipo_mensaje;
-
-typedef struct{
-	tipo_mensaje id;
-	t_queue* mensajes;
-	t_list* suscriptores;
-}cola_mensajes;
-
-typedef struct{
-	char* ip;
-	char* puerto;
-}suscriptor;
+#include"cola_mensajes.h"
 
 
 typedef struct{
@@ -70,19 +46,19 @@ typedef struct
 pthread_t thread;
 
 void* recibir_buffer(int*, int);
-
 void iniciar_servidor(void);
 void esperar_cliente(int);
-void* recibir_mensaje(int socket_cliente, int* size);
+void* recibir_mensaje(int, int*);
 int recibir_operacion(int);
-void process_request(int cod_op, int cliente_fd);
-void serve_client(int *socket);
-void* serializar_paquete(t_paquete* paquete, int bytes);
-void devolver_mensaje(void* payload, int size, int socket_cliente);
-
-cola_mensajes* cola_mensajes_create(tipo_mensaje id);
-void cola_mensajes_destroy(cola_mensajes* self);
-suscriptor* crear_suscriptor(char* ip, char* puerto);
-double tiempo_transcurrido(time_t);
+void process_request(int, int);
+void serve_client(int*);
+void* serializar_paquete(t_paquete*, int);
+void devolver_mensaje(void*, int, int);
+char* consultar_config_por_string(char*, char*);
+int recibir_entero(int);
+void* recibir_cadena(int, int*);
+tipo_mensaje obtener_tipo_mensaje(char* tipo);
+char* obtener_tipo_mensaje_string(tipo_mensaje);
+char* consultar_config_por_string(char*, char*);
 
 #endif /* CONEXIONES_H_ */
