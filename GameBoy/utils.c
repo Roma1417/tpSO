@@ -126,6 +126,13 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			break;
 		case GET_POKEMON:
 			agregar_string(&offset, argumentos[2], &stream);
+
+			if(string_equals_ignore_case(argumentos[0],"BROKER")) i_max=3;
+				else i_max = 4;
+
+			for(int i=3; i<i_max; i++){
+				agregar_entero(&offset, argumentos[i], &stream);
+			}
 			break;
 		case SUSCRIPTOR:{
 			agregar_string(&offset, argumentos[2], &stream);
@@ -161,7 +168,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 			size = sizeof(u_int32_t) * 2; 
 			break;
 		case GET_POKEMON:
-			size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
+			if(string_equals_ignore_case(argumentos[0],"BROKER"))
+				size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
+			else size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
 			break;
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) *2 + strlen(argumentos[2]) +1;

@@ -546,3 +546,6 @@
 [INFO] 05:10:10:615 gameboy/(10901:10901): Se ha enviado el mensaje CAUGHT_POKEMON al proceso BROKER
 [INFO] 05:10:40:183 gameboy/(10903:10903): Se realiza una conexión al proceso BROKER
 [INFO] 05:10:40:183 gameboy/(10903:10903): Se ha enviado el mensaje CATCH_POKEMON al proceso BROKER
+[INFO] 10:16:41:576 gameboy/(6250:6250): Se realiza una conexión al proceso TEAM
+[INFO] 10:16:54:99 gameboy/(6279:6279): Se realiza una conexión al proceso TEAM
+[INFO] 10:16:54:99 gameboy/(6279:6279): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
