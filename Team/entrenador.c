@@ -38,10 +38,21 @@ void destruir_entrenador(t_entrenador* entrenador){
 
 	free(entrenador->posicion);
 
+	for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
+		free(pokemon);
+	}
+
 	list_destroy(entrenador->pokemon_obtenidos);
+
+	for(int i = 0; i < list_size(entrenador->objetivos); i++){
+		char* pokemon = list_get(entrenador->objetivos, i);
+		free(pokemon);
+	}
+
 	list_destroy(entrenador->objetivos);
 
-	pthread_cancel(entrenador->hilo);
+	pthread_join(entrenador->hilo, NULL); // Esto con cancel da leak
 
 	free(entrenador);
 

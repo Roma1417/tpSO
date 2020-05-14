@@ -106,3 +106,69 @@ t_list* eliminar_repetidos(t_list* objetivo_global){
 
 	return especies_requeridas;
 }
+
+// Separador
+
+void agregar_a_la_lista(t_list* lista_pokemon, char* pokemon){
+	if (pokemon != NULL) list_add(lista_pokemon, pokemon);
+}
+
+
+t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena) {
+  char** read_array = config_get_array_value(config, cadena);
+
+  t_list* pokemon = list_create();
+  t_list* sublista;
+
+  void _a_la_lista(char *poke) {
+    if (poke != NULL) {
+      list_add(sublista, poke);
+    }
+  }
+
+  void _dividir(char *string) {
+	sublista = list_create();
+    if(string != NULL) {
+      char** pokes = string_split(string, "|");
+      string_iterate_lines(pokes, _a_la_lista);
+      free(pokes);
+    } else exit(1);
+    list_add(pokemon,sublista);
+  }
+  string_iterate_lines(read_array, _dividir);
+
+  string_iterate_lines(read_array, (void*) free);
+
+  free(read_array);
+  return pokemon;
+}
+
+t_list* pasar_a_lista_de_posiciones(t_config* config, char* cadena) {
+  char** read_array = config_get_array_value(config, cadena);
+
+  t_list* posiciones = list_create();
+  t_posicion* posicion;
+
+  void _dividir(char *string) {
+    if(string != NULL) {
+      char** punto = string_split(string, "|");
+      u_int32_t x = atoi(punto[0]);
+      u_int32_t y = atoi(punto[1]);
+      posicion = posicion_create(x,y);
+      string_iterate_lines(punto, (void*) free);
+      free(punto);
+    } else exit(1);
+    list_add(posiciones,posicion);
+  }
+
+  string_iterate_lines(read_array, _dividir);
+
+  string_iterate_lines(read_array, (void*) free);
+
+  free(read_array);
+
+
+
+  return posiciones;
+}
+

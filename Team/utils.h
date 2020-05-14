@@ -11,11 +11,13 @@
 
 
 #include <stdio.h>
+#include <pthread.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netdb.h>
 #include <string.h>
 #include "entrenador.h"
+#include "appeared_pokemon.h"
 
 #define IP "127.0.0.3"
 #define PUERTO "37229"
@@ -30,16 +32,6 @@ typedef struct
 	int size;
 	void* stream;
 } t_buffer;
-
-
-
-typedef struct{
-
-	u_int32_t size_pokemon;
-	char* pokemon;
-	t_posicion* posicion;
-
-} t_appeared_pokemon;
 
 typedef struct{
 

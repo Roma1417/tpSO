@@ -8,7 +8,6 @@
 #ifndef TEAM_H_
 #define TEAM_H_
 
-
 #include <pthread.h>
 #include <commons/collections/queue.h>
 #include "entrenador.h"

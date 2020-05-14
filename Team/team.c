@@ -1,4 +1,4 @@
-/*
+/*p
  * team.c
  *
  *  Created on: 28 abr. 2020
@@ -31,29 +31,19 @@ t_config_team* construir_config_team(t_config* config){
 	t_config_team* config_team = malloc(sizeof(t_config_team));
 
 	config_team -> puerto_broker = config_get_string_value(config, "PUERTO_BROKER");
-
-	// A revisar el config_get_array_value
-	char** objetivos = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
-	t_list* lista_objetivos = convertir_string_a_lista_de_listas(objetivos);
-	config_team -> objetivos_entrenadores = lista_objetivos;
-
-	char** pokemons = config_get_array_value(config, "POKEMON_ENTRENADORES");
-	t_list* lista_pokemons = convertir_string_a_lista_de_listas(pokemons);
-	config_team -> pokemon_entrenadores = lista_pokemons;
-
-	char** posiciones = config_get_array_value(config, "POSICIONES_ENTRENADORES");
-	t_list* lista_posiciones = convertir_string_a_lista_de_posiciones(posiciones);
-	config_team -> posiciones_entrenadores = lista_posiciones;
+	config_team -> algoritmo_planificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
+	config_team -> ip_broker = config_get_string_value(config, "IP_BROKER");
+	config_team -> log_file = config_get_string_value(config, "LOG_FILE");
 
 	config_team -> tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
 	config_team -> retardo_ciclo_cpu = config_get_int_value(config, "RETARDO_CICLO_CPU");
-	config_team -> algoritmo_planificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
-	config_team -> ip_broker = config_get_string_value(config, "IP_BROKER");
 	config_team -> estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
-	config_team -> log_file = config_get_string_value(config, "LOG_FILE");
+
+	config_team -> objetivos_entrenadores = pasar_a_lista_de_pokemon(config,"OBJETIVOS_ENTRENADORES");
+	config_team -> pokemon_entrenadores = pasar_a_lista_de_pokemon(config, "POKEMON_ENTRENADORES");
+	config_team -> posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
 
 	return config_team;
-
 }
 
 //Codigo de prueba
@@ -90,8 +80,6 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 }
 
-
-
 t_list* get_objetivo_global (t_list* entrenadores) {
 
 	return list_map(entrenadores, (void*) get_objetivos);
@@ -103,12 +91,11 @@ void destruir_config_team(t_config_team* config_team){
 	list_destroy(config_team->pokemon_entrenadores);
 	list_destroy(config_team->posiciones_entrenadores);
 
-	free(config_team -> algoritmo_planificacion);
-	free(config_team -> ip_broker);
-	free(config_team -> log_file);
+	free(config_team);
 }
 
-void liberar_estructuras(t_config_team* config_team, t_list* entrenadores){
+void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
+		t_queue* cola_ready, t_list* objetivo_global, t_list* especies_requeridas){
 
 	for(int i = 0; i < list_size(entrenadores); i++){
 		t_entrenador* entrenador = list_get(entrenadores,i);
@@ -116,6 +103,11 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores){
 	}
 
 	destruir_config_team(config_team);
+
+	list_destroy(entrenadores);
+	queue_destroy(cola_ready);
+	list_destroy(objetivo_global);
+	list_destroy(especies_requeridas);
 
 }
 
@@ -145,6 +137,8 @@ void enviar_mensajes_get_pokemon(int conexion, t_list* especies_requeridas){
 	free(mensaje);
 }
 
+
+
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready){
 	t_entrenador* mas_cercano = list_get(entrenadores, 0);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
@@ -165,8 +159,9 @@ void planificar_entrenadores(t_queue* cola_ready){
 	//Mover entrenador
 }
 
-int main (void) {
 
+
+int main (void) {
 	t_list* entrenadores;
 	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
@@ -175,28 +170,29 @@ int main (void) {
 
 	entrenadores = crear_entrenadores(config_team);
 
-	//t_list* objetivo_global = get_objetivo_global(entrenadores);
+	t_list* objetivo_global = get_objetivo_global(entrenadores);
 
-	//t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
+	t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
 
 	//int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
 	//enviar_mensajes_get_pokemon(conexion, especies_requeridas);
 
-	liberar_estructuras(config_team, entrenadores);
-
-	terminar_programa(logger, config);
-
-	t_appeared_pokemon* appeared_pokemon = iniciar_servidor();
+	t_appeared_pokemon* appeared_pokemon = iniciar_servidor(); // n
 
 	enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 
 	planificar_entrenadores(cola_ready);
 
-	printf("pokemon de appeared_pokemon: %s\n", appeared_pokemon->pokemon);
-	printf("posicion_x de appeared_pokemon: %d\n", appeared_pokemon->posicion->x);
-	printf("posicion_y de appeared_pokemon: %d\n", appeared_pokemon->posicion->y);
-	printf("size_pokemon de appeared_pokemon: %d\n", appeared_pokemon->size_pokemon);
+	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
+
+	terminar_programa(logger, config);
+
+	//liberar_conexion(conexion);
+
+	destruir_appeared_pokemon(appeared_pokemon);
+
+
 
 	return 0;
 

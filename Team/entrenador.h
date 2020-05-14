@@ -9,6 +9,7 @@
 #define ENTRENADOR_H_
 
 #include <stdlib.h>
+#include <pthread.h>
 #include <commons/log.h>
 #include <commons/string.h>
 #include <commons/config.h>
@@ -22,13 +23,6 @@ typedef enum{
 	BLOCK = 4,
 	EXIT = 5,
 } t_estado;
-
-typedef struct {
-
-	u_int32_t x;
-	u_int32_t y;
-
-} t_posicion;
 
 typedef struct {
 
