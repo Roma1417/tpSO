@@ -23,13 +23,16 @@ typedef enum{
 	GET_POKEMON = 5,
 	LOCALIZED_POKEMON = 6,
 	SUSCRIPTOR = 7,
+	EXIT = 9,
 }tipo_mensaje;
+
 
 typedef struct{
 	tipo_mensaje id;
 	t_queue* mensajes;
 	t_list* suscriptores;
 }t_cola_mensajes;
+
 
 typedef struct{
 	char* ip;

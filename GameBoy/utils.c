@@ -139,6 +139,9 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			agregar_entero(&offset, argumentos[3], &stream); // Modificamos el formato del mensaje SUSCRIPTOR
 			break;
 			}
+		case EXIT:
+
+			break;
 		default:
 			break;
 	}
@@ -175,6 +178,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) *2 + strlen(argumentos[2]) +1;
 			break;
+		case EXIT:
+			size = 0;
+			break;
 		default:
 			break;
 	}
@@ -195,6 +201,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	else if(strcasecmp(tipo,"CAUGHT_POKEMON") == 0) {tipo_mensaje = CAUGHT_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
+	else if(strcasecmp(tipo,"EXIT") == 0) {tipo_mensaje = EXIT;}
 	else tipo_mensaje = DESCONOCIDO;
 	return tipo_mensaje;
 }

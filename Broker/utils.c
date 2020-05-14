@@ -9,8 +9,6 @@
 
 
 
-
-
 void iniciar_servidor(void)
 {
 	int socket_servidor;
@@ -95,24 +93,10 @@ void process_request(int cod_op, int cliente_fd) {
 			agregar_mensaje(mensaje, cola_mensajes);
 			
 			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
-			t_mensaje* primer_mensaje = queue_pop(cola_mensajes->mensajes);
+			t_mensaje* primer_mensaje = queue_peek(cola_mensajes->mensajes);
 			printf("El primer parametro de la cola es %s\n", primer_mensaje->stream + 4);
 
 			break;
-
-			/*
-			//Quiero decir en mi defensa que modifique codigo a pedido de ALE
-			// Saludos.
-
-			size = recibir_entero(cliente_fd);
-
-			int pokemon_size3;
-			char* pokemon_nombre3 = recibir_cadena(cliente_fd, &pokemon_size3);
-			printf("El pokémon recibido fue: %s\n", pokemon_nombre3);
-
-			free(pokemon_nombre3);
-
-			break;*/
 
 		case SUSCRIPTOR:
 
@@ -142,6 +126,9 @@ void process_request(int cod_op, int cliente_fd) {
 
 			printf("El socket %d se ha desuscripto de la cola.\n", *primer_sub);
 
+			break;
+		case EXIT:
+			finalizar_servidor();
 			break;
 
 		case 0:
@@ -217,7 +204,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
 	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
 	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
-	if(string_equals_ignore_case(tipo,"SUSCRIPTOR")) return SUSCRIPTOR;
+	if(string_equals_ignore_case(tipo,"EXIT")) return EXIT;
 	return -1;
 }
 
@@ -229,6 +216,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
 	if(tipo == GET_POKEMON) return "GET_POKEMON";
 	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
+	if(tipo == EXIT) return "EXIT";
 	return "DESCONOCIDO";
 }
 
@@ -244,12 +232,14 @@ char* consultar_config_por_string(char* path, char* key){
 }
 
 
+void finalizar_servidor(){
 
-
-
-
-
-
+	for (int i=1; i<=6; i++){
+		t_cola_mensajes* cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje_string(i));
+		cola_mensajes_destroy(cola_mensajes);
+	}
+	exit(2);
+}
 
 
 

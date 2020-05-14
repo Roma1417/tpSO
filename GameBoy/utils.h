@@ -24,6 +24,7 @@ typedef enum{
 	GET_POKEMON = 5,
 	SUSCRIPTOR = 7,
 	DESCONOCIDO = 8,
+	EXIT = 9,
 }tipo_mensaje;
 
 /*typedef struct{

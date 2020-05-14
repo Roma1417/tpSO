@@ -7,6 +7,9 @@
 
 #include "cola_mensajes.h"
 
+
+
+
 t_cola_mensajes* cola_mensajes_create(tipo_mensaje id){
 
 	t_cola_mensajes* cola_mensajes = malloc(sizeof(t_cola_mensajes));
@@ -32,7 +35,7 @@ void set_cola_mensajes(char* nombre_cola){
 
 	t_config* config = config_create("colas_mensajes.config");
 	t_cola_mensajes* cola = cola_mensajes_create(obtener_tipo_mensaje(nombre_cola));
-	char direccion[15];
+	char direccion[12];
 
 	sprintf(direccion, "%d", (int)cola);
 	config_set_value(config, nombre_cola, direccion);
@@ -94,5 +97,4 @@ void agregar_mensaje(t_mensaje* mensaje, t_cola_mensajes* cola_mensajes){
 
 	queue_push(cola_mensajes->mensajes, mensaje);
 }
-
 

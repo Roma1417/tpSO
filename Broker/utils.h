@@ -60,5 +60,6 @@ void* recibir_cadena(int, int*);
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje);
 char* consultar_config_por_string(char*, char*);
+void finalizar_servidor();
 
 #endif /* CONEXIONES_H_ */
