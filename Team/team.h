@@ -8,44 +8,11 @@
 #ifndef TEAM_H_
 #define TEAM_H_
 
+#include <pthread.h>
+#include <commons/collections/queue.h>
 #include "entrenador.h"
 #include "utils.h"
-#include <pthread.h>
-#include <stdlib.h>
-#include <commons/log.h>
-#include <commons/string.h>
-#include <commons/config.h>
-#include <commons/collections/list.h>
-#include <commons/string.h>
-
-/*typedef struct {
-
-	int posicion_x;
-	int posicion_y;
-
-} t_posicion;*/
-
-typedef struct {
-
-	int posicion_x;
-	int posicion_y;
-	int* sgte;
-
-} t_lista_posicion_entrenador;
-
-typedef struct {
-
-	char* pokemon;
-	int* sgte;
-
-}t_lista_pokemon;
-
-typedef struct {
-
-	t_lista_pokemon* pokemons;
-	int* sgte;
-
-}t_lista_lista_pokemon;
+#include "auxiliar.h"
 
 typedef struct {
 
@@ -64,6 +31,8 @@ typedef struct {
 
 }t_config_team;
 
+void planificar_entrenadores(t_queue* cola_ready);
+void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready);
 t_config* leer_config (void);
 t_log* iniciar_logger (void);
 t_list* get_objetivo_global ();

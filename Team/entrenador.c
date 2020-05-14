@@ -20,6 +20,13 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	return entrenador;
 
 }
+void cambiar_estado(t_entrenador* entrenador, t_estado estado){
+	entrenador->estado = estado;
+}
+
+bool puede_pasar_a_ready(t_entrenador* entrenador){
+	return ((entrenador->estado != READY) && (entrenador->estado != EXIT));
+}
 
 t_list* get_objetivos(t_entrenador* entrenador){
 
@@ -31,10 +38,21 @@ void destruir_entrenador(t_entrenador* entrenador){
 
 	free(entrenador->posicion);
 
+	for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
+		free(pokemon);
+	}
+
 	list_destroy(entrenador->pokemon_obtenidos);
+
+	for(int i = 0; i < list_size(entrenador->objetivos); i++){
+		char* pokemon = list_get(entrenador->objetivos, i);
+		free(pokemon);
+	}
+
 	list_destroy(entrenador->objetivos);
 
-	pthread_cancel(entrenador->hilo);
+	pthread_join(entrenador->hilo, NULL); // Esto con cancel da leak
 
 	free(entrenador);
 

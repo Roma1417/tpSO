@@ -8,16 +8,16 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+
+
 #include <stdio.h>
-#include <stdlib.h>
+#include <pthread.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netdb.h>
-#include <commons/log.h>
-#include <commons/string.h>
-#include <commons/collections/list.h>
 #include <string.h>
-#include <pthread.h>
+#include "entrenador.h"
+#include "appeared_pokemon.h"
 
 #define IP "127.0.0.3"
 #define PUERTO "37229"
@@ -32,15 +32,6 @@ typedef struct
 	int size;
 	void* stream;
 } t_buffer;
-
-typedef struct{
-
-	u_int32_t size_pokemon;
-	char* pokemon;
-	u_int32_t posicion_x;
-	u_int32_t posicion_y;
-
-} t_appeared_pokemon;
 
 typedef struct{
 

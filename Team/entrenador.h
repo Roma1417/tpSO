@@ -9,19 +9,12 @@
 #define ENTRENADOR_H_
 
 #include <stdlib.h>
+#include <pthread.h>
 #include <commons/log.h>
 #include <commons/string.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
-#include "team.h"
 #include "posicion.h"
-
-typedef struct {
-
-	u_int32_t posicion_x;
-	u_int32_t posicion_y;
-
-} t_posicion;
 
 typedef enum{
 	NEW = 1,
@@ -41,6 +34,10 @@ typedef struct {
 
 } t_entrenador;
 
+
+
+void cambiar_estado(t_entrenador* entrenador, t_estado estado);
+bool puede_pasar_a_ready(t_entrenador* entrenador);
 t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, pthread_t hilo);
 t_list* get_objetivos();
 void destruir_entrenador(t_entrenador* entrenador);

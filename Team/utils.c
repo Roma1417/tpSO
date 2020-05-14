@@ -91,8 +91,6 @@ void esperar_cliente(int socket_servidor, t_parametros* parametros)
 	pthread_create(&thread,NULL,(void*)serve_client, parametros);
 	pthread_join(thread, NULL);
 
-	//printf("p: %s\n", parametros->appeared_pokemon->pokemon);
-
 }
 
 void serve_client(t_parametros* parametros) // int* socket)
@@ -113,13 +111,20 @@ void process_request(int cod_op, t_parametros* parametros){// int cliente_fd) {
 		case APPEARED_POKEMON:
 			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
 
-			t_appeared_pokemon* appeared_pokemon = malloc(sizeof(t_appeared_pokemon));
+			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 
 			size = recibir_entero(*(parametros->socket_cliente));
 
-			appeared_pokemon->pokemon = recibir_cadena(*(parametros->socket_cliente), &(appeared_pokemon->size_pokemon));
-			appeared_pokemon->posicion_x = recibir_entero(*(parametros->socket_cliente));
-			appeared_pokemon->posicion_y = recibir_entero(*(parametros->socket_cliente));
+			char* cadena = recibir_cadena(*(parametros->socket_cliente), &(appeared_pokemon->size_pokemon));
+
+			cambiar_nombre_pokemon(appeared_pokemon, cadena);
+
+			u_int32_t x = recibir_entero(*(parametros->socket_cliente));
+			u_int32_t y = recibir_entero(*(parametros->socket_cliente));
+
+			t_posicion* posicion = posicion_create(x,y);
+
+			cambiar_posicion(appeared_pokemon,posicion);
 
 			parametros->appeared_pokemon = appeared_pokemon;
 
