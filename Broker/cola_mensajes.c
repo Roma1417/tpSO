@@ -7,7 +7,7 @@
 
 #include "cola_mensajes.h"
 
-
+u_int32_t generador_id_suscriptores[6] = {1,1,1,1,1,1};
 
 
 t_cola_mensajes* cola_mensajes_create(tipo_mensaje id){
@@ -27,48 +27,69 @@ void cola_mensajes_destroy(t_cola_mensajes* self){
 
 	queue_destroy(self -> mensajes);
 	list_destroy(self -> suscriptores);
+	printf("Ward\n");
 	free(self);
 
 }
 
-void set_cola_mensajes(char* nombre_cola){
 
-	t_config* config = config_create("colas_mensajes.config");
-	t_cola_mensajes* cola = cola_mensajes_create(obtener_tipo_mensaje(nombre_cola));
-	char direccion[12];
+void* get_cola_mensajes(tipo_mensaje tipo){
 
-	sprintf(direccion, "%d", (int)cola);
-	config_set_value(config, nombre_cola, direccion);
-	config_save(config);
-	config_destroy(config);
-}
 
-void* get_cola_mensajes(char* nombre_cola){
 
-	t_config* config = config_create("colas_mensajes.config");
+	return colas_mensajes[tipo - 1];
 
-	void* direccion_cola = (void*)config_get_int_value(config, nombre_cola);
-	config_destroy(config);
-	return (void*) direccion_cola;
+
+
 
 }
 
 
-t_suscriptor* crear_suscriptor(char* ip, char* puerto){
+t_suscriptor* crear_suscriptor(u_int32_t id, u_int32_t socket){
 
 	t_suscriptor* suscriptor = malloc(sizeof(t_suscriptor));
-	suscriptor -> ip = ip;
-	suscriptor -> puerto = puerto;
+	suscriptor -> id = id;
+	suscriptor -> socket = socket;
 
 	return suscriptor;
 }
 
 
-void agregar_suscriptor(int32_t* suscriptor, t_cola_mensajes* cola_mensajes){
+u_int32_t agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){ //Agrega suscriptor a una lista y retorna la id, que seria la posicion en la lista +1
+
+	t_suscriptor* suscriptor = crear_suscriptor(generar_id_suscriptor(cola_mensajes->id), socket);
 
 	list_add(cola_mensajes->suscriptores, suscriptor);
+
+	return suscriptor->id;
 }
 
+
+void actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
+
+	t_suscriptor* suscriptor = buscar_suscriptor(cola_mensajes, id_suscriptor);
+
+	suscriptor->socket = socket;
+
+}
+
+t_suscriptor* buscar_suscriptor(t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
+
+	t_list* lista_suscriptores = cola_mensajes->suscriptores;
+	for(u_int32_t x=0; x < list_size(lista_suscriptores); x++){
+		t_suscriptor* aux_suscriptor = list_get(lista_suscriptores, x);
+
+		if(aux_suscriptor->id == id_suscriptor) return aux_suscriptor;
+	}
+
+	printf("Error buscando al suscriptor\n");
+
+	return NULL;
+}
+
+u_int32_t generar_id_suscriptor(tipo_mensaje id_cola){
+	return ++generador_id_suscriptores[id_cola - 1];
+}
 
 void eliminar_suscriptor(int32_t* suscriptor, t_cola_mensajes* cola_mensajes){
 

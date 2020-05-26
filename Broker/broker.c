@@ -9,30 +9,16 @@
 #include "broker.h"
 
 
+
 int main(void)
 {
 
-
-	set_cola_mensajes("NEW_POKEMON");
-	set_cola_mensajes("APPEARED_POKEMON");
-	set_cola_mensajes("CATCH_POKEMON");
-	set_cola_mensajes("CAUGHT_POKEMON");
-	set_cola_mensajes("GET_POKEMON");
-	set_cola_mensajes("LOCALIZED_POKEMON");
-
-
-
-	/*printf("La direccion es %d\n", direccion);
-	printf("La direccion es %d\n", cola);
-	printf("La direccion es %d\n", config_get_int_value(config, "NEW_POKEMON"));
-	printf("El puntero de la lista de subs es %p\n", cola->suscriptores);*/
-
-
-
-
-
-
-
+	colas_mensajes[0] = cola_mensajes_create(NEW_POKEMON);
+	colas_mensajes[1] = cola_mensajes_create(APPEARED_POKEMON);
+	colas_mensajes[2] = cola_mensajes_create(CATCH_POKEMON);
+	colas_mensajes[3] = cola_mensajes_create(CAUGHT_POKEMON);
+	colas_mensajes[4] = cola_mensajes_create(GET_POKEMON);
+	colas_mensajes[5] = cola_mensajes_create(LOCALIZED_POKEMON);
 
 
 	iniciar_servidor();

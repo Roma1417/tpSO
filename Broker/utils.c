@@ -71,9 +71,11 @@ void serve_client(int* socket)
 
 
 void process_request(int cod_op, int cliente_fd) {
-	int size;
-	void* msg;
+	u_int32_t size;
 	t_cola_mensajes* cola_mensajes;
+
+	//u_int32_t id_mensaje = recibir_entero(cliente_fd);
+
 
 		switch (cod_op) {
 		case NEW_POKEMON:
@@ -88,7 +90,7 @@ void process_request(int cod_op, int cliente_fd) {
 			void* stream = (void*)recibir_cadena(cliente_fd, &size);
 
 			t_mensaje* mensaje = crear_mensaje(size, stream);
-			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje_string(cod_op));
+			cola_mensajes = get_cola_mensajes(cod_op);
 
 			agregar_mensaje(mensaje, cola_mensajes);
 			
@@ -105,29 +107,44 @@ void process_request(int cod_op, int cliente_fd) {
 			size = recibir_entero(cliente_fd);
 			printf("La size recibida fue: %d\n", size);
 
-			int cola_size;
+			u_int32_t cola_size;
 			char* cola_nombre = recibir_cadena(cliente_fd, &cola_size);
 			printf("La cola recibida fue: %s\n", cola_nombre);
 
-			int segundos = recibir_entero(cliente_fd);
-			printf("La VERDADERA segundos recibida fue: %d\n", segundos);
+			u_int32_t id_suscriptor = recibir_entero(cliente_fd);
+			printf("La id recibida fue: %d\n", id_suscriptor);
 
-			cola_mensajes = get_cola_mensajes(cola_nombre);
+			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje(cola_nombre));
 
-			agregar_suscriptor(&cliente_fd,cola_mensajes); //
-			time_t tiempo_inicial;
-			time(&tiempo_inicial);
 
-			int* primer_sub = list_get(cola_mensajes->suscriptores, 0);
+			if(id_suscriptor == 0){
+				printf("Ward 1.1 \n");
+				id_suscriptor = agregar_suscriptor(&cliente_fd,cola_mensajes);
+				printf("Ward 1.2 \n");
+				printf("Asignada ID a nuevo suscriptor:%d\n", id_suscriptor);
+				//mandar mensaje diciendo el id asignado
+			} else {
+				printf("Ward 2.1 \n");
+				actualizar_suscriptor(&cliente_fd, cola_mensajes, id_suscriptor);
+				printf("Actualizado el socket del nuevo suscriptor:%d\n", id_suscriptor);
+			}
 
-			sleep(segundos);
+
+
+			 //
+
+			printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
+
+
+
 
 			eliminar_suscriptor(&cliente_fd, cola_mensajes);
 
-			printf("El socket %d se ha desuscripto de la cola.\n", *primer_sub);
+			printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
 
 			break;
 		case EXIT:
+			printf("Hola\n");
 			finalizar_servidor();
 			break;
 
@@ -204,6 +221,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
 	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
 	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
+	if(string_equals_ignore_case(tipo, "LOCALIZED_POKEMON")) return LOCALIZED_POKEMON;
 	if(string_equals_ignore_case(tipo,"EXIT")) return EXIT;
 	return -1;
 }
@@ -215,6 +233,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
 	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
 	if(tipo == GET_POKEMON) return "GET_POKEMON";
+	if(tipo == LOCALIZED_POKEMON) return "LOCALIZED";
 	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
 	if(tipo == EXIT) return "EXIT";
 	return "DESCONOCIDO";
@@ -233,9 +252,9 @@ char* consultar_config_por_string(char* path, char* key){
 
 
 void finalizar_servidor(){
-
 	for (int i=1; i<=6; i++){
-		t_cola_mensajes* cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje_string(i));
+		t_cola_mensajes* cola_mensajes = get_cola_mensajes(i);
+		printf("Tipo msj %s\n", obtener_tipo_mensaje_string(i));
 		cola_mensajes_destroy(cola_mensajes);
 	}
 	exit(2);

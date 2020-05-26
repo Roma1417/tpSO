@@ -35,22 +35,35 @@ typedef struct{
 
 
 typedef struct{
-	char* ip;
-	char* puerto;
+	u_int32_t id;
+	u_int32_t socket;
 }t_suscriptor;
 
+
 typedef struct{
+	u_int32_t id_mensaje;
 	u_int32_t size;
 	void* stream;
+	t_list* suscriptores_enviados;
+	t_list* suscriptores_confirmados;
 }t_mensaje;
+
+t_cola_mensajes* colas_mensajes[6];
+
+
 
 t_cola_mensajes* cola_mensajes_create(tipo_mensaje);
 void cola_mensajes_destroy(t_cola_mensajes*);
 void set_cola_mensajes(char*);
-void* get_cola_mensajes(char*);
-t_suscriptor* crear_suscriptor(char*, char*);
-void agregar_suscriptor(int32_t*, t_cola_mensajes*);
+void* get_cola_mensajes(tipo_mensaje);
+
+t_suscriptor* crear_suscriptor(u_int32_t, u_int32_t);
+u_int32_t agregar_suscriptor(u_int32_t, t_cola_mensajes*);
+void actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
+t_suscriptor* buscar_suscriptor(t_cola_mensajes*, u_int32_t);
+u_int32_t generar_id_suscriptor(tipo_mensaje);
 void eliminar_suscriptor(int32_t*, t_cola_mensajes*);
+
 t_mensaje* crear_mensaje(u_int32_t, void*);
 void agregar_mensaje(t_mensaje*, t_cola_mensajes*);
 

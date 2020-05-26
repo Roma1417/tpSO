@@ -124,3 +124,165 @@
 [INFO] 01:23:28:90 gameboy/(3427:3427): Se ha enviado el mensaje EXIT al proceso BROKER
 [INFO] 01:32:02:167 gameboy/(3543:3543): Se realiza una conexión al proceso BROKER
 [INFO] 01:32:02:167 gameboy/(3543:3543): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 18:51:23:269 gameboy/(3531:3531): Se realiza una conexión al proceso BROKER
+[INFO] 18:51:23:275 gameboy/(3531:3531): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 18:51:41:389 gameboy/(3553:3553): Se realiza una conexión al proceso BROKER
+[INFO] 18:51:41:389 gameboy/(3553:3553): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 18:51:53:412 gameboy/(3555:3555): Se realiza una conexión al proceso BROKER
+[INFO] 18:51:53:412 gameboy/(3555:3555): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:22:02:446 gameboy/(6704:6704): Se realiza una conexión al proceso BROKER
+[INFO] 21:22:02:448 gameboy/(6704:6704): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:24:00:367 gameboy/(6797:6797): Se realiza una conexión al proceso BROKER
+[INFO] 21:24:00:367 gameboy/(6797:6797): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:24:26:192 gameboy/(6850:6850): Se realiza una conexión al proceso BROKER
+[INFO] 21:24:26:192 gameboy/(6850:6850): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:25:07:14 gameboy/(6895:6895): Se realiza una conexión al proceso BROKER
+[INFO] 21:25:07:15 gameboy/(6895:6895): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:25:17:920 gameboy/(6912:6912): Se realiza una conexión al proceso BROKER
+[INFO] 21:25:17:920 gameboy/(6912:6912): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:26:38:359 gameboy/(6928:6928): Se realiza una conexión al proceso BROKER
+[INFO] 21:26:38:359 gameboy/(6928:6928): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 21:26:57:200 gameboy/(6936:6936): Se realiza una conexión al proceso BROKER
+[INFO] 21:26:57:200 gameboy/(6936:6936): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:29:44:775 gameboy/(7021:7021): Se realiza una conexión al proceso BROKER
+[INFO] 21:29:44:775 gameboy/(7021:7021): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:29:53:291 gameboy/(7034:7034): Se realiza una conexión al proceso BROKER
+[INFO] 21:29:53:291 gameboy/(7034:7034): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:30:01:423 gameboy/(7051:7051): Se realiza una conexión al proceso BROKER
+[INFO] 21:30:01:423 gameboy/(7051:7051): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:30:37:136 gameboy/(7098:7098): Se realiza una conexión al proceso BROKER
+[INFO] 21:30:37:136 gameboy/(7098:7098): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 21:30:42:532 gameboy/(7111:7111): Se realiza una conexión al proceso BROKER
+[INFO] 21:30:42:532 gameboy/(7111:7111): Se ha enviado el mensaje EXIT al proceso BROKER
+[INFO] 06:31:53:35 gameboy/(5690:5690): Se realiza una conexión al proceso BROKER
+[INFO] 06:31:53:37 gameboy/(5690:5690): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:32:02:421 gameboy/(5694:5694): Se realiza una conexión al proceso BROKER
+[INFO] 06:32:02:421 gameboy/(5694:5694): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:32:33:53 gameboy/(5739:5739): Se realiza una conexión al proceso BROKER
+[INFO] 06:32:33:53 gameboy/(5739:5739): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:32:40:261 gameboy/(5741:5741): Se realiza una conexión al proceso BROKER
+[INFO] 06:32:40:261 gameboy/(5741:5741): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:23:279 gameboy/(25957:25957): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:23:279 gameboy/(25957:25957): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:27:30 gameboy/(20150:20150): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:27:30 gameboy/(20150:20150): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:43:2 gameboy/(17374:17374): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:43:2 gameboy/(17374:17374): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:45:345 gameboy/(16946:16946): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:45:348 gameboy/(16946:16946): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:50:671 gameboy/(28010:28010): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:50:681 gameboy/(28010:28010): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:51:721 gameboy/(16339:16339): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:51:721 gameboy/(16339:16339): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:52:375 gameboy/(446:446): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:52:375 gameboy/(446:446): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:52:992 gameboy/(17579:17579): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:52:992 gameboy/(17579:17579): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:33:53:913 gameboy/(11525:11525): Se realiza una conexión al proceso BROKER
+[INFO] 06:33:53:913 gameboy/(11525:11525): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:58:47:19 gameboy/(6811:6811): Se realiza una conexión al proceso BROKER
+[INFO] 06:58:47:24 gameboy/(6811:6811): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:58:53:965 gameboy/(7010:7010): Se realiza una conexión al proceso BROKER
+[INFO] 06:58:53:965 gameboy/(7010:7010): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:58:54:884 gameboy/(30236:30236): Se realiza una conexión al proceso BROKER
+[INFO] 06:58:54:884 gameboy/(30236:30236): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:07:536 gameboy/(3355:3355): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:07:536 gameboy/(3355:3355): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:09:484 gameboy/(23855:23855): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:09:485 gameboy/(23855:23855): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:11:965 gameboy/(31378:31378): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:11:965 gameboy/(31378:31378): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:13:792 gameboy/(15794:15794): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:13:792 gameboy/(15794:15794): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:15:188 gameboy/(24214:24214): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:15:188 gameboy/(24214:24214): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 06:59:16:822 gameboy/(8210:8210): Se realiza una conexión al proceso BROKER
+[INFO] 06:59:16:822 gameboy/(8210:8210): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:10:393 gameboy/(21488:21488): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:10:393 gameboy/(21488:21488): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:12:879 gameboy/(22163:22163): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:12:879 gameboy/(22163:22163): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:21:477 gameboy/(29398:29398): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:21:477 gameboy/(29398:29398): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:43:56 gameboy/(26307:26307): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:43:57 gameboy/(26307:26307): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:50:543 gameboy/(5025:5025): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:50:557 gameboy/(5025:5025): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:56:526 gameboy/(30889:30889): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:56:527 gameboy/(30889:30889): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:01:59:357 gameboy/(8341:8341): Se realiza una conexión al proceso BROKER
+[INFO] 07:01:59:357 gameboy/(8341:8341): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:02:04:275 gameboy/(8132:8132): Se realiza una conexión al proceso BROKER
+[INFO] 07:02:04:275 gameboy/(8132:8132): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:02:07:395 gameboy/(24659:24659): Se realiza una conexión al proceso BROKER
+[INFO] 07:02:07:395 gameboy/(24659:24659): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:03:12:746 gameboy/(8386:8386): Se realiza una conexión al proceso BROKER
+[INFO] 07:03:12:746 gameboy/(8386:8386): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:03:18:601 gameboy/(27260:27260): Se realiza una conexión al proceso BROKER
+[INFO] 07:03:18:601 gameboy/(27260:27260): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:04:52:446 gameboy/(3282:3282): Se realiza una conexión al proceso BROKER
+[INFO] 07:04:52:446 gameboy/(3282:3282): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:05:07:674 gameboy/(21526:21526): Se realiza una conexión al proceso BROKER
+[INFO] 07:05:07:674 gameboy/(21526:21526): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:00:493 gameboy/(20829:20829): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:00:493 gameboy/(20829:20829): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:08:187 gameboy/(17885:17885): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:08:187 gameboy/(17885:17885): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:23:186 gameboy/(2677:2677): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:23:186 gameboy/(2677:2677): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:26:459 gameboy/(2679:2679): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:26:459 gameboy/(2679:2679): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:28:507 gameboy/(2681:2681): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:28:507 gameboy/(2681:2681): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:29:987 gameboy/(2683:2683): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:29:987 gameboy/(2683:2683): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:32:938 gameboy/(2685:2685): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:32:938 gameboy/(2685:2685): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:35:178 gameboy/(2687:2687): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:35:178 gameboy/(2687:2687): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 07:06:43:410 gameboy/(2689:2689): Se realiza una conexión al proceso BROKER
+[INFO] 07:06:43:410 gameboy/(2689:2689): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [INFO] 05:44:07:627 gameboy/(12296:12296): Se realiza una conexión al proceso BROKER
+[INFO] 05:44:07:664 gameboy/(12296:12296): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:45:07:360 gameboy/(12400:12400): Se realiza una conexión al proceso BROKER
+[INFO] 05:45:07:360 gameboy/(12400:12400): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:45:13:128 gameboy/(12413:12413): Se realiza una conexión al proceso BROKER
+[INFO] 05:45:13:128 gameboy/(12413:12413): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:45:30:879 gameboy/(12458:12458): Se realiza una conexión al proceso BROKER
+[INFO] 05:45:30:879 gameboy/(12458:12458): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:46:02:219 gameboy/(12572:12572): Se realiza una conexión al proceso BROKER
+[INFO] 05:46:02:219 gameboy/(12572:12572): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:46:25:344 gameboy/(12617:12617): Se realiza una conexión al proceso BROKER
+[INFO] 05:46:25:344 gameboy/(12617:12617): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:47:57:84 gameboy/(12699:12699): Se realiza una conexión al proceso BROKER
+[INFO] 05:47:57:84 gameboy/(12699:12699): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:48:15:817 gameboy/(12758:12758): Se realiza una conexión al proceso BROKER
+[INFO] 05:48:15:817 gameboy/(12758:12758): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:48:35:689 gameboy/(12803:12803): Se realiza una conexión al proceso BROKER
+[INFO] 05:48:35:689 gameboy/(12803:12803): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:25:882 gameboy/(13048:13048): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:25:882 gameboy/(13048:13048): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:31:842 gameboy/(13051:13051): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:31:842 gameboy/(13051:13051): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:33:11 gameboy/(13053:13053): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:33:11 gameboy/(13053:13053): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:48:7 gameboy/(13055:13055): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:48:7 gameboy/(13055:13055): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:50:738 gameboy/(13057:13057): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:50:738 gameboy/(13057:13057): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:53:395 gameboy/(13059:13059): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:53:395 gameboy/(13059:13059): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:55:461 gameboy/(13061:13061): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:55:461 gameboy/(13061:13061): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:56:118 gameboy/(13065:13065): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:56:118 gameboy/(13065:13065): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:56:734 gameboy/(13067:13067): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:56:735 gameboy/(13067:13067): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:57:295 gameboy/(13069:13069): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:57:295 gameboy/(13069:13069): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:50:57:823 gameboy/(13071:13071): Se realiza una conexión al proceso BROKER
+[INFO] 05:50:57:823 gameboy/(13071:13071): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:51:02:187 gameboy/(13073:13073): Se realiza una conexión al proceso BROKER
+[INFO] 05:51:02:187 gameboy/(13073:13073): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 05:51:03:679 gameboy/(13075:13075): Se realiza una conexión al proceso BROKER
+[INFO] 05:51:03:679 gameboy/(13075:13075): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER

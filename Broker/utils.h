@@ -23,6 +23,7 @@
 #include"cola_mensajes.h"
 
 
+
 typedef struct{
 	u_int32_t nombre_size;
 	char* nombre_pokemon;
