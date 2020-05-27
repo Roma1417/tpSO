@@ -82,7 +82,7 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 t_list* get_objetivo_global (t_list* entrenadores) {
 
-	return list_map(entrenadores, (void*) get_objetivos);
+	return list_map(entrenadores, (void*) get_objetivos_faltantes);
 
 }
 
@@ -137,8 +137,6 @@ void enviar_mensajes_get_pokemon(int conexion, t_list* especies_requeridas){
 	free(mensaje);
 }
 
-
-
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready){
 	t_entrenador* mas_cercano = list_get(entrenadores, 0);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
@@ -159,18 +157,51 @@ void planificar_entrenadores(t_queue* cola_ready){
 	//Mover entrenador
 }
 
+void* mantener_servidor(){
 
+	printf("Soy un servidor\n");
+
+	iniciar_servidor();
+
+	return EXIT_SUCCESS;
+}
+
+bool objetivo_global_cumplido(t_list* objetivo_global){
+	bool objetivo_cumplido = true;
+
+	for(int i; i < list_size(objetivo_global) && objetivo_cumplido; i++){
+		t_list* objetivos = list_get(objetivo_global, i);
+		objetivo_cumplido = list_is_empty(objetivos);
+	}
+
+	return objetivo_cumplido;
+}
 
 int main (void) {
+
 	t_list* entrenadores;
 	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
 	t_config_team* config_team = construir_config_team(config);
 	t_queue* cola_ready = queue_create();
 
+	pthread_t hilo_servidor;
+	int iret = pthread_create(&hilo_servidor, NULL, mantener_servidor(), NULL);
+	if (iret) exit(1);
+
+	pthread_t hilo_planificador;
+	iret = pthread_create(&hilo_planificador, NULL, print_message_function, NULL);
+	if (iret) exit(1);
+
 	entrenadores = crear_entrenadores(config_team);
 
 	t_list* objetivo_global = get_objetivo_global(entrenadores);
+	// Objetivo global tiene que ser una variable global.
+	// Hay que usar semaforos.
+	// Hay que usar objetivo global en el servidor e ir
+	// viendo si los appeared pokemon son objetivo o no.
+	// Si es objetivo lo agrego a la lista de appeared pokemons,
+	// en caso contrario lo libero.
 
 	t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
 
@@ -178,11 +209,11 @@ int main (void) {
 
 	//enviar_mensajes_get_pokemon(conexion, especies_requeridas);
 
-	t_appeared_pokemon* appeared_pokemon = iniciar_servidor(); // n
+	//t_appeared_pokemon* appeared_pokemon = iniciar_servidor();
 
-	enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
+	//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 
-	planificar_entrenadores(cola_ready);
+	//planificar_entrenadores(cola_ready);
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
@@ -190,7 +221,10 @@ int main (void) {
 
 	//liberar_conexion(conexion);
 
-	destruir_appeared_pokemon(appeared_pokemon);
+	//destruir_appeared_pokemon(appeared_pokemon);
+
+	pthread_join(hilo_servidor, NULL);
+	pthread_join(hilo_planificador, NULL);
 
 	return 0;
 

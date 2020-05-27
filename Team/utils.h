@@ -22,6 +22,8 @@
 #define IP "127.0.0.3"
 #define PUERTO "37229"
 
+t_list* appeared_pokemons;
+
 typedef enum{
 	APPEARED_POKEMON = 2,
 	GET_POKEMON = 5,
@@ -51,11 +53,11 @@ pthread_t thread;
 // Funciones Servidor
 
 void* recibir_buffer(int*, int);
-t_appeared_pokemon* iniciar_servidor(void);
-void esperar_cliente(int, t_parametros*);
+void iniciar_servidor(void);
+void esperar_cliente(int);
 void* recibir_mensaje(int socket_cliente, int* size);
-void process_request(int cod_op, t_parametros* parametros);
-void serve_client(t_parametros* parametros);
+void process_request(int, int);
+void serve_client(int*);
 int recibir_entero(int socket_cliente);
 
 // Funciones Cliente

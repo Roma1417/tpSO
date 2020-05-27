@@ -13,59 +13,6 @@ u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokem
 	return sqrt(suma_de_potencias);
 }
 
-t_list* convertir_string_a_lista_de_listas(char** cadenas){
-	t_list* listas = list_create();
-	char* cadena;
-	int longitud = sizeof(cadenas) - 1;
-	for(int i = 0; i < longitud; i++){
-		t_list* sublista = list_create();
-		for(int j = 0; j < string_length(cadenas[i])+1; j++){
-			if (j == 0){
-				cadena = string_new();
-			}
-			if (cadenas[i][j] == '|'){
-				list_add(sublista, cadena);
-				cadena = string_new();
-			}
-			if (j == string_length(cadenas[i])) {
-				list_add(sublista, cadena);
-			}
-			if(cadenas[i][j] != '|') string_append_with_format(&cadena, "%c",cadenas[i][j]);
-		}
-		list_add(listas,sublista);
-	}
-	return listas;
-}
-
-t_list* convertir_string_a_lista_de_posiciones(char** cadenas){
-	t_list* posiciones = list_create();
-	t_posicion* posicion;
-	char* cadena;
-	int longitud = sizeof(cadenas) - 1;
-	for(int i = 0; i < longitud; i++){
-		for(int j = 0; j < string_length(cadenas[i])+1; j++){
-			if (j == 0){
-				posicion = malloc(sizeof(t_posicion));
-				cadena = string_new();
-			}
-			if (cadenas[i][j] == '|'){
-				posicion -> x = atoi(cadena);
-				free(cadena);
-				cadena = string_new();
-			}
-			if (j == string_length(cadenas[i])) {
-				posicion -> y = atoi(cadena);
-				free(cadena);
-				list_add(posiciones, posicion);
-			}
-			if(cadenas[i][j] != '|') {
-				string_append_with_format(&cadena, "%c",cadenas[i][j]);
-			}
-		}
-	}
-	return posiciones;
-}
-
 t_list* list_flatten(t_list* listas){
 
 	t_list* lista = list_create();

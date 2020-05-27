@@ -28,6 +28,31 @@ bool puede_pasar_a_ready(t_entrenador* entrenador){
 	return ((entrenador->estado != READY) && (entrenador->estado != EXIT));
 }
 
+bool ya_fue_obtenido(char* un_pokemon, char* otro_pokemon){
+	return string_equals_ignore_case(un_pokemon, otro_pokemon);
+}
+
+void remover_elemento_repetido(t_list* lista, char* un_pokemon){
+	bool encontrado = false;
+	for (int i = 0; i < list_size(lista) && !encontrado; i++){
+		char* otro_pokemon = list_get(lista, i);
+		encontrado = string_equals_ignore_case(un_pokemon, otro_pokemon);
+		if (encontrado){
+			char* removido = list_remove(lista, i);
+			free(removido);
+		}
+	}
+}
+
+t_list* get_objetivos_faltantes(t_entrenador* entrenador){
+	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
+		remover_elemento_repetido(entrenador->objetivos, pokemon);
+	}
+
+	return entrenador->objetivos;
+}
+
 t_list* get_objetivos(t_entrenador* entrenador){
 
 	return entrenador->objetivos;
