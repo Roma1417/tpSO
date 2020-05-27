@@ -58,8 +58,8 @@ void set_cola_mensajes(char*);
 void* get_cola_mensajes(tipo_mensaje);
 
 t_suscriptor* crear_suscriptor(u_int32_t, u_int32_t);
-u_int32_t agregar_suscriptor(u_int32_t, t_cola_mensajes*);
-void actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
+t_suscriptor* agregar_suscriptor(u_int32_t, t_cola_mensajes*);
+t_suscriptor* actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
 t_suscriptor* buscar_suscriptor(t_cola_mensajes*, u_int32_t);
 u_int32_t generar_id_suscriptor(tipo_mensaje);
 void eliminar_suscriptor(int32_t*, t_cola_mensajes*);

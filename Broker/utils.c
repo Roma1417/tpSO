@@ -117,16 +117,18 @@ void process_request(int cod_op, int cliente_fd) {
 			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje(cola_nombre));
 
 
+			t_suscriptor* suscriptor;
+
 			if(id_suscriptor == 0){
-				printf("Ward 1.1 \n");
-				id_suscriptor = agregar_suscriptor(&cliente_fd,cola_mensajes);
-				printf("Ward 1.2 \n");
-				printf("Asignada ID a nuevo suscriptor:%d\n", id_suscriptor);
-				//mandar mensaje diciendo el id asignado
+
+				 suscriptor = agregar_suscriptor(cliente_fd,cola_mensajes);
+
+				printf("Asignada ID a nuevo suscriptor:%d\n", suscriptor->id);
+				notificar_suscriptor(suscriptor, cola_mensajes->id);
 			} else {
 				printf("Ward 2.1 \n");
-				actualizar_suscriptor(&cliente_fd, cola_mensajes, id_suscriptor);
-				printf("Actualizado el socket del nuevo suscriptor:%d\n", id_suscriptor);
+				suscriptor = actualizar_suscriptor(cliente_fd, cola_mensajes, id_suscriptor);
+				printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->socket);
 			}
 
 
@@ -137,14 +139,8 @@ void process_request(int cod_op, int cliente_fd) {
 
 
 
-
-			eliminar_suscriptor(&cliente_fd, cola_mensajes);
-
-			printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
-
 			break;
 		case EXIT:
-			printf("Hola\n");
 			finalizar_servidor();
 			break;
 
@@ -176,43 +172,6 @@ void* recibir_cadena(int socket_cliente, int* size)
 	return cadena;
 }
 
-
-void* serializar_paquete(t_paquete* paquete, int bytes){
-	void * magic = malloc(bytes);
-	int desplazamiento = 0;
-
-	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(u_int32_t));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento+= paquete->buffer->size;
-
-	return magic;
-}
-
-
-void devolver_mensaje(void* payload, int size, int socket_cliente)
-{
-	t_paquete* paquete = malloc(sizeof(t_paquete));
-
-	paquete->codigo_operacion = NEW_POKEMON;
-	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->size = size;
-	paquete->buffer->stream = malloc(paquete->buffer->size);
-	memcpy(paquete->buffer->stream, payload, paquete->buffer->size);
-
-	int bytes = paquete->buffer->size + 2*sizeof(int);
-
-	void* a_enviar = serializar_paquete(paquete, bytes);
-
-	send(socket_cliente, a_enviar, bytes, 0);
-
-	free(a_enviar);
-	free(paquete->buffer->stream);
-	free(paquete->buffer);
-	free(paquete);
-}
 
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
@@ -259,6 +218,50 @@ void finalizar_servidor(){
 	}
 	exit(2);
 }
+
+
+
+void* serializar_paquete(t_paquete* paquete, int bytes){
+	void * magic = malloc(bytes);
+	int desplazamiento = 0;
+
+	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+	desplazamiento += paquete->buffer->size;
+
+	return magic;
+}
+
+
+
+void notificar_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){
+	t_paquete* paquete = malloc(sizeof(t_paquete));
+
+	paquete->id_mensaje = suscriptor->id;
+	paquete->tipo_mensaje = SUSCRIPTOR;
+	paquete->buffer = malloc(sizeof(t_buffer));
+	paquete->buffer->size = sizeof(tipo_mensaje);
+	paquete->buffer->stream = malloc(paquete->buffer->size);
+	memcpy(paquete->buffer->stream, &tipo_mensaje, paquete->buffer->size);
+
+	int bytes = paquete->buffer->size + 3*sizeof(u_int32_t);
+
+	void* a_enviar = serializar_paquete(paquete, bytes);
+
+	send(suscriptor->socket, a_enviar, bytes, 0);
+
+	free(a_enviar);
+	free(paquete->buffer->stream);
+	free(paquete->buffer);
+	free(paquete);
+}
+
+
 
 
 

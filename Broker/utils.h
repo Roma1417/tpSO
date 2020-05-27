@@ -24,14 +24,6 @@
 
 
 
-typedef struct{
-	u_int32_t nombre_size;
-	char* nombre_pokemon;
-	u_int32_t pos_x;
-	u_int32_t pos_y;
-	u_int32_t cantidad;
-}t_new_pokemon;
-
 typedef struct
 {
 	int size;
@@ -40,9 +32,11 @@ typedef struct
 
 typedef struct
 {
-	tipo_mensaje codigo_operacion;
+	u_int32_t id_mensaje;
+	tipo_mensaje tipo_mensaje;
 	t_buffer* buffer;
 } t_paquete;
+
 
 pthread_t thread;
 

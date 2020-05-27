@@ -35,12 +35,7 @@ void cola_mensajes_destroy(t_cola_mensajes* self){
 
 void* get_cola_mensajes(tipo_mensaje tipo){
 
-
-
 	return colas_mensajes[tipo - 1];
-
-
-
 
 }
 
@@ -55,21 +50,23 @@ t_suscriptor* crear_suscriptor(u_int32_t id, u_int32_t socket){
 }
 
 
-u_int32_t agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){ //Agrega suscriptor a una lista y retorna la id, que seria la posicion en la lista +1
+t_suscriptor* agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){ //Agrega suscriptor a una lista y retorna la id, que seria la posicion en la lista +1
 
 	t_suscriptor* suscriptor = crear_suscriptor(generar_id_suscriptor(cola_mensajes->id), socket);
 
 	list_add(cola_mensajes->suscriptores, suscriptor);
 
-	return suscriptor->id;
+	return suscriptor;
 }
 
 
-void actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
+t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
 
 	t_suscriptor* suscriptor = buscar_suscriptor(cola_mensajes, id_suscriptor);
 
 	suscriptor->socket = socket;
+
+	return suscriptor;
 
 }
 
@@ -88,7 +85,7 @@ t_suscriptor* buscar_suscriptor(t_cola_mensajes* cola_mensajes, u_int32_t id_sus
 }
 
 u_int32_t generar_id_suscriptor(tipo_mensaje id_cola){
-	return ++generador_id_suscriptores[id_cola - 1];
+	return generador_id_suscriptores[id_cola - 1]++;
 }
 
 void eliminar_suscriptor(int32_t* suscriptor, t_cola_mensajes* cola_mensajes){
