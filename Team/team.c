@@ -69,8 +69,7 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 		// Codigo en prueba
 		pthread_t hilo;
-	    int iret = pthread_create(&hilo, NULL, print_message_function, NULL);
-	    if (iret) exit(1);
+	    pthread_create(&hilo, NULL, print_message_function, NULL);
 
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, hilo);
 		list_add(entrenadores, entrenador);
@@ -166,15 +165,44 @@ void* mantener_servidor(){
 	return EXIT_SUCCESS;
 }
 
-bool objetivo_global_cumplido(t_list* objetivo_global){
-	bool objetivo_cumplido = true;
+void* iniciar_planificador(){
 
-	for(int i; i < list_size(objetivo_global) && objetivo_cumplido; i++){
-		t_list* objetivos = list_get(objetivo_global, i);
-		objetivo_cumplido = list_is_empty(objetivos);
+	printf("Soy un planificador\n");
+
+	return EXIT_SUCCESS;
+}
+
+bool elem_especies(t_list* especies, char* pokemon){
+	bool encontrado = false;
+	for (int i = 0; i < list_size(especies) && !encontrado; i++){
+		t_especie* especie = list_get(especies, i);
+		encontrado = string_equals_ignore_case(especie->nombre,pokemon);
+		if (encontrado) especie->cantidad++;
+	}
+	return encontrado;
+}
+
+t_list* obtener_especies(t_list* objetivo_global){
+
+	t_list* especies = list_create();
+
+	for (int i = 0; i < list_size(objetivo_global); i++){
+		// if esta en la lista -> Aumento la cantidad
+		// else -> lo agrego con cantidad 1
+
+		char* pokemon = list_get(objetivo_global, i);
+
+		if (elem_especies(especies, pokemon)){}
+		else {
+			t_especie* especie = malloc(sizeof(t_especie));
+			especie->nombre = pokemon;
+			especie->cantidad = 1;
+			list_add(especies, especie);
+		}
+
 	}
 
-	return objetivo_cumplido;
+	return especies;
 }
 
 int main (void) {
@@ -185,17 +213,20 @@ int main (void) {
 	t_config_team* config_team = construir_config_team(config);
 	t_queue* cola_ready = queue_create();
 
-	pthread_t hilo_servidor;
-	int iret = pthread_create(&hilo_servidor, NULL, mantener_servidor(), NULL);
-	if (iret) exit(1);
-
-	pthread_t hilo_planificador;
-	iret = pthread_create(&hilo_planificador, NULL, print_message_function, NULL);
-	if (iret) exit(1);
-
 	entrenadores = crear_entrenadores(config_team);
 
-	t_list* objetivo_global = get_objetivo_global(entrenadores);
+	appeared_pokemons = list_create();
+
+	objetivo_global = list_flatten(get_objetivo_global(entrenadores));
+
+	especies_requeridas = obtener_especies(objetivo_global);
+
+	pthread_t hilo_servidor;
+	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
+
+	pthread_t hilo_planificador;
+	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
+
 	// Objetivo global tiene que ser una variable global.
 	// Hay que usar semaforos.
 	// Hay que usar objetivo global en el servidor e ir
@@ -203,7 +234,9 @@ int main (void) {
 	// Si es objetivo lo agrego a la lista de appeared pokemons,
 	// en caso contrario lo libero.
 
-	t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
+	//t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
+
+	t_list* especies_requeridas = list_create();
 
 	//int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
@@ -215,6 +248,9 @@ int main (void) {
 
 	//planificar_entrenadores(cola_ready);
 
+	pthread_join(hilo_planificador, NULL);
+	pthread_join(hilo_servidor, NULL);
+
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
 	terminar_programa(logger, config);
@@ -223,8 +259,6 @@ int main (void) {
 
 	//destruir_appeared_pokemon(appeared_pokemon);
 
-	pthread_join(hilo_servidor, NULL);
-	pthread_join(hilo_planificador, NULL);
 
 	return 0;
 

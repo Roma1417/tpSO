@@ -28,10 +28,6 @@ bool puede_pasar_a_ready(t_entrenador* entrenador){
 	return ((entrenador->estado != READY) && (entrenador->estado != EXIT));
 }
 
-bool ya_fue_obtenido(char* un_pokemon, char* otro_pokemon){
-	return string_equals_ignore_case(un_pokemon, otro_pokemon);
-}
-
 void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 	bool encontrado = false;
 	for (int i = 0; i < list_size(lista) && !encontrado; i++){

@@ -18,11 +18,10 @@
 #include <string.h>
 #include "entrenador.h"
 #include "appeared_pokemon.h"
+#include "auxiliar.h"
 
 #define IP "127.0.0.3"
 #define PUERTO "37229"
-
-t_list* appeared_pokemons;
 
 typedef enum{
 	APPEARED_POKEMON = 2,
@@ -48,7 +47,16 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
+typedef struct
+{
+	char* nombre;
+	int cantidad;
+} t_especie;
+
 pthread_t thread;
+t_list* appeared_pokemons;
+t_list* objetivo_global;
+t_list* especies_requeridas;
 
 // Funciones Servidor
 
@@ -74,5 +82,6 @@ void agregar_entero(int* offset, char* string, void** stream);
 // Funciones compartidas
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
+bool objetivo_global_cumplido(t_list* objetivo_global);
 
 #endif /* UTILS_H_ */

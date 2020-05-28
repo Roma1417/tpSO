@@ -64,25 +64,37 @@ void iniciar_servidor(void)
     // Falta ver la condicion del while
     // Deberia ser algo como: Mientras no se cumpla el objetivo global...
 
-    // Lo que dijo ALE (MUY PERO MUY NECESARIO):
     // while (no se cumple objetivo global) -> funca servidor
     // se cumplio entonces -> sem_servidor = 0;
 
-    while (1) esperar_cliente(socket_servidor);
+    while (!objetivo_global_cumplido(objetivo_global))
+    	esperar_cliente(socket_servidor);
 
+}
+
+bool objetivo_global_cumplido(t_list* objetivo_global){
+	bool objetivo_cumplido = true;
+
+	for(int i = 0; i < list_size(objetivo_global) && objetivo_cumplido; i++){
+		t_list* objetivos = list_get(objetivo_global, i);
+		objetivo_cumplido = list_is_empty(objetivos);
+	}
+
+	return objetivo_cumplido;
 }
 
 
 void esperar_cliente(int socket_servidor)
 {
-	struct sockaddr_in dir_cliente; //¿Puedo sacar la ip y el ?
 
+	struct sockaddr_in dir_cliente; //¿Puedo sacar la ip y el ?
 	int tam_direccion = sizeof(struct sockaddr_in);
+	//socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_detach(thread);
+	pthread_join(thread, NULL);
 
 }
 
@@ -95,7 +107,17 @@ void serve_client(int* socket)
 	process_request(cod_op, *socket);
 }
 
+// menor cantidad al maximo de objetivo de esa especie
 
+bool sigue_en_falta_especie(char* pokemon){
+	bool en_falta = false;
+	for (int i = 0; i < list_size(especies_requeridas) && !en_falta; i++){
+		t_especie* especie = list_get(especies_requeridas, i);
+		en_falta = string_equals_ignore_case(especie->nombre, pokemon) && especie->cantidad > 0;
+		if (en_falta) especie->cantidad--;
+	}
+	return en_falta;
+}
 
 void process_request(int cod_op, int cliente_fd) {
 	int size;
@@ -119,7 +141,12 @@ void process_request(int cod_op, int cliente_fd) {
 
 			cambiar_posicion(appeared_pokemon,posicion);
 
+			// Posible uso de semaforos en esta parte
 
+			if (list_elem(appeared_pokemon->pokemon, objetivo_global)
+					&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
+				list_add(appeared_pokemons, appeared_pokemon);
+			} else destruir_appeared_pokemon(appeared_pokemon);
 
 			break;
 		case 0:
