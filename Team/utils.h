@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <string.h>
+#include <signal.h>
 #include "entrenador.h"
 #include "appeared_pokemon.h"
 #include "auxiliar.h"
@@ -57,6 +58,7 @@ pthread_t thread;
 t_list* appeared_pokemons;
 t_list* objetivo_global;
 t_list* especies_requeridas;
+int socket_servidor;
 
 // Funciones Servidor
 

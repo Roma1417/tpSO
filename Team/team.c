@@ -25,7 +25,6 @@ t_config* leer_config(void) {
 
 }
 
-
 t_config_team* construir_config_team(t_config* config){
 
 	t_config_team* config_team = malloc(sizeof(t_config_team));
@@ -93,6 +92,15 @@ void destruir_config_team(t_config_team* config_team){
 	free(config_team);
 }
 
+void destruir_appeared_pokemons(){
+	for (int i = 0; i<list_size(appeared_pokemons); i++){
+		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, i);
+		destruir_appeared_pokemon(appeared_pokemon);
+	}
+
+	list_destroy(appeared_pokemons);
+}
+
 void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
 		t_queue* cola_ready, t_list* objetivo_global, t_list* especies_requeridas){
 
@@ -102,10 +110,13 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
 	}
 
 	destruir_config_team(config_team);
+	destruir_appeared_pokemons();
 
 	list_destroy(entrenadores);
 	queue_destroy(cola_ready);
 	list_destroy(objetivo_global);
+
+	list_iterate(especies_requeridas, free);
 	list_destroy(especies_requeridas);
 
 }
@@ -205,19 +216,32 @@ t_list* obtener_especies(t_list* objetivo_global){
 	return especies;
 }
 
+void imprimir(int n){
+	printf("Eclipse no funciona igual -> F\n");
+}
+
+void liberar_todo(int n){
+	printf("\n Intento terminar el programa pero... \n"); // Karen ayuda pls
+	list_clean(objetivo_global);
+}
+
 int main (void) {
+
+	signal(SIGTERM, imprimir); // Mostrar
+	signal(SIGINT,liberar_todo); // Mostrar
 
 	t_list* entrenadores;
 	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
 	t_config_team* config_team = construir_config_team(config);
 	t_queue* cola_ready = queue_create();
+	appeared_pokemons = list_create();
 
 	entrenadores = crear_entrenadores(config_team);
 
-	appeared_pokemons = list_create();
-
-	objetivo_global = list_flatten(get_objetivo_global(entrenadores));
+	t_list* auxiliar = get_objetivo_global(entrenadores);
+	objetivo_global = list_flatten(auxiliar);
+	list_destroy(auxiliar);
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
@@ -227,25 +251,12 @@ int main (void) {
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 
-	// Objetivo global tiene que ser una variable global.
-	// Hay que usar semaforos.
-	// Hay que usar objetivo global en el servidor e ir
-	// viendo si los appeared pokemon son objetivo o no.
-	// Si es objetivo lo agrego a la lista de appeared pokemons,
-	// en caso contrario lo libero.
-
 	//t_list* especies_requeridas = eliminar_repetidos(objetivo_global);
 
-	t_list* especies_requeridas = list_create();
-
 	//int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
-
 	//enviar_mensajes_get_pokemon(conexion, especies_requeridas);
-
 	//t_appeared_pokemon* appeared_pokemon = iniciar_servidor();
-
 	//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
-
 	//planificar_entrenadores(cola_ready);
 
 	pthread_join(hilo_planificador, NULL);
@@ -256,9 +267,6 @@ int main (void) {
 	terminar_programa(logger, config);
 
 	//liberar_conexion(conexion);
-
-	//destruir_appeared_pokemon(appeared_pokemon);
-
 
 	return 0;
 

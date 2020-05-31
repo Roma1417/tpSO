@@ -32,8 +32,16 @@ void* recibir_cadena(int socket_cliente, int* size)
 	return cadena;
 }
 
+/*void liberar_todo(int n){
+	printf("Lo intento\n");
+	list_clean(objetivo_global);
+	shutdown(socket_servidor, SHUT_RDWR);
+}*/
+
 void iniciar_servidor(void)
 {
+	//signal(SIGINT,liberar_todo);
+
 	int socket_servidor;
 
     struct addrinfo hints, *servinfo, *p;
@@ -159,7 +167,7 @@ void process_request(int cod_op, int cliente_fd) {
 int recibir_entero(int socket_cliente){
 	int entero;
 
-	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
+	recv(socket_cliente, &entero, sizeof(int), MSG_DONTWAIT);
 
 	return entero;
 }

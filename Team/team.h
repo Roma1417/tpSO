@@ -9,6 +9,7 @@
 #define TEAM_H_
 
 #include <pthread.h>
+#include <signal.h>
 #include <commons/collections/queue.h>
 #include "entrenador.h"
 #include "utils.h"
