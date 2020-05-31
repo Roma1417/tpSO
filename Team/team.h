@@ -10,6 +10,7 @@
 
 #include <pthread.h>
 #include <signal.h>
+#include <time.h>
 #include <commons/collections/queue.h>
 #include "entrenador.h"
 #include "utils.h"
@@ -32,11 +33,15 @@ typedef struct {
 
 }t_config_team;
 
+u_int32_t id_team;
+t_config_team* config_team;
+
 void planificar_entrenadores(t_queue* cola_ready);
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready);
 t_config* leer_config (void);
 t_log* iniciar_logger (void);
 t_list* get_objetivo_global ();
 t_config_team* construir_config_team(t_config* config);
+void enviar_mensajes_get_pokemon(t_config_team* config_team); // (int conexion);
 
 #endif /* TEAM_H_ */

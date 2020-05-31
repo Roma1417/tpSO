@@ -230,7 +230,7 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
 
-	send(socket_cliente, a_enviar, size_serializado, 0);
+	int estado = send(socket_cliente, a_enviar, size_serializado, 0);
 
 	free(paquete->buffer->stream);
 	free(paquete->buffer);
@@ -260,6 +260,10 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 		case GET_POKEMON:
 			agregar_string(&offset, argumentos[2], &stream);
 			break;
+		case SUSCRIPTOR:
+			agregar_string(&offset, argumentos[2], &stream);
+			agregar_entero(&offset, argumentos[3], &stream);
+			break;
 		default:
 			break;
 	}
@@ -272,6 +276,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	switch(tipo){
 		case GET_POKEMON:
 			size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
+			break;
+		case SUSCRIPTOR:
+			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
 			break;
 		default:
 			break;

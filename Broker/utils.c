@@ -56,7 +56,7 @@ void esperar_cliente(int socket_servidor)
 
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_detach(thread);
+	pthread_join(thread, NULL); // esto estaba asi
 
 }
 
@@ -96,7 +96,7 @@ void process_request(int cod_op, int cliente_fd) {
 			
 			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
 			t_mensaje* primer_mensaje = queue_peek(cola_mensajes->mensajes);
-			printf("El primer parametro de la cola es %s\n", primer_mensaje->stream + 4);
+			printf("El primer parametro de la cola es %s\n", primer_mensaje->stream);
 
 			break;
 

@@ -27,6 +27,7 @@
 typedef enum{
 	APPEARED_POKEMON = 2,
 	GET_POKEMON = 5,
+	SUSCRIPTOR = 7
 }tipo_mensaje;
 
 typedef struct
