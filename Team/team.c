@@ -95,7 +95,7 @@ void destruir_config_team(t_config_team* config_team){
 void destruir_appeared_pokemons(){
 	for (int i = 0; i<list_size(appeared_pokemons); i++){
 		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, i);
-		destruir_appeared_pokemon(appeared_pokemon);
+		appeared_pokemon_destroy(appeared_pokemon);
 	}
 
 	list_destroy(appeared_pokemons);
@@ -106,7 +106,7 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
 
 	for(int i = 0; i < list_size(entrenadores); i++){
 		t_entrenador* entrenador = list_get(entrenadores,i);
-		destruir_entrenador(entrenador);
+		entrenador_destroy(entrenador);
 	}
 
 	destruir_config_team(config_team);
@@ -126,9 +126,35 @@ void terminar_programa(t_log* logger, t_config* config){
 	if (config != NULL) config_destroy(config);
 }
 
-void enviar_mensajes_get_pokemon(t_config_team* config_team){
+void* enviar_get_pokemon(void* pokemon){
+	printf("Ward1\n");
+	char** mensaje = malloc(sizeof(char*)*3);
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	mensaje[0] = string_new();
+	string_append(&(mensaje[0]), "BROKER");
 
-	int conexion;
+	mensaje[1] = string_new();
+	string_append(&(mensaje[1]), "GET_POKEMON");
+
+	mensaje[2] = (char*)pokemon;
+	printf("Pokemon: %s\n", mensaje[2]);
+	enviar_mensaje(mensaje, conexion);
+	liberar_conexion(conexion);
+
+	return EXIT_SUCCESS;
+}
+
+void enviar_mensajes_get_pokemon(){
+
+	pthread_t* get_pokemon[list_size(especies_requeridas)];
+	t_especie* especie;
+	for(int i=0; i<list_size(especies_requeridas); i++){
+		especie = list_get(especies_requeridas, i);
+		pthread_create(&(get_pokemon[i]),NULL, enviar_get_pokemon, (void*) especie->nombre);
+		pthread_join(get_pokemon[i],NULL);
+	}
+
+	/*int conexion[list_size(especies_requeridas)];
 	t_especie* pokemon;
 
 	char** mensaje = malloc(sizeof(char*)*3);
@@ -140,19 +166,19 @@ void enviar_mensajes_get_pokemon(t_config_team* config_team){
 	string_append(&(mensaje[1]), "GET_POKEMON");
 
 	for(int i = 0; i < list_size(especies_requeridas); i++){
-		conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+		conexion[i] = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 		pokemon = list_get(especies_requeridas, i);
 		mensaje[2] = pokemon->nombre;
-		enviar_mensaje(mensaje, conexion);
-		liberar_conexion(conexion);
+		enviar_mensaje(mensaje, conexion[i]);
+		liberar_conexion(conexion[i]);
 	}
 
 	free(mensaje[0]);
 	free(mensaje[1]);
-	free(mensaje);
+	free(mensaje);*/
 }
 
-void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon, t_queue* cola_ready){
+void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
 	t_entrenador* mas_cercano = list_get(entrenadores, 0);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
 	for(int i=1; i<list_size(entrenadores); i++){
@@ -163,13 +189,15 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 		}
 	}
 	cambiar_estado(mas_cercano, READY);
-	queue_push(cola_ready, mas_cercano);
+	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	queue_push(cola_ready, planificado);
 }
 
-void planificar_entrenadores(t_queue* cola_ready){
-	t_entrenador* entrenador_a_ejecutar = queue_pop(cola_ready);
+void planificar_entrenadores(){
+	t_planificado* planificado = queue_pop(cola_ready);
 
 	//Mover entrenador
+
 }
 
 void* mantener_servidor(){
@@ -183,7 +211,23 @@ void* mantener_servidor(){
 
 void* iniciar_planificador(){
 
-	printf("Soy un planificador\n");
+	while(1)
+		planificar_entrenadores();
+
+	return EXIT_SUCCESS;
+}
+
+void* iniciar_planificador_largo_plazo(void* parametro){
+	t_list* entrenadores = parametro;
+
+	while(1){
+		//Poner semáforos
+		sem_wait(sem_appeared_pokemon);
+		sem_wait(sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
+		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, 0);
+		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+	}
+
 
 	return EXIT_SUCCESS;
 }
@@ -230,10 +274,11 @@ void liberar_todo(int n){
 	list_clean(objetivo_global);
 }
 
-void suscribirse(char* cola){
-
+void* suscribirse(void* cola){
+	char* msg = (char *)cola;
 	// No acepta el config team global -> no se puede establecer conexion
-	int conexion = crear_conexion("127.0.0.1", "37227");
+
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
 	char** mensaje = malloc(sizeof(char*)*4);
 
@@ -244,15 +289,19 @@ void suscribirse(char* cola){
 	string_append(&(mensaje[1]), "SUSCRIPTOR");
 
 	mensaje[2] = string_new();
-	string_append(&(mensaje[2]), cola);
+	string_append(&(mensaje[2]), msg);
 
 	mensaje[3] = string_itoa(id_team);
 
 	// Y si establece conexion, no se envian mensajes bien
 	enviar_mensaje(mensaje, conexion);
 
+	//Falta esperar la respuesta
+
 	// Problema para ale -> no liberar conexion
 	liberar_conexion(conexion);
+
+	return EXIT_SUCCESS;
 }
 
 void suscribirse_a_colas(){
@@ -265,27 +314,25 @@ void suscribirse_a_colas(){
 
 	char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
-	pthread_create(&hilo_appeared, NULL, (void*) suscribirse, mensaje);
-	pthread_join(hilo_appeared, NULL);
+	pthread_create(&hilo_appeared, NULL, suscribirse,(void*) mensaje);
+	pthread_join(hilo_appeared, NULL); //Vamos a tener que mover el join
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "LOCALIZED_POKEMON");
-	pthread_create(&hilo_localized, NULL, (void*) suscribirse, mensaje);
+	pthread_create(&hilo_localized, NULL, suscribirse,(void*) mensaje);
 	pthread_join(hilo_appeared, NULL);
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "CAUGHT_POKEMON");
-	pthread_create(&hilo_caught, NULL, (void*) suscribirse, mensaje);
+	pthread_create(&hilo_caught, NULL, suscribirse,(void*) mensaje);
 	pthread_join(hilo_appeared, NULL);
 	free(mensaje);
 
 }
 
 int main (void) {
-
-	id_team = 0;
 
 	signal(SIGTERM, imprimir); // Mostrar
 	signal(SIGINT,liberar_todo); // Mostrar
@@ -296,14 +343,18 @@ int main (void) {
 
 	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
 	config_team = construir_config_team(config);
-	printf("1. ip_broker %s, puerto_broker: %s\n", config_team->ip_broker, config_team->puerto_broker);
 
-	t_queue* cola_ready = queue_create();
+
+	cola_ready = queue_create();
 	appeared_pokemons = list_create();
+	id_team = 0;
+	sem_init(sem_appeared_pokemon, 0, 0);
 
 	entrenadores = crear_entrenadores(config_team);
 
-	suscribirse_a_colas(); // REVISAR
+	sem_init(sem_entrenadores, 0, list_size(entrenadores));
+
+	//suscribirse_a_colas(); // REVISAR
 
 	t_list* auxiliar = get_objetivo_global(entrenadores);
 	objetivo_global = list_flatten(auxiliar);
@@ -311,13 +362,18 @@ int main (void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
+	//enviar_mensajes_get_pokemon(); // REVISAR
+
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
+	/*pthread_t hilo_planificador_largo_plazo;
+	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
+	*/
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 
-	//enviar_mensajes_get_pokemon(config_team); // REVISAR
+
 
 	//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);

@@ -17,7 +17,7 @@ t_appeared_pokemon* appeared_pokemon_create(){
 	return appeared_pokemon;
 }
 
-void destruir_appeared_pokemon(t_appeared_pokemon* appeared_pokemon){
+void appeared_pokemon_destroy(t_appeared_pokemon* appeared_pokemon){
 
 	free(appeared_pokemon->pokemon);
 	free(appeared_pokemon->posicion);

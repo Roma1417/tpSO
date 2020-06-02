@@ -25,7 +25,7 @@ void cambiar_estado(t_entrenador* entrenador, t_estado estado){
 }
 
 bool puede_pasar_a_ready(t_entrenador* entrenador){
-	return ((entrenador->estado != READY) && (entrenador->estado != EXIT));
+	return ((entrenador->estado == NEW) && (entrenador->estado == BLOCK));
 }
 
 void remover_elemento_repetido(t_list* lista, char* un_pokemon){
@@ -55,7 +55,7 @@ t_list* get_objetivos(t_entrenador* entrenador){
 
 }
 
-void destruir_entrenador(t_entrenador* entrenador){
+void entrenador_destroy(t_entrenador* entrenador){
 
 	free(entrenador->posicion);
 

@@ -17,6 +17,8 @@
 #include <netdb.h>
 #include <string.h>
 #include <signal.h>
+#include <semaphore.h>
+#include <commons/collections/queue.h>
 #include "entrenador.h"
 #include "appeared_pokemon.h"
 #include "auxiliar.h"
@@ -59,7 +61,10 @@ pthread_t thread;
 t_list* appeared_pokemons;
 t_list* objetivo_global;
 t_list* especies_requeridas;
+t_queue* cola_ready;
 int socket_servidor;
+sem_t* sem_appeared_pokemon;
+sem_t* sem_entrenadores;
 
 // Funciones Servidor
 
@@ -85,6 +90,6 @@ void agregar_entero(int* offset, char* string, void** stream);
 // Funciones compartidas
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
-bool objetivo_global_cumplido(t_list* objetivo_global);
+bool quedan_pokemons_por_atrapar();
 
 #endif /* UTILS_H_ */

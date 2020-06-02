@@ -13,6 +13,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	tipo_mensaje tipo_mensaje;
 	if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
+	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
 	return tipo_mensaje;
 }
 
@@ -75,12 +76,12 @@ void iniciar_servidor(void)
     // while (no se cumple objetivo global) -> funca servidor
     // se cumplio entonces -> sem_servidor = 0;
 
-    while (!objetivo_global_cumplido(objetivo_global))
+    while (!quedan_pokemons_por_atrapar())
     	esperar_cliente(socket_servidor);
 
 }
 
-bool objetivo_global_cumplido(t_list* objetivo_global){
+bool quedan_pokemons_por_atrapar(){
 	bool objetivo_cumplido = true;
 
 	for(int i = 0; i < list_size(objetivo_global) && objetivo_cumplido; i++){
@@ -154,7 +155,8 @@ void process_request(int cod_op, int cliente_fd) {
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global)
 					&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
 				list_add(appeared_pokemons, appeared_pokemon);
-			} else destruir_appeared_pokemon(appeared_pokemon);
+				sem_post(sem_appeared_pokemon);
+			} else appeared_pokemon_destroy(appeared_pokemon);
 
 			break;
 		case 0:
