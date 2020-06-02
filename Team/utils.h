@@ -63,8 +63,8 @@ t_list* objetivo_global;
 t_list* especies_requeridas;
 t_queue* cola_ready;
 int socket_servidor;
-sem_t* sem_appeared_pokemon;
-sem_t* sem_entrenadores;
+sem_t sem_appeared_pokemon;
+sem_t sem_entrenadores;
 
 // Funciones Servidor
 

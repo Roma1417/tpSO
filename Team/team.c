@@ -146,7 +146,7 @@ void* enviar_get_pokemon(void* pokemon){
 
 void enviar_mensajes_get_pokemon(){
 
-	pthread_t* get_pokemon[list_size(especies_requeridas)];
+	pthread_t get_pokemon[list_size(especies_requeridas)];
 	t_especie* especie;
 	for(int i=0; i<list_size(especies_requeridas); i++){
 		especie = list_get(especies_requeridas, i);
@@ -179,11 +179,11 @@ void enviar_mensajes_get_pokemon(){
 }
 
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
-	t_entrenador* mas_cercano = list_get(entrenadores, 0);
+	t_entrenador* mas_cercano = list_find(entrenadores, puede_pasar_a_ready);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
 	for(int i=1; i<list_size(entrenadores); i++){
 		t_entrenador* entrenador_actual = list_get(entrenadores, i);
-		if((puede_pasar_a_ready(entrenador_actual)) && (distancia(entrenador_actual,appeared_pokemon) < distancia_minima)){
+		if(puede_pasar_a_ready(entrenador_actual) && (distancia(entrenador_actual,appeared_pokemon) < distancia_minima)){
 			mas_cercano = entrenador_actual;
 			distancia_minima = distancia(entrenador_actual,appeared_pokemon);
 		}
@@ -222,8 +222,8 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 
 	while(1){
 		//Poner semáforos
-		sem_wait(sem_appeared_pokemon);
-		sem_wait(sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
+		sem_wait(&sem_appeared_pokemon);
+		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
 		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, 0);
 		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 	}
@@ -344,15 +344,15 @@ int main (void) {
 	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
 	config_team = construir_config_team(config);
 
-
 	cola_ready = queue_create();
 	appeared_pokemons = list_create();
 	id_team = 0;
-	sem_init(sem_appeared_pokemon, 0, 0);
+
+	sem_init(&sem_appeared_pokemon, 0, 0);
 
 	entrenadores = crear_entrenadores(config_team);
 
-	sem_init(sem_entrenadores, 0, list_size(entrenadores));
+	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
 	//suscribirse_a_colas(); // REVISAR
 
@@ -367,15 +367,13 @@ int main (void) {
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
-	/*pthread_t hilo_planificador_largo_plazo;
+	pthread_t hilo_planificador_largo_plazo;
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
-	*/
+
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 
-
-
-	//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
+    //enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);
 
 	pthread_join(hilo_planificador, NULL);

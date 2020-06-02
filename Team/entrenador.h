@@ -37,7 +37,7 @@ typedef struct {
 
 
 void cambiar_estado(t_entrenador* entrenador, t_estado estado);
-bool puede_pasar_a_ready(t_entrenador* entrenador);
+bool puede_pasar_a_ready(void* parametro);
 t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, pthread_t hilo);
 t_list* get_objetivos(t_entrenador* entrenador);
 t_list* get_objetivos_faltantes(t_entrenador* entrenador);

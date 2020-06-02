@@ -11,6 +11,7 @@
 #include <pthread.h>
 #include <signal.h>
 #include <time.h>
+#include <semaphore.h>
 #include <commons/collections/queue.h>
 #include "entrenador.h"
 #include "utils.h"
@@ -44,5 +45,6 @@ t_log* iniciar_logger (void);
 t_list* get_objetivo_global ();
 t_config_team* construir_config_team(t_config* config);
 void enviar_mensajes_get_pokemon(); // (int conexion);
+void* enviar_get_pokemon(void* pokemon);
 
 #endif /* TEAM_H_ */

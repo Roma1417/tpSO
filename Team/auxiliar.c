@@ -8,9 +8,11 @@
 
 u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	u_int32_t diferencia_en_x = entrenador->posicion->x - appeared_pokemon->posicion->x;
+	//printf("diferencia en x: %d, entrenador x: %d, pokemon x: %d\n", diferencia_en_x, entrenador->posicion->x, appeared_pokemon->posicion->x);
 	u_int32_t diferencia_en_y = entrenador->posicion->y - appeared_pokemon->posicion->y;
-	u_int32_t suma_de_potencias = pow(diferencia_en_x, 2) + pow(diferencia_en_y, 2);
-	return sqrt(suma_de_potencias);
+	//printf("diferencia en y: %d, entrenador y: %d, pokemon y: %d\n", diferencia_en_y, entrenador->posicion->y, appeared_pokemon->posicion->y);
+	//printf("abs x: %d, abs y: %d\n",abs(diferencia_en_x), abs(diferencia_en_y));
+	return abs(diferencia_en_x) + abs(diferencia_en_y);
 }
 
 t_list* list_flatten(t_list* listas){

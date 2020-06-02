@@ -24,8 +24,9 @@ void cambiar_estado(t_entrenador* entrenador, t_estado estado){
 	entrenador->estado = estado;
 }
 
-bool puede_pasar_a_ready(t_entrenador* entrenador){
-	return ((entrenador->estado == NEW) && (entrenador->estado == BLOCK));
+bool puede_pasar_a_ready(void* parametro){
+	t_entrenador* entrenador = parametro;
+	return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
 }
 
 void remover_elemento_repetido(t_list* lista, char* un_pokemon){
