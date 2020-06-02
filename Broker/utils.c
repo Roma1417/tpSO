@@ -48,15 +48,14 @@ void iniciar_servidor(void)
 
 void esperar_cliente(int socket_servidor)
 {
-	struct sockaddr_in dir_cliente; //¿Puedo sacar la ip y el ?
+	struct sockaddr_in dir_cliente;
 
-	int tam_direccion = sizeof(struct sockaddr_in);
+	u_int32_t tam_direccion = sizeof(struct sockaddr_in); //capaz no sea unsigned
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
-
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_join(thread, NULL); // esto estaba asi
+	pthread_detach(thread);
 
 }
 
@@ -71,7 +70,6 @@ void serve_client(int* socket)
 
 
 void process_request(int cod_op, int cliente_fd) {
-	u_int32_t size;
 	t_cola_mensajes* cola_mensajes;
 
 	//u_int32_t id_mensaje = recibir_entero(cliente_fd);
@@ -86,17 +84,29 @@ void process_request(int cod_op, int cliente_fd) {
 		case LOCALIZED_POKEMON:
 			printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
 
-			int size;
+			int32_t size;
 			void* stream = (void*)recibir_cadena(cliente_fd, &size);
+			printf("Parametro cadena %s\n",stream+4);
 
-			t_mensaje* mensaje = crear_mensaje(size, stream);
+			t_buffer* buffer = crear_buffer(size, stream);
+			t_paquete* paquete = crear_paquete(generar_id_mensaje(), cod_op, buffer);
+			t_mensaje* mensaje = crear_mensaje(paquete);
 			cola_mensajes = get_cola_mensajes(cod_op);
 
-			agregar_mensaje(mensaje, cola_mensajes);
-			
+			//queue_push(cola_mensajes->mensajes, mensaje);
+
+			printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
+
 			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
-			t_mensaje* primer_mensaje = queue_peek(cola_mensajes->mensajes);
-			printf("El primer parametro de la cola es %s\n", primer_mensaje->stream);
+
+			//enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
+			t_suscriptor* sub = list_get(cola_mensajes->suscriptores, 0);
+			printf("ID suscriptor %d\n", sub->id);
+			enviar_mensaje(paquete, cliente_fd);
+			printf("Socket suscriptor %d\n", sub->numero_socket);
+			printf("ID mensaje %d\n", paquete->id_mensaje);
+			enviar_mensaje(paquete, sub->numero_socket);
+			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
 
 			break;
 
@@ -107,7 +117,7 @@ void process_request(int cod_op, int cliente_fd) {
 			size = recibir_entero(cliente_fd);
 			printf("La size recibida fue: %d\n", size);
 
-			u_int32_t cola_size;
+			int32_t cola_size;
 			char* cola_nombre = recibir_cadena(cliente_fd, &cola_size);
 			printf("La cola recibida fue: %s\n", cola_nombre);
 
@@ -115,7 +125,6 @@ void process_request(int cod_op, int cliente_fd) {
 			printf("La id recibida fue: %d\n", id_suscriptor);
 
 			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje(cola_nombre));
-
 
 			t_suscriptor* suscriptor;
 
@@ -126,14 +135,9 @@ void process_request(int cod_op, int cliente_fd) {
 				printf("Asignada ID a nuevo suscriptor:%d\n", suscriptor->id);
 				notificar_suscriptor(suscriptor, cola_mensajes->id);
 			} else {
-				printf("Ward 2.1 \n");
 				suscriptor = actualizar_suscriptor(cliente_fd, cola_mensajes, id_suscriptor);
-				printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->socket);
+				printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->numero_socket);
 			}
-
-
-
-			 //
 
 			printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
 
@@ -150,6 +154,7 @@ void process_request(int cod_op, int cliente_fd) {
 			pthread_exit(NULL);
 		}
 }
+
 
 int recibir_entero(int socket_cliente){
 
@@ -171,7 +176,6 @@ void* recibir_cadena(int socket_cliente, int* size)
 
 	return cadena;
 }
-
 
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
@@ -198,6 +202,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	return "DESCONOCIDO";
 }
 
+
 char* consultar_config_por_string(char* path, char* key){
 
 	t_config* config = config_create(path);
@@ -214,15 +219,14 @@ void finalizar_servidor(){
 	for (int i=1; i<=6; i++){
 		t_cola_mensajes* cola_mensajes = get_cola_mensajes(i);
 		printf("Tipo msj %s\n", obtener_tipo_mensaje_string(i));
-		cola_mensajes_destroy(cola_mensajes);
+		destruir_cola_mensajes(cola_mensajes);
 	}
 	exit(2);
 }
 
 
-
-void* serializar_paquete(t_paquete* paquete, int bytes){
-	void * magic = malloc(bytes);
+void* serializar_paquete(t_paquete* paquete, size_t bytes){
+	void* magic = malloc(bytes);
 	int desplazamiento = 0;
 
 	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
@@ -238,31 +242,48 @@ void* serializar_paquete(t_paquete* paquete, int bytes){
 }
 
 
+void notificar_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){ //envio al suscriptor un mensaje de argumentos (id, SUSCRIPTOR, cola)
+	void* stream = malloc(sizeof(tipo_mensaje));
+	memcpy(stream, &tipo_mensaje, sizeof(tipo_mensaje));
+	t_buffer* buffer = crear_buffer(sizeof(tipo_mensaje), stream);
+	t_paquete* paquete = crear_paquete(suscriptor->id, SUSCRIPTOR, buffer);
 
-void notificar_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){
-	t_paquete* paquete = malloc(sizeof(t_paquete));
+	enviar_mensaje(paquete, suscriptor->numero_socket);
 
-	paquete->id_mensaje = suscriptor->id;
-	paquete->tipo_mensaje = SUSCRIPTOR;
-	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->size = sizeof(tipo_mensaje);
-	paquete->buffer->stream = malloc(paquete->buffer->size);
-	memcpy(paquete->buffer->stream, &tipo_mensaje, paquete->buffer->size);
-
-	int bytes = paquete->buffer->size + 3*sizeof(u_int32_t);
-
-	void* a_enviar = serializar_paquete(paquete, bytes);
-
-	send(suscriptor->socket, a_enviar, bytes, 0);
-
-	free(a_enviar);
-	free(paquete->buffer->stream);
-	free(paquete->buffer);
-	free(paquete);
+	destruir_paquete(paquete);
 }
 
 
+void enviar_mensaje(t_paquete* paquete, int socket){
+	printf("Ward 3.-1\n");
 
+	size_t bytes = paquete->buffer->size + 3*sizeof(int32_t);
+	printf("Ward 3\n");
+	void* a_enviar = serializar_paquete(paquete, bytes);
+	printf("%s\n",a_enviar +12);
+	printf("Ward 3.1\n");
+	//send(socket, a_enviar, bytes, 0);
+	printf("Ward 3.2\n");
+	free(a_enviar);
+}
 
+void enviar_a_suscriptor(t_mensaje* mensaje, t_suscriptor* suscriptor){
+	printf("Ward 2\n");
+	enviar_mensaje(mensaje->paquete, suscriptor->numero_socket);
+	printf("Ward 2.1\n");
+	list_add(mensaje->suscriptores_enviados, suscriptor);
+}
 
+void enviar_a_suscriptores(t_mensaje* mensaje, t_list* suscriptores){
+	printf("Ward 1\n");
+	t_suscriptor* suscriptor = list_get(suscriptores, 0);
+	enviar_mensaje(mensaje->paquete, suscriptor->numero_socket);
+	for (u_int32_t i = 0; i < list_size(suscriptores); i++){
+		t_suscriptor* suscriptor = (void*)list_get(suscriptores, i);
+		printf("Ward 1.1\n");
+		enviar_a_suscriptor(mensaje, suscriptor);
+		printf("Se envio el mensaje de ID %d al suscriptor %d\n", mensaje->paquete->id_mensaje, suscriptor->id);
+	}
+
+}
 

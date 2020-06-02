@@ -15,40 +15,26 @@
 #include<netdb.h>
 #include<commons/log.h>
 #include<commons/config.h>
+#include<commons/string.h>
 #include<commons/collections/list.h>
 #include<commons/collections/queue.h>
 #include<time.h>
 #include<string.h>
 #include<pthread.h>
-#include"cola_mensajes.h"
+
+#include "collections.h"
 
 
-
-typedef struct
-{
-	int size;
-	void* stream;
-} t_buffer;
-
-typedef struct
-{
-	u_int32_t id_mensaje;
-	tipo_mensaje tipo_mensaje;
-	t_buffer* buffer;
-} t_paquete;
 
 
 pthread_t thread;
 
-void* recibir_buffer(int*, int);
+
 void iniciar_servidor(void);
 void esperar_cliente(int);
-void* recibir_mensaje(int, int*);
-int recibir_operacion(int);
 void process_request(int, int);
 void serve_client(int*);
-void* serializar_paquete(t_paquete*, int);
-void devolver_mensaje(void*, int, int);
+void* serializar_paquete(t_paquete*, size_t);;
 char* consultar_config_por_string(char*, char*);
 int recibir_entero(int);
 void* recibir_cadena(int, int*);
@@ -56,5 +42,9 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje);
 char* consultar_config_por_string(char*, char*);
 void finalizar_servidor();
+void notificar_suscriptor(t_suscriptor*, tipo_mensaje);
+void enviar_mensaje(t_paquete*, int);
 
+void enviar_a_suscriptor(t_mensaje*, t_suscriptor*);
+void enviar_a_suscriptores(t_mensaje*, t_list*);
 #endif /* CONEXIONES_H_ */
