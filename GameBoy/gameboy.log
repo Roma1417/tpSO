@@ -1202,3 +1202,5 @@
 [INFO] 20:59:21:560 gameboy/(21413:21413): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
 [INFO] 21:01:14:53 gameboy/(21760:21760): Se realiza una conexión al proceso BROKER
 [INFO] 21:01:14:53 gameboy/(21760:21760): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 22:13:39:647 gameboy/(32023:32023): Se realiza una conexión al proceso BROKER
+[INFO] 22:13:39:647 gameboy/(32023:32023): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
