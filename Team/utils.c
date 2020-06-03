@@ -193,7 +193,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global)
 					&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
-				list_add(appeared_pokemons, appeared_pokemon);
+				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);
 			} else appeared_pokemon_destroy(appeared_pokemon);
 

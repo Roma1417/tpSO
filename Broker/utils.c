@@ -93,7 +93,7 @@ void process_request(int cod_op, int cliente_fd) {
 			t_mensaje* mensaje = crear_mensaje(paquete);
 			cola_mensajes = get_cola_mensajes(cod_op);
 
-			//queue_push(cola_mensajes->mensajes, mensaje);
+			queue_push(cola_mensajes->mensajes, mensaje);
 
 			printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
 

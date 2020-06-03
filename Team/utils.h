@@ -58,13 +58,14 @@ typedef struct
 } t_especie;
 
 pthread_t thread;
-t_list* appeared_pokemons;
+t_queue* appeared_pokemons;
 t_list* objetivo_global;
 t_list* especies_requeridas;
 t_queue* cola_ready;
 int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
+sem_t* puede_ejecutar;
 
 // Funciones Servidor
 

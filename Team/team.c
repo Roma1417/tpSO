@@ -58,8 +58,12 @@ t_config_team* construir_config_team(t_config* config){
 }
 
 //Codigo de prueba
-void* print_message_function(){
-	printf("Soy un hilo\n");
+void* ejecutar_entrenador(void* parametro){
+	t_entrenador* entrenador = parametro;
+
+	sem_wait(&(puede_ejecutar[entrenador->id]));
+	printf("Se ejecuta el entrenador: %d\n", entrenador->id);
+
 	return EXIT_SUCCESS;
 }
 
@@ -83,10 +87,12 @@ t_list* crear_entrenadores(t_config_team* config_team){
 		t_posicion* posicion = list_get(posiciones_entrenadores, i);
 
 		// Codigo en prueba
-		pthread_t hilo;
-	    pthread_create(&hilo, NULL, print_message_function, NULL);
 
-		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, hilo);
+
+		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i);
+		pthread_t hilo;
+		pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
+		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
 	}
 
@@ -121,12 +127,12 @@ void destruir_config_team(t_config_team* config_team){
 * @DESC: Destruye la lista de t_appeared_pokemon.
 */
 void destruir_appeared_pokemons(){
-	for (int i = 0; i<list_size(appeared_pokemons); i++){
-		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, i);
+	while(!(queue_is_empty(appeared_pokemons))){
+		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
 		appeared_pokemon_destroy(appeared_pokemon);
 	}
 
-	list_destroy(appeared_pokemons);
+	queue_destroy(appeared_pokemons);
 }
 
 /*
@@ -172,7 +178,7 @@ void terminar_programa(t_log* logger, t_config* config){
 * 		 Recordar -> Pokemon requiere casteo a (char*).
 */
 void* enviar_get_pokemon(void* pokemon){
-	printf("Ward1\n");
+
 	char** mensaje = malloc(sizeof(char*)*3);
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	mensaje[0] = string_new();
@@ -182,7 +188,6 @@ void* enviar_get_pokemon(void* pokemon){
 	string_append(&(mensaje[1]), "GET_POKEMON");
 
 	mensaje[2] = (char*)pokemon;
-	printf("Pokemon: %s\n", mensaje[2]);
 	enviar_mensaje(mensaje, conexion);
 	liberar_conexion(conexion);
 
@@ -228,14 +233,16 @@ void enviar_mensajes_get_pokemon(){
 }
 
 /*
- * @NAME: enreadyar_al_mas_cercano (FUE IDEA DE ALE)
+ * @NAME: enreadyar_al_mas_cercano (FUE IDEA DE JOSI)
  * @DESC: Dados una lista de entrenadores y un appeared_pokemon, pone
  * 		  en estado READY al entrenador mas cercano a ese pokemon.
  */
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
 	t_entrenador* mas_cercano = list_find(entrenadores, puede_pasar_a_ready);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
+
 	for(int i=1; i<list_size(entrenadores); i++){
+
 		t_entrenador* entrenador_actual = list_get(entrenadores, i);
 		if(puede_pasar_a_ready(entrenador_actual) && (distancia(entrenador_actual,appeared_pokemon) < distancia_minima)){
 			mas_cercano = entrenador_actual;
@@ -252,10 +259,13 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
  * @DESC: pendiente
  */
 void planificar_entrenadores(){
-	t_planificado* planificado = queue_pop(cola_ready);
+	//Falta un switch para planificar según cada algoritmo
+	if(!(queue_is_empty(cola_ready))){
+		t_planificado* planificado = queue_pop(cola_ready);
+		sem_post(&(puede_ejecutar[planificado->entrenador->id]));
+	}
 
 	//Mover entrenador
-
 }
 
 /*
@@ -264,7 +274,7 @@ void planificar_entrenadores(){
  * 		  que le manden al proceso Team.
  */
 void* mantener_servidor(){
-
+	printf("Ward1.1\n");
 	iniciar_servidor();
 
 	return EXIT_SUCCESS;
@@ -294,10 +304,9 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 		//Poner semáforos
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
-		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, 0);
+		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
 		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 	}
-
 
 	return EXIT_SUCCESS;
 }
@@ -441,10 +450,14 @@ int main (void) {
 	config_team = construir_config_team(config);
 
 	cola_ready = queue_create();
-	appeared_pokemons = list_create();
+	appeared_pokemons = queue_create();
 	id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
+	puede_ejecutar = malloc(sizeof(sem_t)*list_size(config_team->posiciones_entrenadores));
+	for(int i=0; i<list_size(config_team->posiciones_entrenadores); i++){
+		sem_init(&(puede_ejecutar[i]), 0, 0);
+	}
 
 	entrenadores = crear_entrenadores(config_team);
 
@@ -458,14 +471,14 @@ int main (void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	enviar_mensajes_get_pokemon(); // REVISAR
-
+	//enviar_mensajes_get_pokemon(); // REVISAR
+	printf("Ward1\n");
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
-
+	printf("Ward2\n");
 	pthread_t hilo_planificador_largo_plazo;
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
-
+	printf("Ward3\n");
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 

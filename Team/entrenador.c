@@ -13,7 +13,7 @@
  *        una lista con los objetivos y un hilo,
  *        crea y devuelve un puntero a una estructura t_entrenador.
  */
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, pthread_t hilo){
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t id){
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
@@ -21,7 +21,9 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->pokemon_obtenidos = pokemon_obtenidos;
 	entrenador->objetivos = objetivos;
 	entrenador->estado = NEW;
-	entrenador->hilo = hilo;
+	entrenador->hilo = NULL;
+	entrenador->capturas_disponibles = list_size(objetivos);
+	entrenador->id = id;
 
 	return entrenador;
 
@@ -115,3 +117,28 @@ void entrenador_destroy(t_entrenador* entrenador){
 	free(entrenador);
 
 }
+
+/*
+ * @NAME: puede_seguir_atrapando
+ * @DESC: Verifica si un entrenador tiene capturas disponibles.
+ */
+bool puede_seguir_atrapando(t_entrenador* entrenador){
+	return entrenador->capturas_disponibles > 0;
+}
+
+/*
+ * @NAME: decrementar_capturas_disponibles
+ * @DESC: Dado un entrenador se decrementa en uno sus capturas disponibles.
+ */
+void decrementar_capturas_disponibles(t_entrenador* entrenador){
+	entrenador->capturas_disponibles--;
+}
+
+/*
+ * @NAME: set_hilo
+ * @DESC: Settea un hilo pasado por parámetro en un entrenador.
+ */
+void set_hilo(t_entrenador* entrenador, pthread_t hilo){
+	entrenador->hilo = hilo;
+}
+
