@@ -9,6 +9,11 @@
 
 // FUNCIONES SERVIDOR
 
+/*
+ * @NAME: obtener_tipo_mensaje
+ * @DESC: Dado el nombre de un tipo de mensaje,
+ * 		  devuelve su codigo de operacion.
+ */
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	tipo_mensaje tipo_mensaje;
 	if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
@@ -17,11 +22,21 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	return tipo_mensaje;
 }
 
+/*
+ * @NAME: obtener_tipo_mensaje
+ * @DESC: Dado un codigo de operacion,
+ * 		  devuelve su equivalente en nombre de tipo de mensaje.
+ */
 char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
 	return "DESCONOCIDO";
 }
 
+/*
+ * @NAME: recibir_cadena
+ * @DESC: Dados un socket y un tamanio, recibe una cadena
+ *        mandada desde el socket.
+ */
 void* recibir_cadena(int socket_cliente, int* size)
 {
 	void * cadena;
@@ -39,6 +54,11 @@ void* recibir_cadena(int socket_cliente, int* size)
 	shutdown(socket_servidor, SHUT_RDWR);
 }*/
 
+/*
+ * @NAME: iniciar_servidor
+ * @DESC: Inicia y mantiene el servidor para la posterior
+ * 		  escucha de mensajes enviados al proceso TEAM.
+ */
 void iniciar_servidor(void)
 {
 	//signal(SIGINT,liberar_todo);
@@ -81,6 +101,11 @@ void iniciar_servidor(void)
 
 }
 
+/*
+ * @NAME: quedan_pokemons_por_atrapar
+ * @DESC: Se fija si aun quedan pokemons por atrapar. Esto se produce cuando
+ * 		  ya no quedan mas objetivos en objetivo global.
+ */
 bool quedan_pokemons_por_atrapar(){
 	bool objetivo_cumplido = true;
 
@@ -92,7 +117,10 @@ bool quedan_pokemons_por_atrapar(){
 	return objetivo_cumplido;
 }
 
-
+/*
+ * @NAME: esperar_cliente
+ * @DESC: Funcion auxilar de iniciar_servidor.
+ */
 void esperar_cliente(int socket_servidor)
 {
 
@@ -107,7 +135,10 @@ void esperar_cliente(int socket_servidor)
 
 }
 
-
+/*
+ * @NAME: serve_client
+ * @DESC: Funcion auxilar de iniciar_servidor.
+ */
 void serve_client(int* socket)
 {
 	int cod_op;
@@ -116,8 +147,12 @@ void serve_client(int* socket)
 	process_request(cod_op, *socket);
 }
 
-// menor cantidad al maximo de objetivo de esa especie
-
+/*
+ * @NAME: sigue_en_falta_especie
+ * @DESC: Dado un nombre de una especie de pokemons, se fija si
+ * 		  aun se sigue esperando que aparezcan pokemons de esa misma
+ * 		  especie. Si es asi resta 1 a la cantidad total de faltantes.
+ */
 bool sigue_en_falta_especie(char* pokemon){
 	bool en_falta = false;
 	for (int i = 0; i < list_size(especies_requeridas) && !en_falta; i++){
@@ -128,6 +163,10 @@ bool sigue_en_falta_especie(char* pokemon){
 	return en_falta;
 }
 
+/*
+ * @NAME: process_request
+ * @DESC: Funcion auxilar de iniciar_servidor.
+ */
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
@@ -166,6 +205,10 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 }
 
+/*
+ * @NAME: recibir_entero
+ * @DESC: Dado un socket_cliente, recibe un entero desde ese socket.
+ */
 int recibir_entero(int socket_cliente){
 	int entero;
 
@@ -176,6 +219,11 @@ int recibir_entero(int socket_cliente){
 
 // FUNCIONES CLIENTE
 
+/*
+ * @NAME: serializar_paquete
+ * @DESC: Dado un paquete y una cantidad de bytes,
+ * 		  serializa ese paquete.
+ */
 void* serializar_paquete(t_paquete* paquete, u_int32_t *bytes){
 	u_int32_t size_serializado = sizeof(paquete->codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 	void* buffer = malloc(size_serializado);
@@ -196,6 +244,11 @@ void* serializar_paquete(t_paquete* paquete, u_int32_t *bytes){
 	return buffer;
 }
 
+/*
+ * @NAME: crear_conexion
+ * @DESC: Dados un ip y un puerto en formato de string,
+ * 		  crea una conexion y devuelve el socket resultante.
+ */
 int crear_conexion(char *ip, char* puerto){
 	struct addrinfo hints;
 	struct addrinfo *server_info;
@@ -217,6 +270,11 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
+/*
+ * @NAME: enviar_mensaje
+ * @DESC: Dado un arreglo de argumentos en formato string,
+ * 		  y un socket_cliente, manda un mensaje a ese socket.
+ */
 void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
@@ -240,6 +298,11 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	free(a_enviar);
 }
 
+/*
+ * @NAME: agregar_string
+ * @DESC: Dados un string, un stream y un offset,
+ * 		  agrega el string al stream.
+ */
 void agregar_string(int* offset, char* string, void** stream){
 	u_int32_t longitud_nombre = strlen(string) + 1;
 	memcpy((*stream) + (*offset), &longitud_nombre, sizeof(u_int32_t));
@@ -248,12 +311,22 @@ void agregar_string(int* offset, char* string, void** stream){
 	(*offset) += longitud_nombre;
 }
 
+/*
+ * @NAME: agregar_entero
+ * @DESC: Dados un string, un stream y un offset,
+ * 		  agrega un entero en formato de string al stream.
+ */
 void agregar_entero(int* offset, char* string, void** stream){
 	u_int32_t entero = atoi(string);
 	memcpy((*stream) + (*offset), &entero, sizeof(u_int32_t));
 	(*offset) += sizeof(u_int32_t);
 }
 
+/*
+ * @NAME: generar_stream
+ * @DESC: Dados un arreglo de argumentos en formato de string y un paquete,
+ * 		  genera el stream correspondiente a ese paquete.
+ */
 void* generar_stream(char** argumentos, t_paquete* paquete){
 	int offset = 0;
 	void* stream = malloc(paquete->buffer->size);
@@ -273,6 +346,12 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 	return stream;
 }
 
+/*
+ * @NAME: obtener_size
+ * @DESC: Dados un arreglo de argumentos en formato de string y
+ * 		  codigo de operacion de un tipo de mensaje, devuelve el
+ * 		  size correspondiente a ese tipo de mensaje.
+ */
 u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	u_int32_t size = 0;
 	switch(tipo){
@@ -289,6 +368,10 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	return size;
 }
 
+/*
+ * @NAME: liberar_conexion
+ * @DESC: Libera la conexion con un socket_cliente pasado por parametro.
+ */
 void liberar_conexion(u_int32_t socket_cliente){
 	close(socket_cliente);
 }
