@@ -55,7 +55,7 @@ void esperar_cliente(int socket_servidor)
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_detach(thread);
+	pthread_join(thread, NULL);
 
 }
 
