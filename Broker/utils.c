@@ -82,11 +82,11 @@ void process_request(int cod_op, int cliente_fd) {
 		case CAUGHT_POKEMON:
 		case GET_POKEMON:
 		case LOCALIZED_POKEMON:
-			printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
+			printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
 
 			int32_t size;
 			void* stream = (void*)recibir_cadena(cliente_fd, &size);
-			printf("Parametro cadena %s\n",stream+4);
+			printf("Parametro cadena %s\n",(char*) (stream+4));
 
 			t_buffer* buffer = crear_buffer(size, stream);
 			t_paquete* paquete = crear_paquete(generar_id_mensaje(), cod_op, buffer);
@@ -100,14 +100,14 @@ void process_request(int cod_op, int cliente_fd) {
 			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
 
 			//enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
-			t_suscriptor* sub = list_get(cola_mensajes->suscriptores, 0);
+			/*t_suscriptor* sub = list_get(cola_mensajes->suscriptores, 0);
 			printf("ID suscriptor %d\n", sub->id);
 			enviar_mensaje(paquete, cliente_fd);
 			printf("Socket suscriptor %d\n", sub->numero_socket);
 			printf("ID mensaje %d\n", paquete->id_mensaje);
 			enviar_mensaje(paquete, sub->numero_socket);
 			printf("El tamaño de la cola de mensajes ahora es %d\n", queue_size(cola_mensajes->mensajes));
-
+			*/
 			break;
 
 		case SUSCRIPTOR:
@@ -260,7 +260,7 @@ void enviar_mensaje(t_paquete* paquete, int socket){
 	size_t bytes = paquete->buffer->size + 3*sizeof(int32_t);
 	printf("Ward 3\n");
 	void* a_enviar = serializar_paquete(paquete, bytes);
-	printf("%s\n",a_enviar +12);
+	printf("%s\n",(char*) (a_enviar +12));
 	printf("Ward 3.1\n");
 	//send(socket, a_enviar, bytes, 0);
 	printf("Ward 3.2\n");

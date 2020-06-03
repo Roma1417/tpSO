@@ -1196,3 +1196,9 @@
 [INFO] 20:30:09:865 gameboy/(8400:8400): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
 [INFO] 20:30:17:339 gameboy/(8403:8403): Se realiza una conexión al proceso TEAM
 [INFO] 20:30:17:339 gameboy/(8403:8403): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+[INFO] 20:58:07:116 gameboy/(21254:21254): Se realiza una conexión al proceso BROKER
+[INFO] 20:58:07:116 gameboy/(21254:21254): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 20:59:21:560 gameboy/(21413:21413): Se realiza una conexión al proceso BROKER
+[INFO] 20:59:21:560 gameboy/(21413:21413): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 21:01:14:53 gameboy/(21760:21760): Se realiza una conexión al proceso BROKER
+[INFO] 21:01:14:53 gameboy/(21760:21760): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER

@@ -1,5 +1,5 @@
 /*
- * entrenador.c
+ * collections.c
  *
  *  Created on: 1 may. 2020
  *      Author: utnso

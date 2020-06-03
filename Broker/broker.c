@@ -12,6 +12,7 @@
 
 int main(void)
 {
+
 	colas_mensajes[0] = crear_cola_mensajes(NEW_POKEMON);
 	colas_mensajes[1] = crear_cola_mensajes(APPEARED_POKEMON);
 	colas_mensajes[2] = crear_cola_mensajes(CATCH_POKEMON);
@@ -27,7 +28,6 @@ int main(void)
 	generador_id_suscriptor[5] = 1;
 
 	generador_id_mensaje = 1;
-
 
 
 	iniciar_servidor();

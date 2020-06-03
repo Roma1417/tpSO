@@ -1,5 +1,5 @@
 /*
- * entrenador.h
+ * collections.h
  *
  *  Created on: 1 may. 2020
  *      Author: utnso
@@ -73,7 +73,7 @@ int mutex_id_mensaje;
 
 
 
-t_cola_mensajes* cola_mensajes_create(tipo_mensaje);
+t_cola_mensajes* crear_cola_mensajes(tipo_mensaje);
 void destruir_cola_mensajes(t_cola_mensajes*);
 void* get_cola_mensajes(tipo_mensaje);
 
