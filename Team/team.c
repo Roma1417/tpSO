@@ -6,6 +6,11 @@
  */
 #include "team.h"
 
+/**
+* @NAME: iniciar_logger
+* @DESC: Crea y devuelve un puntero a una estructura t_log,
+* 		 que sirve como log del proceso Team.
+*/
 t_log* iniciar_logger(void) {
 
 	t_log* logger = log_create("team.log","team", true, LOG_LEVEL_INFO);
@@ -17,14 +22,21 @@ t_log* iniciar_logger(void) {
 
 }
 
+/**
+* @NAME: leer_config
+* @DESC: Crea y devuelve un puntero a una estructura t_config.
+*/
 t_config* leer_config(void) {
-
 	t_config* config = config_create("./team.config");
-
 	return config;
-
 }
 
+/**
+* @NAME: construir_config_team
+* @DESC: Crea y devuelve un puntero a una estructura t_config_team,
+* 		 donde sus valores internos corresponden a los guardados en
+* 		 el archivo del team de tipo config.
+*/
 t_config_team* construir_config_team(t_config* config){
 
 	t_config_team* config_team = malloc(sizeof(t_config_team));
@@ -47,12 +59,16 @@ t_config_team* construir_config_team(t_config* config){
 
 //Codigo de prueba
 void* print_message_function(){
-
 	printf("Soy un hilo\n");
-
 	return EXIT_SUCCESS;
 }
 
+/**
+* @NAME: crear_entrenadores
+* @DESC: Crea y devuelve un puntero a una t_list con referencias a
+*        estructuras t_entrenador, inicializados con los valores guardados
+*        en una estructura t_config_team pasada por parametro.
+*/
 t_list* crear_entrenadores(t_config_team* config_team){
 
 	t_list* entrenadores = list_create();
@@ -75,15 +91,23 @@ t_list* crear_entrenadores(t_config_team* config_team){
 	}
 
 	return entrenadores;
-
 }
 
+/**
+* @NAME: get_objetivo_global
+* @DESC: Crea y devuelve un puntero a una t_list con los objetivos que faltan
+* 		 atrapar por parte de los entrenadores.
+*/
 t_list* get_objetivo_global (t_list* entrenadores) {
 
 	return list_map(entrenadores, (void*) get_objetivos_faltantes);
 
 }
 
+/**
+* @NAME: destruir_config_team
+* @DESC: Destruye la estructura t_config_team pasada por parametro.
+*/
 void destruir_config_team(t_config_team* config_team){
 	list_destroy(config_team->objetivos_entrenadores);
 	list_destroy(config_team->pokemon_entrenadores);
@@ -92,6 +116,10 @@ void destruir_config_team(t_config_team* config_team){
 	free(config_team);
 }
 
+/**
+* @NAME: destruir_appeared_pokemons
+* @DESC: Destruye la lista de t_appeared_pokemon.
+*/
 void destruir_appeared_pokemons(){
 	for (int i = 0; i<list_size(appeared_pokemons); i++){
 		t_appeared_pokemon* appeared_pokemon = list_get(appeared_pokemons, i);
@@ -101,6 +129,13 @@ void destruir_appeared_pokemons(){
 	list_destroy(appeared_pokemons);
 }
 
+/*
+* @NAME: liberar_estructuras
+* @DESC: Dados un conjunto de estructuras pasados por parametro, se encarga
+* 		 de destruirlas y liberar toda la memoria tomada por ellas.
+* @PARAM: config_team, entrenadores, cola_ready, objetivo_global y
+* 	      especies_requeridas.
+*/
 void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
 		t_queue* cola_ready, t_list* objetivo_global, t_list* especies_requeridas){
 
@@ -121,11 +156,21 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
 
 }
 
+/*
+* @NAME: terminar_programa
+* @DESC: Destruye las estructuras t_log y t_config pasadas por parametro.
+*/
 void terminar_programa(t_log* logger, t_config* config){
 	if (logger != NULL) log_destroy(logger);
 	if (config != NULL) config_destroy(config);
 }
 
+/*
+* @NAME: enviar_get_pokemon
+* @DESC: Establece conexion con el broker y envia un mensaje GET_POKEMON,
+* 		 para un pokemon pasado por parametro.
+* 		 Recordar -> Pokemon requiere casteo a (char*).
+*/
 void* enviar_get_pokemon(void* pokemon){
 	printf("Ward1\n");
 	char** mensaje = malloc(sizeof(char*)*3);
@@ -144,6 +189,10 @@ void* enviar_get_pokemon(void* pokemon){
 	return EXIT_SUCCESS;
 }
 
+/*
+* @NAME: enviar_mensajes_get_pokemon
+* @DESC: Envia un mensaje get_pokemon al broker por cada especie requerida.
+*/
 void enviar_mensajes_get_pokemon(){
 
 	pthread_t get_pokemon[list_size(especies_requeridas)];
@@ -178,6 +227,11 @@ void enviar_mensajes_get_pokemon(){
 	free(mensaje);*/
 }
 
+/*
+ * @NAME: enreadyar_al_mas_cercano (FUE IDEA DE ALE)
+ * @DESC: Dados una lista de entrenadores y un appeared_pokemon, pone
+ * 		  en estado READY al entrenador mas cercano a ese pokemon.
+ */
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
 	t_entrenador* mas_cercano = list_find(entrenadores, puede_pasar_a_ready);
 	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
@@ -193,6 +247,10 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 	queue_push(cola_ready, planificado);
 }
 
+/*
+ * @NAME: planificar_entrenadores
+ * @DESC: pendiente
+ */
 void planificar_entrenadores(){
 	t_planificado* planificado = queue_pop(cola_ready);
 
@@ -200,15 +258,22 @@ void planificar_entrenadores(){
 
 }
 
+/*
+ * @NAME: mantener_servidor
+ * @DESC: Inicia y mantiene el servidor abierto para escuchar los mensajes
+ * 		  que le manden al proceso Team.
+ */
 void* mantener_servidor(){
-
-	printf("Soy un servidor\n");
 
 	iniciar_servidor();
 
 	return EXIT_SUCCESS;
 }
 
+/*
+ * @NAME: iniciar_planificador
+ * @DESC: pendiente
+ */
 void* iniciar_planificador(){
 
 	while(1)
@@ -217,6 +282,11 @@ void* iniciar_planificador(){
 	return EXIT_SUCCESS;
 }
 
+/*
+ * @NAME: iniciar_planificador_largo_plazo
+ * @DESC: Si aparece un pokemon, se encarga de poner en ready al
+ * 		  entrenador mas cercano.
+ */
 void* iniciar_planificador_largo_plazo(void* parametro){
 	t_list* entrenadores = parametro;
 
@@ -232,6 +302,11 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 	return EXIT_SUCCESS;
 }
 
+/*
+ * @NAME: elem_especies
+ * @DESC: Dados una lista de especies y el nombre de una especie,
+ * 		  se fija si ese nombre esta entre las especies.
+ */
 bool elem_especies(t_list* especies, char* pokemon){
 	bool encontrado = false;
 	for (int i = 0; i < list_size(especies) && !encontrado; i++){
@@ -242,6 +317,13 @@ bool elem_especies(t_list* especies, char* pokemon){
 	return encontrado;
 }
 
+/*
+ * @NAME: obtener_especies
+ * @DESC: Dada una lista con el objetivo global,
+ * 		  crea una lista con referencias a estructuras t_especies.
+ * 		  Estas especies tienen el nombre de la especie y la cantidad
+ * 		  de apariciones en el objetivo global.
+ */
 t_list* obtener_especies(t_list* objetivo_global){
 
 	t_list* especies = list_create();
@@ -265,15 +347,23 @@ t_list* obtener_especies(t_list* objetivo_global){
 	return especies;
 }
 
+// Codigo de prueba
 void imprimir(int n){
 	printf("Eclipse no funciona igual -> F\n");
 }
 
+// Codigo de prueba
 void liberar_todo(int n){
 	printf("\n Intento terminar el programa pero... \n"); // Karen ayuda pls
 	list_clean(objetivo_global);
 }
 
+/*
+ * @NAME: suscribirse
+ * @DESC: Dado el nombre de una cola, se suscribe a esa cola de mensajes del
+ * 		  broker.
+ * 		  FALTA IMPLEMENTAR BIEN
+ */
 void* suscribirse(void* cola){
 	char* msg = (char *)cola;
 	// No acepta el config team global -> no se puede establecer conexion
@@ -304,6 +394,11 @@ void* suscribirse(void* cola){
 	return EXIT_SUCCESS;
 }
 
+/*
+ * @NAME: suscribirse
+ * @DESC: Suscribe al proceso Team a las colas de mensajes del
+ * 		  broker.
+ */
 void suscribirse_a_colas(){
 
 	pthread_t hilo_appeared;
@@ -332,6 +427,7 @@ void suscribirse_a_colas(){
 
 }
 
+// Funcion main
 int main (void) {
 
 	signal(SIGTERM, imprimir); // Mostrar

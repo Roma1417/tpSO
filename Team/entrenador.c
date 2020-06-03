@@ -7,6 +7,12 @@
 
 #include "entrenador.h"
 
+/*
+ * @NAME: entrenador_create
+ * @DESC: Dados una posicion, una lista con los pokemon obtenidos,
+ *        una lista con los objetivos y un hilo,
+ *        crea y devuelve un puntero a una estructura t_entrenador.
+ */
 t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, pthread_t hilo){
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
@@ -20,15 +26,32 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	return entrenador;
 
 }
+
+/*
+ * @NAME: cambiar_estado
+ * @DESC: Dado un entrenador y un estado pasados por parametro,
+ * 		  cambia el estado del entrenador.
+ */
 void cambiar_estado(t_entrenador* entrenador, t_estado estado){
 	entrenador->estado = estado;
 }
 
+/*
+ * @NAME: cambiar_estado
+ * @DESC: Dado un entrenador, devuelve si este puede pasar o no
+ *        a estado READY.
+ */
 bool puede_pasar_a_ready(void* parametro){
 	t_entrenador* entrenador = parametro;
 	return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
 }
 
+/*
+ * @NAME: remover_estado_repetido
+ * @DESC: Dada una lista y el nombre de un pokemon,
+ * 		  remueve de la lista la primer aparicion repetida de ese nombre.
+ * 		  // revisar
+ */
 void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 	bool encontrado = false;
 	for (int i = 0; i < list_size(lista) && !encontrado; i++){
@@ -41,6 +64,11 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 	}
 }
 
+/*
+ * @NAME: get_objetivos_faltantes
+ * @DESC: Dado un entrenador, saca de sus objetivos los pokemon que ya obtuvo.
+ * 		  Devuelve la lista de objetivos modificada.
+ */
 t_list* get_objetivos_faltantes(t_entrenador* entrenador){
 	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
@@ -50,12 +78,20 @@ t_list* get_objetivos_faltantes(t_entrenador* entrenador){
 	return entrenador->objetivos;
 }
 
+/*
+ * @NAME: get_objetivos_faltantes
+ * @DESC: Dado un entrenador, devuelve sus objetivos.
+ */
 t_list* get_objetivos(t_entrenador* entrenador){
 
 	return entrenador->objetivos;
 
 }
 
+/*
+ * @NAME: get_objetivos_faltantes
+ * @DESC: Destruye una estructura t_entrenador.
+ */
 void entrenador_destroy(t_entrenador* entrenador){
 
 	free(entrenador->posicion);
