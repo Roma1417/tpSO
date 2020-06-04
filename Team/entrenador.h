@@ -32,15 +32,16 @@ typedef struct {
 	t_estado estado;
 	pthread_t hilo;
 	u_int32_t capturas_disponibles;
-	u_int32_t id;
+	u_int32_t indice;
+	u_int32_t id_caught;
 
 } t_entrenador;
 
 
 
 void cambiar_estado(t_entrenador* entrenador, t_estado estado);
-bool puede_pasar_a_ready(void* parametro);
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t id);
+bool puede_ser_planificado(void* parametro);
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice);
 t_list* get_objetivos(t_entrenador* entrenador);
 t_list* get_objetivos_faltantes(t_entrenador* entrenador);
 void entrenador_destroy(t_entrenador* entrenador);

@@ -28,6 +28,7 @@
 
 typedef enum{
 	APPEARED_POKEMON = 2,
+	CATCH_POKEMON = 3,
 	GET_POKEMON = 5,
 	SUSCRIPTOR = 7
 }tipo_mensaje;
@@ -66,6 +67,8 @@ int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
 sem_t* puede_ejecutar;
+sem_t* llega_mensaje_caught;
+t_appeared_pokemon* pokemon_a_atrapar;
 
 // Funciones Servidor
 

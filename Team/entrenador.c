@@ -13,7 +13,7 @@
  *        una lista con los objetivos y un hilo,
  *        crea y devuelve un puntero a una estructura t_entrenador.
  */
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t id){
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice){
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
@@ -23,7 +23,8 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->estado = NEW;
 	entrenador->hilo = NULL;
 	entrenador->capturas_disponibles = list_size(objetivos);
-	entrenador->id = id;
+	entrenador->indice = indice;
+	entrenador->id_caught = 0;
 
 	return entrenador;
 
@@ -39,11 +40,11 @@ void cambiar_estado(t_entrenador* entrenador, t_estado estado){
 }
 
 /*
- * @NAME: cambiar_estado
+ * @NAME: puede_ser_planificado
  * @DESC: Dado un entrenador, devuelve si este puede pasar o no
  *        a estado READY.
  */
-bool puede_pasar_a_ready(void* parametro){
+bool puede_ser_planificado(void* parametro){
 	t_entrenador* entrenador = parametro;
 	return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
 }

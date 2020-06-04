@@ -1293,3 +1293,5 @@
 [INFO] 19:23:44:554 gameboy/(30660:30660): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
 [INFO] 19:23:49:922 gameboy/(30670:30670): Se realiza una conexión al proceso TEAM
 [INFO] 19:23:49:922 gameboy/(30670:30670): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+[INFO] 17:15:07:125 gameboy/(17079:17079): Se realiza una conexión al proceso TEAM
+[INFO] 17:15:07:125 gameboy/(17079:17079): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM

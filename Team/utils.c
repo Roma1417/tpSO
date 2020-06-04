@@ -17,6 +17,7 @@
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	tipo_mensaje tipo_mensaje;
 	if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
+	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
 	return tipo_mensaje;
@@ -332,6 +333,11 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 	void* stream = malloc(paquete->buffer->size);
 
 	switch(paquete->codigo_operacion){
+	    case CATCH_POKEMON:
+	    	agregar_string(&offset, argumentos[2], &stream);
+	    	agregar_entero(&offset, argumentos[3], &stream);
+	    	agregar_entero(&offset, argumentos[4], &stream);
+	    	break;
 		case GET_POKEMON:
 			agregar_string(&offset, argumentos[2], &stream);
 			break;
@@ -355,6 +361,9 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	u_int32_t size = 0;
 	switch(tipo){
+		case CATCH_POKEMON:
+			size = sizeof(u_int32_t) * 3 + strlen(argumentos[2]) + 1;
+			break;
 		case GET_POKEMON:
 			size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
 			break;

@@ -46,5 +46,6 @@ t_list* get_objetivo_global ();
 t_config_team* construir_config_team(t_config* config);
 void enviar_mensajes_get_pokemon(); // (int conexion);
 void* enviar_get_pokemon(void* pokemon);
+sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
 
 #endif /* TEAM_H_ */

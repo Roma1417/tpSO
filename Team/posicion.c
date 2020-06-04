@@ -68,3 +68,19 @@ bool esta_mas_a_la_derecha(t_posicion* una_posicion, t_posicion* otra_posicion){
 bool esta_mas_arriba(t_posicion* una_posicion, t_posicion* otra_posicion){
 	return una_posicion->y > otra_posicion->y;
 }
+
+/*
+ * @NAME: distancia_en_x
+ * @DESC: Devuelve el valor absoluto de la diferencia en x
+ */
+u_int32_t distancia_en_x(t_posicion* una_posicion, t_posicion* otra_posicion){
+	return abs(una_posicion->x - otra_posicion->x);
+}
+
+/*
+ * @NAME: distancia_en_y
+ * @DESC: Devuelve el valor absoluto de la diferencia en y
+ */
+u_int32_t distancia_en_y(t_posicion* una_posicion, t_posicion* otra_posicion){
+	return abs(una_posicion->y - otra_posicion->y);
+}
