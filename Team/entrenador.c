@@ -21,7 +21,7 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->pokemon_obtenidos = pokemon_obtenidos;
 	entrenador->objetivos = objetivos;
 	entrenador->estado = NEW;
-	entrenador->hilo = NULL;
+	entrenador->hilo = 0;
 	entrenador->capturas_disponibles = list_size(objetivos);
 	entrenador->indice = indice;
 	entrenador->id_caught = 0;

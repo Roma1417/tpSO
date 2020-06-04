@@ -11,9 +11,9 @@
 * @DESC: Crea y devuelve un puntero a una estructura t_log,
 * 		 que sirve como log del proceso Team.
 */
-t_log* iniciar_logger(void) {
+t_log* iniciar_logger(char* path) {
 
-	t_log* logger = log_create("team.log","team", true, LOG_LEVEL_INFO);
+	t_log* logger = log_create(path,"team", true, LOG_LEVEL_INFO);
 	if(logger == NULL) {
 		 printf("No pude crear el logger\n");
 		 exit(1);
@@ -66,20 +66,28 @@ void* ejecutar_entrenador(void* parametro){
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		printf("Se ejecuto el entrenador %d\n", entrenador->indice);
 
-		for(int i=0; i<distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);i++){
+		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
+		for(int i=0; i<distancia_x;i++){
 			if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
 				mover_a_la_derecha(entrenador->posicion);
 			else mover_a_la_izquierda(entrenador->posicion);
+			sleep(config_team->retardo_ciclo_cpu);
 		}
 
-		for(int i=0; i<distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);i++){
+		u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
+		for(int j=0; j<distancia_y;j++){
 			if(esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
 				mover_hacia_arriba(entrenador->posicion);
 			else mover_hacia_abajo(entrenador->posicion);
+			sleep(config_team->retardo_ciclo_cpu);
 		}
 
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)\n", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 		enviar_catch_pokemon(pokemon_a_atrapar);
-
+		cambiar_estado(entrenador, BLOCK);
+		sem_post(&puede_planificar);
+		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+		//Tiene que atraparlo
 
 	}
 	return EXIT_SUCCESS;
@@ -299,9 +307,13 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 void planificar_entrenadores(){
 	//Falta un switch para planificar según cada algoritmo
 	if(!(queue_is_empty(cola_ready))){
+		sem_wait(&puede_planificar);
+		printf("Ward1\n");
 		t_planificado* planificado = queue_pop(cola_ready);
 		pokemon_a_atrapar = planificado->pokemon;
 		cambiar_estado(planificado->entrenador, EXEC);
+		printf("Indice del planificado: %d\n", planificado->entrenador->indice);
+		printf("Ward2\n");
 		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 	}
 
@@ -436,7 +448,10 @@ void* suscribirse(void* cola){
 	enviar_mensaje(mensaje, conexion);
 
 	//Falta esperar la respuesta
-	//process_request("") Lo ve después Ale
+	process_request(SUSCRIPTOR, conexion);
+	printf("id_appeared: %d\n", id_cola_appeared);
+	printf("id_caught: %d\n", id_cola_caught);
+	printf("id_localized: %d\n", id_cola_localized);
 
 	// Problema para ale -> no liberar conexion
 	liberar_conexion(conexion);
@@ -494,24 +509,24 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud){
 // Funcion main
 int main (void) {
 
-	signal(SIGTERM, imprimir); // Mostrar
-	signal(SIGINT,liberar_todo); // Mostrar
+	//signal(SIGTERM, imprimir); // Mostrar
+	//signal(SIGINT,liberar_todo); // Mostrar
 
 	t_list* entrenadores;
-	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();
 
 	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
 	config_team = construir_config_team(config);
+	logger_team = iniciar_logger(config_team->log_file);
 
 	cola_ready = queue_create();
 	appeared_pokemons = queue_create();
 	id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
-
+	sem_init(&puede_planificar, 0, 1);
 	puede_ejecutar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
-
+	llega_mensaje_caught = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 
 	entrenadores = crear_entrenadores(config_team);
 
@@ -541,7 +556,7 @@ int main (void) {
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
-	terminar_programa(logger, config);
+	terminar_programa(logger_team, config);
 
 	//liberar_conexion(conexion);
 

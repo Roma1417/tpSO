@@ -27,10 +27,13 @@
 #define PUERTO "37229"
 
 typedef enum{
+	NEW_POKEMON = 1,
 	APPEARED_POKEMON = 2,
 	CATCH_POKEMON = 3,
+	CAUGHT_POKEMON = 4,
 	GET_POKEMON = 5,
-	SUSCRIPTOR = 7
+	LOCALIZED_POKEMON = 6,
+	SUSCRIPTOR = 7,
 }tipo_mensaje;
 
 typedef struct
@@ -58,6 +61,8 @@ typedef struct
 	int cantidad;
 } t_especie;
 
+t_log* logger_team;
+t_log* logger_prueba;
 pthread_t thread;
 t_queue* appeared_pokemons;
 t_list* objetivo_global;
@@ -66,9 +71,13 @@ t_queue* cola_ready;
 int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
+sem_t puede_planificar;
 sem_t* puede_ejecutar;
 sem_t* llega_mensaje_caught;
 t_appeared_pokemon* pokemon_a_atrapar;
+u_int32_t id_cola_localized;
+u_int32_t id_cola_caught;
+u_int32_t id_cola_appeared;
 
 // Funciones Servidor
 
@@ -90,6 +99,7 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo);
 void* generar_stream(char** argumentos, t_paquete* paquete);
 void agregar_string(int* offset, char* string, void** stream);
 void agregar_entero(int* offset, char* string, void** stream);
+void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo);
 
 // Funciones compartidas
 

@@ -229,9 +229,9 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 	void* magic = malloc(bytes);
 	int desplazamiento = 0;
 
-	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
-	desplazamiento += sizeof(u_int32_t);
 	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);

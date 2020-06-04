@@ -54,8 +54,8 @@ typedef struct
 
 typedef struct
 {
-	u_int32_t id_mensaje;
 	tipo_mensaje tipo_mensaje;
+	u_int32_t id_mensaje;
 	t_buffer* buffer;
 } t_paquete;
 

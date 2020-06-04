@@ -29,7 +29,13 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
  * 		  devuelve su equivalente en nombre de tipo de mensaje.
  */
 char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
+	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
 	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
+	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
+	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
+	if(tipo == GET_POKEMON) return "GET_POKEMON";
+	if(tipo == LOCALIZED_POKEMON) return "LOCALIZED";
+	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
 	return "DESCONOCIDO";
 }
 
@@ -199,11 +205,36 @@ void process_request(int cod_op, int cliente_fd) {
 			} else appeared_pokemon_destroy(appeared_pokemon);
 
 			break;
+
+		case SUSCRIPTOR:{
+			printf("Buenass\n");
+			u_int32_t cola_de_mensajes_size = recibir_entero(cliente_fd);
+			u_int32_t id_cola = recibir_entero(cliente_fd);
+			u_int32_t size_2 = recibir_entero(cliente_fd);
+			tipo_mensaje tipo = recibir_entero(cliente_fd);
+			printf("Tipo: %d\n", tipo);
+			asignar_id_cola_de_mensajes(id_cola, tipo);
+
+			break;}
 		case 0:
 			pthread_exit(NULL);
 		case -1:
 			pthread_exit(NULL);
 		}
+}
+
+void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
+	switch(tipo){
+		case APPEARED_POKEMON:
+			id_cola_appeared = id_a_asignar;
+			break;
+		case LOCALIZED_POKEMON:
+			id_cola_localized = id_a_asignar;
+			break;
+		case CAUGHT_POKEMON:
+			id_cola_caught = id_a_asignar;
+			break;
+	}
 }
 
 /*

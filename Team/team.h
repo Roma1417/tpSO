@@ -41,11 +41,12 @@ t_config_team* config_team;
 void planificar_entrenadores();
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
 t_config* leer_config (void);
-t_log* iniciar_logger (void);
+t_log* iniciar_logger (char* path);
 t_list* get_objetivo_global ();
 t_config_team* construir_config_team(t_config* config);
 void enviar_mensajes_get_pokemon(); // (int conexion);
 void* enviar_get_pokemon(void* pokemon);
 sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
+void enviar_catch_pokemon(t_appeared_pokemon* pokemon);
 
 #endif /* TEAM_H_ */
