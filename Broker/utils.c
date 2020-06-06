@@ -262,7 +262,7 @@ void enviar_mensaje(t_paquete* paquete, int socket){
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	printf("%s\n",(char*) (a_enviar +12));
 	printf("Ward 3.1\n");
-	//send(socket, a_enviar, bytes, 0);
+	send(socket, a_enviar, bytes, MSG_NOSIGNAL);
 	printf("Ward 3.2\n");
 	free(a_enviar);
 }

@@ -87,7 +87,7 @@ void esperar_cliente(int);
 void* recibir_mensaje(int socket_cliente, int* size);
 void process_request(int, int);
 void serve_client(int*);
-int recibir_entero(int socket_cliente);
+u_int32_t recibir_entero(int socket_cliente);
 
 // Funciones Cliente
 

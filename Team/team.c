@@ -446,9 +446,8 @@ void* suscribirse(void* cola){
 
 	// Y si establece conexion, no se envian mensajes bien
 	enviar_mensaje(mensaje, conexion);
-
 	//Falta esperar la respuesta
-	process_request(SUSCRIPTOR, conexion);
+	serve_client(&conexion);
 	printf("id_appeared: %d\n", id_cola_appeared);
 	printf("id_caught: %d\n", id_cola_caught);
 	printf("id_localized: %d\n", id_cola_localized);
@@ -532,7 +531,7 @@ int main (void) {
 
 	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
-	//suscribirse_a_colas(); // REVISAR
+	suscribirse_a_colas(); // REVISAR
 
 	t_list* auxiliar = get_objetivo_global(entrenadores);
 	objetivo_global = list_flatten(auxiliar);

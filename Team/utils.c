@@ -207,9 +207,11 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 
 		case SUSCRIPTOR:{
-			printf("Buenass\n");
-			u_int32_t cola_de_mensajes_size = recibir_entero(cliente_fd);
+			printf("Hola Juan\n");
+			//u_int32_t cola_de_mensajes_size = recibir_entero(cliente_fd);
+			//printf("cola_de_mensajes: %d\n", cola_de_mensajes_size);
 			u_int32_t id_cola = recibir_entero(cliente_fd);
+			printf("id_cola: %d\n", id_cola);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
 			printf("Tipo: %d\n", tipo);
@@ -234,6 +236,8 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
 		case CAUGHT_POKEMON:
 			id_cola_caught = id_a_asignar;
 			break;
+		default:
+			printf("Boca campeón\n");
 	}
 }
 
@@ -241,10 +245,9 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
  * @NAME: recibir_entero
  * @DESC: Dado un socket_cliente, recibe un entero desde ese socket.
  */
-int recibir_entero(int socket_cliente){
+u_int32_t recibir_entero(int socket_cliente){
 	int entero;
-
-	recv(socket_cliente, &entero, sizeof(int), MSG_DONTWAIT);
+	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
 
 	return entero;
 }
