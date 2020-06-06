@@ -417,6 +417,7 @@ void imprimir(int n){
 void liberar_todo(int n){
 	printf("\n Intento terminar el programa pero... \n"); // Karen ayuda pls
 	list_clean(objetivo_global);
+	exit(1);
 }
 
 /*
@@ -447,7 +448,24 @@ void* suscribirse(void* cola){
 	// Y si establece conexion, no se envian mensajes bien
 	enviar_mensaje(mensaje, conexion);
 	//Falta esperar la respuesta
+
+	pthread_t thread_suscriptor;
+
+	/* F
+	 *
+	 * serve_client(&conexion);
+	 *
+	 */
+
+	printf("conexion: %d \n", conexion);
+
+	/*while (1){
+		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
+		pthread_join(thread_suscriptor, NULL);
+	}*/
+
 	serve_client(&conexion);
+
 	printf("id_appeared: %d\n", id_cola_appeared);
 	printf("id_caught: %d\n", id_cola_caught);
 	printf("id_localized: %d\n", id_cola_localized);
@@ -465,28 +483,24 @@ void* suscribirse(void* cola){
  */
 void suscribirse_a_colas(){
 
-	pthread_t hilo_appeared;
-	pthread_t hilo_localized;
-	pthread_t hilo_caught;
-
 	// REVISAR
 
 	char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
 	pthread_create(&hilo_appeared, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_appeared, NULL); //Vamos a tener que mover el join
+	pthread_join(hilo_appeared, NULL);
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "LOCALIZED_POKEMON");
 	pthread_create(&hilo_localized, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_appeared, NULL);
+	pthread_join(hilo_localized, NULL);
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "CAUGHT_POKEMON");
 	pthread_create(&hilo_caught, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_appeared, NULL);
+	pthread_join(hilo_caught, NULL);
 	free(mensaje);
 
 }

@@ -84,10 +84,11 @@ u_int32_t id_cola_appeared;
 void* recibir_buffer(int*, int);
 void iniciar_servidor(void);
 void esperar_cliente(int);
-void* recibir_mensaje(int socket_cliente, int* size);
 void process_request(int, int);
 void serve_client(int*);
 u_int32_t recibir_entero(int socket_cliente);
+void* recibir_cadena(int socket_cliente, int* size);
+
 
 // Funciones Cliente
 

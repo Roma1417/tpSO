@@ -302,6 +302,8 @@ int crear_conexion(char *ip, char* puerto){
 
 	freeaddrinfo(server_info);
 
+	printf("MIRAME: %d\n", socket_cliente);
+
 	return socket_cliente;
 }
 

@@ -124,6 +124,8 @@ void process_request(int cod_op, int cliente_fd) {
 			u_int32_t id_suscriptor = recibir_entero(cliente_fd);
 			printf("La id recibida fue: %d\n", id_suscriptor);
 
+
+
 			cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje(cola_nombre));
 
 			t_suscriptor* suscriptor;
