@@ -64,6 +64,9 @@ typedef struct
 t_log* logger_team;
 t_log* logger_prueba;
 pthread_t thread;
+pthread_t hilo_appeared;
+pthread_t hilo_localized;
+pthread_t hilo_caught;
 t_queue* appeared_pokemons;
 t_list* objetivo_global;
 t_list* especies_requeridas;

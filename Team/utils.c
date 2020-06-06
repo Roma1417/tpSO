@@ -207,14 +207,9 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 
 		case SUSCRIPTOR:{
-			printf("Hola Juan\n");
-			//u_int32_t cola_de_mensajes_size = recibir_entero(cliente_fd);
-			//printf("cola_de_mensajes: %d\n", cola_de_mensajes_size);
 			u_int32_t id_cola = recibir_entero(cliente_fd);
-			printf("id_cola: %d\n", id_cola);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
-			printf("Tipo: %d\n", tipo);
 			asignar_id_cola_de_mensajes(id_cola, tipo);
 
 			break;}
@@ -285,6 +280,15 @@ void* serializar_paquete(t_paquete* paquete, u_int32_t *bytes){
  * 		  crea una conexion y devuelve el socket resultante.
  */
 int crear_conexion(char *ip, char* puerto){
+	/*int puerto_entero = atoi(puerto);
+	struct sockaddr_in server;
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = inet_addr(ip);
+	server.sin_port = htons(puerto_entero);
+	uint32_t client = socket(AF_INET, SOCK_STREAM, 0);
+	uint32_t socket_broker = connect(client, (void*) &server, sizeof(server));
+	printf("MIRAME: %d\n", socket_broker);
+	return socket_broker;*/
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
@@ -301,9 +305,13 @@ int crear_conexion(char *ip, char* puerto){
 		printf("error");
 
 	freeaddrinfo(server_info);
+<<<<<<< HEAD
+	printf("MIRAME: %d\n", socket_cliente);
+=======
 
 	printf("MIRAME: %d\n", socket_cliente);
 
+>>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	return socket_cliente;
 }
 

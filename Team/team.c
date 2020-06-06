@@ -482,25 +482,37 @@ void* suscribirse(void* cola){
  * 		  broker.
  */
 void suscribirse_a_colas(){
+<<<<<<< HEAD
+=======
 
+>>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	// REVISAR
 
 	char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
 	pthread_create(&hilo_appeared, NULL, suscribirse,(void*) mensaje);
+<<<<<<< HEAD
+=======
 	pthread_join(hilo_appeared, NULL);
+>>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "LOCALIZED_POKEMON");
 	pthread_create(&hilo_localized, NULL, suscribirse,(void*) mensaje);
+<<<<<<< HEAD
+=======
 	pthread_join(hilo_localized, NULL);
+>>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "CAUGHT_POKEMON");
 	pthread_create(&hilo_caught, NULL, suscribirse,(void*) mensaje);
+<<<<<<< HEAD
+=======
 	pthread_join(hilo_caught, NULL);
+>>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	free(mensaje);
 
 }
@@ -566,6 +578,10 @@ int main (void) {
 
 	pthread_join(hilo_planificador, NULL);
 	pthread_join(hilo_servidor, NULL);
+	pthread_join(hilo_appeared, NULL); //Vamos a tener que mover el join
+	pthread_join(hilo_caught, NULL);
+	pthread_join(hilo_localized, NULL);
+
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
