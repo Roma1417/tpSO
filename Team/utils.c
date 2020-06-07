@@ -305,13 +305,7 @@ int crear_conexion(char *ip, char* puerto){
 		printf("error");
 
 	freeaddrinfo(server_info);
-<<<<<<< HEAD
-	printf("MIRAME: %d\n", socket_cliente);
-=======
 
-	printf("MIRAME: %d\n", socket_cliente);
-
->>>>>>> eaeaf338f3b9a54016ecf3639889d9973d74a3d1
 	return socket_cliente;
 }
 
