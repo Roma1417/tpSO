@@ -428,7 +428,6 @@ void liberar_todo(int n){
  */
 void* suscribirse(void* cola){
 	char* msg = (char *)cola;
-	// No acepta el config team global -> no se puede establecer conexion
 
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
@@ -445,32 +444,20 @@ void* suscribirse(void* cola){
 
 	mensaje[3] = string_itoa(id_team);
 
-	// Y si establece conexion, no se envian mensajes bien
 	enviar_mensaje(mensaje, conexion);
-	//Falta esperar la respuesta
 
 	pthread_t thread_suscriptor;
 
-	/* F
-	 *
-	 * serve_client(&conexion);
-	 *
-	 */
-
 	printf("conexion: %d \n", conexion);
 
-	/*while (1){
+	while (1){
 		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
 		pthread_join(thread_suscriptor, NULL);
-	}*/
+		printf("id_appeared: %d\n", id_cola_appeared);
+		printf("id_caught: %d\n", id_cola_caught);
+		printf("id_localized: %d\n", id_cola_localized);
+	}
 
-	serve_client(&conexion);
-
-	printf("id_appeared: %d\n", id_cola_appeared);
-	printf("id_caught: %d\n", id_cola_caught);
-	printf("id_localized: %d\n", id_cola_localized);
-
-	// Problema para ale -> no liberar conexion
 	liberar_conexion(conexion);
 
 	return EXIT_SUCCESS;
@@ -488,20 +475,14 @@ void suscribirse_a_colas(){
 	char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
 	pthread_create(&hilo_appeared, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_appeared, NULL);
-	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "LOCALIZED_POKEMON");
 	pthread_create(&hilo_localized, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_localized, NULL);
-	free(mensaje);
 
 	mensaje = string_new();
 	string_append(&mensaje, "CAUGHT_POKEMON");
 	pthread_create(&hilo_caught, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_caught, NULL);
-	free(mensaje);
 
 }
 
@@ -566,9 +547,9 @@ int main (void) {
 
 	pthread_join(hilo_planificador, NULL);
 	pthread_join(hilo_servidor, NULL);
-	//pthread_join(hilo_appeared, NULL); //Vamos a tener que mover el join
-	//pthread_join(hilo_caught, NULL);
-	//pthread_join(hilo_localized, NULL);
+	pthread_join(hilo_appeared, NULL);
+	pthread_join(hilo_caught, NULL);
+	pthread_join(hilo_localized, NULL);
 
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
