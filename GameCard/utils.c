@@ -119,6 +119,7 @@ void esperar_cliente(int socket_servidor)
 void serve_client(int* socket)
 {
 	int cod_op;
+
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	process_request(cod_op, *socket);

@@ -39,10 +39,11 @@ char* id_cola_mensajes(char* msg){
 }
 
 void* suscribirse(void* cola){
+
 	char* msg = (char *)cola;
 	int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** mensaje = malloc(sizeof(char*)*4);
-
+	printf("cola: %s\n", msg);
 	mensaje[0] = string_new();
 	string_append(&(mensaje[0]), "BROKER");
 
@@ -55,7 +56,9 @@ void* suscribirse(void* cola){
 	mensaje[3] = id_cola_mensajes(msg);
 
 	// Y si establece conexion, no se envian mensajes bien
+
 	enviar_mensaje(mensaje, conexion);
+
 	//Falta esperar la respuesta
 
 	//pthread_t thread_suscriptor;
@@ -69,12 +72,13 @@ void* suscribirse(void* cola){
 		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
 		pthread_join(thread_suscriptor, NULL);
 	}*/
-
-	serve_client(&conexion);
-
-	printf("id_appeared: %d\n", id_cola_new);
-	printf("id_caught: %d\n", id_cola_get);
-	printf("id_localized: %d\n", id_cola_catch);
+	while(1){
+	pthread_create(&thread,NULL,(void*)serve_client,&conexion);
+	pthread_join(thread, NULL);
+	printf("id_new: %d\n", id_cola_new);
+	printf("id_get: %d\n", id_cola_get);
+	printf("id_catch: %d\n", id_cola_catch);
+	}
 
 	// Problema para ale -> no liberar conexion
 	liberar_conexion(conexion);
@@ -90,24 +94,17 @@ void* suscribirse(void* cola){
 void suscribirse_a_colas(){
 
 	// REVISAR
-
 	char* mensaje = string_new();
 	string_append(&mensaje, "NEW_POKEMON");
 	pthread_create(&hilo_new, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_new, NULL);
-	free(mensaje);
 
-	mensaje = string_new();
-	string_append(&mensaje, "GET_POKEMON");
-	pthread_create(&hilo_get, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_get, NULL);
-	free(mensaje);
+	char* mensaje2 = string_new();
+	string_append(&mensaje2, "GET_POKEMON");
+	pthread_create(&hilo_get, NULL, suscribirse,(void*) mensaje2);
 
-	mensaje = string_new();
-	string_append(&mensaje, "CATCH_POKEMON");
-	pthread_create(&hilo_catch, NULL, suscribirse,(void*) mensaje);
-	pthread_join(hilo_catch, NULL);
-	free(mensaje);
+	char* mensaje3 = string_new();
+	string_append(&mensaje3, "CATCH_POKEMON");
+	pthread_create(&hilo_catch, NULL, suscribirse,(void*) mensaje3);
 
 }
 
@@ -146,6 +143,9 @@ int main(){
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
+	pthread_join(hilo_new, NULL);
+	pthread_join(hilo_get, NULL);
+	pthread_join(hilo_catch, NULL);
 	pthread_join(hilo_servidor, NULL);
 	return 0;
 }

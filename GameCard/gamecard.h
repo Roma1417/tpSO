@@ -13,6 +13,7 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
+#include <semaphore.h>
 #include "utils.h"
 
 typedef struct {
