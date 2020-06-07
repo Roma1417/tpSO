@@ -136,12 +136,9 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			break;
 		case SUSCRIPTOR:{
 			agregar_string(&offset, argumentos[2], &stream);
-			agregar_entero(&offset, argumentos[3], &stream); // Modificamos el formato del mensaje SUSCRIPTOR
+			agregar_entero(&offset, "0", &stream); // Modificamos el formato del mensaje SUSCRIPTOR
 			break;
 			}
-		case EXIT:
-
-			break;
 		default:
 			break;
 	}
@@ -178,9 +175,6 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) *2 + strlen(argumentos[2]) +1;
 			break;
-		case EXIT:
-			size = 0;
-			break;
 		default:
 			break;
 	}
@@ -201,9 +195,19 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	else if(strcasecmp(tipo,"CAUGHT_POKEMON") == 0) {tipo_mensaje = CAUGHT_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
-	else if(strcasecmp(tipo,"EXIT") == 0) {tipo_mensaje = EXIT;}
 	else tipo_mensaje = DESCONOCIDO;
 	return tipo_mensaje;
+}
+
+char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
+	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
+	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
+	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
+	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
+	if(tipo == GET_POKEMON) return "GET_POKEMON";
+	if(tipo == LOCALIZED_POKEMON) return "LOCALIZED";
+	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
+	return "DESCONOCIDO";
 }
 
 void validar_argumentos(char** argumentos, int cantidad){
@@ -220,7 +224,60 @@ void validar_argumentos(char** argumentos, int cantidad){
 		printf("No se puede mandar el mensaje %s al proceso GameCard\n", argumentos[2]);
 		exit(1);
 	}
-
 }
+
+void* recibir_cadena(int socket_cliente, int* size)
+{
+	void * cadena;
+
+	recv(socket_cliente, size, sizeof(int), MSG_DONTWAIT);
+	cadena = malloc(*size);
+	recv(socket_cliente, cadena, *size, MSG_DONTWAIT);
+
+	return cadena;
+}
+
+u_int32_t recibir_entero(int socket_cliente){
+	int entero;
+	recv(socket_cliente, &entero, sizeof(int), MSG_DONTWAIT);
+
+	return entero;
+}
+
+void recibir_mensaje(int* conexion){
+	int cod_op;
+	if(recv(*conexion, &cod_op, sizeof(int), MSG_DONTWAIT) == -1)
+		cod_op = -1;
+	process_request(cod_op, *conexion);
+}
+void process_request(int cod_op, int cliente_fd) {
+
+	switch (cod_op) {
+		case NEW_POKEMON:
+		case APPEARED_POKEMON:
+		case CATCH_POKEMON:
+		case CAUGHT_POKEMON:
+		case GET_POKEMON:
+		case LOCALIZED_POKEMON:
+			printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
+
+			int32_t size;
+			void* stream = (void*)recibir_cadena(cliente_fd, &size);
+			printf("Parametro cadena %s\n",(char*) (stream+4));
+
+			break;
+
+		case SUSCRIPTOR:
+			printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
+			u_int32_t id_cola = recibir_entero(cliente_fd);
+			u_int32_t size_2 = recibir_entero(cliente_fd);
+			tipo_mensaje tipo = recibir_entero(cliente_fd);
+			break;
+		default:
+			break;
+
+		}
+}
+
 
 

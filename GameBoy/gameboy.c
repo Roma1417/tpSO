@@ -5,7 +5,8 @@ int main(int argc, char* argv[]){
 	char* ip;
 	char* puerto;
 
-	validar_argumentos(argv, argc-3);
+	//validar_argumentos(argv, argc-3);
+	argv = caso_suscriptor(argv);
 
 	t_log* logger;
 	t_config* config;
@@ -24,6 +25,9 @@ int main(int argc, char* argv[]){
 
 	enviar_mensaje(p, conexion);
 	log_info(logger, "Se ha enviado el mensaje %s al proceso %s", argv[2], argv[1]);
+
+	if(string_equals_ignore_case(argv[2], "SUSCRIPTOR"))
+		evaluar_suscripcion(argv, conexion);
 
 	terminar_programa(conexion, logger, config);
 }
@@ -64,4 +68,27 @@ void obtener_parametro(char ** parametro, char* string_parametro, char* destino,
 	char* parametro_key = obtener_key(string_parametro, destino);
 	*parametro = config_get_string_value(config, parametro_key);
 	free(parametro_key);
+}
+
+char** caso_suscriptor(char** argv){
+	if(string_equals_ignore_case(argv[1], "SUSCRIPTOR")){
+		char** parametros = malloc(sizeof(char*)*5);
+		parametros[0] = argv[0];
+		parametros[1] = "BROKER";
+		for(int i=2; i<5; i++){
+			parametros[i]=argv[i-1];
+		}
+		return parametros;
+	}
+	return argv;
+}
+
+void evaluar_suscripcion(char** argv, int conexion){
+	int tiempo_a_esperar = atoi(argv[4]);
+	//Preguntar por biblioteca para manejar el tiempo del clock
+	for(int i=1; i<=tiempo_a_esperar; i++){
+		recibir_mensaje(&conexion);
+		sleep(1);
+		printf("segundos:%d \n", i);
+	}
 }

@@ -545,7 +545,7 @@ int main (void) {
 
 	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
-	suscribirse_a_colas(); // REVISAR
+	//suscribirse_a_colas(); // REVISAR
 
 	t_list* auxiliar = get_objetivo_global(entrenadores);
 	objetivo_global = list_flatten(auxiliar);
@@ -553,7 +553,7 @@ int main (void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	//enviar_mensajes_get_pokemon(); // REVISAR
+	enviar_mensajes_get_pokemon(); // REVISAR
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_t hilo_planificador_largo_plazo;
