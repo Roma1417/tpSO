@@ -42,9 +42,12 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje);
 char* consultar_config_por_string(char*, char*);
 void finalizar_servidor();
-void notificar_suscriptor(t_suscriptor*, tipo_mensaje);
-void enviar_mensaje(t_paquete*, int);
+void notificar_id_suscriptor(t_suscriptor*, tipo_mensaje);
+u_int32_t enviar_mensaje(t_paquete*, u_int32_t);
 
 void enviar_a_suscriptor(t_mensaje*, t_suscriptor*);
 void enviar_a_suscriptores(t_mensaje*, t_list*);
+void agregar_suscriptor(u_int32_t, t_cola_mensajes*);
+t_suscriptor* actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
+
 #endif /* CONEXIONES_H_ */

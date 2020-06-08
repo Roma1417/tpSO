@@ -1,5 +1,5 @@
 /*
- * collections.c
+ * entrenador.c
  *
  *  Created on: 1 may. 2020
  *      Author: utnso
@@ -11,7 +11,7 @@
 t_cola_mensajes* crear_cola_mensajes(tipo_mensaje id){
 
 	t_cola_mensajes* cola_mensajes = malloc(sizeof(t_cola_mensajes));
-	t_queue* mensajes = queue_create();
+	t_list* mensajes = list_create();
 	t_list* suscriptores = list_create();
 
 	cola_mensajes -> id = id;
@@ -23,7 +23,7 @@ t_cola_mensajes* crear_cola_mensajes(tipo_mensaje id){
 
 void destruir_cola_mensajes(t_cola_mensajes* self){
 
-	queue_destroy(self -> mensajes);
+	list_destroy(self -> mensajes);
 	list_destroy(self -> suscriptores);
 	printf("Ward\n");
 	free(self);
@@ -45,28 +45,19 @@ t_suscriptor* crear_suscriptor(u_int32_t id, int32_t socket){
 	return suscriptor;
 }
 
-t_suscriptor* agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){ //Agrega suscriptor a una lista y retorna la id, que seria la posicion en la lista +1
+t_suscriptor* generar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){ //Agrega suscriptor a una lista y retorna la id, que seria la posicion en la lista +1
 	t_suscriptor* suscriptor = crear_suscriptor(generar_id_suscriptor(cola_mensajes->id), socket);
 
-	list_add(cola_mensajes->suscriptores, suscriptor);
+
 
 	return suscriptor;
 }
 
 
-t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
 
-	t_suscriptor* suscriptor = buscar_suscriptor(cola_mensajes, id_suscriptor);
 
-	suscriptor->numero_socket = socket;
+t_suscriptor* buscar_suscriptor(t_list* lista_suscriptores, u_int32_t id_suscriptor){
 
-	return suscriptor;
-
-}
-
-t_suscriptor* buscar_suscriptor(t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
-
-	t_list* lista_suscriptores = cola_mensajes->suscriptores;
 	for(u_int32_t x=0; x < list_size(lista_suscriptores); x++){
 		t_suscriptor* aux_suscriptor = list_get(lista_suscriptores, x);
 
@@ -107,6 +98,19 @@ void destruir_mensaje(t_mensaje* mensaje){
 	list_destroy(mensaje->suscriptores_enviados);
 	list_destroy(mensaje->suscriptores_confirmados);
 	free(mensaje);
+}
+
+t_mensaje* buscar_mensaje(t_list* lista_mensajes, u_int32_t id_mensaje){
+	printf("ward 2.1 \n");
+	for(u_int32_t x=0; x < list_size(lista_mensajes); x++){
+		t_mensaje* aux_mensaje = list_get(lista_mensajes, x);
+		printf("ward 2.2 \n");
+		if(aux_mensaje->paquete->id_mensaje == id_mensaje) return aux_mensaje;
+	}
+
+	printf("Error buscando al mensaje\n");
+
+	return NULL;
 }
 
 u_int32_t generar_id_mensaje(){

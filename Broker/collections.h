@@ -1,5 +1,5 @@
 /*
- * collections.h
+ * entrenador.h
  *
  *  Created on: 1 may. 2020
  *      Author: utnso
@@ -30,13 +30,13 @@ typedef enum{
 	GET_POKEMON = 5,
 	LOCALIZED_POKEMON = 6,
 	SUSCRIPTOR = 7,
-	EXIT = 9,
+	CONFIRMAR = 8,
 }tipo_mensaje;
 
 
 typedef struct{
 	tipo_mensaje id;
-	t_queue* mensajes;
+	t_list* mensajes;
 	t_list* suscriptores;
 }t_cola_mensajes;
 
@@ -54,8 +54,8 @@ typedef struct
 
 typedef struct
 {
-	tipo_mensaje tipo_mensaje;
 	u_int32_t id_mensaje;
+	tipo_mensaje tipo_mensaje;
 	t_buffer* buffer;
 } t_paquete;
 
@@ -78,13 +78,13 @@ void destruir_cola_mensajes(t_cola_mensajes*);
 void* get_cola_mensajes(tipo_mensaje);
 
 t_suscriptor* crear_suscriptor(u_int32_t, int32_t);
-t_suscriptor* agregar_suscriptor(u_int32_t, t_cola_mensajes*);
-t_suscriptor* actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
-t_suscriptor* buscar_suscriptor(t_cola_mensajes*, u_int32_t);
+t_suscriptor* generar_suscriptor(u_int32_t, t_cola_mensajes*);
+t_suscriptor* buscar_suscriptor(t_list*, u_int32_t);
 u_int32_t generar_id_suscriptor(tipo_mensaje);
 
 t_mensaje* crear_mensaje(t_paquete*);
 void destruir_mensaje(t_mensaje*);
+t_mensaje* buscar_mensaje(t_list*, u_int32_t);
 u_int32_t generar_id_mensaje();
 
 t_paquete* crear_paquete(u_int32_t, tipo_mensaje, t_buffer*);
