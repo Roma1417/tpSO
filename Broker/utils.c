@@ -95,13 +95,16 @@ void process_request(int cod_op, int cliente_fd) {
 
 		list_add(cola_mensajes->mensajes, mensaje);
 
+		enviar_mensaje(paquete, cliente_fd);
+		// Segun roman esto funciona
+
 		printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
 
 		printf("El tamaño de la cola de mensajes ahora es %d\n", list_size(cola_mensajes->mensajes));
 
 		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
 
-		printf("GG\n");
+		printf("GG\n"); // GG EASY, BETTER SUPP WINS
 
 		break;
 

@@ -83,17 +83,33 @@ void* ejecutar_entrenador(void* parametro){
 		}
 
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)\n", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
-		enviar_catch_pokemon(pokemon_a_atrapar);
+
+		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
-		//Tiene que atraparlo
 
+		if(entrenador->resultado_caught){
+			cambiar_estado(entrenador, READY);
+			queue_push(cola_ready, planificado);
+			sem_wait(&(puede_ejecutar[entrenador->indice]));
+			atrapar(entrenador, planificado->pokemon);
+			actualizar_objetivo_global();
+
+			for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+				char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
+				printf("pokemon atrapado: %s\n", pokemon);
+			}
+			// Estado a bloqueado?
+		}
+		cambiar_condicion_ready(entrenador);
+		sem_post(&puede_planificar);
 	}
 	return EXIT_SUCCESS;
 }
 
-void enviar_catch_pokemon(t_appeared_pokemon* pokemon){
+void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon){
 
 	char** mensaje = malloc(sizeof(char*)*5);
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
@@ -108,7 +124,8 @@ void enviar_catch_pokemon(t_appeared_pokemon* pokemon){
 	mensaje[4] = string_itoa(pokemon->posicion->y);
 
 	enviar_mensaje(mensaje, conexion);
-	//Falta recibir el id que manda el broker
+
+	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
 }
@@ -131,9 +148,6 @@ t_list* crear_entrenadores(t_config_team* config_team){
 		t_list* objetivo = list_get(objetivos_entrenadores,i);
 		t_list* pokemon_obtenidos = list_get(pokemon_entrenadores,i);
 		t_posicion* posicion = list_get(posiciones_entrenadores, i);
-
-		// Codigo en prueba
-
 
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i);
 		pthread_t hilo;
@@ -253,29 +267,6 @@ void enviar_mensajes_get_pokemon(){
 		pthread_create(&(get_pokemon[i]),NULL, enviar_get_pokemon, (void*) especie->nombre);
 		pthread_join(get_pokemon[i],NULL);
 	}
-
-	/*int conexion[list_size(especies_requeridas)];
-	t_especie* pokemon;
-
-	char** mensaje = malloc(sizeof(char*)*3);
-
-	mensaje[0] = string_new();
-	string_append(&(mensaje[0]), "BROKER");
-
-	mensaje[1] = string_new();
-	string_append(&(mensaje[1]), "GET_POKEMON");
-
-	for(int i = 0; i < list_size(especies_requeridas); i++){
-		conexion[i] = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
-		pokemon = list_get(especies_requeridas, i);
-		mensaje[2] = pokemon->nombre;
-		enviar_mensaje(mensaje, conexion[i]);
-		liberar_conexion(conexion[i]);
-	}
-
-	free(mensaje[0]);
-	free(mensaje[1]);
-	free(mensaje);*/
 }
 
 /*
@@ -296,6 +287,7 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 		}
 	}
 	cambiar_estado(mas_cercano, READY);
+	cambiar_condicion_ready(mas_cercano);
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
 	queue_push(cola_ready, planificado);
 }
@@ -356,6 +348,7 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 		//Poner semáforos
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
+		printf("Ward1\n");
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
 		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 	}
@@ -390,9 +383,6 @@ t_list* obtener_especies(t_list* objetivo_global){
 	t_list* especies = list_create();
 
 	for (int i = 0; i < list_size(objetivo_global); i++){
-		// if esta en la lista -> Aumento la cantidad
-		// else -> lo agrego con cantidad 1
-
 		char* pokemon = list_get(objetivo_global, i);
 
 		if (elem_especies(especies, pokemon)){}
@@ -424,7 +414,6 @@ void liberar_todo(int n){
  * @NAME: suscribirse
  * @DESC: Dado el nombre de una cola, se suscribe a esa cola de mensajes del
  * 		  broker.
- * 		  FALTA IMPLEMENTAR BIEN
  */
 void* suscribirse(void* cola){
 	char* msg = (char *)cola;
@@ -446,16 +435,16 @@ void* suscribirse(void* cola){
 
 	enviar_mensaje(mensaje, conexion);
 
+	for(int i = 0; i < 4; i++) free(mensaje[i]);
+	free(mensaje);
+
 	pthread_t thread_suscriptor;
 
 	printf("conexion: %d \n", conexion);
 
-	while (1){
+	while (1){ // Falta condicion
 		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
 		pthread_join(thread_suscriptor, NULL);
-		printf("id_appeared: %d\n", id_cola_appeared);
-		printf("id_caught: %d\n", id_cola_caught);
-		printf("id_localized: %d\n", id_cola_localized);
 	}
 
 	liberar_conexion(conexion);
@@ -500,13 +489,18 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud){
 	return vector;
 }
 
+void actualizar_objetivo_global(){
+	t_list* auxiliar = get_objetivo_global(entrenadores);
+	objetivo_global = list_flatten(auxiliar);
+	list_destroy(auxiliar);
+}
+
 // Funcion main
 int main (void) {
 
 	//signal(SIGTERM, imprimir); // Mostrar
 	//signal(SIGINT,liberar_todo); // Mostrar
 
-	t_list* entrenadores;
 	t_config* config = leer_config();
 
 	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
@@ -528,9 +522,7 @@ int main (void) {
 
 	suscribirse_a_colas(); // REVISAR
 
-	t_list* auxiliar = get_objetivo_global(entrenadores);
-	objetivo_global = list_flatten(auxiliar);
-	list_destroy(auxiliar);
+	actualizar_objetivo_global();
 
 	especies_requeridas = obtener_especies(objetivo_global);
 

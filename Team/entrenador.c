@@ -22,12 +22,25 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->objetivos = objetivos;
 	entrenador->estado = NEW;
 	entrenador->hilo = 0;
-	entrenador->capturas_disponibles = list_size(objetivos);
 	entrenador->indice = indice;
 	entrenador->id_caught = 0;
+	entrenador->resultado_caught = 0;
+	entrenador->puede_pasar_a_ready = true;
+	entrenador->capturas_disponibles = list_size(get_objetivos_faltantes(entrenador));
+	printf("capturas disponibles: %d\n",entrenador->capturas_disponibles);
 
 	return entrenador;
 
+}
+
+void cambiar_condicion_ready(t_entrenador* entrenador){
+	entrenador->puede_pasar_a_ready = !entrenador->puede_pasar_a_ready;
+}
+
+void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
+	list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
+	decrementar_capturas_disponibles(entrenador);
+	printf("i: %d, capturas disponibles: %d\n",entrenador->indice, entrenador->capturas_disponibles);
 }
 
 /*
@@ -46,7 +59,8 @@ void cambiar_estado(t_entrenador* entrenador, t_estado estado){
  */
 bool puede_ser_planificado(void* parametro){
 	t_entrenador* entrenador = parametro;
-	return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
+	return (entrenador->puede_pasar_a_ready);
+	//return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
 }
 
 /*
@@ -132,7 +146,7 @@ bool puede_seguir_atrapando(t_entrenador* entrenador){
  * @DESC: Dado un entrenador se decrementa en uno sus capturas disponibles.
  */
 void decrementar_capturas_disponibles(t_entrenador* entrenador){
-	entrenador->capturas_disponibles--;
+	entrenador->capturas_disponibles-=1;
 }
 
 /*

@@ -68,6 +68,7 @@ void* recibir_cadena(int socket_cliente, int* size)
  */
 void iniciar_servidor(void)
 {
+
 	//signal(SIGINT,liberar_todo);
 
 	int socket_servidor;
@@ -177,35 +178,81 @@ bool sigue_en_falta_especie(char* pokemon){
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
+	if (cod_op != -1) printf("cod_op: %d\n", cod_op);
 		switch (cod_op) {
 		case APPEARED_POKEMON:
 			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
 
 			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 
+			printf("WARD1\n");
+
 			size = recibir_entero(cliente_fd);
+
+			printf("WARD2\n");
 
 			char* cadena = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
 
+			printf("WARD3\n");
+
 			cambiar_nombre_pokemon(appeared_pokemon, cadena);
 
+			printf("WARD4\n");
+
 			u_int32_t x = recibir_entero(cliente_fd);
+			printf("WARD5\n");
 			u_int32_t y = recibir_entero(cliente_fd);
 
+			printf("WARD6\n");
+
 			t_posicion* posicion = posicion_create(x,y);
+
+			printf("WARD7\n");
 
 			cambiar_posicion(appeared_pokemon,posicion);
 
 			// Posible uso de semaforos en esta parte
 
+			printf("pokemon: %s\n", appeared_pokemon->pokemon);
+			printf("x: %d\n", appeared_pokemon->posicion->x);
+			printf("y: %d\n", appeared_pokemon->posicion->y);
+			printf("size: %d\n", appeared_pokemon->size_pokemon);
+
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global)
 					&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
+				printf("esta chequeado\n");
 				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);
 			} else appeared_pokemon_destroy(appeared_pokemon);
 
 			break;
 
+		case CATCH_POKEMON:
+			break;
+		case CAUGHT_POKEMON:
+			printf("Recibí un mensaje de tipo CAUGHT_POKEMON\n");
+
+			recibir_entero(cliente_fd);
+
+			size = recibir_entero(cliente_fd);
+
+			u_int32_t id_mensaje = recibir_entero(cliente_fd);
+
+			u_int32_t resultado = recibir_entero(cliente_fd);
+
+			printf("size: %d\n", size);
+			printf("id_mensaje: %d\n", id_mensaje);
+			printf("resultado: %d\n", resultado);
+
+			for (int i = 0; i<list_size(entrenadores); i++){
+				t_entrenador* entrenador = list_get(entrenadores, i);
+				if (entrenador->id_caught == id_mensaje){
+					sem_post(&(llega_mensaje_caught[entrenador->indice]));
+					entrenador->resultado_caught = resultado;
+				}
+			}
+
+			break;
 		case SUSCRIPTOR:{
 			u_int32_t id_cola = recibir_entero(cliente_fd);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
@@ -218,6 +265,19 @@ void process_request(int cod_op, int cliente_fd) {
 		case -1:
 			pthread_exit(NULL);
 		}
+}
+
+void asignar_id_caught(t_entrenador* entrenador, int conexion){
+	tipo_mensaje tipo = recibir_entero(conexion);
+	if (tipo == CATCH_POKEMON){
+		entrenador->id_caught = recibir_entero(conexion);
+		recibir_entero(conexion);
+		int size;
+		recibir_cadena(conexion, &size);
+		recibir_entero(conexion);
+		recibir_entero(conexion);
+	} else exit(1);
+	// Ale dijo que no hay que hacer free de los mensajes
 }
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){

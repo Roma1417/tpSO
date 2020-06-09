@@ -15,6 +15,7 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include "posicion.h"
+#include "appeared_pokemon.h"
 
 typedef enum{
 	NEW = 1,
@@ -34,6 +35,8 @@ typedef struct {
 	u_int32_t capturas_disponibles;
 	u_int32_t indice;
 	u_int32_t id_caught;
+	u_int32_t resultado_caught;
+	bool puede_pasar_a_ready;
 
 } t_entrenador;
 
@@ -48,5 +51,7 @@ void entrenador_destroy(t_entrenador* entrenador);
 bool puede_seguir_atrapando(t_entrenador* entrenador);
 void decrementar_capturas_disponibles(t_entrenador* entrenador);
 void set_hilo(t_entrenador* entrenador, pthread_t hilo);
+void cambiar_condicion_ready(t_entrenador* entrenador);
+void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
 
 #endif /* ENTRENADOR_H_ */
