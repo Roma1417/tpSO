@@ -12,6 +12,16 @@
 
 int main(void)
 {
+
+//probando memoria
+	t_memoria* memoria = crear_memoria(100);
+	agregar_stream(memoria, "asadsaf");
+	agregar_stream(memoria, "boca campeon");
+	agregar_stream(memoria, "chau");
+	mostrar_memoria(memoria);
+
+
+
 	for(u_int32_t i = 0; i<6; i++){
 	colas_mensajes[i] = crear_cola_mensajes(i + 1);
 	generador_id_suscriptor[i] = 1;

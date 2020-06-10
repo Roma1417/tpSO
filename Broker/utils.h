@@ -23,6 +23,7 @@
 #include<pthread.h>
 
 #include "collections.h"
+#include "memory.h"
 
 
 
