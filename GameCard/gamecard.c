@@ -126,6 +126,42 @@ t_config_gamecard* construir_config_gamecard(t_config* config){
 	return config_gamecard_local;
 }
 
+char* generar_nombre(char* parametro){
+	char* nombre = string_new();
+	string_append(&nombre, config_gamecard->punto_montaje_tallgrass);
+	string_append(&nombre, parametro);
+	return nombre;
+}
+
+/*void crear_directorios(){
+	printf("Ward1\n");
+
+	mkdir(config_gamecard->punto_montaje_tallgrass, 0777);
+	char* nombre_directorio = generar_nombre("/Metadata");
+	mkdir(nombre_directorio, 0777);
+	free(nombre_directorio);
+	nombre_directorio = generar_nombre("/Files");
+	mkdir(nombre_directorio, 0777);
+	free(nombre_directorio);
+	nombre_directorio = generar_nombre("/Blocks");
+	mkdir(nombre_directorio, 0777);
+	free(nombre_directorio);
+	printf("Ward2\n");
+}
+
+void crear_archivos(){
+	char* nombre_archivo = generar_nombre("/Metadata/Metadata.bin");
+	archivo_metadata = fopen(nombre_archivo, "r+b");
+	free(nombre_archivo);
+	//fputs("BLOCK_SIZE=64\n", archivo_metadata);
+	//fputs("BLOCKS=5192\n", archivo_metadata);
+	//fputs("MAGIC_NUMBER=TALL_GRASS\n", archivo_metadata);
+	nombre_archivo = generar_nombre("/Metadata/Bitmap.bin");
+	archivo_bitmap = fopen(nombre_archivo, "w+b");
+	free(nombre_archivo);
+
+}*/
+
 int main(){
 	t_config* config = leer_config();
 	//t_log* logger_team = iniciar_logger();
@@ -134,12 +170,16 @@ int main(){
 	id_cola_catch = 0;
 
 	config_gamecard = construir_config_gamecard(config);
+	//crear_directorios();
+	//crear_archivos();
 
 	suscribirse_a_colas();
 
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
+	fclose(archivo_metadata);
+	fclose(archivo_bitmap);
 	pthread_join(hilo_new, NULL);
 	pthread_join(hilo_get, NULL);
 	pthread_join(hilo_catch, NULL);
