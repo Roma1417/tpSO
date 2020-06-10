@@ -75,9 +75,6 @@ void* suscribirse(void* cola){
 	while(1){
 	pthread_create(&thread,NULL,(void*)serve_client,&conexion);
 	pthread_join(thread, NULL);
-	printf("id_new: %d\n", id_cola_new);
-	printf("id_get: %d\n", id_cola_get);
-	printf("id_catch: %d\n", id_cola_catch);
 	}
 
 	// Problema para ale -> no liberar conexion

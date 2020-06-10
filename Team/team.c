@@ -262,8 +262,10 @@ void enviar_mensajes_get_pokemon(){
 
 	pthread_t get_pokemon[list_size(especies_requeridas)];
 	t_especie* especie;
+	printf("Cantidad de especies: %d\n", list_size(especies_requeridas));
 	for(int i=0; i<list_size(especies_requeridas); i++){
 		especie = list_get(especies_requeridas, i);
+		printf("Especie: %s, Cantidad: %d\n", especie->nombre, especie->cantidad);
 		pthread_create(&(get_pokemon[i]),NULL, enviar_get_pokemon, (void*) especie->nombre);
 		pthread_join(get_pokemon[i],NULL);
 	}
@@ -364,9 +366,11 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 bool elem_especies(t_list* especies, char* pokemon){
 	bool encontrado = false;
 	for (int i = 0; i < list_size(especies) && !encontrado; i++){
+		printf("Ward1\n");
 		t_especie* especie = list_get(especies, i);
 		encontrado = string_equals_ignore_case(especie->nombre,pokemon);
-		if (encontrado) especie->cantidad++;
+		if (encontrado) {especie->cantidad++;
+		printf("Especie: %s, Cantidad: %d", especie->nombre, especie->cantidad);}
 	}
 	return encontrado;
 }
@@ -378,13 +382,13 @@ bool elem_especies(t_list* especies, char* pokemon){
  * 		  Estas especies tienen el nombre de la especie y la cantidad
  * 		  de apariciones en el objetivo global.
  */
-t_list* obtener_especies(t_list* objetivo_global){
+t_list* obtener_especies(){
 
 	t_list* especies = list_create();
 
 	for (int i = 0; i < list_size(objetivo_global); i++){
 		char* pokemon = list_get(objetivo_global, i);
-
+		printf("Pokemon: %s\n", pokemon);
 		if (elem_especies(especies, pokemon)){}
 		else {
 			t_especie* especie = malloc(sizeof(t_especie));
@@ -526,7 +530,7 @@ int main (void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	//enviar_mensajes_get_pokemon(); // REVISAR
+	enviar_mensajes_get_pokemon(); // REVISAR
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_t hilo_planificador_largo_plazo;

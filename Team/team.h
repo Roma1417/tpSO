@@ -52,5 +52,6 @@ void* enviar_get_pokemon(void* pokemon);
 sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon);
 void actualizar_objetivo_global();
+t_list* obtener_especies();
 
 #endif /* TEAM_H_ */

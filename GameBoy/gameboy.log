@@ -1514,3 +1514,5 @@
 [INFO] 20:20:39:91 gameboy/(11918:11918): Se ha enviado el mensaje CAUGHT_POKEMON al proceso BROKER
 [INFO] 20:23:34:986 gameboy/(11945:11945): Se realiza una conexión al proceso TEAM
 [INFO] 20:23:34:986 gameboy/(11945:11945): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+[INFO] 17:20:35:137 gameboy/(13142:13142): Se realiza una conexión al proceso BROKER
+[INFO] 17:20:35:137 gameboy/(13142:13142): Se ha enviado el mensaje APPEARED_POKEMON al proceso BROKER

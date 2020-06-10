@@ -20,14 +20,15 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->posicion = posicion;
 	entrenador->pokemon_obtenidos = pokemon_obtenidos;
 	entrenador->objetivos = objetivos;
+	entrenador->objetivos_faltantes = get_objetivos_faltantes(entrenador);
 	entrenador->estado = NEW;
 	entrenador->hilo = 0;
 	entrenador->indice = indice;
 	entrenador->id_caught = 0;
 	entrenador->resultado_caught = 0;
 	entrenador->puede_pasar_a_ready = true;
-	entrenador->capturas_disponibles = list_size(get_objetivos_faltantes(entrenador));
-	printf("capturas disponibles: %d\n",entrenador->capturas_disponibles);
+	entrenador->capturas_disponibles = list_size(entrenador->objetivos_faltantes);
+	//printf("capturas disponibles: %d\n",entrenador->capturas_disponibles); Me dijo Juan
 
 	return entrenador;
 
@@ -40,7 +41,7 @@ void cambiar_condicion_ready(t_entrenador* entrenador){
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
 	decrementar_capturas_disponibles(entrenador);
-	printf("i: %d, capturas disponibles: %d\n",entrenador->indice, entrenador->capturas_disponibles);
+
 }
 
 /*
@@ -76,7 +77,6 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 		encontrado = string_equals_ignore_case(un_pokemon, otro_pokemon);
 		if (encontrado){
 			char* removido = list_remove(lista, i);
-			free(removido);
 		}
 	}
 }
@@ -87,12 +87,17 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
  * 		  Devuelve la lista de objetivos modificada.
  */
 t_list* get_objetivos_faltantes(t_entrenador* entrenador){
+	t_list* objetivos_faltantes = list_create();
+	list_add_all(objetivos_faltantes, entrenador->objetivos);
+	for(int j=0; j<list_size(objetivos_faltantes);j++){
+		char* poke = list_get(objetivos_faltantes, j);
+	}
 	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
-		remover_elemento_repetido(entrenador->objetivos, pokemon);
+		remover_elemento_repetido(objetivos_faltantes, pokemon);
 	}
 
-	return entrenador->objetivos;
+	return objetivos_faltantes;
 }
 
 /*

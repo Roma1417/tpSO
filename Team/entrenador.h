@@ -30,6 +30,7 @@ typedef struct {
 	t_posicion* posicion;
 	t_list* pokemon_obtenidos;
 	t_list* objetivos;
+	t_list* objetivos_faltantes;
 	t_estado estado;
 	pthread_t hilo;
 	u_int32_t capturas_disponibles;

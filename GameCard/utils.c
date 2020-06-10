@@ -142,6 +142,14 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		case GET_POKEMON:
 			printf("Recibi un mensaje GET_POKEMON\n");
+			int id = recibir_entero(cliente_fd);
+			printf("id: %d\n", id);
+			size = recibir_entero(cliente_fd);
+			printf("size: %d\n", size);
+			int size2;
+			char* pokemon = recibir_cadena(cliente_fd, &size2);
+			printf("size_Pokemon: %d\n", size2);
+			printf("Pokemon: %s\n", pokemon);
 			break;
 
 		case SUSCRIPTOR:{
