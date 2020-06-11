@@ -230,23 +230,23 @@ void* recibir_cadena(int socket_cliente, int* size)
 {
 	void * cadena;
 
-	recv(socket_cliente, size, sizeof(int), MSG_DONTWAIT);
+	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
 	cadena = malloc(*size);
-	recv(socket_cliente, cadena, *size, MSG_DONTWAIT);
+	recv(socket_cliente, cadena, *size, MSG_WAITALL);
 
 	return cadena;
 }
 
 u_int32_t recibir_entero(int socket_cliente){
 	int entero;
-	recv(socket_cliente, &entero, sizeof(int), MSG_DONTWAIT);
+	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
 
 	return entero;
 }
 
 void recibir_mensaje(int* conexion){
 	int cod_op;
-	if(recv(*conexion, &cod_op, sizeof(int), MSG_DONTWAIT) == -1)
+	if(recv(*conexion, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	process_request(cod_op, *conexion);
 }
@@ -259,19 +259,19 @@ void process_request(int cod_op, int cliente_fd) {
 		case CAUGHT_POKEMON:
 		case GET_POKEMON:
 		case LOCALIZED_POKEMON:
-			printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
-
+			log_info(logger, "Llegó un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
+			recibir_entero(cliente_fd);
 			int32_t size;
-			void* stream = (void*)recibir_cadena(cliente_fd, &size);
-			printf("Parametro cadena %s\n",(char*) (stream+4));
+			recibir_cadena(cliente_fd, &size);
+			//log_info(logger, "Mensaje recibido: %s, id asignado: %d\n",(char*) (stream+4), id);
 
 			break;
 
-		case SUSCRIPTOR:
-			printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
-			u_int32_t id_cola = recibir_entero(cliente_fd);
-			u_int32_t size_2 = recibir_entero(cliente_fd);
-			tipo_mensaje tipo = recibir_entero(cliente_fd);
+		case SUSCRIPTOR:;
+			//printf("Recibí un mensaje de tipo %s\n", (char*) obtener_tipo_mensaje_string(cod_op));
+			recibir_entero(cliente_fd);
+			recibir_entero(cliente_fd);
+			recibir_entero(cliente_fd);
 			break;
 		default:
 			break;

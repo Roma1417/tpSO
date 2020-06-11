@@ -9,12 +9,10 @@
 #include <netdb.h>
 #include <string.h>
 #include <stdbool.h>
+#include<commons/log.h>
 #include <commons/string.h>
 
-/*typedef enum
-{
-	MENSAJE = 1,
-}op_code;*/
+t_log* logger;
 
 typedef enum{
 	NEW_POKEMON = 1,
@@ -26,34 +24,6 @@ typedef enum{
 	SUSCRIPTOR = 7,
 	DESCONOCIDO = 8,
 }tipo_mensaje;
-
-/*typedef struct{
-	u_int32_t nombre_size;
-	char* nombre_pokemon;
-	u_int32_t pos_x;
-	u_int32_t pos_y;
-	u_int32_t cantidad;
-}t_new_pokemon;
-
-typedef struct{
-	u_int32_t nombre_size;
-	char* nombre_pokemon;
-	u_int32_t pos_x;
-	u_int32_t pos_y;
-	u_int32_t id_mensaje;
-}t_appeared_pokemon;
-
-typedef struct{
-	u_int32_t nombre_size;
-	char* nombre_pokemon;
-	u_int32_t pos_x;
-	u_int32_t pos_y;
-}t_catch_pokemon;
-
-typedef struct{
-	u_int32_t id_mensaje;
-	u_int32_t 
-}t_caught_pokemon;*/
 
 typedef struct
 {

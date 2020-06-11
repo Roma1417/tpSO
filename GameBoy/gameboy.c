@@ -8,7 +8,6 @@ int main(int argc, char* argv[]){
 	//validar_argumentos(argv, argc-3);
 	argv = caso_suscriptor(argv);
 
-	t_log* logger;
 	t_config* config;
 
 	logger = iniciar_logger();
@@ -33,7 +32,7 @@ int main(int argc, char* argv[]){
 }
 
 t_log* iniciar_logger(void){
-	t_log* logger = log_create("gameboy.log","gameboy", false, LOG_LEVEL_INFO);
+	t_log* logger = log_create("gameboy.log","gameboy", true, LOG_LEVEL_INFO);
 	if(logger == NULL){
 		 printf("No pude crear el logger\n");
 		 exit(1);
@@ -83,12 +82,18 @@ char** caso_suscriptor(char** argv){
 	return argv;
 }
 
+void* suscribirse(void* parametro){
+	int conexion = (int) parametro;
+	while(1){
+		pthread_create(&thread,NULL,(void *) recibir_mensaje,&conexion);
+		pthread_join(thread, NULL);
+	}
+}
+
 void evaluar_suscripcion(char** argv, int conexion){
 	int tiempo_a_esperar = atoi(argv[4]);
-	//Preguntar por biblioteca para manejar el tiempo del clock
-	for(int i=1; i<=tiempo_a_esperar; i++){
-		recibir_mensaje(&conexion);
-		sleep(1);
-		printf("segundos:%d \n", i);
-	}
+	pthread_t suscriptor;
+	pthread_create(&suscriptor, NULL, suscribirse, (void*) conexion);
+	sleep(tiempo_a_esperar);
+	pthread_detach(suscriptor);
 }
