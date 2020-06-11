@@ -32,7 +32,7 @@ int main(int argc, char* argv[]){
 }
 
 t_log* iniciar_logger(void){
-	t_log* logger = log_create("gameboy.log","gameboy", true, LOG_LEVEL_INFO);
+	t_log* logger = log_create("gameboy.log","gameboy", false, LOG_LEVEL_INFO);
 	if(logger == NULL){
 		 printf("No pude crear el logger\n");
 		 exit(1);

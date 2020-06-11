@@ -64,8 +64,6 @@ void* ejecutar_entrenador(void* parametro){
 
 	while(puede_seguir_atrapando(entrenador)){
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		printf("Se ejecuto el entrenador %d\n", entrenador->indice);
-
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
 		for(int i=0; i<distancia_x;i++){
 			if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
@@ -82,7 +80,7 @@ void* ejecutar_entrenador(void* parametro){
 			sleep(config_team->retardo_ciclo_cpu);
 		}
 
-		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)\n", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 
 		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
@@ -95,16 +93,12 @@ void* ejecutar_entrenador(void* parametro){
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, planificado->pokemon);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
-
-			for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
-				char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
-				printf("pokemon atrapado: %s\n", pokemon);
-			}
-			// Estado a bloqueado?
 		}
-		cambiar_condicion_ready(entrenador);
+		if(puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
+		sem_post(&sem_entrenadores);
 	}
 	return EXIT_SUCCESS;
 }
@@ -262,10 +256,8 @@ void enviar_mensajes_get_pokemon(){
 
 	pthread_t get_pokemon[list_size(especies_requeridas)];
 	t_especie* especie;
-	printf("Cantidad de especies: %d\n", list_size(especies_requeridas));
 	for(int i=0; i<list_size(especies_requeridas); i++){
 		especie = list_get(especies_requeridas, i);
-		printf("Especie: %s, Cantidad: %d\n", especie->nombre, especie->cantidad);
 		pthread_create(&(get_pokemon[i]),NULL, enviar_get_pokemon, (void*) especie->nombre);
 		pthread_join(get_pokemon[i],NULL);
 	}
@@ -302,12 +294,9 @@ void planificar_entrenadores(){
 	//Falta un switch para planificar según cada algoritmo
 	if(!(queue_is_empty(cola_ready))){
 		sem_wait(&puede_planificar);
-		printf("Ward1\n");
 		t_planificado* planificado = queue_pop(cola_ready);
 		pokemon_a_atrapar = planificado->pokemon;
 		cambiar_estado(planificado->entrenador, EXEC);
-		printf("Indice del planificado: %d\n", planificado->entrenador->indice);
-		printf("Ward2\n");
 		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 	}
 
@@ -350,7 +339,6 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 		//Poner semáforos
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
-		printf("Ward1\n");
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
 		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 	}
@@ -366,11 +354,9 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 bool elem_especies(t_list* especies, char* pokemon){
 	bool encontrado = false;
 	for (int i = 0; i < list_size(especies) && !encontrado; i++){
-		printf("Ward1\n");
 		t_especie* especie = list_get(especies, i);
 		encontrado = string_equals_ignore_case(especie->nombre,pokemon);
-		if (encontrado) {especie->cantidad++;
-		printf("Especie: %s, Cantidad: %d", especie->nombre, especie->cantidad);}
+		if (encontrado) especie->cantidad++;
 	}
 	return encontrado;
 }
@@ -388,7 +374,6 @@ t_list* obtener_especies(){
 
 	for (int i = 0; i < list_size(objetivo_global); i++){
 		char* pokemon = list_get(objetivo_global, i);
-		printf("Pokemon: %s\n", pokemon);
 		if (elem_especies(especies, pokemon)){}
 		else {
 			t_especie* especie = malloc(sizeof(t_especie));
@@ -443,11 +428,8 @@ void* suscribirse(void* cola){
 	free(mensaje);
 
 	pthread_t thread_suscriptor;
-
-	printf("conexion: %d \n", conexion);
-
 	while (1){ // Falta condicion
-		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
+		pthread_create(&thread_suscriptor,NULL,(void*)recibir_mensaje,&conexion);
 		pthread_join(thread_suscriptor, NULL);
 	}
 

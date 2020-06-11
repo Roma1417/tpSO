@@ -7,6 +7,8 @@
 
 #include "utils.h"
 
+// Los cambios que se hicieron en el broker fueron culpa de ALE.
+// No tengo nada que ver. salu2
 
 
 void iniciar_servidor(void)
@@ -74,6 +76,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 	//u_int32_t id_mensaje = recibir_entero(cliente_fd);
 
+	if (cod_op != -1) printf("cod_op: %d\n",cod_op);
 
 	switch (cod_op) {
 	case NEW_POKEMON:
@@ -103,6 +106,12 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("El tamaño de la cola de mensajes ahora es %d\n", list_size(cola_mensajes->mensajes));
 
 		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
+
+		/*if (cod_op == APPEARED_POKEMON){
+			pthread_t nuevo;
+			pthread_create(&nuevo,NULL,(void*)serve_client,&cliente_fd);
+			pthread_join(nuevo, NULL);
+		}*/
 
 		printf("GG\n"); // GG EASY, BETTER SUPP WINS
 

@@ -34,6 +34,7 @@ typedef enum{
 	GET_POKEMON = 5,
 	LOCALIZED_POKEMON = 6,
 	SUSCRIPTOR = 7,
+	CONFIRMAR = 8
 }tipo_mensaje;
 
 typedef struct
@@ -106,6 +107,7 @@ void* generar_stream(char** argumentos, t_paquete* paquete);
 void agregar_string(int* offset, char* string, void** stream);
 void agregar_entero(int* offset, char* string, void** stream);
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo);
+void recibir_mensaje(int* socket);
 
 // Funciones compartidas
 

@@ -41,7 +41,6 @@ void cambiar_condicion_ready(t_entrenador* entrenador){
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
 	decrementar_capturas_disponibles(entrenador);
-
 }
 
 /*

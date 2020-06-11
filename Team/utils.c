@@ -20,6 +20,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
+	else if(strcasecmp(tipo,"CONFIRMAR") == 0) {tipo_mensaje = CONFIRMAR;}
 	return tipo_mensaje;
 }
 
@@ -36,6 +37,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	if(tipo == GET_POKEMON) return "GET_POKEMON";
 	if(tipo == LOCALIZED_POKEMON) return "LOCALIZED";
 	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
+	if(tipo == CONFIRMAR) return "CONFIRMAR";
 	return "DESCONOCIDO";
 }
 
@@ -147,7 +149,7 @@ void esperar_cliente(int socket_servidor)
  * @NAME: serve_client
  * @DESC: Funcion auxilar de iniciar_servidor.
  */
-void serve_client(int* socket)
+void recibir_mensaje(int* socket)
 {
 	int cod_op;
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
@@ -171,6 +173,37 @@ bool sigue_en_falta_especie(char* pokemon){
 	return en_falta;
 }
 
+void serve_client(int* socket){
+	int cod_op;
+	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+		cod_op = -1;
+	if (cod_op == APPEARED_POKEMON){
+		printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
+
+		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
+		recibir_entero(*socket);
+
+		char* cadena = recibir_cadena(*socket, &(appeared_pokemon->size_pokemon));
+		cambiar_nombre_pokemon(appeared_pokemon, cadena);
+		u_int32_t x = recibir_entero(*socket);
+		u_int32_t y = recibir_entero(*socket);
+
+		t_posicion* posicion = posicion_create(x,y);
+		cambiar_posicion(appeared_pokemon,posicion);
+
+		// Posible uso de semaforos en esta parte
+
+		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
+
+		if (list_elem(appeared_pokemon->pokemon, objetivo_global)
+				&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
+			queue_push(appeared_pokemons, appeared_pokemon);
+			sem_post(&sem_appeared_pokemon);
+		} else appeared_pokemon_destroy(appeared_pokemon);
+
+	}
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -178,60 +211,52 @@ bool sigue_en_falta_especie(char* pokemon){
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
-	if (cod_op != -1) printf("cod_op: %d\n", cod_op);
-		switch (cod_op) {
-		case APPEARED_POKEMON:
-			printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
-
+	switch (cod_op) {
+		case APPEARED_POKEMON:{
 			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
-
-			printf("WARD1\n");
-
-			size = recibir_entero(cliente_fd);
-
-			printf("WARD2\n");
-
+			u_int32_t id = recibir_entero(cliente_fd);
+			recibir_entero(cliente_fd);
 			char* cadena = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
-
-			printf("WARD3\n");
-
 			cambiar_nombre_pokemon(appeared_pokemon, cadena);
-
-			printf("WARD4\n");
-
 			u_int32_t x = recibir_entero(cliente_fd);
-			printf("WARD5\n");
 			u_int32_t y = recibir_entero(cliente_fd);
-
-			printf("WARD6\n");
-
 			t_posicion* posicion = posicion_create(x,y);
-
-			printf("WARD7\n");
-
 			cambiar_posicion(appeared_pokemon,posicion);
+			u_int32_t id_correlativo = recibir_entero(cliente_fd);
 
 			// Posible uso de semaforos en esta parte
 
-			printf("pokemon: %s\n", appeared_pokemon->pokemon);
-			printf("x: %d\n", appeared_pokemon->posicion->x);
-			printf("y: %d\n", appeared_pokemon->posicion->y);
-			printf("size: %d\n", appeared_pokemon->size_pokemon);
+			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d", cadena, x, y, id_correlativo);
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global)
 					&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
-				printf("esta chequeado\n");
 				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);
 			} else appeared_pokemon_destroy(appeared_pokemon);
 
-			break;
+			char** argv = malloc(sizeof(char*) * 5);
 
+			for (int i = 0; i < 5; i++){
+				argv[i] = string_new();
+			}
+
+			string_append(&(argv[0]), "BROKER");
+			string_append(&(argv[1]), "CONFIRMAR");
+			string_append(&(argv[2]), "APPEARED_POKEMON");
+			string_append(&(argv[3]), string_itoa(id));
+			string_append(&(argv[4]), string_itoa(id_cola_appeared));
+
+			for (int i = 0; i < 5; i++){
+				printf("%s\n", argv[i]);
+			}
+
+			enviar_mensaje(argv, cliente_fd);
+
+			break;
+		}
 		case CATCH_POKEMON:
 			break;
 		case CAUGHT_POKEMON:
-			printf("Recibí un mensaje de tipo CAUGHT_POKEMON\n");
-
 			recibir_entero(cliente_fd);
 
 			size = recibir_entero(cliente_fd);
@@ -240,9 +265,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			u_int32_t resultado = recibir_entero(cliente_fd);
 
-			printf("size: %d\n", size);
-			printf("id_mensaje: %d\n", id_mensaje);
-			printf("resultado: %d\n", resultado);
+			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %d", id_mensaje, resultado);
 
 			for (int i = 0; i<list_size(entrenadores); i++){
 				t_entrenador* entrenador = list_get(entrenadores, i);
@@ -292,7 +315,7 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
 			id_cola_caught = id_a_asignar;
 			break;
 		default:
-			printf("Boca campeón\n");
+			break;
 	}
 }
 
@@ -340,15 +363,6 @@ void* serializar_paquete(t_paquete* paquete, u_int32_t *bytes){
  * 		  crea una conexion y devuelve el socket resultante.
  */
 int crear_conexion(char *ip, char* puerto){
-	/*int puerto_entero = atoi(puerto);
-	struct sockaddr_in server;
-	server.sin_family = AF_INET;
-	server.sin_addr.s_addr = inet_addr(ip);
-	server.sin_port = htons(puerto_entero);
-	uint32_t client = socket(AF_INET, SOCK_STREAM, 0);
-	uint32_t socket_broker = connect(client, (void*) &server, sizeof(server));
-	printf("MIRAME: %d\n", socket_broker);
-	return socket_broker;*/
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
@@ -376,6 +390,7 @@ int crear_conexion(char *ip, char* puerto){
  */
 void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
+	printf("tipo: %d\n", tipo);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = tipo;
 	paquete->buffer = malloc(sizeof(t_buffer));
@@ -390,6 +405,8 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
 
 	int estado = send(socket_cliente, a_enviar, size_serializado, 0);
+
+	printf("estado: %d\n", estado);
 
 	free(paquete->buffer->stream);
 	free(paquete->buffer);
@@ -443,6 +460,16 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			agregar_string(&offset, argumentos[2], &stream);
 			agregar_entero(&offset, argumentos[3], &stream);
 			break;
+		case CONFIRMAR:{
+			printf("ward1\n");
+			tipo_mensaje cod_op = obtener_tipo_mensaje(argumentos[2]);
+			printf("cod_op: %d\n", cod_op);
+			memcpy(stream + offset, &cod_op, sizeof(u_int32_t));
+			offset += sizeof(u_int32_t);
+			agregar_entero(&offset, argumentos[3], &stream);
+			agregar_entero(&offset, argumentos[4], &stream);
+			break;
+		}
 		default:
 			break;
 	}
@@ -467,6 +494,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 			break;
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
+			break;
+		case CONFIRMAR:
+			size = sizeof(u_int32_t) * 3;
 			break;
 		default:
 			break;
