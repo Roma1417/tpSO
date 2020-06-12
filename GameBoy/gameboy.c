@@ -85,8 +85,8 @@ char** caso_suscriptor(char** argv){
 
 char** caso_caught(char** argv){
 	if(string_equals_ignore_case(argv[2], "CAUGHT_POKEMON")){
-		if (string_equals_ignore_case(argv[3], "OK")) argv[3] = "1";
-		else if (string_equals_ignore_case(argv[3], "FAIL")) argv[3] = "0";
+		if (string_equals_ignore_case(argv[4], "OK")) argv[4] = "1";
+		else if (string_equals_ignore_case(argv[4], "FAIL")) argv[4] = "0";
 	}
 	return argv;
 }

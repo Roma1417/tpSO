@@ -179,6 +179,7 @@ void serve_client(int* socket){
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	if (cod_op == APPEARED_POKEMON){
+		printf("Llego un mensaje APPEARED_POKEMON\n");
 		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 		recibir_entero(*socket);
 
@@ -223,9 +224,10 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
-	u_int32_t id = recibir_entero(cliente_fd);
+	u_int32_t id;
 	switch (cod_op) {
 		case APPEARED_POKEMON:{
+			id = recibir_entero(cliente_fd);
 			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 			recibir_entero(cliente_fd);
 			char* cadena = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
@@ -254,6 +256,8 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		case CAUGHT_POKEMON:{
 
+			id = recibir_entero(cliente_fd);
+
 			size = recibir_entero(cliente_fd);
 
 			u_int32_t id_mensaje = recibir_entero(cliente_fd);
@@ -275,6 +279,8 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		}
 		case LOCALIZED_POKEMON:
+			id = recibir_entero(cliente_fd);
+			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
 			size = recibir_entero(cliente_fd);
 			u_int32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
