@@ -7,7 +7,7 @@
 
 #include "memory.h"
 
-int algoritmo_eleccion = 1;
+int algoritmo_eleccion = 2;
 
 t_memoria* crear_memoria(uint32_t tamanio){
 	t_memoria* memoria = malloc(sizeof(t_memoria));
@@ -28,10 +28,10 @@ t_particion* crear_particion(void* base, uint32_t tamanio, bool ocupada){
 	return particion;
 }
 
-void agregar_stream(t_memoria* memoria, void* stream){
+void agregar_stream(t_memoria* memoria, void* stream, uint32_t tamanio){
 	t_list* particiones = memoria->particiones;
-	uint32_t indice_particion_seleccionada = buscar_indice_particion(particiones, strlen(stream));
-	agregar_particion(particiones, indice_particion_seleccionada, stream);
+	uint32_t indice_particion_seleccionada = buscar_indice_particion(particiones, tamanio);
+	agregar_particion(particiones, indice_particion_seleccionada, stream, tamanio);
 }
 
 uint32_t buscar_indice_particion(t_list* particiones, uint32_t tamanio){
@@ -48,16 +48,18 @@ uint32_t buscar_indice_particion(t_list* particiones, uint32_t tamanio){
 		break;
 
 	case 2:;
-		uint32_t indice_particion_elegida = NULL;
+		uint32_t indice_particion_elegida;
+		t_particion* particion_elegida = NULL;
 
 				for (uint32_t i = 0; i < list_size(particiones); i++){
 					t_particion* particion_actual = list_get(particiones, i);
-					t_particion* particion_elegida = list_get(particiones, indice_particion_elegida);
 
-					if(tamanio < particion_actual->tamanio && !particion_actual->ocupada){
+					if(tamanio < particion_actual->tamanio && !(particion_actual->ocupada)){
 
-						if(particion_actual->tamanio < particion_elegida->tamanio || particion_elegida == NULL){
+						if(particion_elegida == NULL || particion_actual->tamanio < particion_elegida->tamanio){
+
 							indice_particion_elegida = i;
+							particion_elegida = list_get(particiones, indice_particion_elegida);
 						}
 					}
 				}
@@ -71,9 +73,8 @@ uint32_t buscar_indice_particion(t_list* particiones, uint32_t tamanio){
 }
 
 
-void agregar_particion(t_list* particiones, uint32_t indice, void* stream){
+void agregar_particion(t_list* particiones, uint32_t indice, void* stream, uint32_t tamanio){
 	t_particion* particion_seleccionada = list_get(particiones, indice);
-	uint32_t tamanio= strlen(stream);
 
 	t_particion* particion_libre = crear_particion(particion_seleccionada->base + tamanio, particion_seleccionada->tamanio - tamanio, false);
 	list_add_in_index(particiones, indice + 1,particion_libre);
@@ -81,16 +82,68 @@ void agregar_particion(t_list* particiones, uint32_t indice, void* stream){
 	memcpy(particion_seleccionada->base, stream, tamanio);
 	particion_seleccionada->tamanio = tamanio;
 	particion_seleccionada->ocupada =true;
+
+	log_info(logger, "Se ha almacenado un mensaje dentro de la memoria. (Base: %p)", particion_seleccionada->base);
 }
 
 
 void mostrar_memoria(t_memoria* memoria){
 	for (uint32_t i = 0; i < list_size(memoria->particiones); i++){
 		t_particion* particion_actual = list_get(memoria->particiones, i);
-		printf("Particion %d\n", i);
+		printf("\nParticion %d:\n", i);
 		printf("Base: %d\n", particion_actual->base);
 		printf("Tamanio: %d\n", particion_actual->tamanio);
 		printf("Está ocupada: %d\n", particion_actual->ocupada);
 		printf("Contenido: %s\n",particion_actual->base);
 	}
 }
+
+void* liberar_particion(t_memoria* memoria, uint32_t indice){
+	t_list* particiones = memoria->particiones;
+	t_particion* particion = list_get(particiones, indice);
+	particion->ocupada = false;
+	void* stream = malloc(particion->tamanio);
+	memcpy(stream, particion->base, particion->tamanio);
+
+	t_particion* particion_siguiente = list_get(particiones, indice + 1);
+	if (particion_siguiente != NULL && particion_siguiente->ocupada == false){
+		combinar_particiones(particiones, indice);
+	}
+
+	t_particion* particion_anterior = list_get(particiones, indice - 1);
+	if (particion_anterior != NULL && particion_anterior->ocupada == false){
+		combinar_particiones(particiones, indice - 1);
+	}
+
+	log_info(logger, "Se ha liberado un mensaje de la memoria. (Base: %p)", particion->base);
+	return stream;
+}
+
+void combinar_particiones(t_list* particiones, uint32_t indice){
+	t_particion* particion = list_get(particiones, indice);
+	t_particion* particion_siguiente = list_get(particiones, indice + 1);
+
+	particion->tamanio += particion_siguiente->tamanio;
+	list_remove_and_destroy_element(particiones, indice + 1, free);
+}
+
+void compactar_memoria(t_memoria* memoria){
+	t_list* particiones = memoria->particiones;
+
+	for (uint32_t i = 0; i < list_size(particiones); i++){
+		t_particion* particion_actual = list_get(particiones, i);
+		if(particion_actual->ocupada == 1){
+			uint32_t tamanio = particion_actual->tamanio;
+			void* stream = liberar_particion(memoria, i);
+			agregar_stream(memoria, stream, tamanio);
+			free(stream);
+		}
+	}
+
+	log_info(logger, "Se ha ejecutado una compactación de memoria.");
+
+}
+
+
+
+

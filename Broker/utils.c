@@ -7,8 +7,6 @@
 
 #include "utils.h"
 
-// Los cambios que se hicieron en el broker fueron culpa de ALE.
-// No tengo nada que ver. salu2
 
 
 void iniciar_servidor(void)
@@ -55,7 +53,11 @@ void esperar_cliente(int socket_servidor)
 	u_int32_t tam_direccion = sizeof(struct sockaddr_in); //capaz no sea unsigned
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
-	//agregar log de conexion
+
+	if(socket_cliente != -1){
+	log_info(logger, "Se ha conectado un proceso al servidor (Socket: %d)", socket_cliente);
+	}
+
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
 	pthread_join(thread, NULL);
 
@@ -76,7 +78,6 @@ void process_request(int cod_op, int cliente_fd) {
 
 	//u_int32_t id_mensaje = recibir_entero(cliente_fd);
 
-	if (cod_op != -1) printf("cod_op: %d\n",cod_op);
 
 	switch (cod_op) {
 	case NEW_POKEMON:
@@ -86,6 +87,7 @@ void process_request(int cod_op, int cliente_fd) {
 	case GET_POKEMON:
 	case LOCALIZED_POKEMON:
 		printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
+		log_info(logger, "Se ha recibido un mensaje del tipo %d(%s).", cod_op, obtener_tipo_mensaje_string(cod_op));
 
 		int32_t size;
 		void* stream = (void*)recibir_cadena(cliente_fd, &size);
@@ -99,7 +101,7 @@ void process_request(int cod_op, int cliente_fd) {
 		list_add(cola_mensajes->mensajes, mensaje);
 
 		enviar_mensaje(paquete, cliente_fd);
-		// Segun roman esto funciona
+		// Segun Román esto funciona
 
 		printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
 
@@ -159,6 +161,8 @@ void process_request(int cod_op, int cliente_fd) {
 		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(mensaje_confirmado->suscriptores_enviados, id_suscriptor_confirmado);
 
 		list_add(mensaje_confirmado->suscriptores_confirmados, suscriptor_confirmado);
+
+		log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
 		break;
 	case 0:
@@ -233,6 +237,7 @@ void finalizar_servidor(){
 		t_cola_mensajes* cola_mensajes = get_cola_mensajes(i);
 		printf("Tipo msj %s\n", obtener_tipo_mensaje_string(i));
 		destruir_cola_mensajes(cola_mensajes);
+		log_destroy(logger);
 	}
 	exit(2);
 }
@@ -272,7 +277,7 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 
 	size_t bytes = paquete->buffer->size + 3*sizeof(int32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
-
+	printf("Se envio un mensaje\n");
 	u_int32_t envio = send(socket, a_enviar, bytes, MSG_NOSIGNAL);
 	free(a_enviar);
 	return envio;
@@ -281,6 +286,7 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 void enviar_a_suscriptor(t_mensaje* mensaje, t_suscriptor* suscriptor){
 	u_int32_t envio = enviar_mensaje(mensaje->paquete, suscriptor->numero_socket);
 	printf("Se envio el mensaje de ID %d al suscriptor %d (%d)\n", mensaje->paquete->id_mensaje, suscriptor->id, envio);
+	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)", mensaje->paquete->id_mensaje, suscriptor->id, envio);
 	list_add(mensaje->suscriptores_enviados, suscriptor);
 	esperar_confirmacion(suscriptor);
 }
@@ -307,6 +313,9 @@ void agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){
 	notificar_id_suscriptor(suscriptor, cola_mensajes->id);
 
 	list_add(cola_mensajes->suscriptores, suscriptor);
+	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).", suscriptor->id, cola_mensajes->id, obtener_tipo_mensaje_string(cola_mensajes->id));
+
+
 	t_list* mensajes = cola_mensajes->mensajes;
 
 	for(int i = 0; i < list_size(mensajes); i++){

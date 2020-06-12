@@ -33,13 +33,21 @@ typedef struct{
 	bool ocupada;
 }t_particion;
 
+uint32_t tamano_minimo_particion;
+char* algoritmo_memoria;
+char* algoritmo_particion_libre;
+char* algoritmo_reemplazo;
+uint32_t frecuencia_compactacion;
+t_log* logger;
+
 
 t_memoria* crear_memoria(uint32_t);
 t_particion* crear_particion(void*, uint32_t, bool);
-void agregar_stream(t_memoria*, void*);
+void agregar_stream(t_memoria*, void*, uint32_t);
 uint32_t buscar_indice_particion(t_list*, uint32_t);
-void agregar_particion(t_list*, uint32_t, void*);
+void agregar_particion(t_list*, uint32_t, void*, uint32_t);
 void mostrar_memoria(t_memoria*);
-
+void* liberar_particion(t_memoria*, uint32_t);
+void combinar_particiones(t_list*, uint32_t);
 
 #endif /* MEMORY_H_ */
