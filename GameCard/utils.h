@@ -16,6 +16,9 @@
 #include <netdb.h>
 #include <string.h>
 #include <commons/string.h>
+#include <commons/collections/list.h>
+#include <sys/stat.h>
+#include <commons/config.h>
 
 #define IP "127.0.0.2"
 #define PUERTO "37228"
@@ -31,10 +34,23 @@ typedef enum{
 	CONFIRMAR = 8,
 }tipo_mensaje;
 
+typedef struct {
+	uint32_t tiempo_de_reintento_conexion;
+	uint32_t tiempo_de_reintento_operacion;
+	char* punto_montaje_tallgrass;
+	char* ip_broker;
+	char* puerto_broker;
+
+}t_config_gamecard;
+
 pthread_t thread;
 u_int32_t id_cola_get;
 u_int32_t id_cola_new;
 u_int32_t id_cola_catch;
+t_list* archivos_creados;
+t_config_gamecard* config_gamecard;
+FILE * archivo_metadata;
+FILE * archivo_bitmap;
 
 typedef struct
 {
@@ -66,6 +82,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo);
 void liberar_conexion(u_int32_t socket_cliente);
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo);
 void recibir_mensaje(int* socket);
+bool list_elem(char* elemento, t_list* lista);
+char* generar_nombre(char* parametro);
+void generar_metadata_bin(char* path);
 
 
 #endif /* UTILS_H_ */

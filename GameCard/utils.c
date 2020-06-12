@@ -144,6 +144,15 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
 	printf("Mandé confirmación\n");
 }
 
+bool list_elem(char* elemento, t_list* lista){
+	bool encontrado = false;
+	for(int i = 0; i < list_size(lista) && !encontrado; i++){
+		char* pokemon = list_get(lista, i);
+		encontrado = string_equals_ignore_case(pokemon, elemento);
+	}
+	return encontrado;
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -169,6 +178,20 @@ void process_request(int cod_op, int cliente_fd) {
 			u_int32_t cantidad = recibir_entero(cliente_fd);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
+
+			if(list_elem(pokemon, archivos_creados)){
+				printf("Entré al if\n");//Muchas cosas
+			} else {
+				printf("Entré al else\n");
+				char* path = string_new();
+				string_append_with_format(&path, "/Files/%s", pokemon);
+				char* nombre_directorio = generar_nombre(path);
+				mkdir(nombre_directorio, 0777);
+				generar_metadata_bin(nombre_directorio);
+				free(path);
+				free(nombre_directorio);
+
+			}
 			break;
 		case CATCH_POKEMON:
 			printf("Recibi un mensaje CATCH_POKEMON\n");
@@ -204,6 +227,14 @@ void process_request(int cod_op, int cliente_fd) {
 		case -1:
 			pthread_exit(NULL);
 		}
+}
+
+void generar_metadata_bin(char* path){
+	char* metadata = string_new();
+	string_append_with_format(&metadata, "%s/Metadata.bin", path);
+	printf("Path: %s\n", metadata);
+	archivo_metadata = fopen(metadata, "w+b");
+	free(metadata);
 }
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
@@ -458,5 +489,12 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
  */
 void liberar_conexion(u_int32_t socket_cliente){
 	close(socket_cliente);
+}
+
+char* generar_nombre(char* parametro){
+	char* nombre = string_new();
+	string_append(&nombre, config_gamecard->punto_montaje_tallgrass);
+	string_append(&nombre, parametro);
+	return nombre;
 }
 

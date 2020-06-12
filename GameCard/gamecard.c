@@ -126,12 +126,7 @@ t_config_gamecard* construir_config_gamecard(t_config* config){
 	return config_gamecard_local;
 }
 
-char* generar_nombre(char* parametro){
-	char* nombre = string_new();
-	string_append(&nombre, config_gamecard->punto_montaje_tallgrass);
-	string_append(&nombre, parametro);
-	return nombre;
-}
+
 
 /*void crear_directorios(){
 	printf("Ward1\n");
@@ -168,6 +163,8 @@ int main(){
 	id_cola_get = 0;
 	id_cola_new = 0;
 	id_cola_catch = 0;
+	archivos_creados = list_create();
+
 
 	config_gamecard = construir_config_gamecard(config);
 	//crear_directorios();
