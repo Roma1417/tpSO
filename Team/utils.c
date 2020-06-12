@@ -179,7 +179,6 @@ void serve_client(int* socket){
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	if (cod_op == APPEARED_POKEMON){
-		printf("Llego un mensaje APPEARED_POKEMON\n");
 		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 		recibir_entero(*socket);
 
@@ -215,6 +214,13 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
 	string_append(&(argv[3]), string_itoa(id_mensaje));
 	string_append(&(argv[4]), string_itoa(id_proceso));
 	enviar_mensaje(argv, cliente_fd);
+}
+
+char* obtener_resultado(u_int32_t resultado){
+	char* string = string_new();
+	if (resultado) string_append(&string, "OK");
+	else string_append(&string, "FAIL");
+	return string;
 }
 
 /*
@@ -264,7 +270,11 @@ void process_request(int cod_op, int cliente_fd) {
 
 			u_int32_t resultado = recibir_entero(cliente_fd);
 
-			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %d", id_mensaje, resultado);
+			char* cadena = obtener_resultado(resultado);
+
+			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %s", id_mensaje, cadena);
+
+			free(cadena);
 
 			for (int i = 0; i<list_size(entrenadores); i++){
 				t_entrenador* entrenador = list_get(entrenadores, i);
