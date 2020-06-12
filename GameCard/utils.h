@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <string.h>
+#include <commons/string.h>
 
 #define IP "127.0.0.2"
 #define PUERTO "37228"
@@ -27,6 +28,7 @@ typedef enum{
 	GET_POKEMON = 5,
 	LOCALIZED_POKEMON = 6,
 	SUSCRIPTOR = 7,
+	CONFIRMAR = 8,
 }tipo_mensaje;
 
 pthread_t thread;

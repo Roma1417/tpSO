@@ -9,7 +9,6 @@
 #define GAMECARD_H_
 
 #include <commons/log.h>
-#include <commons/string.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>

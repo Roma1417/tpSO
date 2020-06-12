@@ -18,6 +18,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
+	else if(strcasecmp(tipo,"CONFIRMAR") == 0) {tipo_mensaje = CONFIRMAR;}
 	return tipo_mensaje;
 }
 
@@ -125,6 +126,21 @@ void serve_client(int* socket)
 	process_request(cod_op, *socket);
 }
 
+void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proceso, char* mensaje) {
+	char** argv = malloc(sizeof(char*) * 5);
+	for (int i = 0; i < 5; i++) {
+		argv[i] = string_new();
+	}
+	string_append(&(argv[0]), "BROKER");
+	string_append(&(argv[1]), "CONFIRMAR");
+	argv[2] = mensaje;
+	string_append(&(argv[3]), string_itoa(id_mensaje));
+	string_append(&(argv[4]), string_itoa(id_proceso));
+	for (int i = 0; i < 5; i++) {
+		printf("%s\n", argv[i]);
+	}
+	enviar_mensaje(argv, cliente_fd);
+}
 
 /*
  * @NAME: process_request
@@ -150,6 +166,8 @@ void process_request(int cod_op, int cliente_fd) {
 			char* pokemon = recibir_cadena(cliente_fd, &size2);
 			printf("size_Pokemon: %d\n", size2);
 			printf("Pokemon: %s\n", pokemon);
+
+			confirmar_recepcion(id, cliente_fd, id_cola_get, "GET_POKEMON");
 			break;
 
 		case SUSCRIPTOR:{
@@ -319,6 +337,16 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			agregar_string(&offset, argumentos[2], &stream);
 			agregar_entero(&offset, argumentos[3], &stream);
 			break;
+		case CONFIRMAR:{
+			printf("ward1\n");
+			tipo_mensaje cod_op = obtener_tipo_mensaje(argumentos[2]);
+			printf("cod_op: %d\n", cod_op);
+			memcpy(stream + offset, &cod_op, sizeof(u_int32_t));
+			offset += sizeof(u_int32_t);
+			agregar_entero(&offset, argumentos[3], &stream);
+			agregar_entero(&offset, argumentos[4], &stream);
+			break;
+			}
 		default:
 			break;
 	}
@@ -343,6 +371,9 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 			break;
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
+			break;
+		case CONFIRMAR:
+			size = sizeof(u_int32_t) * 3;
 			break;
 		default:
 			break;

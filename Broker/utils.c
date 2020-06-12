@@ -107,12 +107,6 @@ void process_request(int cod_op, int cliente_fd) {
 
 		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
 
-		/*if (cod_op == APPEARED_POKEMON){
-			pthread_t nuevo;
-			pthread_create(&nuevo,NULL,(void*)serve_client,&cliente_fd);
-			pthread_join(nuevo, NULL);
-		}*/
-
 		printf("GG\n"); // GG EASY, BETTER SUPP WINS
 
 		break;
@@ -288,6 +282,13 @@ void enviar_a_suscriptor(t_mensaje* mensaje, t_suscriptor* suscriptor){
 	u_int32_t envio = enviar_mensaje(mensaje->paquete, suscriptor->numero_socket);
 	printf("Se envio el mensaje de ID %d al suscriptor %d (%d)\n", mensaje->paquete->id_mensaje, suscriptor->id, envio);
 	list_add(mensaje->suscriptores_enviados, suscriptor);
+	esperar_confirmacion(suscriptor);
+}
+
+void esperar_confirmacion(t_suscriptor* suscriptor){
+	pthread_t nuevo;
+	pthread_create(&nuevo,NULL,(void*)serve_client,&suscriptor->numero_socket);
+	pthread_join(nuevo, NULL);
 }
 
 void enviar_a_suscriptores(t_mensaje* mensaje, t_list* suscriptores){

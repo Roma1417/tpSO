@@ -47,6 +47,7 @@ void notificar_id_suscriptor(t_suscriptor*, tipo_mensaje);
 u_int32_t enviar_mensaje(t_paquete*, u_int32_t);
 
 void enviar_a_suscriptor(t_mensaje*, t_suscriptor*);
+void esperar_confirmacion(t_suscriptor* suscriptor); //Agregado por el hincha de BOCA
 void enviar_a_suscriptores(t_mensaje*, t_list*);
 void agregar_suscriptor(u_int32_t, t_cola_mensajes*);
 t_suscriptor* actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);

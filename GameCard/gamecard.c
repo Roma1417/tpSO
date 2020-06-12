@@ -178,8 +178,8 @@ int main(){
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
-	fclose(archivo_metadata);
-	fclose(archivo_bitmap);
+	//fclose(archivo_metadata);
+	//fclose(archivo_bitmap);
 	pthread_join(hilo_new, NULL);
 	pthread_join(hilo_get, NULL);
 	pthread_join(hilo_catch, NULL);

@@ -18,6 +18,7 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	tipo_mensaje tipo_mensaje;
 	if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
 	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
+	else if(strcasecmp(tipo,"CAUGHT_POKEMON") == 0) {tipo_mensaje = CAUGHT_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
 	else if(strcasecmp(tipo,"CONFIRMAR") == 0) {tipo_mensaje = CONFIRMAR;}
@@ -256,8 +257,8 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 		case CATCH_POKEMON:
 			break;
-		case CAUGHT_POKEMON:
-			recibir_entero(cliente_fd);
+		case CAUGHT_POKEMON:;
+			u_int32_t id_caught = recibir_entero(cliente_fd);
 
 			size = recibir_entero(cliente_fd);
 
@@ -274,6 +275,24 @@ void process_request(int cod_op, int cliente_fd) {
 					entrenador->resultado_caught = resultado;
 				}
 			}
+
+			char** argv = malloc(sizeof(char*) * 5);
+
+			for (int i = 0; i < 5; i++){
+				argv[i] = string_new();
+			}
+
+			string_append(&(argv[0]), "BROKER");
+			string_append(&(argv[1]), "CONFIRMAR");
+			string_append(&(argv[2]), "CAUGHT_POKEMON");
+			string_append(&(argv[3]), string_itoa(id_caught));
+			string_append(&(argv[4]), string_itoa(id_cola_caught));
+
+			for (int i = 0; i < 5; i++){
+				printf("%s\n", argv[i]);
+			}
+
+			enviar_mensaje(argv, cliente_fd);
 
 			break;
 		case SUSCRIPTOR:{
