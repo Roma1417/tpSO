@@ -13,10 +13,7 @@
  */
 u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	u_int32_t diferencia_en_x = entrenador->posicion->x - appeared_pokemon->posicion->x;
-	//printf("diferencia en x: %d, entrenador x: %d, pokemon x: %d\n", diferencia_en_x, entrenador->posicion->x, appeared_pokemon->posicion->x);
 	u_int32_t diferencia_en_y = entrenador->posicion->y - appeared_pokemon->posicion->y;
-	//printf("diferencia en y: %d, entrenador y: %d, pokemon y: %d\n", diferencia_en_y, entrenador->posicion->y, appeared_pokemon->posicion->y);
-	//printf("abs x: %d, abs y: %d\n",abs(diferencia_en_x), abs(diferencia_en_y));
 	return abs(diferencia_en_x) + abs(diferencia_en_y);
 }
 
@@ -86,6 +83,31 @@ void agregar_a_la_lista(t_list* lista_pokemon, char* pokemon){
 	if (pokemon != NULL) list_add(lista_pokemon, pokemon);
 }
 
+char** get_array_value(char* string){
+	int length_value = strlen(string) - 1;
+	int contador = 2;
+
+	for(int i = 0; i < length_value; i++){
+		if (string[i] == ',') contador++;
+	}
+
+	char** read_array = malloc(sizeof(char*) * contador);
+	read_array[0] = string_new();
+
+	int j = 0;
+	for (int i = 1; i < length_value; i++){
+		if (string[i] == ','){
+			j++;
+			read_array[j] = string_new();
+		} else {
+			string_append_with_format(&(read_array[j]), "%c", string[i]);
+		}
+	}
+
+	read_array[contador - 1] = NULL;
+	return read_array;
+}
+
 /*
  * @NAME: pasar_a_lista_de_pokemon
  * @DESC: Dados un config y una cadena, crea una lista
@@ -93,7 +115,10 @@ void agregar_a_la_lista(t_list* lista_pokemon, char* pokemon){
  * 		  dentro del config.
  */
 t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena) {
-  char** read_array = config_get_array_value(config, cadena);
+  //char** read_array = config_get_array_value(config, cadena);
+	char* suplente = config_get_string_value(config, cadena);
+
+	char** read_array = get_array_value(suplente);
 
   t_list* pokemon = list_create();
   t_list* sublista;
@@ -113,6 +138,7 @@ t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena) {
     } else exit(1);
     list_add(pokemon,sublista);
   }
+
   string_iterate_lines(read_array, _dividir);
 
   string_iterate_lines(read_array, (void*) free);

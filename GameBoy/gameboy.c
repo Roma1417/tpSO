@@ -7,6 +7,7 @@ int main(int argc, char* argv[]){
 
 	//validar_argumentos(argv, argc-3);
 	argv = caso_suscriptor(argv);
+	argv = caso_caught(argv);
 
 	t_config* config;
 
@@ -78,6 +79,14 @@ char** caso_suscriptor(char** argv){
 			parametros[i]=argv[i-1];
 		}
 		return parametros;
+	}
+	return argv;
+}
+
+char** caso_caught(char** argv){
+	if(string_equals_ignore_case(argv[2], "CAUGHT_POKEMON")){
+		if (string_equals_ignore_case(argv[3], "OK")) argv[3] = "1";
+		else if (string_equals_ignore_case(argv[3], "FAIL")) argv[3] = "0";
 	}
 	return argv;
 }

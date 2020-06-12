@@ -179,8 +179,6 @@ void serve_client(int* socket){
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	if (cod_op == APPEARED_POKEMON){
-		printf("Recibí un mensaje de tipo APPEARED_POKEMON\n");
-
 		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 		recibir_entero(*socket);
 
@@ -205,6 +203,19 @@ void serve_client(int* socket){
 	}
 }
 
+void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proceso, char* mensaje) {
+	char** argv = malloc(sizeof(char*) * 5);
+	for (int i = 0; i < 5; i++) {
+		argv[i] = string_new();
+	}
+	string_append(&(argv[0]), "BROKER");
+	string_append(&(argv[1]), "CONFIRMAR");
+	argv[2] = mensaje;
+	string_append(&(argv[3]), string_itoa(id_mensaje));
+	string_append(&(argv[4]), string_itoa(id_proceso));
+	enviar_mensaje(argv, cliente_fd);
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -212,10 +223,10 @@ void serve_client(int* socket){
 void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
+	u_int32_t id = recibir_entero(cliente_fd);
 	switch (cod_op) {
 		case APPEARED_POKEMON:{
 			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
-			u_int32_t id = recibir_entero(cliente_fd);
 			recibir_entero(cliente_fd);
 			char* cadena = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
 			cambiar_nombre_pokemon(appeared_pokemon, cadena);
@@ -235,30 +246,13 @@ void process_request(int cod_op, int cliente_fd) {
 				sem_post(&sem_appeared_pokemon);
 			} else appeared_pokemon_destroy(appeared_pokemon);
 
-			char** argv = malloc(sizeof(char*) * 5);
-
-			for (int i = 0; i < 5; i++){
-				argv[i] = string_new();
-			}
-
-			string_append(&(argv[0]), "BROKER");
-			string_append(&(argv[1]), "CONFIRMAR");
-			string_append(&(argv[2]), "APPEARED_POKEMON");
-			string_append(&(argv[3]), string_itoa(id));
-			string_append(&(argv[4]), string_itoa(id_cola_appeared));
-
-			for (int i = 0; i < 5; i++){
-				printf("%s\n", argv[i]);
-			}
-
-			enviar_mensaje(argv, cliente_fd);
+			confirmar_recepcion(id, cliente_fd, id_cola_appeared, "APPEARED_POKEMON");
 
 			break;
 		}
 		case CATCH_POKEMON:
 			break;
-		case CAUGHT_POKEMON:;
-			u_int32_t id_caught = recibir_entero(cliente_fd);
+		case CAUGHT_POKEMON:{
 
 			size = recibir_entero(cliente_fd);
 
@@ -276,24 +270,19 @@ void process_request(int cod_op, int cliente_fd) {
 				}
 			}
 
-			char** argv = malloc(sizeof(char*) * 5);
+			confirmar_recepcion(id, cliente_fd, id_cola_caught, "CAUGHT_POKEMON");
 
-			for (int i = 0; i < 5; i++){
-				argv[i] = string_new();
-			}
+			break;
+		}
+		case LOCALIZED_POKEMON:
+			size = recibir_entero(cliente_fd);
+			u_int32_t size_pokemon;
+			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+			u_int32_t x = recibir_entero(cliente_fd);
+			u_int32_t y = recibir_entero(cliente_fd);
+			recibir_entero(cliente_fd);
 
-			string_append(&(argv[0]), "BROKER");
-			string_append(&(argv[1]), "CONFIRMAR");
-			string_append(&(argv[2]), "CAUGHT_POKEMON");
-			string_append(&(argv[3]), string_itoa(id_caught));
-			string_append(&(argv[4]), string_itoa(id_cola_caught));
-
-			for (int i = 0; i < 5; i++){
-				printf("%s\n", argv[i]);
-			}
-
-			enviar_mensaje(argv, cliente_fd);
-
+			confirmar_recepcion(id, cliente_fd, id_cola_localized, "LOCALIZED_POKEMON");
 			break;
 		case SUSCRIPTOR:{
 			u_int32_t id_cola = recibir_entero(cliente_fd);
@@ -409,7 +398,6 @@ int crear_conexion(char *ip, char* puerto){
  */
 void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
-	printf("tipo: %d\n", tipo);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = tipo;
 	paquete->buffer = malloc(sizeof(t_buffer));
@@ -424,9 +412,6 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
 
 	int estado = send(socket_cliente, a_enviar, size_serializado, 0);
-
-	printf("estado: %d\n", estado);
-
 	free(paquete->buffer->stream);
 	free(paquete->buffer);
 	free(paquete);
@@ -480,9 +465,7 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			agregar_entero(&offset, argumentos[3], &stream);
 			break;
 		case CONFIRMAR:{
-			printf("ward1\n");
 			tipo_mensaje cod_op = obtener_tipo_mensaje(argumentos[2]);
-			printf("cod_op: %d\n", cod_op);
 			memcpy(stream + offset, &cod_op, sizeof(u_int32_t));
 			offset += sizeof(u_int32_t);
 			agregar_entero(&offset, argumentos[3], &stream);

@@ -26,6 +26,7 @@ void terminar_programa(int, t_log*, t_config*);
 char* obtener_key(char* parametro, char* destino);
 void obtener_parametro(char ** parametro, char* string_parametro, char* destino, t_config* config);
 char** caso_suscriptor(char** argv);
+char** caso_caught(char** argv);
 void evaluar_suscripcion(char** argv, int conexion);
 
 #endif /* GAMEBOY_H_ */
