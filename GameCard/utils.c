@@ -14,9 +14,12 @@
  */
 tipo_mensaje obtener_tipo_mensaje(char* tipo){
 	tipo_mensaje tipo_mensaje;
-	if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
+	if(strcasecmp(tipo,"NEW_POKEMON") == 0) {tipo_mensaje = NEW_POKEMON;}
+	else if(strcasecmp(tipo,"APPEARED_POKEMON") == 0) {tipo_mensaje = APPEARED_POKEMON;}
 	else if(strcasecmp(tipo,"CATCH_POKEMON") == 0) {tipo_mensaje = CATCH_POKEMON;}
+	else if(strcasecmp(tipo,"CAUGHT_POKEMON") == 0) {tipo_mensaje = CAUGHT_POKEMON;}
 	else if(strcasecmp(tipo,"GET_POKEMON") == 0) {tipo_mensaje = GET_POKEMON;}
+	else if(strcasecmp(tipo,"LOCALIZED_POKEMON") == 0) {tipo_mensaje = LOCALIZED_POKEMON;}
 	else if(strcasecmp(tipo,"SUSCRIPTOR") == 0) {tipo_mensaje = SUSCRIPTOR;}
 	else if(strcasecmp(tipo,"CONFIRMAR") == 0) {tipo_mensaje = CONFIRMAR;}
 	return tipo_mensaje;
@@ -43,11 +46,11 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
  * @DESC: Dados un socket y un tamanio, recibe una cadena
  *        mandada desde el socket.
  */
-void* recibir_cadena(int socket_cliente, int* size)
+void* recibir_cadena(int socket_cliente, u_int32_t* size)
 {
 	void * cadena;
 
-	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	recv(socket_cliente, size, sizeof(u_int32_t), MSG_WAITALL);
 	cadena = malloc(*size);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
 
@@ -117,8 +120,9 @@ void esperar_cliente(int socket_servidor)
  * @NAME: serve_client
  * @DESC: Funcion auxilar de iniciar_servidor.
  */
-void serve_client(int* socket)
+void recibir_mensaje(int* socket)
 {
+
 	int cod_op;
 
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
@@ -136,10 +140,8 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
 	argv[2] = mensaje;
 	string_append(&(argv[3]), string_itoa(id_mensaje));
 	string_append(&(argv[4]), string_itoa(id_proceso));
-	for (int i = 0; i < 5; i++) {
-		printf("%s\n", argv[i]);
-	}
 	enviar_mensaje(argv, cliente_fd);
+	printf("Mandé confirmación\n");
 }
 
 /*
@@ -148,23 +150,44 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
  */
 void process_request(int cod_op, int cliente_fd) {
 	int size;
+	u_int32_t id;
 	void* msg;
+	char* pokemon;
+	u_int32_t size_pokemon;
+	u_int32_t posicion_x;
+	u_int32_t posicion_y;
+
 	switch (cod_op) {
 		case NEW_POKEMON:
 			printf("Recibi un mensaje NEW_POKEMON\n");
+			id = recibir_entero(cliente_fd);
+			size = recibir_entero(cliente_fd);
+			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+			printf("Pokemon: %s\n", pokemon);
+			posicion_x = recibir_entero(cliente_fd);
+			posicion_y = recibir_entero(cliente_fd);
+			u_int32_t cantidad = recibir_entero(cliente_fd);
+
+			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 			break;
 		case CATCH_POKEMON:
 			printf("Recibi un mensaje CATCH_POKEMON\n");
+			id = recibir_entero(cliente_fd);
+			size = recibir_entero(cliente_fd);
+			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+			printf("Pokemon: %s\n", pokemon);
+			posicion_x = recibir_entero(cliente_fd);
+			posicion_y = recibir_entero(cliente_fd);
+
+			confirmar_recepcion(id, cliente_fd, id_cola_catch, "CATCH_POKEMON");
 			break;
 		case GET_POKEMON:
 			printf("Recibi un mensaje GET_POKEMON\n");
-			int id = recibir_entero(cliente_fd);
-			printf("id: %d\n", id);
+			id = recibir_entero(cliente_fd);
+
 			size = recibir_entero(cliente_fd);
-			printf("size: %d\n", size);
-			int size2;
-			char* pokemon = recibir_cadena(cliente_fd, &size2);
-			printf("size_Pokemon: %d\n", size2);
+
+			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
 			printf("Pokemon: %s\n", pokemon);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_get, "GET_POKEMON");
@@ -199,13 +222,62 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
 	}
 }
 
+void serve_client(int* cliente_fd){
+	int cod_op;
+
+	if(recv(*cliente_fd, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+		cod_op = -1;
+
+	int size;
+	void* msg;
+	char* pokemon;
+	u_int32_t size_pokemon;
+	u_int32_t posicion_x;
+	u_int32_t posicion_y;
+	u_int32_t id_mensaje;
+
+	switch (cod_op) {
+		case NEW_POKEMON:
+			printf("Recibi un mensaje NEW_POKEMON\n");
+			size = recibir_entero(*cliente_fd);
+			pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
+			posicion_x = recibir_entero(*cliente_fd);
+			posicion_y = recibir_entero(*cliente_fd);
+			u_int32_t cantidad = recibir_entero(*cliente_fd);
+			id_mensaje = recibir_entero(*cliente_fd);
+
+			break;
+		case CATCH_POKEMON:
+			printf("Recibi un mensaje CATCH_POKEMON\n");
+			size = recibir_entero(*cliente_fd);
+			pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
+			posicion_x = recibir_entero(*cliente_fd);
+			posicion_y = recibir_entero(*cliente_fd);
+			id_mensaje = recibir_entero(*cliente_fd);
+
+			break;
+		case GET_POKEMON:
+			printf("Recibi un mensaje GET_POKEMON\n");
+			size = recibir_entero(*cliente_fd);
+			printf("size: %d\n", size);
+			pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
+			printf("size_Pokemon: %d\n", size_pokemon);
+			printf("Pokemon: %s\n", pokemon);
+			id_mensaje = recibir_entero(*cliente_fd);
+
+			break;
+		default:
+			break;
+	}
+}
+
 /*
  * @NAME: recibir_entero
  * @DESC: Dado un socket_cliente, recibe un entero desde ese socket.
  */
 u_int32_t recibir_entero(int socket_cliente){
-	int entero;
-	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
+	u_int32_t entero;
+	recv(socket_cliente, &entero, sizeof(u_int32_t), MSG_WAITALL);
 
 	return entero;
 }
@@ -338,9 +410,7 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			agregar_entero(&offset, argumentos[3], &stream);
 			break;
 		case CONFIRMAR:{
-			printf("ward1\n");
 			tipo_mensaje cod_op = obtener_tipo_mensaje(argumentos[2]);
-			printf("cod_op: %d\n", cod_op);
 			memcpy(stream + offset, &cod_op, sizeof(u_int32_t));
 			offset += sizeof(u_int32_t);
 			agregar_entero(&offset, argumentos[3], &stream);
@@ -389,3 +459,4 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 void liberar_conexion(u_int32_t socket_cliente){
 	close(socket_cliente);
 }
+

@@ -50,7 +50,7 @@ typedef struct
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje tipo);
-void* recibir_cadena(int socket_cliente, int* size);
+void* recibir_cadena(int socket_cliente, u_int32_t* size);
 void iniciar_servidor(void);
 void esperar_cliente(int socket_servidor);
 void serve_client(int* socket);
@@ -65,6 +65,7 @@ void* generar_stream(char** argumentos, t_paquete* paquete);
 u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo);
 void liberar_conexion(u_int32_t socket_cliente);
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo);
+void recibir_mensaje(int* socket);
 
 
 #endif /* UTILS_H_ */

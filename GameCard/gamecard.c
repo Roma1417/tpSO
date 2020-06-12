@@ -73,7 +73,7 @@ void* suscribirse(void* cola){
 		pthread_join(thread_suscriptor, NULL);
 	}*/
 	while(1){
-	pthread_create(&thread,NULL,(void*)serve_client,&conexion);
+	pthread_create(&thread,NULL,(void*)recibir_mensaje,&conexion);
 	pthread_join(thread, NULL);
 	}
 
