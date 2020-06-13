@@ -177,9 +177,11 @@ void process_request(int cod_op, int cliente_fd) {
 			posicion_y = recibir_entero(cliente_fd);
 			u_int32_t cantidad = recibir_entero(cliente_fd);
 
+			log_info(logger_gamecard, "Recibí un mensaje de tipo NEW_POKEMON y sus datos son: %s %d %d %d", pokemon, posicion_x, posicion_y, cantidad);
+
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
-			if(list_elem(pokemon, archivos_creados)){
+			/*if(list_elem(pokemon, archivos_creados)){
 				printf("Entré al if\n");//Muchas cosas
 			} else {
 				printf("Entré al else\n");
@@ -191,27 +193,27 @@ void process_request(int cod_op, int cliente_fd) {
 				free(path);
 				free(nombre_directorio);
 
-			}
+			}*/
 			break;
 		case CATCH_POKEMON:
-			printf("Recibi un mensaje CATCH_POKEMON\n");
+			//printf("Recibi un mensaje CATCH_POKEMON\n");
 			id = recibir_entero(cliente_fd);
 			size = recibir_entero(cliente_fd);
 			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
 			posicion_x = recibir_entero(cliente_fd);
 			posicion_y = recibir_entero(cliente_fd);
+
+			log_info(logger_gamecard, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", pokemon, posicion_x, posicion_y);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_catch, "CATCH_POKEMON");
 			break;
 		case GET_POKEMON:
-			printf("Recibi un mensaje GET_POKEMON\n");
+			//printf("Recibi un mensaje GET_POKEMON\n");
 			id = recibir_entero(cliente_fd);
-
 			size = recibir_entero(cliente_fd);
-
 			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
+
+			log_info(logger_gamecard, "Recibí un mensaje de tipo GET_POKEMON y sus datos son: %s", pokemon);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_get, "GET_POKEMON");
 			break;

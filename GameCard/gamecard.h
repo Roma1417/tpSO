@@ -8,7 +8,6 @@
 #ifndef GAMECARD_H_
 #define GAMECARD_H_
 
-#include <commons/log.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
 #include <semaphore.h>

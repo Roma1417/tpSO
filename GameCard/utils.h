@@ -19,6 +19,7 @@
 #include <commons/collections/list.h>
 #include <sys/stat.h>
 #include <commons/config.h>
+#include <commons/log.h>
 
 #define IP "127.0.0.2"
 #define PUERTO "37228"
@@ -51,6 +52,7 @@ t_list* archivos_creados;
 t_config_gamecard* config_gamecard;
 FILE * archivo_metadata;
 FILE * archivo_bitmap;
+t_log* logger_gamecard;
 
 typedef struct
 {

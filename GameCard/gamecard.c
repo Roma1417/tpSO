@@ -43,7 +43,7 @@ void* suscribirse(void* cola){
 	char* msg = (char *)cola;
 	int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** mensaje = malloc(sizeof(char*)*4);
-	printf("cola: %s\n", msg);
+
 	mensaje[0] = string_new();
 	string_append(&(mensaje[0]), "BROKER");
 
@@ -66,7 +66,7 @@ void* suscribirse(void* cola){
 	//serve_client(&conexion);
 
 
-	printf("conexion: %d \n", conexion);
+
 
 	/*while (1){
 		pthread_create(&thread_suscriptor,NULL,(void*)serve_client,&conexion);
@@ -159,7 +159,7 @@ void crear_archivos(){
 
 int main(){
 	t_config* config = leer_config();
-	//t_log* logger_team = iniciar_logger();
+	logger_gamecard = iniciar_logger();
 	id_cola_get = 0;
 	id_cola_new = 0;
 	id_cola_catch = 0;
