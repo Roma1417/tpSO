@@ -10,6 +10,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 #include<sys/socket.h>
 #include<unistd.h>
 #include<netdb.h>
@@ -38,6 +39,7 @@ char* algoritmo_memoria;
 char* algoritmo_particion_libre;
 char* algoritmo_reemplazo;
 uint32_t frecuencia_compactacion;
+char* log_file;
 t_log* logger;
 
 
@@ -49,5 +51,7 @@ void agregar_particion(t_list*, uint32_t, void*, uint32_t);
 void mostrar_memoria(t_memoria*);
 void* liberar_particion(t_memoria*, uint32_t);
 void combinar_particiones(t_list*, uint32_t);
+
+uint32_t max(uint32_t, uint32_t);
 
 #endif /* MEMORY_H_ */

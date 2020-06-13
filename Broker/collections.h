@@ -56,6 +56,7 @@ typedef struct
 {
 	tipo_mensaje tipo_mensaje;
 	u_int32_t id_mensaje;
+	uint32_t id_correlativo;
 	t_buffer* buffer;
 } t_paquete;
 
@@ -87,7 +88,7 @@ void destruir_mensaje(t_mensaje*);
 t_mensaje* buscar_mensaje(t_list*, u_int32_t);
 u_int32_t generar_id_mensaje();
 
-t_paquete* crear_paquete(u_int32_t, tipo_mensaje, t_buffer*);
+t_paquete* crear_paquete(u_int32_t, uint32_t, tipo_mensaje, t_buffer*);
 void destruir_paquete(t_paquete*);
 
 t_buffer* crear_buffer(u_int32_t, void*);

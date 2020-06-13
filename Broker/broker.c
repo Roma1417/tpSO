@@ -26,14 +26,21 @@ int main(void)
 	algoritmo_particion_libre = config_get_string_value(config, "ALGORITMO_PARTICION_LIBRE");
 	algoritmo_reemplazo = config_get_string_value(config, "ALGORTIMO_REEMPLAZO");
 	frecuencia_compactacion = config_get_int_value(config, "FRECUENCIA_COMPACTACION");
+	log_file = config_get_string_value(config, "LOG_FILE");
 	config_destroy(config);
 
-	t_memoria* memoria = crear_memoria(tamanio_memoria);
+	memoria = crear_memoria(tamanio_memoria);
 
-	logger = log_create("broker.log", "Broker", 0, LOG_LEVEL_INFO);
+	logger = log_create("./broker.log", "Broker", 0, LOG_LEVEL_INFO);
+
+
+
+
 	//probando memoria
 
-	agregar_stream(memoria, "asadsaf", strlen("asadsaf")+1);
+
+
+	/*agregar_stream(memoria, "asadsaf", strlen("asadsaf")+1);
 	agregar_stream(memoria, "boca campeon", strlen("boca campeon")+1);
 	agregar_stream(memoria, "chau", strlen("chau")+1);
 	agregar_stream(memoria, "pepe", strlen("pepe")+1);
@@ -43,7 +50,7 @@ int main(void)
 	mostrar_memoria(memoria);
 	printf("\n\nCompactada:");
 	compactar_memoria(memoria);
-	mostrar_memoria(memoria);
+	mostrar_memoria(memoria);*/
 
 
 

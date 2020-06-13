@@ -30,8 +30,8 @@ t_particion* crear_particion(void* base, uint32_t tamanio, bool ocupada){
 
 void agregar_stream(t_memoria* memoria, void* stream, uint32_t tamanio){
 	t_list* particiones = memoria->particiones;
-	uint32_t indice_particion_seleccionada = buscar_indice_particion(particiones, tamanio);
-	agregar_particion(particiones, indice_particion_seleccionada, stream, tamanio);
+	uint32_t indice_particion_seleccionada = buscar_indice_particion(particiones, max(tamanio, tamano_minimo_particion));
+	agregar_particion(particiones, indice_particion_seleccionada, stream, max(tamanio, tamano_minimo_particion));
 }
 
 uint32_t buscar_indice_particion(t_list* particiones, uint32_t tamanio){
@@ -75,6 +75,7 @@ uint32_t buscar_indice_particion(t_list* particiones, uint32_t tamanio){
 
 void agregar_particion(t_list* particiones, uint32_t indice, void* stream, uint32_t tamanio){
 	t_particion* particion_seleccionada = list_get(particiones, indice);
+	t_particion* particion_inicial = list_get(particiones, 0);
 
 	t_particion* particion_libre = crear_particion(particion_seleccionada->base + tamanio, particion_seleccionada->tamanio - tamanio, false);
 	list_add_in_index(particiones, indice + 1,particion_libre);
@@ -83,7 +84,7 @@ void agregar_particion(t_list* particiones, uint32_t indice, void* stream, uint3
 	particion_seleccionada->tamanio = tamanio;
 	particion_seleccionada->ocupada =true;
 
-	log_info(logger, "Se ha almacenado un mensaje dentro de la memoria. (Base: %p)", particion_seleccionada->base);
+	log_info(logger, "Se ha almacenado un mensaje dentro de la memoria. (Base: %d)", particion_seleccionada->base - particion_inicial->base);
 }
 
 
@@ -144,6 +145,8 @@ void compactar_memoria(t_memoria* memoria){
 
 }
 
-
+uint32_t max(uint32_t X, uint32_t Y){
+	return X > Y ? X : Y;
+}
 
 

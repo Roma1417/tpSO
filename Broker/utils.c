@@ -76,9 +76,6 @@ void serve_client(int* socket)
 void process_request(int cod_op, int cliente_fd) {
 	t_cola_mensajes* cola_mensajes;
 
-	//u_int32_t id_mensaje = recibir_entero(cliente_fd);
-
-
 	switch (cod_op) {
 	case NEW_POKEMON:
 	case APPEARED_POKEMON:
@@ -91,17 +88,27 @@ void process_request(int cod_op, int cliente_fd) {
 
 		int32_t size;
 		void* stream = (void*)recibir_cadena(cliente_fd, &size);
-		printf("Parametro cadena %s\n",stream+4);
+
+		printf("La size recibida fue: %d\n", size);
+
+		if (es_cola_correlativa(cod_op)){
+			agregar_stream(memoria, stream + sizeof(uint32_t), size - sizeof(uint32_t));
+		} else {
+			agregar_stream(memoria, stream, size);
+		}
+
+
+		printf("Parametro cadena: %s\n",stream+4);
 
 		t_buffer* buffer = crear_buffer(size, stream);
-		t_paquete* paquete = crear_paquete(generar_id_mensaje(), cod_op, buffer);
+		t_paquete* paquete = crear_paquete(generar_id_mensaje(), 0, cod_op, buffer);
 		t_mensaje* mensaje = crear_mensaje(paquete);
 		cola_mensajes = get_cola_mensajes(cod_op);
 
 		list_add(cola_mensajes->mensajes, mensaje);
 
 		enviar_mensaje(paquete, cliente_fd);
-		// Segun Román esto funciona
+
 
 		printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
 
@@ -109,7 +116,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
 
-		printf("GG\n"); // GG EASY, BETTER SUPP WINS
+		printf("GG\n");
 
 		break;
 
@@ -153,11 +160,8 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("La mensaje recibida fue: %d\n", id_mensaje);
 		u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
 		printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
-		printf("ward 1 \n");
 		cola_mensajes = get_cola_mensajes(id_cola_mensajes);
-		printf("ward 2 \n");
 		t_mensaje* mensaje_confirmado = buscar_mensaje(cola_mensajes->mensajes, id_mensaje);
-		printf("ward 3 \n");
 		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(mensaje_confirmado->suscriptores_enviados, id_suscriptor_confirmado);
 
 		list_add(mensaje_confirmado->suscriptores_confirmados, suscriptor_confirmado);
@@ -264,7 +268,7 @@ void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje
 	void* stream = malloc(sizeof(tipo_mensaje));
 	memcpy(stream, &tipo_mensaje, sizeof(tipo_mensaje));
 	t_buffer* buffer = crear_buffer(sizeof(tipo_mensaje), stream);
-	t_paquete* paquete = crear_paquete(suscriptor->id, SUSCRIPTOR, buffer);
+	t_paquete* paquete = crear_paquete(suscriptor->id, 0, SUSCRIPTOR, buffer);
 
 	enviar_mensaje(paquete, suscriptor->numero_socket);
 
@@ -342,3 +346,7 @@ t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mens
 
 }
 
+
+bool es_cola_correlativa(tipo_mensaje tipo){
+	return tipo == 2 || tipo == 4 || tipo == 6;
+}

@@ -86,9 +86,9 @@ t_mensaje* crear_mensaje(t_paquete* paquete){
 	return mensaje;
 }
 
-t_mensaje* generar_mensaje(int32_t id, tipo_mensaje tipo_mensaje, int32_t size, void* stream){
+t_mensaje* generar_mensaje(int32_t id, int32_t id_correlativo, tipo_mensaje tipo_mensaje, int32_t size, void* stream){
 	t_buffer* buffer = crear_buffer(size, stream);
-	t_paquete* paquete = crear_paquete(id, tipo_mensaje, buffer);
+	t_paquete* paquete = crear_paquete(id, id_correlativo, tipo_mensaje, buffer);
 	t_mensaje* mensaje = crear_mensaje(paquete);
 	return mensaje;
 }
@@ -120,11 +120,12 @@ u_int32_t generar_id_mensaje(){
 	return id;
 }
 
-t_paquete* crear_paquete(u_int32_t id_mensaje, tipo_mensaje tipo_mensaje,t_buffer* buffer){
+t_paquete* crear_paquete(u_int32_t id_mensaje, uint32_t id_correlativo, tipo_mensaje tipo_mensaje,t_buffer* buffer){
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 
 	paquete->tipo_mensaje = tipo_mensaje;
 	paquete->id_mensaje = id_mensaje;
+	paquete->id_correlativo = id_correlativo;
 	paquete->buffer = buffer;
 
 	return paquete;

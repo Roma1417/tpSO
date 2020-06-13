@@ -183,6 +183,7 @@ void serve_client(int* socket){
 		recibir_entero(*socket);
 
 		char* cadena = recibir_cadena(*socket, &(appeared_pokemon->size_pokemon));
+		*(cadena+appeared_pokemon->size_pokemon)=0; //Es un toque inestable, pero funciona
 		cambiar_nombre_pokemon(appeared_pokemon, cadena);
 		u_int32_t x = recibir_entero(*socket);
 		u_int32_t y = recibir_entero(*socket);
