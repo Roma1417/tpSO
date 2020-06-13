@@ -62,10 +62,10 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 
 	send(socket_cliente, a_enviar, size_serializado, 0);
 
-	free(paquete->buffer->stream);
-	free(paquete->buffer);
-	free(paquete);
-	free(a_enviar);
+	//free(paquete->buffer->stream);
+	//free(paquete->buffer);
+	//free(paquete);
+	//free(a_enviar);
 }
 
 void agregar_string(int* offset, char* string, void** stream){
@@ -126,7 +126,8 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			break;
 		case GET_POKEMON:
 			agregar_string(&offset, argumentos[2], &stream);
-
+			if (!string_equals_ignore_case(argumentos[0],"BROKER"))
+				agregar_entero(&offset, argumentos[3], &stream);
 			break;
 		case SUSCRIPTOR:{
 			agregar_string(&offset, argumentos[2], &stream);
