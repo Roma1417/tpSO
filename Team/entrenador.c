@@ -29,9 +29,14 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->puede_pasar_a_ready = true;
 	entrenador->capturas_disponibles = list_size(entrenador->objetivos_faltantes);
 	//printf("capturas disponibles: %d\n",entrenador->capturas_disponibles); Me dijo Juan
+	entrenador->pokemon_inservibles = list_create();
 
 	return entrenador;
 
+}
+
+bool le_sirve(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
+	return list_elem(appeared_pokemon->pokemon, entrenador->objetivos_faltantes);
 }
 
 void cambiar_condicion_ready(t_entrenador* entrenador){
@@ -40,6 +45,8 @@ void cambiar_condicion_ready(t_entrenador* entrenador){
 
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
+	if(!le_sirve(entrenador, appeared_pokemon))
+		list_add(entrenador->pokemon_inservibles, appeared_pokemon->pokemon);
 	decrementar_capturas_disponibles(entrenador);
 }
 
@@ -95,6 +102,8 @@ t_list* get_objetivos_faltantes(t_entrenador* entrenador){
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
 		remover_elemento_repetido(objetivos_faltantes, pokemon);
 	}
+
+	entrenador->objetivos_faltantes = objetivos_faltantes;
 
 	return objetivos_faltantes;
 }
@@ -159,5 +168,14 @@ void decrementar_capturas_disponibles(t_entrenador* entrenador){
  */
 void set_hilo(t_entrenador* entrenador, pthread_t hilo){
 	entrenador->hilo = hilo;
+}
+
+bool cumplio_su_objetivo(void* parametro){
+	t_entrenador* entrenador = parametro;
+	return list_is_empty(entrenador->objetivos_faltantes);
+}
+
+bool no_cumplio_su_objetivo(void* parametro){
+	return !cumplio_su_objetivo(parametro);
 }
 

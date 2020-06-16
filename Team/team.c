@@ -60,7 +60,6 @@ t_config_team* construir_config_team(t_config* config){
 void* ejecutar_entrenador(void* parametro){
 	t_entrenador* entrenador = parametro;
 
-
 	while(puede_seguir_atrapando(entrenador)){
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
@@ -94,13 +93,26 @@ void* ejecutar_entrenador(void* parametro){
 			atrapar(entrenador, planificado->pokemon);
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
+			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		if(puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
 	}
+
+	// wait semaforo todos
+
+	/* Implementar un nuevo hilo
+
+	while(!cumplio_su_objetivo(entrenador)){
+		sem_wait(&(puede_ejecutar[entrenador->indice]));
+
+
+	}*/
+
 	return EXIT_SUCCESS;
 }
+
 
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon){
 
@@ -147,6 +159,7 @@ t_list* crear_entrenadores(t_config_team* config_team){
 		pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
 		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
+		list_add(entrenadores_deadlock, entrenador);
 	}
 
 	return entrenadores;
@@ -285,13 +298,23 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 	queue_push(cola_ready, planificado);
 }
 
+void realizar_intercambios(){
+	// Falta implementar en otro hilo
+	// while segun ALE
+	// hasta que se cumplio el objetivo posta posta (literal) segun JOSI
+	// implementar con el entrenador global en principio
+	// Usamos lista entrenadores_deadlock
+	// Buscar dos en deadlock y mandar a uno a planificar y el
+	// otro seria variable global, segun ALE
+}
+
 /*
  * @NAME: planificar_entrenadores
  * @DESC: pendiente
  */
 void planificar_entrenadores(){
 	//Falta un switch para planificar según cada algoritmo
-	if(!(queue_is_empty(cola_ready))){
+	if(!queue_is_empty(cola_ready)){
 		sem_wait(&puede_planificar);
 		t_planificado* planificado = queue_pop(cola_ready);
 		pokemon_a_atrapar = planificado->pokemon;
@@ -320,7 +343,7 @@ void* mantener_servidor(){
  */
 void* iniciar_planificador(){
 
-	while(1)
+	while(1) // hasta que todos terminen
 		planificar_entrenadores();
 
 	return EXIT_SUCCESS;
@@ -480,6 +503,8 @@ void actualizar_objetivo_global(){
 	list_destroy(auxiliar);
 }
 
+
+
 // Funcion main
 int main (void) {
 
@@ -494,6 +519,7 @@ int main (void) {
 
 	cola_ready = queue_create();
 	appeared_pokemons = queue_create();
+	entrenadores_deadlock = list_create();
 	id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);

@@ -107,6 +107,7 @@ void iniciar_servidor(void)
     // while (no se cumple objetivo global) -> funca servidor
     // se cumplio entonces -> sem_servidor = 0;
 
+    // Cambiar por algo mas feliz (para Josi)
     while (!quedan_pokemons_por_atrapar())
     	esperar_cliente(socket_servidor);
 
@@ -441,7 +442,7 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
  * 		  agrega el string al stream.
  */
 void agregar_string(int* offset, char* string, void** stream){
-	u_int32_t longitud_nombre = strlen(string) + 1;
+	u_int32_t longitud_nombre = strlen(string)+1;
 	memcpy((*stream) + (*offset), &longitud_nombre, sizeof(u_int32_t));
 	(*offset) += sizeof(u_int32_t);
 	memcpy((*stream) + (*offset), string, longitud_nombre);

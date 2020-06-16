@@ -29,6 +29,7 @@ t_list* eliminar_repetidos(t_list* objetivo_global);
 t_list* list_flatten(t_list* listas);
 t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena);
 t_list* pasar_a_lista_de_posiciones(t_config* config, char* cadena);
+t_list* filtrar_entrenadores_con_objetivos(t_list* lista);
 
 
 #endif /* AUXILIAR_H_ */

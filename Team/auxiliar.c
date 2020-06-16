@@ -38,6 +38,18 @@ t_list* list_flatten(t_list* listas){
 	return lista;
 }
 
+t_list* filtrar_entrenadores_con_objetivos(t_list* lista){
+	t_list* nueva_lista = list_create();
+	for(int i = 0; i < list_size(lista); i++){
+		t_entrenador* entrenador = list_get(lista, i);
+		if (no_cumplio_su_objetivo(entrenador)) list_add(nueva_lista, entrenador);
+	}
+	t_list* auxiliar = lista;
+	lista = nueva_lista;
+	list_destroy(auxiliar);
+	return lista;
+}
+
 /*
  * @NAME: list_elem
  * @DESC: Dados un elemento (tipo string) y una lista, me dice si ese

@@ -31,6 +31,7 @@ typedef struct {
 	t_list* pokemon_obtenidos;
 	t_list* objetivos;
 	t_list* objetivos_faltantes;
+	t_list* pokemon_inservibles;
 	t_estado estado;
 	pthread_t hilo;
 	u_int32_t capturas_disponibles;
@@ -54,5 +55,7 @@ void decrementar_capturas_disponibles(t_entrenador* entrenador);
 void set_hilo(t_entrenador* entrenador, pthread_t hilo);
 void cambiar_condicion_ready(t_entrenador* entrenador);
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
+bool cumplio_su_objetivo(void* parametro);
+bool no_cumplio_su_objetivo(void* parametro);
 
 #endif /* ENTRENADOR_H_ */
