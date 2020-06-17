@@ -114,6 +114,6 @@ void recibir_mensaje(int* socket);
 // Funciones compartidas
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
-bool quedan_pokemons_por_atrapar();
+bool pokemons_objetivo_fueron_atrapados();
 
 #endif /* UTILS_H_ */

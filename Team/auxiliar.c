@@ -11,9 +11,10 @@
  * @DESC: Dados un entrenador y un appeared_pokemon, nos devuelve
  * 		  la distancia entre estos dos.
  */
-u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
-	u_int32_t diferencia_en_x = entrenador->posicion->x - appeared_pokemon->posicion->x;
-	u_int32_t diferencia_en_y = entrenador->posicion->y - appeared_pokemon->posicion->y;
+
+u_int32_t distancia (t_posicion* posicion1, t_posicion* posicion2) {
+	u_int32_t diferencia_en_x = posicion1->x - posicion2->x;
+	u_int32_t diferencia_en_y = posicion1->y - posicion2->y;
 	return abs(diferencia_en_x) + abs(diferencia_en_y);
 }
 

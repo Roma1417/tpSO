@@ -21,7 +21,7 @@
 #include "utils.h"
 #include "posicion.h"
 
-u_int32_t distancia(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
+u_int32_t distancia(t_posicion* posicion1, t_posicion* posicion2);
 t_list* convertir_string_a_lista_de_listas(char** cadenas);
 t_list* convertir_string_a_lista_de_posiciones(char** cadenas);
 bool list_elem(char* elemento, t_list* lista);

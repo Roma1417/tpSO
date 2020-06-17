@@ -282,14 +282,14 @@ void enviar_mensajes_get_pokemon(){
  */
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
 	t_entrenador* mas_cercano = list_find(entrenadores, puede_ser_planificado);
-	int distancia_minima = distancia(mas_cercano,appeared_pokemon);
+	int distancia_minima = distancia(mas_cercano->posicion,appeared_pokemon->posicion);
 
 	for(int i=1; i<list_size(entrenadores); i++){
 
 		t_entrenador* entrenador_actual = list_get(entrenadores, i);
-		if(puede_ser_planificado(entrenador_actual) && (distancia(entrenador_actual,appeared_pokemon) < distancia_minima)){
+		if(puede_ser_planificado(entrenador_actual) && (distancia(entrenador_actual->posicion,appeared_pokemon->posicion) < distancia_minima)){
 			mas_cercano = entrenador_actual;
-			distancia_minima = distancia(entrenador_actual,appeared_pokemon);
+			distancia_minima = distancia(entrenador_actual->posicion,appeared_pokemon->posicion);
 		}
 	}
 	cambiar_estado(mas_cercano, READY);

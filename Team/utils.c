@@ -108,17 +108,17 @@ void iniciar_servidor(void)
     // se cumplio entonces -> sem_servidor = 0;
 
     // Cambiar por algo mas feliz (para Josi)
-    while (!quedan_pokemons_por_atrapar())
+    while (!pokemons_objetivo_fueron_atrapados())
     	esperar_cliente(socket_servidor);
 
 }
 
 /*
- * @NAME: quedan_pokemons_por_atrapar
+ * @NAME: pokemons_objetivo_fueron_atrapados
  * @DESC: Se fija si aun quedan pokemons por atrapar. Esto se produce cuando
  * 		  ya no quedan mas objetivos en objetivo global.
  */
-bool quedan_pokemons_por_atrapar(){
+bool pokemons_objetivo_fueron_atrapados(){
 	bool objetivo_cumplido = true;
 
 	for(int i = 0; i < list_size(objetivo_global) && objetivo_cumplido; i++){
