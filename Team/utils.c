@@ -47,13 +47,14 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
  * @DESC: Dados un socket y un tamanio, recibe una cadena
  *        mandada desde el socket.
  */
-void* recibir_cadena(int socket_cliente, int* size)
+char* recibir_cadena(int socket_cliente, u_int32_t* size)
 {
-	void * cadena;
+	char * cadena;
 
-	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
-	cadena = malloc(*size);
+	recv(socket_cliente, size, sizeof(u_int32_t), MSG_WAITALL);
+	cadena = malloc((*size)+1);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
+	cadena[(*size)] = 0;
 
 	return cadena;
 }
@@ -184,7 +185,7 @@ void serve_client(int* socket){
 		recibir_entero(*socket);
 
 		char* cadena = recibir_cadena(*socket, &(appeared_pokemon->size_pokemon));
-		*(cadena+appeared_pokemon->size_pokemon)=0; //Es un toque inestable, pero funciona
+		//*(cadena+appeared_pokemon->size_pokemon)=0; //Es un toque inestable, pero funciona
 		cambiar_nombre_pokemon(appeared_pokemon, cadena);
 		u_int32_t x = recibir_entero(*socket);
 		u_int32_t y = recibir_entero(*socket);
@@ -442,7 +443,7 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
  * 		  agrega el string al stream.
  */
 void agregar_string(int* offset, char* string, void** stream){
-	u_int32_t longitud_nombre = strlen(string)+1;
+	u_int32_t longitud_nombre = strlen(string);
 	memcpy((*stream) + (*offset), &longitud_nombre, sizeof(u_int32_t));
 	(*offset) += sizeof(u_int32_t);
 	memcpy((*stream) + (*offset), string, longitud_nombre);
@@ -507,13 +508,13 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	u_int32_t size = 0;
 	switch(tipo){
 		case CATCH_POKEMON:
-			size = sizeof(u_int32_t) * 3 + strlen(argumentos[2]) + 1;
+			size = sizeof(u_int32_t) * 3 + strlen(argumentos[2]);
 			break;
 		case GET_POKEMON:
-			size = sizeof(u_int32_t) + strlen(argumentos[2]) + 1;
+			size = sizeof(u_int32_t) + strlen(argumentos[2]);
 			break;
 		case SUSCRIPTOR:
-			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]) + 1;
+			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]);
 			break;
 		case CONFIRMAR:
 			size = sizeof(u_int32_t) * 3;

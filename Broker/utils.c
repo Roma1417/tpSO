@@ -128,7 +128,7 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("La size recibida fue: %d\n", size);
 
 		int32_t cola_size;
-		char* cola_nombre = recibir_cadena(cliente_fd, &cola_size);
+		char* cola_nombre = recibir_string(cliente_fd, &cola_size);
 		printf("La cola recibida fue: %s\n", cola_nombre);
 
 		u_int32_t id_suscriptor = recibir_entero(cliente_fd);
@@ -192,9 +192,23 @@ void* recibir_cadena(int socket_cliente, int* size)
 	void * cadena;
 
 	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	printf("Size: %d\n", *size);
 	cadena = malloc(*size);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
+	printf("Cadena: %s\n", (char*) cadena);
+	return cadena;
+}
 
+char* recibir_string(int socket_cliente, u_int32_t* size)
+{
+	char * cadena;
+
+	recv(socket_cliente, size, sizeof(u_int32_t), MSG_WAITALL);
+	printf("Size: %d\n", *size);
+	cadena = malloc((*size)+1);
+	recv(socket_cliente, cadena, *size, MSG_WAITALL);
+	cadena[(*size)] = '\0';
+	printf("Cadena: %s\n", (char*) cadena);
 	return cadena;
 }
 

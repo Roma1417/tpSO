@@ -3,7 +3,7 @@
 
 ## TO DO [Team]
 
-- [ ] Arreglar problema +1
+- [X] Arreglar problema +1
 - [ ] Hacer funcion find_first (si no encuentra devuelve el primero)
 - [X] Universalizar funcion distancia
 - [ ] Implementacion Deadlock (IN_PROGRESS)

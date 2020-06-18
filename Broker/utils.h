@@ -40,6 +40,7 @@ void* serializar_paquete(t_paquete*, size_t);;
 char* consultar_config_por_string(char*, char*);
 int recibir_entero(int);
 void* recibir_cadena(int, int*);
+char* recibir_string(int socket_cliente, u_int32_t* size);
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje);
 char* consultar_config_por_string(char*, char*);

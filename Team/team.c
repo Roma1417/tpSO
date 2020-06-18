@@ -243,8 +243,8 @@ void terminar_programa(t_log* logger, t_config* config){
 * 		 para un pokemon pasado por parametro.
 * 		 Recordar -> Pokemon requiere casteo a (char*).
 */
-void* enviar_get_pokemon(void* pokemon){
-
+void* enviar_get_pokemon(void* parametro){
+	char* pokemon = parametro;
 	char** mensaje = malloc(sizeof(char*)*3);
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	mensaje[0] = string_new();
@@ -253,7 +253,8 @@ void* enviar_get_pokemon(void* pokemon){
 	mensaje[1] = string_new();
 	string_append(&(mensaje[1]), "GET_POKEMON");
 
-	mensaje[2] = (char*)pokemon;
+	mensaje[2] = pokemon;
+	printf("Pokemon enviado: %s\n", pokemon);
 	enviar_mensaje(mensaje, conexion);
 	liberar_conexion(conexion);
 

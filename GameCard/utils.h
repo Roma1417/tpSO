@@ -68,7 +68,7 @@ typedef struct
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo);
 char* obtener_tipo_mensaje_string(tipo_mensaje tipo);
-void* recibir_cadena(int socket_cliente, u_int32_t* size);
+char* recibir_cadena(int socket_cliente, u_int32_t* size);
 void iniciar_servidor(void);
 void esperar_cliente(int socket_servidor);
 void serve_client(int* socket);

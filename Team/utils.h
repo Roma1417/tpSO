@@ -94,7 +94,7 @@ void esperar_cliente(int);
 void process_request(int, int);
 void serve_client(int*);
 u_int32_t recibir_entero(int socket_cliente);
-void* recibir_cadena(int socket_cliente, int* size);
+char* recibir_cadena(int socket_cliente, u_int32_t* size);
 
 
 // Funciones Cliente
