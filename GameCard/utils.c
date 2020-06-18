@@ -181,7 +181,12 @@ void process_request(int cod_op, int cliente_fd) {
 
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
-			/*if(list_elem(pokemon, archivos_creados)){
+			char* path2 = string_new();
+			string_append_with_format(&path2, "/Files/%s", pokemon);
+			char* path_pokemon = generar_nombre(path2);
+			DIR* directorio_pokemon = opendir(path_pokemon);
+
+			if(directorio_pokemon != NULL){
 				printf("Entré al if\n");//Muchas cosas
 			} else {
 				printf("Entré al else\n");
@@ -192,8 +197,8 @@ void process_request(int cod_op, int cliente_fd) {
 				generar_metadata_bin(nombre_directorio);
 				free(path);
 				free(nombre_directorio);
+			}
 
-			}*/
 			break;
 		case CATCH_POKEMON:
 			//printf("Recibi un mensaje CATCH_POKEMON\n");

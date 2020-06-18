@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <commons/config.h>
 #include <commons/log.h>
+#include <dirent.h>
 
 #define IP "127.0.0.2"
 #define PUERTO "37228"
@@ -48,7 +49,7 @@ pthread_t thread;
 u_int32_t id_cola_get;
 u_int32_t id_cola_new;
 u_int32_t id_cola_catch;
-t_list* archivos_creados;
+//t_list* archivos_creados;
 t_config_gamecard* config_gamecard;
 FILE * archivo_metadata;
 FILE * archivo_bitmap;

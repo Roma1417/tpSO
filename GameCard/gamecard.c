@@ -163,7 +163,7 @@ int main(){
 	id_cola_get = 0;
 	id_cola_new = 0;
 	id_cola_catch = 0;
-	archivos_creados = list_create();
+	//archivos_creados = list_create();
 
 
 	config_gamecard = construir_config_gamecard(config);
