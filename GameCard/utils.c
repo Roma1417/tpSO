@@ -153,6 +153,25 @@ bool list_elem(char* elemento, t_list* lista){
 	return encontrado;
 }
 
+DIR* verificar_existencia_de_archivo(char* pokemon) {
+	char* path = string_new();
+	string_append_with_format(&path, "/Files/%s", pokemon);
+	char* path_pokemon = generar_nombre(path);
+	DIR* directorio_pokemon = opendir(path_pokemon);
+	free(path);
+
+	if (directorio_pokemon == NULL) {
+		path = string_new();
+		string_append_with_format(&path, "/Files/%s", pokemon);
+		char* nombre_directorio = generar_nombre(path);
+		mkdir(nombre_directorio, 0777);
+		generar_metadata_bin(nombre_directorio);
+		free(path);
+		free(nombre_directorio);
+	}
+	return directorio_pokemon;
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -181,23 +200,8 @@ void process_request(int cod_op, int cliente_fd) {
 
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
-			char* path2 = string_new();
-			string_append_with_format(&path2, "/Files/%s", pokemon);
-			char* path_pokemon = generar_nombre(path2);
-			DIR* directorio_pokemon = opendir(path_pokemon);
+			DIR* directorio_pokemon = verificar_existencia_de_archivo(pokemon);
 
-			if(directorio_pokemon != NULL){
-				printf("Entré al if\n");//Muchas cosas
-			} else {
-				printf("Entré al else\n");
-				char* path = string_new();
-				string_append_with_format(&path, "/Files/%s", pokemon);
-				char* nombre_directorio = generar_nombre(path);
-				mkdir(nombre_directorio, 0777);
-				generar_metadata_bin(nombre_directorio);
-				free(path);
-				free(nombre_directorio);
-			}
 
 			break;
 		case CATCH_POKEMON:
@@ -240,7 +244,12 @@ void generar_metadata_bin(char* path){
 	char* metadata = string_new();
 	string_append_with_format(&metadata, "%s/Metadata.bin", path);
 	printf("Path: %s\n", metadata);
-	archivo_metadata = fopen(metadata, "w+b");
+	FILE* metadata_file = fopen(metadata, "w+b");
+	fputs("DIRECTORY=N\n",metadata_file);
+	fputs("SIZE=0\n",metadata_file);
+	fputs("BLOCKS=[]\n",metadata_file);
+	fputs("OPEN=Y",metadata_file);
+	fclose(metadata_file);
 	free(metadata);
 }
 

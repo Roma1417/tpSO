@@ -69,3 +69,6 @@
 [INFO] 18:53:12:38 gamecard/(13487:13504): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
 [INFO] 18:53:12:42 gamecard/(13487:13508): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 7 7
 [INFO] 18:53:12:43 gamecard/(13487:13511): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Moltres 7 7 7
+[INFO] 18:02:28:949 gamecard/(8544:8557): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1
+[INFO] 18:04:50:747 gamecard/(9105:9118): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1
+[INFO] 18:06:31:699 gamecard/(9346:9359): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1

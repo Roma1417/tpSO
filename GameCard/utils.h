@@ -88,6 +88,7 @@ void recibir_mensaje(int* socket);
 bool list_elem(char* elemento, t_list* lista);
 char* generar_nombre(char* parametro);
 void generar_metadata_bin(char* path);
+DIR* verificar_existencia_de_archivo(char* pokemon);
 
 
 #endif /* UTILS_H_ */
