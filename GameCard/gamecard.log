@@ -72,3 +72,15 @@
 [INFO] 18:02:28:949 gamecard/(8544:8557): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1
 [INFO] 18:04:50:747 gamecard/(9105:9118): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1
 [INFO] 18:06:31:699 gamecard/(9346:9359): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 1
+[INFO] 19:07:40:218 gamecard/(15726:15739): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 1
+[INFO] 19:10:01:163 gamecard/(16014:16027): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 1
+[INFO] 19:11:14:2 gamecard/(16172:16185): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 1
+[INFO] 19:14:44:965 gamecard/(17133:17146): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:15:17:507 gamecard/(17385:17398): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:16:50:437 gamecard/(17585:17598): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:20:31:613 gamecard/(18037:18050): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:21:03:219 gamecard/(18123:18136): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:21:22:986 gamecard/(18181:18194): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:22:39:490 gamecard/(18338:18351): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:22:54:945 gamecard/(18400:18413): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1
+[INFO] 19:23:17:295 gamecard/(18471:18484): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gyarados 7 1 1

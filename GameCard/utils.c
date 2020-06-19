@@ -153,22 +153,23 @@ bool list_elem(char* elemento, t_list* lista){
 	return encontrado;
 }
 
-DIR* verificar_existencia_de_archivo(char* pokemon) {
-	char* path = string_new();
-	string_append_with_format(&path, "/Files/%s", pokemon);
-	char* path_pokemon = generar_nombre(path);
-	DIR* directorio_pokemon = opendir(path_pokemon);
-	free(path);
+char* generar_pokemon_file_path(char* pokemon) {
+	char* path_beta = string_new();
+	string_append_with_format(&path_beta, "/Files/%s", pokemon);
+	char* path = generar_nombre(path_beta);
+	return path;
+}
 
+DIR* verificar_existencia_de_archivo(char* pokemon) {
+	char* path_pokemon_file = generar_pokemon_file_path(pokemon);
+	DIR* directorio_pokemon = opendir(path_pokemon_file);
+	printf("Path_pokemon_file: %s\n", path_pokemon_file);
 	if (directorio_pokemon == NULL) {
-		path = string_new();
-		string_append_with_format(&path, "/Files/%s", pokemon);
-		char* nombre_directorio = generar_nombre(path);
-		mkdir(nombre_directorio, 0777);
-		generar_metadata_bin(nombre_directorio);
-		free(path);
-		free(nombre_directorio);
+		mkdir(path_pokemon_file, 0777);
+		generar_metadata_bin(pokemon);
 	}
+	free(path_pokemon_file);
+
 	return directorio_pokemon;
 }
 
@@ -240,17 +241,23 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 }
 
-void generar_metadata_bin(char* path){
-	char* metadata = string_new();
-	string_append_with_format(&metadata, "%s/Metadata.bin", path);
-	printf("Path: %s\n", metadata);
-	FILE* metadata_file = fopen(metadata, "w+b");
+char* generar_pokemon_metadata_bin_path(char* pokemon) {
+	char* path = generar_pokemon_file_path(pokemon);
+	printf("Path_Beta: %s\n", path);
+	string_append(&path, "/Metadata.bin");
+	printf("Path: %s\n", path);
+	return path;
+}
+
+void generar_metadata_bin(char* pokemon){
+	char* metadata_bin_path = generar_pokemon_metadata_bin_path(pokemon);
+	FILE* metadata_file = fopen(metadata_bin_path, "w+b");
 	fputs("DIRECTORY=N\n",metadata_file);
 	fputs("SIZE=0\n",metadata_file);
 	fputs("BLOCKS=[]\n",metadata_file);
 	fputs("OPEN=Y",metadata_file);
 	fclose(metadata_file);
-	free(metadata);
+	free(metadata_bin_path);
 }
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){

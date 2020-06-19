@@ -32,6 +32,7 @@
 - [ ] Implementación del procedimiento al recibir mensaje NEW_POKEMON (IN_PROGRESS)
 - [ ] Implementación del procedimiento al recibir mensaje CATCH_POKEMON
 - [ ] Implementación del procedimiento al recibir mensaje GET_POKEMON
+- [ ] Separar funciones de Archivos en un .c distinto
 
 ### . NEW_POKEMON  
 
