@@ -27,3 +27,17 @@
 - [ ] Realizar intercambio
 - [ ] Actualizar el estado del entrenador (si ya cumplio su objetivo propio o no (si sigue en deadlock o no))
 
+## TO DO [GameCard]
+
+- [ ] Implementación del procedimiento al recibir mensaje NEW_POKEMON (IN_PROGRESS)
+- [ ] Implementación del procedimiento al recibir mensaje CATCH_POKEMON
+- [ ] Implementación del procedimiento al recibir mensaje GET_POKEMON
+
+### . NEW_POKEMON  
+
+- [X] Verificar existencia de archivo del pokemon. En caso contrario crearlo con su metadata.bin
+- [ ] Verificar si se puede abrir el archivo
+- [ ] Verificar si las posiciones ya existen en el archivo y actualizarlas. En caso contrario agregarlas en una nueva línea
+- [ ] Esperar la cantidad de segundos definidas en el .config
+- [ ] Enviar mensaje APPEARED_POKEMON al Broker
+
