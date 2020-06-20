@@ -160,7 +160,7 @@ char* generar_pokemon_file_path(char* pokemon) {
 	return path;
 }
 
-DIR* verificar_existencia_de_archivo(char* pokemon) {
+void verificar_existencia_de_archivo(char* pokemon) {
 	char* path_pokemon_file = generar_pokemon_file_path(pokemon);
 	DIR* directorio_pokemon = opendir(path_pokemon_file);
 	printf("Path_pokemon_file: %s\n", path_pokemon_file);
@@ -169,8 +169,57 @@ DIR* verificar_existencia_de_archivo(char* pokemon) {
 		generar_metadata_bin(pokemon);
 	}
 	free(path_pokemon_file);
+	closedir(directorio_pokemon);
+}
 
-	return directorio_pokemon;
+bool esta_abierto(FILE* file){
+	fseek(file, -sizeof(char), SEEK_END);
+	char abierto = (char) fgetc(file);
+	return (abierto == 'Y');
+}
+
+void abrir_file(FILE* file){
+	fseek(file, -sizeof(char), SEEK_END);
+	fputc('Y', file);
+}
+
+void cerrar_file(FILE* file){
+	fseek(file, -sizeof(char), SEEK_END);
+	fputc('N', file);
+}
+
+void verificar_estado_de_apertura_de_archivo_pokemon(FILE* file){
+	while(esta_abierto(file))
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
+
+	abrir_file(file);
+}
+
+char* obtener_ultimo_bloque(FILE* file){
+	fseek(file, -2, SEEK_END);
+	char bloque = fgetc(file);
+	while((bloque != ',') && (bloque != '[')){
+		fseek(file, -2, SEEK_CUR);
+		bloque = fgetc(file);
+	}
+	char* ultimo_bloque = string_new();
+	bloque = fgetc(file);
+	while(bloque != ']')
+		string_append_with_format(&ultimo_bloque, "%c", bloque);
+	//printf("Ultimo bloque: %s\n", ultimo_bloque);
+
+	return ultimo_bloque;
+}
+
+void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
+	char* ultimo_bloque = obtener_ultimo_bloque(file);
+
+	if(string_equals_ignore_case(ultimo_bloque,"")){
+		//Crear nuevo bloque
+	}
+	else{
+		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE
+	}
 }
 
 /*
@@ -189,20 +238,27 @@ void process_request(int cod_op, int cliente_fd) {
 	switch (cod_op) {
 		case NEW_POKEMON:
 			printf("Recibi un mensaje NEW_POKEMON\n");
+			t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
 			id = recibir_entero(cliente_fd);
 			size = recibir_entero(cliente_fd);
-			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
-			posicion_x = recibir_entero(cliente_fd);
-			posicion_y = recibir_entero(cliente_fd);
-			u_int32_t cantidad = recibir_entero(cliente_fd);
+			new_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+			printf("Pokemon: %s\n", new_pokemon->pokemon);
+			new_pokemon->pos_x = recibir_entero(cliente_fd);
+			new_pokemon->pos_y = recibir_entero(cliente_fd);
+			new_pokemon->cantidad = recibir_entero(cliente_fd);
 
-			log_info(logger_gamecard, "Recibí un mensaje de tipo NEW_POKEMON y sus datos son: %s %d %d %d", pokemon, posicion_x, posicion_y, cantidad);
+			log_info(logger_gamecard, "Recibí un mensaje de tipo NEW_POKEMON y sus datos son: %s %d %d %d", new_pokemon->pokemon, new_pokemon->pos_x, new_pokemon->pos_y, new_pokemon->cantidad);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
-			DIR* directorio_pokemon = verificar_existencia_de_archivo(pokemon);
-
+			verificar_existencia_de_archivo(new_pokemon->pokemon);
+			char* file_pokemon_path = generar_pokemon_metadata_bin_path(new_pokemon->pokemon);
+			FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+			printf("File_pokemon_path: %s\n", file_pokemon_path);
+			verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
+			actualizar_posiciones(file_pokemon, new_pokemon);
+			cerrar_file(file_pokemon);
+			fclose(file_pokemon);
 
 			break;
 		case CATCH_POKEMON:
@@ -252,10 +308,11 @@ char* generar_pokemon_metadata_bin_path(char* pokemon) {
 void generar_metadata_bin(char* pokemon){
 	char* metadata_bin_path = generar_pokemon_metadata_bin_path(pokemon);
 	FILE* metadata_file = fopen(metadata_bin_path, "w+b");
-	fputs("DIRECTORY=N\n",metadata_file);
+	printf("Llegué aca\n");
+	int resultado = fputs("DIRECTORY=N\n",metadata_file);
 	fputs("SIZE=0\n",metadata_file);
 	fputs("BLOCKS=[]\n",metadata_file);
-	fputs("OPEN=Y",metadata_file);
+	fputs("OPEN=N",metadata_file);
 	fclose(metadata_file);
 	free(metadata_bin_path);
 }

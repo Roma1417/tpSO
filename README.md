@@ -37,7 +37,7 @@
 ### . NEW_POKEMON  
 
 - [X] Verificar existencia de archivo del pokemon. En caso contrario crearlo con su metadata.bin
-- [ ] Verificar si se puede abrir el archivo
+- [X] Verificar si se puede abrir el archivo
 - [ ] Verificar si las posiciones ya existen en el archivo y actualizarlas. En caso contrario agregarlas en una nueva línea
 - [ ] Esperar la cantidad de segundos definidas en el .config
 - [ ] Enviar mensaje APPEARED_POKEMON al Broker

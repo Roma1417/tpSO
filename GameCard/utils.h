@@ -51,8 +51,8 @@ u_int32_t id_cola_new;
 u_int32_t id_cola_catch;
 //t_list* archivos_creados;
 t_config_gamecard* config_gamecard;
-FILE * archivo_metadata;
-FILE * archivo_bitmap;
+//FILE * archivo_metadata;
+//FILE * archivo_bitmap;
 t_log* logger_gamecard;
 
 typedef struct
@@ -60,6 +60,14 @@ typedef struct
 	int size;
 	void* stream;
 } t_buffer;
+
+typedef struct
+{
+	char* pokemon;
+	uint32_t pos_x;
+	uint32_t pos_y;
+	uint32_t cantidad;
+} t_new_pokemon;
 
 typedef struct
 {
@@ -88,7 +96,9 @@ void recibir_mensaje(int* socket);
 bool list_elem(char* elemento, t_list* lista);
 char* generar_nombre(char* parametro);
 void generar_metadata_bin(char* path);
-DIR* verificar_existencia_de_archivo(char* pokemon);
+char* generar_pokemon_metadata_bin_path(char* pokemon);
+void verificar_existencia_de_archivo(char* pokemon);
+void verificar_estado_de_apertura_de_archivo_pokemon(FILE* file);
 
 
 #endif /* UTILS_H_ */
