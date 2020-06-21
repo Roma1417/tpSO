@@ -126,6 +126,46 @@ t_config_gamecard* construir_config_gamecard(t_config* config){
 	return config_gamecard_local;
 }
 
+uint32_t metadata_get_int(FILE* metadata_general_file){
+	char* value = string_new();
+	char caracter = fgetc(metadata_general_file);
+	while(caracter != '='){
+		caracter = fgetc(metadata_general_file);
+	}
+	caracter = fgetc(metadata_general_file);
+	while(caracter != '\n'){
+		string_append_with_format(&value, "%c", caracter);
+		caracter = fgetc(metadata_general_file);
+	}
+	uint32_t valor = atoi(value);
+	free(value);
+	return valor;
+}
+
+char* metadata_get_string(FILE* metadata_general_file){
+	char* value = string_new();
+	char caracter = fgetc(metadata_general_file);
+	while(caracter != '='){
+		caracter = fgetc(metadata_general_file);
+	}
+	caracter = fgetc(metadata_general_file);
+	while(caracter != '\n'){
+		string_append_with_format(&value, "%c", caracter);
+		caracter = fgetc(metadata_general_file);
+	}
+	return value;
+}
+
+t_metadata_general* construir_metadata_general(){
+	t_metadata_general* metadata_general = malloc(sizeof(t_metadata_general));
+	FILE* metadata_general_file = fopen(archivo_metadata_general_path, "r");
+	fseek(metadata_general_file, 0, SEEK_SET);
+	metadata_general->block_size = metadata_get_int(metadata_general_file);
+	metadata_general->blocks = metadata_get_int(metadata_general_file);
+	metadata_general->magic_number = metadata_get_string(metadata_general_file);
+
+	return metadata_general;
+}
 
 
 /*void crear_directorios(){
@@ -159,14 +199,17 @@ void crear_archivos(){
 
 int main(){
 	t_config* config = leer_config();
+	config_gamecard = construir_config_gamecard(config);
 	logger_gamecard = iniciar_logger();
 	id_cola_get = 0;
 	id_cola_new = 0;
 	id_cola_catch = 0;
+	archivo_metadata_general_path = obtener_metadata_general_path();
+	metadata_general = construir_metadata_general();
 	//archivos_creados = list_create();
 
 
-	config_gamecard = construir_config_gamecard(config);
+
 	//crear_directorios();
 	//crear_archivos();
 

@@ -33,7 +33,17 @@ typedef struct {
 	char* puerto_broker;
 }t_config_gamecard;
 
+typedef struct {
+	uint32_t block_size;
+	uint32_t blocks;
+	char* magic_number;
+}t_metadata_general;
+
 t_config_gamecard* config_gamecard;
+char * archivo_bitmap_path;
+char * archivo_metadata_general_path;
+t_metadata_general* metadata_general;
+
 
 char* generar_pokemon_file_path(char* pokemon);
 void verificar_existencia_de_archivo(char* pokemon);
@@ -48,6 +58,7 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon);
 char* generar_nombre(char* parametro);
 char* generar_pokemon_metadata_bin_path(char* pokemon);
 void generar_metadata_bin(char* pokemon);
+char* obtener_metadata_general_path();
 
 
 #endif /* FILE_H_ */

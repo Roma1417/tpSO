@@ -36,8 +36,6 @@ u_int32_t id_cola_get;
 u_int32_t id_cola_new;
 u_int32_t id_cola_catch;
 //t_list* archivos_creados;
-//FILE * archivo_metadata;
-//FILE * archivo_bitmap;
 t_log* logger_gamecard;
 
 typedef struct

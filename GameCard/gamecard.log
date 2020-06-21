@@ -1,0 +1,20 @@
+[INFO] 11:46:51:399 gamecard/(5165:5176): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 11:46:51:404 gamecard/(5165:5178): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 11:46:51:408 gamecard/(5165:5180): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 11:46:51:408 gamecard/(5165:5182): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 11:47:18:888 gamecard/(5165:5186): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 1
+[INFO] 11:48:11:314 gamecard/(5165:5175): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Pikachu 1 1
+[INFO] 11:48:13:329 gamecard/(5165:5297): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Squirtle 9 7
+[INFO] 11:48:20:320 gamecard/(5165:5300): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Onix 2 2
+[INFO] 11:49:30:911 gamecard/(5165:5309): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Squirtle 3 5
+[INFO] 11:49:34:911 gamecard/(5165:5394): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Gengar 7 5
+[INFO] 12:46:10:86 gamecard/(11331:11341): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Pikachu 1 1
+[INFO] 12:46:10:90 gamecard/(11331:11343): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Squirtle 9 7
+[INFO] 12:46:10:93 gamecard/(11331:11344): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Onix 2 2
+[INFO] 12:46:10:94 gamecard/(11331:11347): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Squirtle 3 5
+[INFO] 12:46:10:94 gamecard/(11331:11349): Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: Gengar 7 5
+[INFO] 12:46:10:97 gamecard/(11331:11352): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 12:46:10:99 gamecard/(11331:11354): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 12:46:10:101 gamecard/(11331:11356): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 12:46:10:107 gamecard/(11331:11358): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 12:46:10:113 gamecard/(11331:11362): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 1

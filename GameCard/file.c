@@ -99,6 +99,7 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 char* generar_nombre(char* parametro){
 	char* nombre = string_new();
 	string_append(&nombre, config_gamecard->punto_montaje_tallgrass);
+	printf("Aloh\n");
 	string_append(&nombre, parametro);
 	return nombre;
 }
@@ -118,5 +119,10 @@ void generar_metadata_bin(char* pokemon){
 	fputs("OPEN=N",metadata_file);
 	fclose(metadata_file);
 	free(metadata_bin_path);
+}
+
+char* obtener_metadata_general_path(){
+	char* metadata_general_path = generar_nombre("/Metadata/Metadata.bin");
+	return metadata_general_path;
 }
 

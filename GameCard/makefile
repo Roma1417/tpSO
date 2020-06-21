@@ -1,3 +1,3 @@
 all: server
-server: gamecard.c utils.c
-	gcc gamecard.c utils.c -o Gamecard -lcommons -lpthread
+server: gamecard.c utils.c file.c
+	gcc gamecard.c utils.c file.c -o Gamecard -lcommons -lpthread
