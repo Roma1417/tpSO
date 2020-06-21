@@ -163,8 +163,13 @@ t_metadata_general* construir_metadata_general(){
 	metadata_general->block_size = metadata_get_int(metadata_general_file);
 	metadata_general->blocks = metadata_get_int(metadata_general_file);
 	metadata_general->magic_number = metadata_get_string(metadata_general_file);
-
+	fclose(metadata_general_file);
 	return metadata_general;
+}
+
+void destruir_metadata_general(t_metadata_general* metadata_general){
+	free(metadata_general->magic_number);
+	free(metadata_general);
 }
 
 
@@ -206,6 +211,8 @@ int main(){
 	id_cola_catch = 0;
 	archivo_metadata_general_path = obtener_metadata_general_path();
 	metadata_general = construir_metadata_general();
+	archivo_bitmap_path = obtener_bitmap_path();
+	t_bitarray* bitmap;
 	//archivos_creados = list_create();
 
 

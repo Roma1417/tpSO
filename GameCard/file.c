@@ -126,3 +126,8 @@ char* obtener_metadata_general_path(){
 	return metadata_general_path;
 }
 
+char* obtener_bitmap_path(){
+	char* metadata_general_path = generar_nombre("/Metadata/Bitmap.bin");
+	return metadata_general_path;
+}
+
