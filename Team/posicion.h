@@ -11,7 +11,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <time.h>
+#include <unistd.h>
 #include <stdio.h>
+#include "config_team.h"
 
 typedef uint32_t u_int32_t;
 
@@ -31,5 +34,6 @@ bool esta_mas_a_la_derecha(t_posicion* una_posicion, t_posicion* otra_posicion);
 bool esta_mas_arriba(t_posicion* una_posicion, t_posicion* otra_posicion);
 u_int32_t distancia_en_x(t_posicion* una_posicion, t_posicion* otra_posicion);
 u_int32_t distancia_en_y(t_posicion* una_posicion, t_posicion* otra_posicion);
+void mover_de_posicion(t_posicion* posicion1, t_posicion* posicion2, t_config_team* config_team);
 
 #endif /* POSICION_H_ */

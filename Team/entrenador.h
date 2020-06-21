@@ -57,5 +57,7 @@ void cambiar_condicion_ready(t_entrenador* entrenador);
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
 bool cumplio_su_objetivo(void* parametro);
 bool no_cumplio_su_objetivo(void* parametro);
+void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible);
+
 
 #endif /* ENTRENADOR_H_ */

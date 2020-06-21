@@ -1624,3 +1624,955 @@
 [INFO] 16:25:41:122 Broker/(7258:15563): El suscriptor 32 ha sido agregado a la cola 1 (NEW_POKEMON).
 [INFO] 16:25:41:122 Broker/(7258:15563): Se envio el mensaje de ID 1 al suscriptor 32. (Socket: 34)
 [INFO] 16:25:41:125 Broker/(7258:15565): El suscriptor 32 confirmo confirmó haber recibido el mensaje 1 de la cola 1 (NEW_POKEMON).
+[INFO] 17:43:53:604 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 17:43:53:606 Broker/(5958:5967): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 17:43:53:606 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 17:43:53:607 Broker/(5958:5969): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 17:43:53:607 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 17:43:53:608 Broker/(5958:5971): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 17:44:17:462 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 17:44:17:463 Broker/(5958:5986): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:44:17:463 Broker/(5958:5986): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 17:44:17:464 Broker/(5958:5986): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 17:44:17:465 Broker/(5958:5993): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 17:44:17:465 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 17:44:17:466 Broker/(5958:5995): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:44:17:466 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 17:44:17:467 Broker/(5958:6001): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 17:44:17:467 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 17:44:17:467 Broker/(5958:6003): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 17:44:17:467 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 17:44:17:467 Broker/(5958:6005): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:44:17:467 Broker/(5958:6005): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 17:44:17:469 Broker/(5958:6005): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 17:44:17:474 Broker/(5958:6007): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 17:44:17:474 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 17:44:17:474 Broker/(5958:6008): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:44:17:474 Broker/(5958:6008): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 17:44:17:476 Broker/(5958:6008): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 17:44:17:476 Broker/(5958:6010): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 17:44:17:476 Broker/(5958:5958): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 17:44:17:477 Broker/(5958:6011): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:44:17:477 Broker/(5958:6011): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 17:44:17:477 Broker/(5958:6011): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 17:44:17:478 Broker/(5958:6013): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 17:47:49:33 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 17:47:49:34 Broker/(13353:13364): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 17:47:49:35 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 17:47:49:36 Broker/(13353:13368): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 17:47:49:36 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 17:47:49:37 Broker/(13353:13371): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 17:47:51:830 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 17:47:51:831 Broker/(13353:13386): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:47:51:831 Broker/(13353:13386): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 17:47:51:832 Broker/(13353:13386): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 17:47:51:833 Broker/(13353:13392): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 17:47:51:834 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 17:47:51:834 Broker/(13353:13395): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:47:51:835 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 17:47:51:835 Broker/(13353:13401): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 17:47:51:835 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 17:47:51:837 Broker/(13353:13403): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 17:47:51:837 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 17:47:51:841 Broker/(13353:13405): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:47:51:842 Broker/(13353:13405): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 17:47:51:842 Broker/(13353:13405): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 17:47:51:849 Broker/(13353:13407): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 17:47:51:849 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 17:47:51:849 Broker/(13353:13408): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:47:51:849 Broker/(13353:13408): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 17:47:51:850 Broker/(13353:13408): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 17:47:51:850 Broker/(13353:13410): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 17:47:51:850 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 17:47:51:863 Broker/(13353:13411): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:47:51:866 Broker/(13353:13411): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 17:47:51:868 Broker/(13353:13411): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 17:47:51:869 Broker/(13353:13413): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 17:48:23:292 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 17:48:23:293 Broker/(13353:13432): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:48:23:293 Broker/(13353:13432): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 17:48:23:293 Broker/(13353:13432): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 17:48:23:294 Broker/(13353:13434): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:48:33:294 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 17:48:33:294 Broker/(13353:13438): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:48:33:295 Broker/(13353:13438): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 17:48:33:300 Broker/(13353:13438): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 17:48:33:308 Broker/(13353:13440): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:49:08:301 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 17:49:08:304 Broker/(13353:13442): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:49:08:304 Broker/(13353:13442): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 17:49:08:306 Broker/(13353:13442): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 17:49:08:307 Broker/(13353:13444): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:49:36:949 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 17:49:36:950 Broker/(13353:13448): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:49:36:951 Broker/(13353:13448): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 17:49:36:955 Broker/(13353:13448): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 17:49:36:956 Broker/(13353:13450): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:49:40:380 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 17:49:40:380 Broker/(13353:13452): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:49:40:380 Broker/(13353:13452): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 17:49:40:381 Broker/(13353:13452): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 17:49:40:381 Broker/(13353:13454): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:49:46:886 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 17:49:46:887 Broker/(13353:13457): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:49:46:888 Broker/(13353:13457): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 17:49:46:889 Broker/(13353:13457): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 17:49:46:908 Broker/(13353:13459): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:50:23:716 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 17:50:23:716 Broker/(13353:13471): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:50:23:717 Broker/(13353:13471): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 17:50:23:722 Broker/(13353:13471): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 17:50:23:723 Broker/(13353:13473): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:50:43:724 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 17:50:43:726 Broker/(13353:13476): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:50:43:727 Broker/(13353:13476): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 17:50:43:727 Broker/(13353:13476): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 17:50:43:730 Broker/(13353:13478): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:50:57:696 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 17:50:57:697 Broker/(13353:13480): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:50:57:697 Broker/(13353:13480): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 17:50:57:697 Broker/(13353:13480): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 17:50:57:698 Broker/(13353:13482): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:51:00:319 Broker/(13353:13353): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 17:51:00:324 Broker/(13353:13484): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:51:00:325 Broker/(13353:13484): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 17:51:00:326 Broker/(13353:13484): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 17:51:00:339 Broker/(13353:13486): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:53:52:188 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 17:53:52:189 Broker/(970:982): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:53:52:189 Broker/(970:982): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 17:53:52:190 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 17:53:52:191 Broker/(970:989): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:53:52:191 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 17:53:52:192 Broker/(970:993): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 17:53:52:192 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 17:53:52:195 Broker/(970:995): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 17:53:52:195 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 17:53:52:195 Broker/(970:1001): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:53:52:195 Broker/(970:1001): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 17:53:52:195 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 17:53:52:202 Broker/(970:1004): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:53:52:202 Broker/(970:1004): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 17:53:52:203 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 17:53:52:204 Broker/(970:1005): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 17:53:52:204 Broker/(970:1005): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 17:55:57:109 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 17:55:57:110 Broker/(970:1023): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 17:55:57:110 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 17:55:57:113 Broker/(970:1027): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 17:55:57:113 Broker/(970:1027): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 17:55:57:121 Broker/(970:1033): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 17:55:57:121 Broker/(970:1027): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 17:55:57:123 Broker/(970:1034): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 17:55:57:123 Broker/(970:1027): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 17:55:57:126 Broker/(970:1036): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 17:55:57:126 Broker/(970:1027): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 17:55:57:134 Broker/(970:1038): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 17:55:57:134 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 17:55:57:137 Broker/(970:1041): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 17:56:23:225 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 17:56:23:225 Broker/(970:1057): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:56:23:225 Broker/(970:1057): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 17:56:23:226 Broker/(970:1057): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 17:56:23:226 Broker/(970:1059): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:56:33:227 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 17:56:33:227 Broker/(970:1062): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:56:33:227 Broker/(970:1062): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 17:56:33:233 Broker/(970:1062): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 17:56:33:235 Broker/(970:1064): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:57:08:233 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 17:57:08:237 Broker/(970:1065): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:57:08:237 Broker/(970:1065): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 17:57:08:238 Broker/(970:1065): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 17:57:08:239 Broker/(970:1067): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:57:16:325 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 17:57:16:326 Broker/(970:1069): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:57:16:326 Broker/(970:1069): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 17:57:16:327 Broker/(970:1069): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 17:57:16:347 Broker/(970:1071): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:57:19:123 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 17:57:19:125 Broker/(970:1074): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:57:19:125 Broker/(970:1074): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 17:57:19:126 Broker/(970:1074): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 17:57:19:129 Broker/(970:1076): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:57:21:637 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 17:57:21:640 Broker/(970:1078): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:57:21:641 Broker/(970:1078): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 17:57:21:641 Broker/(970:1078): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 17:57:21:656 Broker/(970:1080): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:58:19:768 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 17:58:19:768 Broker/(970:1095): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:58:19:769 Broker/(970:1095): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 17:58:19:777 Broker/(970:1095): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 17:58:19:778 Broker/(970:1097): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:58:39:773 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 17:58:39:776 Broker/(970:1102): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 17:58:39:776 Broker/(970:1102): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 17:58:39:777 Broker/(970:1102): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 17:58:39:780 Broker/(970:1104): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 17:58:43:801 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 17:58:43:804 Broker/(970:1106): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:58:43:804 Broker/(970:1106): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 17:58:43:806 Broker/(970:1106): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 17:58:43:821 Broker/(970:1108): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:58:45:848 Broker/(970:970): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 17:58:45:849 Broker/(970:1110): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 17:58:45:849 Broker/(970:1110): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 17:58:45:850 Broker/(970:1110): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 17:58:45:864 Broker/(970:1112): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:21:34:953 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:21:34:954 Broker/(5141:5162): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 20:21:34:954 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:21:34:954 Broker/(5141:5164): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 20:21:34:955 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:21:34:955 Broker/(5141:5166): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 20:21:38:532 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:21:38:533 Broker/(5141:5177): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:21:38:533 Broker/(5141:5177): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:21:38:534 Broker/(5141:5177): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 20:21:38:538 Broker/(5141:5184): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 20:21:38:538 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:21:38:540 Broker/(5141:5186): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:21:38:540 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:21:38:543 Broker/(5141:5192): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:21:38:543 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:21:38:548 Broker/(5141:5194): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:21:38:548 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 20:21:38:548 Broker/(5141:5196): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:21:38:548 Broker/(5141:5196): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:21:38:549 Broker/(5141:5196): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 20:21:38:554 Broker/(5141:5198): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 20:21:38:554 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 20:21:38:554 Broker/(5141:5199): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:21:38:554 Broker/(5141:5199): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:21:38:554 Broker/(5141:5199): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 20:21:38:554 Broker/(5141:5201): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 20:21:38:554 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 20:21:38:556 Broker/(5141:5202): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:21:38:556 Broker/(5141:5202): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 20:21:38:558 Broker/(5141:5202): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 20:21:38:572 Broker/(5141:5204): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 20:22:22:873 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 20:22:22:873 Broker/(5141:5228): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:22:22:874 Broker/(5141:5228): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 20:22:22:874 Broker/(5141:5228): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 20:22:22:875 Broker/(5141:5230): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:22:32:875 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 20:22:32:875 Broker/(5141:5231): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:22:32:875 Broker/(5141:5231): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 20:22:32:880 Broker/(5141:5231): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 20:22:32:890 Broker/(5141:5233): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:23:07:880 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 20:23:07:884 Broker/(5141:5236): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:23:07:884 Broker/(5141:5236): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 20:23:07:885 Broker/(5141:5236): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 20:23:07:886 Broker/(5141:5238): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:23:32:477 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 20:23:32:480 Broker/(5141:5245): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:23:32:493 Broker/(5141:5245): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 20:23:32:493 Broker/(5141:5245): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 20:23:32:503 Broker/(5141:5247): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:23:35:669 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 20:23:35:684 Broker/(5141:5249): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:23:35:689 Broker/(5141:5249): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 20:23:35:691 Broker/(5141:5249): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 20:23:35:691 Broker/(5141:5251): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:23:44:938 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 20:23:44:950 Broker/(5141:5255): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:23:44:951 Broker/(5141:5255): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 20:23:44:952 Broker/(5141:5255): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 20:23:44:952 Broker/(5141:5257): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:24:23:110 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 20:24:23:110 Broker/(5141:5264): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:24:23:110 Broker/(5141:5264): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 20:24:23:117 Broker/(5141:5264): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 20:24:23:118 Broker/(5141:5266): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:24:43:116 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 20:24:43:119 Broker/(5141:5269): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:24:43:120 Broker/(5141:5269): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 20:24:43:120 Broker/(5141:5269): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 20:24:43:121 Broker/(5141:5271): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:24:48:632 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 20:24:48:632 Broker/(5141:5273): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:24:48:633 Broker/(5141:5273): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 20:24:48:633 Broker/(5141:5273): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 20:24:48:646 Broker/(5141:5275): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:24:51:781 Broker/(5141:5141): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 20:24:51:782 Broker/(5141:5277): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:24:51:782 Broker/(5141:5277): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 20:24:51:783 Broker/(5141:5277): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 20:24:51:800 Broker/(5141:5279): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:38:30:510 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:38:30:510 Broker/(5593:5604): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:38:30:511 Broker/(5593:5604): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:38:30:511 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:38:30:515 Broker/(5593:5609): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:38:30:516 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:38:30:517 Broker/(5593:5612): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:38:30:517 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:38:30:519 Broker/(5593:5618): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:38:30:519 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:38:30:521 Broker/(5593:5620): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:38:30:521 Broker/(5593:5620): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:38:30:524 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:38:30:524 Broker/(5593:5621): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:38:30:525 Broker/(5593:5621): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:38:30:525 Broker/(5593:5593): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:38:30:526 Broker/(5593:5622): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:38:30:526 Broker/(5593:5622): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 20:39:05:143 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:39:05:144 Broker/(5625:5634): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:39:05:144 Broker/(5625:5634): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:39:05:145 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:39:05:149 Broker/(5625:5639): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:39:05:149 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:39:05:150 Broker/(5625:5643): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:39:05:150 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:39:05:151 Broker/(5625:5649): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:39:05:151 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:39:05:154 Broker/(5625:5651): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:39:05:154 Broker/(5625:5651): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:39:05:154 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:39:05:156 Broker/(5625:5652): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:39:05:157 Broker/(5625:5652): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:39:05:158 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:39:05:170 Broker/(5625:5653): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:39:05:170 Broker/(5625:5653): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 20:39:06:890 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 20:39:06:893 Broker/(5625:5659): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 20:39:06:893 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 20:39:06:903 Broker/(5625:5660): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 20:39:06:903 Broker/(5625:5660): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 20:39:06:907 Broker/(5625:5666): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 20:39:06:918 Broker/(5625:5660): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 20:39:06:919 Broker/(5625:5668): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 20:39:06:919 Broker/(5625:5660): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 20:39:06:922 Broker/(5625:5669): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 20:39:06:922 Broker/(5625:5660): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 20:39:06:925 Broker/(5625:5671): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 20:39:06:925 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 20:39:06:931 Broker/(5625:5673): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 20:39:27:623 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 20:39:27:623 Broker/(5625:5683): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:39:27:624 Broker/(5625:5683): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 20:39:27:625 Broker/(5625:5683): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 20:39:27:625 Broker/(5625:5685): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:39:29:626 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 20:39:29:626 Broker/(5625:5686): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:39:29:626 Broker/(5625:5686): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 20:39:29:633 Broker/(5625:5686): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 20:39:29:633 Broker/(5625:5688): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:39:36:632 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 20:39:36:636 Broker/(5625:5689): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:39:36:637 Broker/(5625:5689): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 20:39:36:638 Broker/(5625:5689): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 20:39:36:639 Broker/(5625:5691): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:39:45:717 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 20:39:45:723 Broker/(5625:5695): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:39:45:723 Broker/(5625:5695): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 20:39:45:723 Broker/(5625:5695): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 20:39:45:725 Broker/(5625:5697): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:39:50:658 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 20:39:50:660 Broker/(5625:5699): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:39:50:660 Broker/(5625:5699): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 20:39:50:662 Broker/(5625:5699): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 20:39:50:665 Broker/(5625:5701): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:39:52:746 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 20:39:52:748 Broker/(5625:5703): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:39:52:748 Broker/(5625:5703): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 20:39:52:749 Broker/(5625:5703): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 20:39:52:764 Broker/(5625:5705): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:40:01:211 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 20:40:01:212 Broker/(5625:5711): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:40:01:212 Broker/(5625:5711): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 20:40:01:218 Broker/(5625:5711): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 20:40:01:219 Broker/(5625:5713): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:40:05:217 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 20:40:05:221 Broker/(5625:5714): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:40:05:221 Broker/(5625:5714): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 20:40:05:222 Broker/(5625:5714): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 20:40:05:223 Broker/(5625:5716): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:40:10:154 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 20:40:10:167 Broker/(5625:5718): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:40:10:167 Broker/(5625:5718): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 20:40:10:168 Broker/(5625:5718): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 20:40:10:184 Broker/(5625:5720): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:40:12:783 Broker/(5625:5625): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 20:40:12:784 Broker/(5625:5722): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:40:12:784 Broker/(5625:5722): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 20:40:12:802 Broker/(5625:5722): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 20:40:12:808 Broker/(5625:5724): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:43:40:326 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:43:40:327 Broker/(22935:22964): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:43:40:327 Broker/(22935:22964): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:43:40:328 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:43:40:329 Broker/(22935:22969): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:43:40:329 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:43:40:330 Broker/(22935:22972): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:43:40:330 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:43:40:331 Broker/(22935:22978): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:43:40:331 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:43:40:332 Broker/(22935:22980): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:43:40:332 Broker/(22935:22980): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:43:40:333 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:43:40:336 Broker/(22935:22981): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:43:40:336 Broker/(22935:22981): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:43:40:337 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:43:40:337 Broker/(22935:22982): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:43:40:337 Broker/(22935:22982): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 20:43:47:452 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 20:43:47:453 Broker/(22935:22990): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 20:43:47:453 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 20:43:47:454 Broker/(22935:22994): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 20:43:47:456 Broker/(22935:22994): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 20:43:47:458 Broker/(22935:22997): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 20:43:47:458 Broker/(22935:22994): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 20:43:47:462 Broker/(22935:22999): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 20:43:47:462 Broker/(22935:22994): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 20:43:47:471 Broker/(22935:23000): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 20:43:47:471 Broker/(22935:22994): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 20:43:47:472 Broker/(22935:23002): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 20:43:47:472 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 20:43:47:476 Broker/(22935:23004): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 20:43:55:130 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 20:43:55:131 Broker/(22935:23014): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:43:55:131 Broker/(22935:23014): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 20:43:55:131 Broker/(22935:23014): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 20:43:55:132 Broker/(22935:23016): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:43:57:132 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 20:43:57:132 Broker/(22935:23017): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:43:57:132 Broker/(22935:23017): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 20:43:57:137 Broker/(22935:23017): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 20:43:57:140 Broker/(22935:23019): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:44:04:144 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 20:44:04:148 Broker/(22935:23020): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:44:04:148 Broker/(22935:23020): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 20:44:04:149 Broker/(22935:23020): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 20:44:04:150 Broker/(22935:23022): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:44:09:231 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 20:44:09:232 Broker/(22935:23024): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:44:09:232 Broker/(22935:23024): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 20:44:09:233 Broker/(22935:23024): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 20:44:09:252 Broker/(22935:23026): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:44:12:805 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 20:44:12:809 Broker/(22935:23028): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:44:12:809 Broker/(22935:23028): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 20:44:12:810 Broker/(22935:23028): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 20:44:12:810 Broker/(22935:23030): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:44:17:681 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 20:44:17:681 Broker/(22935:23032): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:44:17:682 Broker/(22935:23032): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 20:44:17:682 Broker/(22935:23032): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 20:44:17:696 Broker/(22935:23034): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:44:26:167 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 20:44:26:167 Broker/(22935:23040): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:44:26:167 Broker/(22935:23040): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 20:44:26:172 Broker/(22935:23040): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 20:44:26:182 Broker/(22935:23042): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:44:30:171 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 20:44:30:177 Broker/(22935:23043): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:44:30:178 Broker/(22935:23043): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 20:44:30:178 Broker/(22935:23043): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 20:44:30:179 Broker/(22935:23045): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:44:31:874 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 20:44:31:875 Broker/(22935:23047): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:44:31:876 Broker/(22935:23047): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 20:44:31:888 Broker/(22935:23047): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 20:44:31:889 Broker/(22935:23049): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:44:34:656 Broker/(22935:22935): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 20:44:34:658 Broker/(22935:23051): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:44:34:659 Broker/(22935:23051): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 20:44:34:674 Broker/(22935:23051): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 20:44:34:681 Broker/(22935:23053): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:47:14:175 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:47:14:176 Broker/(31617:31628): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:47:14:176 Broker/(31617:31628): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:47:14:176 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:47:14:178 Broker/(31617:31632): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:47:14:178 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:47:14:179 Broker/(31617:31635): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:47:14:180 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:47:14:185 Broker/(31617:31641): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:47:14:186 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:47:14:186 Broker/(31617:31643): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:47:14:186 Broker/(31617:31643): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:47:14:186 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:47:14:186 Broker/(31617:31644): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:47:14:186 Broker/(31617:31644): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:47:14:187 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:47:14:187 Broker/(31617:31645): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:47:14:187 Broker/(31617:31645): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 20:47:19:445 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 20:47:19:446 Broker/(31617:31651): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 20:47:19:446 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 20:47:19:447 Broker/(31617:31656): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 20:47:19:447 Broker/(31617:31656): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 20:47:19:453 Broker/(31617:31658): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 20:47:19:454 Broker/(31617:31656): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 20:47:19:456 Broker/(31617:31660): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 20:47:19:456 Broker/(31617:31656): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 20:47:19:466 Broker/(31617:31662): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 20:47:19:466 Broker/(31617:31656): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 20:47:19:467 Broker/(31617:31664): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 20:47:19:467 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 20:47:19:472 Broker/(31617:31666): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 20:47:31:252 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 20:47:31:252 Broker/(31617:31675): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:47:31:252 Broker/(31617:31675): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 20:47:31:253 Broker/(31617:31675): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 20:47:31:253 Broker/(31617:31677): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:47:33:254 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 20:47:33:254 Broker/(31617:31678): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:47:33:254 Broker/(31617:31678): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 20:47:33:260 Broker/(31617:31678): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 20:47:33:261 Broker/(31617:31680): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:47:40:259 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 20:47:40:260 Broker/(31617:31681): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:47:40:260 Broker/(31617:31681): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 20:47:40:263 Broker/(31617:31681): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 20:47:40:264 Broker/(31617:31683): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:47:41:173 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 20:47:41:174 Broker/(31617:31685): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:47:41:174 Broker/(31617:31685): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 20:47:41:174 Broker/(31617:31685): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 20:47:41:190 Broker/(31617:31687): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:47:43:685 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 20:47:43:688 Broker/(31617:31691): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:47:43:688 Broker/(31617:31691): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 20:47:43:701 Broker/(31617:31691): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 20:47:43:712 Broker/(31617:31693): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:47:51:619 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 20:47:51:621 Broker/(31617:31695): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:47:51:621 Broker/(31617:31695): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 20:47:51:622 Broker/(31617:31695): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 20:47:51:639 Broker/(31617:31697): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:47:59:479 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 20:47:59:479 Broker/(31617:31703): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:47:59:479 Broker/(31617:31703): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 20:47:59:484 Broker/(31617:31703): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 20:47:59:495 Broker/(31617:31705): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:48:03:482 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 20:48:03:484 Broker/(31617:31707): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 20:48:03:484 Broker/(31617:31707): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 20:48:03:485 Broker/(31617:31707): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 20:48:03:488 Broker/(31617:31709): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 20:48:18:972 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 20:48:18:978 Broker/(31617:31716): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:48:18:978 Broker/(31617:31716): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 20:48:18:979 Broker/(31617:31716): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 20:48:19:4 Broker/(31617:31718): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:48:40:251 Broker/(31617:31617): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 20:48:40:251 Broker/(31617:31722): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 20:48:40:251 Broker/(31617:31722): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 20:48:40:252 Broker/(31617:31722): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 20:48:40:269 Broker/(31617:31724): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:00:57:632 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 21:00:57:633 Broker/(10950:10961): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:00:57:634 Broker/(10950:10961): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 21:00:57:634 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 21:00:57:635 Broker/(10950:10965): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:00:57:635 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 21:00:57:636 Broker/(10950:10968): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 21:00:57:636 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 21:00:57:643 Broker/(10950:10974): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 21:00:57:643 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 21:00:57:643 Broker/(10950:10976): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:00:57:643 Broker/(10950:10976): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 21:00:57:643 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 21:00:57:644 Broker/(10950:10977): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:00:57:644 Broker/(10950:10977): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 21:00:57:645 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 21:00:57:646 Broker/(10950:10978): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:00:57:646 Broker/(10950:10978): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 21:01:04:160 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 21:01:04:162 Broker/(10950:10985): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 21:01:04:162 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 21:01:04:162 Broker/(10950:10989): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 21:01:04:163 Broker/(10950:10989): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 21:01:04:169 Broker/(10950:10992): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 21:01:04:170 Broker/(10950:10989): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 21:01:04:171 Broker/(10950:10994): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 21:01:04:171 Broker/(10950:10989): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 21:01:04:181 Broker/(10950:10995): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 21:01:04:181 Broker/(10950:10989): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 21:01:04:182 Broker/(10950:10997): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 21:01:04:182 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 21:01:04:182 Broker/(10950:10999): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 21:01:25:379 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 21:01:25:379 Broker/(10950:11015): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:01:25:379 Broker/(10950:11015): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 21:01:25:380 Broker/(10950:11015): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 21:01:25:380 Broker/(10950:11017): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:01:27:381 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 21:01:27:381 Broker/(10950:11018): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:01:27:381 Broker/(10950:11018): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 21:01:27:387 Broker/(10950:11018): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 21:01:27:389 Broker/(10950:11020): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:01:34:390 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 21:01:34:392 Broker/(10950:11021): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:01:34:393 Broker/(10950:11021): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 21:01:34:393 Broker/(10950:11021): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 21:01:34:397 Broker/(10950:11023): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:02:00:109 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 21:02:00:109 Broker/(10950:11027): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:02:00:110 Broker/(10950:11027): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 21:02:00:110 Broker/(10950:11027): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 21:02:00:110 Broker/(10950:11029): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:02:02:405 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 21:02:02:406 Broker/(10950:11031): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:02:02:406 Broker/(10950:11031): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 21:02:02:406 Broker/(10950:11031): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 21:02:02:408 Broker/(10950:11033): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:02:04:964 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 21:02:04:968 Broker/(10950:11035): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:02:04:968 Broker/(10950:11035): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 21:02:04:969 Broker/(10950:11035): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 21:02:04:980 Broker/(10950:11037): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:02:13:420 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 21:02:13:421 Broker/(10950:11043): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:02:13:421 Broker/(10950:11043): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 21:02:13:429 Broker/(10950:11043): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 21:02:13:429 Broker/(10950:11045): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:02:17:428 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 21:02:17:429 Broker/(10950:11046): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:02:17:429 Broker/(10950:11046): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 21:02:17:430 Broker/(10950:11046): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 21:02:17:433 Broker/(10950:11048): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:02:19:629 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 21:02:19:630 Broker/(10950:11051): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:02:19:630 Broker/(10950:11051): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 21:02:19:631 Broker/(10950:11051): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 21:02:19:648 Broker/(10950:11053): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:02:23:85 Broker/(10950:10950): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 21:02:23:86 Broker/(10950:11055): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:02:23:86 Broker/(10950:11055): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 21:02:23:87 Broker/(10950:11055): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 21:02:23:87 Broker/(10950:11057): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:10:38:434 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 21:10:38:436 Broker/(5521:5530): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 21:10:38:436 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 21:10:38:437 Broker/(5521:5532): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 21:10:38:437 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 21:10:38:438 Broker/(5521:5534): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 21:10:43:927 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 21:10:43:928 Broker/(5521:5546): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:10:43:929 Broker/(5521:5546): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 21:10:43:929 Broker/(5521:5546): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 21:10:43:930 Broker/(5521:5551): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 21:10:43:930 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 21:10:43:931 Broker/(5521:5554): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:10:43:931 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 21:10:43:934 Broker/(5521:5557): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 21:10:43:935 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 21:10:43:936 Broker/(5521:5563): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 21:10:43:937 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 21:10:43:941 Broker/(5521:5565): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:10:43:941 Broker/(5521:5565): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 21:10:43:942 Broker/(5521:5565): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 21:10:43:942 Broker/(5521:5567): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 21:10:43:942 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 21:10:43:948 Broker/(5521:5568): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:10:43:949 Broker/(5521:5568): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 21:10:43:949 Broker/(5521:5568): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 21:10:43:955 Broker/(5521:5570): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 21:10:43:955 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 21:10:43:955 Broker/(5521:5571): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:10:43:956 Broker/(5521:5571): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 21:10:43:957 Broker/(5521:5571): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 21:10:43:961 Broker/(5521:5573): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 21:10:52:140 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 21:10:52:140 Broker/(5521:5581): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:10:52:140 Broker/(5521:5581): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 21:10:52:141 Broker/(5521:5581): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 21:10:52:142 Broker/(5521:5583): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:10:54:142 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 21:10:54:142 Broker/(5521:5584): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:10:54:142 Broker/(5521:5584): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 21:10:54:153 Broker/(5521:5584): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 21:10:54:160 Broker/(5521:5586): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:11:01:151 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 21:11:01:155 Broker/(5521:5587): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:11:01:155 Broker/(5521:5587): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 21:11:01:155 Broker/(5521:5587): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 21:11:01:156 Broker/(5521:5589): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:11:03:479 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 21:11:03:479 Broker/(5521:5591): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:11:03:480 Broker/(5521:5591): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 21:11:03:492 Broker/(5521:5591): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 21:11:03:493 Broker/(5521:5593): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:11:06:149 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 21:11:06:150 Broker/(5521:5595): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:11:06:151 Broker/(5521:5595): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 21:11:06:151 Broker/(5521:5595): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 21:11:06:166 Broker/(5521:5597): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:11:08:157 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 21:11:08:161 Broker/(5521:5604): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:11:08:161 Broker/(5521:5604): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 21:11:08:162 Broker/(5521:5604): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 21:11:08:166 Broker/(5521:5606): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:11:18:521 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 21:11:18:521 Broker/(5521:5617): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:11:18:521 Broker/(5521:5617): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 21:11:18:529 Broker/(5521:5617): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 21:11:18:529 Broker/(5521:5619): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:11:22:528 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 21:11:22:534 Broker/(5521:5620): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:11:22:534 Broker/(5521:5620): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 21:11:22:534 Broker/(5521:5620): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 21:11:22:535 Broker/(5521:5622): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:11:23:340 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 21:11:23:341 Broker/(5521:5624): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:11:23:341 Broker/(5521:5624): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 21:11:23:342 Broker/(5521:5624): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 21:11:23:343 Broker/(5521:5626): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:11:26:366 Broker/(5521:5521): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 21:11:26:366 Broker/(5521:5628): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:11:26:368 Broker/(5521:5628): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 21:11:26:369 Broker/(5521:5628): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 21:11:26:386 Broker/(5521:5630): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:14:20:887 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 21:14:20:888 Broker/(5695:5705): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:14:20:889 Broker/(5695:5705): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 21:14:20:889 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 21:14:20:890 Broker/(5695:5710): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:14:20:890 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 21:14:20:890 Broker/(5695:5713): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 21:14:20:891 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 21:14:20:892 Broker/(5695:5719): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 21:14:20:893 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 21:14:20:893 Broker/(5695:5721): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:14:20:893 Broker/(5695:5721): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 21:14:20:893 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 21:14:20:897 Broker/(5695:5722): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:14:20:897 Broker/(5695:5722): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 21:14:20:897 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 21:14:20:897 Broker/(5695:5723): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:14:20:897 Broker/(5695:5723): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 21:14:24:109 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 21:14:24:110 Broker/(5695:5729): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 21:14:24:110 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 21:14:24:116 Broker/(5695:5733): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 21:14:24:116 Broker/(5695:5733): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 21:14:24:125 Broker/(5695:5736): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 21:14:24:125 Broker/(5695:5733): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 21:14:24:135 Broker/(5695:5737): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 21:14:24:135 Broker/(5695:5733): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 21:14:24:136 Broker/(5695:5739): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 21:14:24:136 Broker/(5695:5733): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 21:14:24:141 Broker/(5695:5741): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 21:14:24:141 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 21:14:24:142 Broker/(5695:5743): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 21:14:30:637 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 21:14:30:637 Broker/(5695:5753): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:14:30:638 Broker/(5695:5753): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 21:14:30:638 Broker/(5695:5753): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 21:14:30:639 Broker/(5695:5755): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:14:32:639 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 21:14:32:640 Broker/(5695:5756): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:14:32:640 Broker/(5695:5756): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 21:14:32:645 Broker/(5695:5756): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 21:14:32:647 Broker/(5695:5758): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:14:39:646 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 21:14:39:649 Broker/(5695:5759): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:14:39:650 Broker/(5695:5759): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 21:14:39:650 Broker/(5695:5759): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 21:14:39:654 Broker/(5695:5761): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:14:42:607 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 21:14:42:612 Broker/(5695:5763): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:14:42:613 Broker/(5695:5763): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 21:14:42:627 Broker/(5695:5763): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 21:14:42:627 Broker/(5695:5765): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:14:44:976 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 21:14:44:989 Broker/(5695:5769): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:14:44:989 Broker/(5695:5769): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 21:14:44:990 Broker/(5695:5769): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 21:14:44:991 Broker/(5695:5771): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:14:47:469 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 21:14:47:471 Broker/(5695:5773): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:14:47:471 Broker/(5695:5773): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 21:14:47:472 Broker/(5695:5773): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 21:14:47:489 Broker/(5695:5775): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:14:54:651 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 21:14:54:652 Broker/(5695:5781): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:14:54:652 Broker/(5695:5781): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 21:14:54:656 Broker/(5695:5781): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 21:14:54:658 Broker/(5695:5783): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:14:58:657 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 21:14:58:663 Broker/(5695:5784): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:14:58:663 Broker/(5695:5784): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 21:14:58:664 Broker/(5695:5784): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 21:14:58:665 Broker/(5695:5786): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:15:00:771 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 21:15:00:774 Broker/(5695:5788): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:15:00:774 Broker/(5695:5788): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 21:15:00:775 Broker/(5695:5788): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 21:15:00:777 Broker/(5695:5790): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:15:02:993 Broker/(5695:5695): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 21:15:02:997 Broker/(5695:5792): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:15:02:1 Broker/(5695:5792): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 21:15:02:2 Broker/(5695:5792): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 21:15:03:15 Broker/(5695:5794): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:18:39:700 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 21:18:39:704 Broker/(5845:5882): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:18:39:704 Broker/(5845:5882): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 21:18:39:704 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 21:18:39:712 Broker/(5845:5883): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:18:39:712 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 21:18:39:713 Broker/(5845:5885): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 21:18:39:713 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 21:18:39:717 Broker/(5845:5887): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 21:18:39:718 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 21:18:39:718 Broker/(5845:5889): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:18:39:718 Broker/(5845:5889): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 21:18:39:719 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 21:18:39:720 Broker/(5845:5890): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:18:39:720 Broker/(5845:5890): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 21:18:39:721 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 21:18:39:723 Broker/(5845:5891): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:18:39:723 Broker/(5845:5891): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 21:18:42:686 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 21:18:42:688 Broker/(5845:5897): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 21:18:42:688 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 21:18:42:689 Broker/(5845:5902): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 21:18:42:689 Broker/(5845:5902): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 21:18:42:697 Broker/(5845:5904): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 21:18:42:698 Broker/(5845:5902): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 21:18:42:708 Broker/(5845:5905): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 21:18:42:709 Broker/(5845:5902): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 21:18:42:716 Broker/(5845:5908): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 21:18:42:716 Broker/(5845:5902): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 21:18:42:720 Broker/(5845:5910): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 21:18:42:720 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 21:18:42:721 Broker/(5845:5912): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 21:18:50:499 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 21:18:50:499 Broker/(5845:5924): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:18:50:499 Broker/(5845:5924): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 21:18:50:500 Broker/(5845:5924): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 21:18:50:500 Broker/(5845:5926): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:18:52:502 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 21:18:52:502 Broker/(5845:5927): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:18:52:502 Broker/(5845:5927): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 21:18:52:508 Broker/(5845:5927): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 21:18:52:509 Broker/(5845:5929): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:18:59:515 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 21:18:59:518 Broker/(5845:5930): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:18:59:518 Broker/(5845:5930): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 21:18:59:519 Broker/(5845:5930): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 21:18:59:519 Broker/(5845:5932): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:19:03:524 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 21:19:03:538 Broker/(5845:5934): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:19:03:539 Broker/(5845:5934): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 21:19:03:539 Broker/(5845:5934): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 21:19:03:544 Broker/(5845:5936): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:19:06:57 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 21:19:06:61 Broker/(5845:5938): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:19:06:61 Broker/(5845:5938): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 21:19:06:62 Broker/(5845:5938): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 21:19:06:75 Broker/(5845:5940): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:19:14:604 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 21:19:14:608 Broker/(5845:5942): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:19:14:609 Broker/(5845:5942): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 21:19:14:621 Broker/(5845:5942): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 21:19:14:623 Broker/(5845:5944): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:19:24:389 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 21:19:24:389 Broker/(5845:5950): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:19:24:390 Broker/(5845:5950): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 21:19:24:395 Broker/(5845:5950): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 21:19:24:397 Broker/(5845:5952): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:19:28:395 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 21:19:28:397 Broker/(5845:5953): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:19:28:398 Broker/(5845:5953): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 21:19:28:398 Broker/(5845:5953): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 21:19:28:400 Broker/(5845:5955): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:19:31:724 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 21:19:31:725 Broker/(5845:5957): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:19:31:725 Broker/(5845:5957): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 21:19:31:726 Broker/(5845:5957): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 21:19:31:726 Broker/(5845:5959): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:19:34:9 Broker/(5845:5845): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 21:19:34:12 Broker/(5845:5961): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:19:34:13 Broker/(5845:5961): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 21:19:34:14 Broker/(5845:5961): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 21:19:34:29 Broker/(5845:5963): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:21:49:372 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 21:21:49:374 Broker/(6018:6037): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:21:49:374 Broker/(6018:6037): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 21:21:49:375 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 21:21:49:381 Broker/(6018:6038): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:21:49:381 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 21:21:49:382 Broker/(6018:6040): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 21:21:49:382 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 21:21:49:383 Broker/(6018:6042): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 21:21:49:383 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 21:21:49:384 Broker/(6018:6044): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:21:49:384 Broker/(6018:6044): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 21:21:49:384 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 21:21:49:386 Broker/(6018:6045): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:21:49:387 Broker/(6018:6045): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 21:21:49:387 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 21:21:49:389 Broker/(6018:6046): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 21:21:49:389 Broker/(6018:6046): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)
+[INFO] 21:21:51:344 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 21:21:51:349 Broker/(6018:6052): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 21:21:51:349 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 21:21:51:350 Broker/(6018:6057): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 21:21:51:350 Broker/(6018:6057): Se envio el mensaje de ID 1 al suscriptor 1. (Socket: 24)
+[INFO] 21:21:51:354 Broker/(6018:6059): El suscriptor 1 confirmo confirmó haber recibido el mensaje 1 de la cola 5 (GET_POKEMON).
+[INFO] 21:21:51:355 Broker/(6018:6057): Se envio el mensaje de ID 2 al suscriptor 1. (Socket: 23)
+[INFO] 21:21:51:359 Broker/(6018:6061): El suscriptor 1 confirmo confirmó haber recibido el mensaje 2 de la cola 5 (GET_POKEMON).
+[INFO] 21:21:51:359 Broker/(6018:6057): Se envio el mensaje de ID 3 al suscriptor 1. (Socket: 22)
+[INFO] 21:21:51:368 Broker/(6018:6062): El suscriptor 1 confirmo confirmó haber recibido el mensaje 3 de la cola 5 (GET_POKEMON).
+[INFO] 21:21:51:368 Broker/(6018:6057): Se envio el mensaje de ID 4 al suscriptor 1. (Socket: 20)
+[INFO] 21:21:51:375 Broker/(6018:6064): El suscriptor 1 confirmo confirmó haber recibido el mensaje 4 de la cola 5 (GET_POKEMON).
+[INFO] 21:21:51:375 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 21:21:51:377 Broker/(6018:6066): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 21:22:02:103 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 21:22:02:103 Broker/(6018:6077): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:22:02:103 Broker/(6018:6077): Se ha almacenado un mensaje dentro de la memoria. (Base: 41)
+[INFO] 21:22:02:104 Broker/(6018:6077): Se envio el mensaje de ID 5 al suscriptor 1. (Socket: 31)
+[INFO] 21:22:02:104 Broker/(6018:6079): El suscriptor 1 confirmo confirmó haber recibido el mensaje 5 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:22:04:106 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 21:22:04:106 Broker/(6018:6080): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:22:04:106 Broker/(6018:6080): Se ha almacenado un mensaje dentro de la memoria. (Base: 60)
+[INFO] 21:22:04:112 Broker/(6018:6080): Se envio el mensaje de ID 6 al suscriptor 1. (Socket: 32)
+[INFO] 21:22:04:113 Broker/(6018:6082): El suscriptor 1 confirmo confirmó haber recibido el mensaje 6 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:22:11:114 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 21:22:11:117 Broker/(6018:6085): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:22:11:117 Broker/(6018:6085): Se ha almacenado un mensaje dentro de la memoria. (Base: 80)
+[INFO] 21:22:11:122 Broker/(6018:6085): Se envio el mensaje de ID 7 al suscriptor 1. (Socket: 28)
+[INFO] 21:22:11:134 Broker/(6018:6087): El suscriptor 1 confirmo confirmó haber recibido el mensaje 7 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:22:55:949 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 21:22:55:954 Broker/(6018:6102): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:22:55:955 Broker/(6018:6102): Se ha almacenado un mensaje dentro de la memoria. (Base: 96)
+[INFO] 21:22:55:956 Broker/(6018:6102): Se envio el mensaje de ID 8 al suscriptor 1. (Socket: 20)
+[INFO] 21:22:55:956 Broker/(6018:6104): El suscriptor 1 confirmo confirmó haber recibido el mensaje 8 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:22:58:349 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 21:22:58:350 Broker/(6018:6106): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:22:58:350 Broker/(6018:6106): Se ha almacenado un mensaje dentro de la memoria. (Base: 100)
+[INFO] 21:22:58:350 Broker/(6018:6106): Se envio el mensaje de ID 9 al suscriptor 1. (Socket: 20)
+[INFO] 21:22:58:351 Broker/(6018:6108): El suscriptor 1 confirmo confirmó haber recibido el mensaje 9 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:23:00:914 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 21:23:00:916 Broker/(6018:6110): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:23:00:917 Broker/(6018:6110): Se ha almacenado un mensaje dentro de la memoria. (Base: 104)
+[INFO] 21:23:00:921 Broker/(6018:6110): Se envio el mensaje de ID 10 al suscriptor 1. (Socket: 20)
+[INFO] 21:23:00:921 Broker/(6018:6112): El suscriptor 1 confirmo confirmó haber recibido el mensaje 10 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:23:08:823 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 21:23:08:823 Broker/(6018:6118): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:23:08:823 Broker/(6018:6118): Se ha almacenado un mensaje dentro de la memoria. (Base: 108)
+[INFO] 21:23:08:829 Broker/(6018:6118): Se envio el mensaje de ID 11 al suscriptor 1. (Socket: 32)
+[INFO] 21:23:08:829 Broker/(6018:6120): El suscriptor 1 confirmo confirmó haber recibido el mensaje 11 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:23:12:830 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 21:23:12:832 Broker/(6018:6121): Se ha recibido un mensaje del tipo 3(CATCH_POKEMON).
+[INFO] 21:23:12:832 Broker/(6018:6121): Se ha almacenado un mensaje dentro de la memoria. (Base: 128)
+[INFO] 21:23:12:833 Broker/(6018:6121): Se envio el mensaje de ID 12 al suscriptor 1. (Socket: 30)
+[INFO] 21:23:12:837 Broker/(6018:6123): El suscriptor 1 confirmo confirmó haber recibido el mensaje 12 de la cola 3 (CATCH_POKEMON).
+[INFO] 21:23:39:76 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 21:23:39:93 Broker/(6018:6130): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:23:39:93 Broker/(6018:6130): Se ha almacenado un mensaje dentro de la memoria. (Base: 146)
+[INFO] 21:23:39:94 Broker/(6018:6130): Se envio el mensaje de ID 13 al suscriptor 1. (Socket: 20)
+[INFO] 21:23:39:104 Broker/(6018:6132): El suscriptor 1 confirmo confirmó haber recibido el mensaje 13 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 21:23:41:425 Broker/(6018:6018): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 21:23:41:429 Broker/(6018:6134): Se ha recibido un mensaje del tipo 4(CAUGHT_POKEMON).
+[INFO] 21:23:41:430 Broker/(6018:6134): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
+[INFO] 21:23:41:430 Broker/(6018:6134): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
+[INFO] 21:23:41:446 Broker/(6018:6136): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).

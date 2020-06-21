@@ -44,10 +44,22 @@ void cambiar_condicion_ready(t_entrenador* entrenador){
 }
 
 void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
-	list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
 	if(!le_sirve(entrenador, appeared_pokemon))
 		list_add(entrenador->pokemon_inservibles, appeared_pokemon->pokemon);
+	else list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
 	decrementar_capturas_disponibles(entrenador);
+}
+
+void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible){
+
+	bool _es_el_inservible(void* parametro){
+		char* auxiliar = parametro;
+		return auxiliar == inservible;
+	}
+
+	list_add(entrenador->pokemon_obtenidos, objetivo);
+	list_remove_by_condition(entrenador->pokemon_inservibles, _es_el_inservible);
+	get_objetivos_faltantes(entrenador);
 }
 
 /*
@@ -81,9 +93,7 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 	for (int i = 0; i < list_size(lista) && !encontrado; i++){
 		char* otro_pokemon = list_get(lista, i);
 		encontrado = string_equals_ignore_case(un_pokemon, otro_pokemon);
-		if (encontrado){
-			char* removido = list_remove(lista, i);
-		}
+		if (encontrado) list_remove(lista, i);
 	}
 }
 
@@ -95,9 +105,6 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
 t_list* get_objetivos_faltantes(t_entrenador* entrenador){
 	t_list* objetivos_faltantes = list_create();
 	list_add_all(objetivos_faltantes, entrenador->objetivos);
-	for(int j=0; j<list_size(objetivos_faltantes);j++){
-		char* poke = list_get(objetivos_faltantes, j);
-	}
 	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
 		remover_elemento_repetido(objetivos_faltantes, pokemon);

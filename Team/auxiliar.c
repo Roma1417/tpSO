@@ -65,6 +65,29 @@ bool list_elem(char* elemento, t_list* lista){
 	return encontrado;
 }
 
+void* list_head(t_list* lista){
+	t_list* lista_auxiliar = list_take_and_remove(lista, 1);
+	void* auxiliar = list_get(lista_auxiliar, 0);
+	list_destroy(lista_auxiliar);
+	return auxiliar;
+}
+
+char* find_first(t_list* objetivos, t_list* inservibles){
+	bool encontrado = false;
+	char* pokemon;
+
+	for(int i = 0; i < list_size(inservibles) && !encontrado; i++){
+		char* inservible = list_get(inservibles, i);
+		for(int j = 0; j < list_size(objetivos) && !encontrado; j++){
+			pokemon = list_get(objetivos, j);
+			encontrado = string_equals_ignore_case(pokemon,inservible);
+		}
+	}
+
+	if (!encontrado) pokemon = list_get(inservibles, 0);
+	return pokemon;
+}
+
 /* Se puede eliminar?
  * @NAME: eliminar_repetidos
  * @DESC: Dada la lista que representa el objetivo global,

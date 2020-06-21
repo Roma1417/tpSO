@@ -79,6 +79,8 @@ int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
 sem_t puede_planificar;
+sem_t puede_intercambiar;
+sem_t* termino_de_capturar;
 sem_t* puede_ejecutar;
 sem_t* llega_mensaje_caught;
 t_appeared_pokemon* pokemon_a_atrapar;

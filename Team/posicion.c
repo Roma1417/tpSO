@@ -84,3 +84,20 @@ u_int32_t distancia_en_x(t_posicion* una_posicion, t_posicion* otra_posicion){
 u_int32_t distancia_en_y(t_posicion* una_posicion, t_posicion* otra_posicion){
 	return abs(una_posicion->y - otra_posicion->y);
 }
+
+void mover_de_posicion(t_posicion* posicion1, t_posicion* posicion2, t_config_team* config_team){
+	u_int32_t distancia_x = distancia_en_x(posicion1, posicion2);
+	for(int i=0; i<distancia_x;i++){
+		if(esta_mas_a_la_derecha(posicion2, posicion1))
+			mover_a_la_derecha(posicion1);
+		else mover_a_la_izquierda(posicion1);
+		sleep(config_team->retardo_ciclo_cpu);
+	}
+	u_int32_t distancia_y = distancia_en_y(posicion1, posicion2);
+	for(int j=0; j<distancia_y;j++){
+		if(esta_mas_arriba(posicion2, posicion1))
+			mover_hacia_arriba(posicion1);
+		else mover_hacia_abajo(posicion1);
+		sleep(config_team->retardo_ciclo_cpu);
+	}
+}

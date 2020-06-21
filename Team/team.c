@@ -62,21 +62,7 @@ void* ejecutar_entrenador(void* parametro){
 
 	while(puede_seguir_atrapando(entrenador)){
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
-		for(int i=0; i<distancia_x;i++){
-			if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
-				mover_a_la_derecha(entrenador->posicion);
-			else mover_a_la_izquierda(entrenador->posicion);
-			sleep(config_team->retardo_ciclo_cpu);
-		}
-
-		u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
-		for(int j=0; j<distancia_y;j++){
-			if(esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
-				mover_hacia_arriba(entrenador->posicion);
-			else mover_hacia_abajo(entrenador->posicion);
-			sleep(config_team->retardo_ciclo_cpu);
-		}
+		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
 
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 
@@ -109,6 +95,8 @@ void* ejecutar_entrenador(void* parametro){
 
 
 	}*/
+
+	sem_post(&(termino_de_capturar[entrenador->indice]));
 
 	return EXIT_SUCCESS;
 }
@@ -299,6 +287,89 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 	queue_push(cola_ready, planificado);
 }
 
+void intercambiar_pokemon(t_entrenador* entrenador, t_planificado* planificado){
+
+	t_entrenador* donador = planificado->entrenador;
+	sem_wait(&(puede_ejecutar[donador->indice]));
+	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
+
+	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", donador->indice, donador->posicion->x, donador->posicion->y);
+
+	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
+
+	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
+	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible,  planificado->pokemon->pokemon);
+
+	// Hay un error
+	// No saca los inservibles bien del entrenador
+	// pero si lo hace del donador
+	// F <- Hay que arreglarlo
+
+	/*printf("entrenador: %d\n", entrenador->indice);
+
+	for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+		char* pokemon = list_get(entrenador->pokemon_obtenidos,i);
+		printf("obtenido: %s\n", pokemon);
+	}
+
+	for(int i = 0; i < list_size(entrenador->objetivos_faltantes); i++){
+		char* pokemon = list_get(entrenador->objetivos_faltantes,i);
+		printf("objetivo faltante: %s\n", pokemon);
+	}
+
+	for(int i = 0; i < list_size(entrenador->pokemon_inservibles); i++){
+		char* pokemon = list_get(entrenador->pokemon_inservibles,i);
+		printf("pokemon inservibles: %s\n", pokemon);
+	}
+
+	printf("donador: %d\n", donador->indice);
+
+	for(int i = 0; i < list_size(donador->pokemon_obtenidos); i++){
+		char* pokemon = list_get(donador->pokemon_obtenidos,i);
+		printf("obtenido: %s\n", pokemon);
+	}
+
+	for(int i = 0; i < list_size(donador->objetivos_faltantes); i++){
+		char* pokemon = list_get(donador->objetivos_faltantes,i);
+		printf("objetivo faltante: %s\n", pokemon);
+	}
+
+	for(int i = 0; i < list_size(donador->pokemon_inservibles); i++){
+		char* pokemon = list_get(donador->pokemon_inservibles,i);
+		printf("pokemon inservibles: %s\n", pokemon);
+	}*/
+
+	sem_post(&puede_intercambiar);
+
+}
+
+t_planificado* buscar_donador(t_entrenador* entrenador){
+	t_planificado* planificado = NULL;
+	bool encontro_donador = false;
+	for(int i = 0; i < list_size(entrenadores_deadlock) && !encontro_donador;i++){
+		t_entrenador* donador = list_get(entrenadores_deadlock, i);
+		for(int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++){
+			char* obtenido = list_get(donador->pokemon_inservibles, j);
+			encontro_donador = list_elem(obtenido, entrenador->objetivos_faltantes);
+			if (encontro_donador){
+				t_appeared_pokemon* pokemon = appeared_pokemon_create();
+				cambiar_nombre_pokemon(pokemon, obtenido);
+				cambiar_estado(donador, READY);
+				cambiar_condicion_ready(donador);
+				printf("pokemon a donar por el entrenador %d: %s\n", donador->indice, pokemon->pokemon);
+				planificado = planificado_create(donador, pokemon);
+				queue_push(cola_ready, planificado);
+				sem_post(&puede_planificar);
+			}
+		}
+	}
+
+	return planificado;
+}
+
 void realizar_intercambios(){
 	// Falta implementar en otro hilo
 	// while segun ALE
@@ -307,6 +378,29 @@ void realizar_intercambios(){
 	// Usamos lista entrenadores_deadlock
 	// Buscar dos en deadlock y mandar a uno a planificar y el
 	// otro seria variable global, segun ALE
+
+	for(int i = 0; i < list_size(entrenadores); i++){
+		sem_wait(&(termino_de_capturar[i]));
+	}
+
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+
+	// Ahora vendria lo que dijo ale
+	// Agarro a un entrenador
+
+	while(!list_is_empty(entrenadores_deadlock)){
+		sem_wait(&puede_intercambiar);
+		t_entrenador* entrenador = list_head(entrenadores_deadlock);
+		if(!list_is_empty(entrenadores_deadlock)){
+			t_planificado* planificado = buscar_donador(entrenador);
+			intercambiar_pokemon(entrenador, planificado);
+			if(no_cumplio_su_objetivo(entrenador))
+				list_add(entrenadores_deadlock, entrenador);
+		}
+	}
+
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
 }
 
 /*
@@ -338,13 +432,20 @@ void* mantener_servidor(){
 	return EXIT_SUCCESS;
 }
 
+void* iniciar_intercambiador(){
+	//while(1)
+		realizar_intercambios();
+
+	return EXIT_SUCCESS;
+}
+
 /*
  * @NAME: iniciar_planificador
  * @DESC: pendiente
  */
 void* iniciar_planificador(){
 
-	while(1) // hasta que todos terminen
+	while(!pokemons_objetivo_fueron_atrapados()) // hasta que todos terminen
 		planificar_entrenadores();
 
 	return EXIT_SUCCESS;
@@ -525,8 +626,11 @@ int main (void) {
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
 	sem_init(&puede_planificar, 0, 1);
+	sem_init(&puede_intercambiar, 0, 1);
 	puede_ejecutar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 	llega_mensaje_caught = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
+
+	termino_de_capturar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 
 	entrenadores = crear_entrenadores(config_team);
 
@@ -545,6 +649,8 @@ int main (void) {
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
+	pthread_t hilo_intercambiador;
+	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
     //enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);

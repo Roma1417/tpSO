@@ -18,23 +18,6 @@
 #include "auxiliar.h"
 #include "planificado.h"
 
-typedef struct {
-
-	//t_lista_posicion_entrenador* posiciones_entrenadores;
-	t_list* posiciones_entrenadores;
-	t_list* pokemon_entrenadores;
-	t_list* objetivos_entrenadores;
-	int tiempo_reconexion;
-	int retardo_ciclo_cpu;
-	char* algoritmo_planificacion;
-	//int quantum; por ahora tiene que ser FIFO asi que no hay quantum
-	char* ip_broker;
-	int estimacion_inicial;
-	char* puerto_broker;
-	char* log_file;
-
-}t_config_team;
-
 u_int32_t id_team;
 t_config_team* config_team;
 pthread_t hilo_appeared;
