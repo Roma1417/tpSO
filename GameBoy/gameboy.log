@@ -30,3 +30,5 @@
 [INFO] 20:19:57:563 gameboy/(9576:9576): Se realiza una conexión al proceso GAMECARD
 [INFO] 20:20:14:413 gameboy/(9598:9598): Se realiza una conexión al proceso BROKER
 [INFO] 20:20:14:413 gameboy/(9598:9598): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 08:15:52:418 gameboy/(4939:4939): Se realiza una conexión al proceso BROKER
+[INFO] 08:15:52:419 gameboy/(4939:4939): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
