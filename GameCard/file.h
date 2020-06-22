@@ -41,9 +41,10 @@ typedef struct {
 }t_metadata_general;
 
 t_config_gamecard* config_gamecard;
-char * archivo_bitmap_path;
-char * archivo_metadata_general_path;
+char* archivo_bitmap_path;
+char* archivo_metadata_general_path;
 t_metadata_general* metadata_general;
+t_bitarray* bitmap;
 
 
 char* generar_pokemon_file_path(char* pokemon);

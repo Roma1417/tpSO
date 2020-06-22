@@ -187,9 +187,7 @@ void process_request(int cod_op, int cliente_fd) {
 			verificar_existencia_de_archivo(new_pokemon->pokemon);
 			char* file_pokemon_path = generar_pokemon_metadata_bin_path(new_pokemon->pokemon);
 			FILE* file_pokemon = fopen(file_pokemon_path, "r+");
-			printf("File_pokemon_path: %s\n", file_pokemon_path);
 			verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
-			printf("Buenassss\n");
 			actualizar_posiciones(file_pokemon, new_pokemon);
 			cerrar_file(file_pokemon);
 			fclose(file_pokemon);

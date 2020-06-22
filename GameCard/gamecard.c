@@ -209,12 +209,12 @@ int main(){
 	id_cola_get = 0;
 	id_cola_new = 0;
 	id_cola_catch = 0;
-	archivo_metadata_general_path = obtener_metadata_general_path();
+	archivo_metadata_general_path = generar_nombre("/Metadata/Metadata.bin");
 	metadata_general = construir_metadata_general();
-	archivo_bitmap_path = obtener_bitmap_path();
-	t_bitarray* bitmap;
-	//archivos_creados = list_create();
-
+	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
+	char* bitarray = malloc((metadata_general->blocks)/8);
+	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks)/8, LSB_FIRST);
+	//actualizar_bit_map() Preguntar A Karen si es necesario actualizar el archivo cada vez que se haga una modificación en el bitmap
 
 
 	//crear_directorios();

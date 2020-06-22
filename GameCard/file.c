@@ -16,7 +16,6 @@ char* generar_pokemon_file_path(char* pokemon) {
 void verificar_existencia_de_archivo(char* pokemon) {
 	char* path_pokemon_file = generar_pokemon_file_path(pokemon);
 	DIR* directorio_pokemon = opendir(path_pokemon_file);
-	printf("Path_pokemon_file: %s\n", path_pokemon_file);
 	if (directorio_pokemon == NULL) {
 		mkdir(path_pokemon_file, 0777);
 		generar_metadata_bin(pokemon);
@@ -75,17 +74,46 @@ char* obtener_directorio_block_path(FILE* file){
 
 char* obtener_bloque_path(FILE* file, char* bloque){
 	char* path = obtener_directorio_block_path(file);
-	printf("Path_Beta: %s\n", path);
 	string_append_with_format(&path, "/%s.bin", bloque);
-	printf("Path: %s\n", path);
 	return path;
+}
+
+char* obtener_bloque_disponible(){
+	bool encontrado;
+	uint32_t bloque_disponible;
+	for(int i=0; i<(metadata_general->blocks) && !encontrado; i++){
+		if(bitarray_test_bit(bitmap, i) == 0){
+			bloque_disponible = i+1;
+			encontrado = true;
+			bitarray_set_bit(bitmap, i);
+		}
+	}
+	return string_itoa(bloque_disponible);
+}
+
+void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon) {
+	//Crear nuevo bloque
+	char* ultimo_bloque = obtener_bloque_disponible();
+	FILE* bloque = fopen(obtener_bloque_path(file, ultimo_bloque), "w+b");
+	fputs(string_itoa(new_pokemon->pos_x), bloque);
+	fputs("-", bloque);
+	fputs(string_itoa(new_pokemon->pos_y), bloque);
+	fputs("=", bloque);
+	fputs(string_itoa(new_pokemon->cantidad), bloque);
+	fputs("\n", bloque);
+	fclose(bloque);
+
+	//Actualizar en Metadata
+	fseek(file, 16, SEEK_SET);
+	//while()
+
 }
 
 void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 	char* ultimo_bloque = obtener_ultimo_bloque(file);
-
 	if(string_equals_ignore_case(ultimo_bloque,"")){
 		//Crear nuevo bloque
+		crear_nuevo_bloque(file, new_pokemon);
 	}
 	else{
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
@@ -95,11 +123,9 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 	}
 }
 
-// ..................................................
 char* generar_nombre(char* parametro){
 	char* nombre = string_new();
 	string_append(&nombre, config_gamecard->punto_montaje_tallgrass);
-	printf("Aloh\n");
 	string_append(&nombre, parametro);
 	return nombre;
 }
@@ -120,14 +146,3 @@ void generar_metadata_bin(char* pokemon){
 	fclose(metadata_file);
 	free(metadata_bin_path);
 }
-
-char* obtener_metadata_general_path(){
-	char* metadata_general_path = generar_nombre("/Metadata/Metadata.bin");
-	return metadata_general_path;
-}
-
-char* obtener_bitmap_path(){
-	char* metadata_general_path = generar_nombre("/Metadata/Bitmap.bin");
-	return metadata_general_path;
-}
-
