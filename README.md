@@ -10,10 +10,11 @@
 - [ ] Implementacion SJF sin desalojo
 - [ ] Implementacion SJF con desalojo
 - [ ] Implementacion RR
-- [ ] Contabilizar ciclos de CPU    - Intercambio = 5
-                                    - Movimiento = 1
-                                    - Envio mensaje = 1
-                                    - Atrapar pokemon = ¿?
+- [ ] Contabilizar ciclos de CPU    
+        . Intercambio = 5
+        . Movimiento = 1
+        . Envio mensaje = 1
+        . Atrapar pokemon = ¿?
 - [ ] Tema Handshake en caso de fallo de conexion con el Broker
 
 
@@ -34,7 +35,7 @@
 
 ### . ALGORITMOS PLANIFICACION
 
-[] Editar estructura t_entrenador (agregar rafaga y estimacion_anterior)
+[ ] Editar estructura t_entrenador (agregar rafaga y estimacion_anterior)
 
 ## TO DO [GameCard]
 
