@@ -32,6 +32,7 @@ t_list* pasar_a_lista_de_posiciones(t_config* config, char* cadena);
 t_list* filtrar_entrenadores_con_objetivos(t_list* lista);
 void* list_head(t_list* lista);
 char* find_first(t_list* objetivos, t_list* inservibles);
+float calcular_estimado_de_la_proxima_rafaga(float estimado_anterior, u_int32_t rafaga_anterior, float alpha);
 
 
 #endif /* AUXILIAR_H_ */
