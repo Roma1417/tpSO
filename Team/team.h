@@ -24,6 +24,12 @@ pthread_t hilo_appeared;
 pthread_t hilo_localized;
 pthread_t hilo_caught;
 
+typedef enum{
+	ATRAPAR=1,
+	INTERCAMBIAR=2,
+	ENVIAR_MENSAJE=3
+}tipo_operacion;
+
 void planificar_entrenadores();
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
 t_config* leer_config (void);
