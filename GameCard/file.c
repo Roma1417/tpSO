@@ -40,6 +40,32 @@ void cerrar_file(FILE* file){
 	fputc('N', file);
 }
 
+void retroceder_hasta(char caracter_de_paro, FILE** file){
+	char caracter = fgetc(*file);
+	while(caracter != caracter_de_paro){
+		printf("Caracter: %c\n", caracter);
+		fseek(*file, -2, SEEK_CUR);
+		caracter = fgetc(*file);
+	}
+}
+
+void avanzar_hasta(char caracter_de_paro, FILE** file){
+	char caracter = fgetc(*file);
+	while(caracter != caracter_de_paro){
+		caracter = fgetc(*file);
+	}
+}
+
+char* guardar_hasta(char caracter_de_paro, FILE** file){
+	char caracter = fgetc(*file);
+	char* cadena_guardada = string_new();
+	while(caracter != caracter_de_paro){
+		string_append_with_format(&cadena_guardada, "%c", caracter);
+		caracter = fgetc(*file);
+	}
+	return cadena_guardada;
+}
+
 void verificar_estado_de_apertura_de_archivo_pokemon(FILE* file){
 	while(esta_abierto(file))
 		sleep(config_gamecard->tiempo_de_reintento_operacion);
@@ -107,6 +133,7 @@ void guardar_posterior(FILE* file, char** posterior) {
 	while (caracter != '\n') {
 		caracter = fgetc(file);
 	}
+
 	caracter = fgetc(file);
 	while (caracter != EOF) {
 		string_append_with_format(posterior, "%c", caracter);
@@ -122,7 +149,7 @@ void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
 	fclose(bloque);
 	fseek(file, 16, SEEK_SET);
 	guardar_posterior(file, &posterior);
-	printf("Posterior: %s", posterior);
+	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
 	fputs(string_itoa(longitud_file), file);
 	fputc('\n', file);
@@ -139,8 +166,7 @@ void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
 	while (caracter != ',' && caracter != '[' ) {
 		fseek(file, -2, SEEK_CUR);
 		caracter = fgetc(file);
-		printf("Char: %c\n", caracter);
-		sleep(1);
+		//printf("Char: %c\n", caracter);
 	}
 	string_append(&ultimo_bloque, "]\n");
 	fputs(ultimo_bloque, file);
@@ -167,22 +193,46 @@ bool posicion_ya_cargada(FILE** bloque_file, char* posicion_actual) {
 	char caracter = 'A';
 	char* posicion_leida;
 	bool posicion_encontrada = false;
+	fseek(*bloque_file, 1, SEEK_CUR);
 	while ((caracter != EOF) && (!posicion_encontrada)) {
-		posicion_leida = string_new();
-		caracter = fgetc(*bloque_file);
-		while (caracter != '=') {
-			string_append_with_format(&posicion_leida, "%c", caracter);
-			caracter = fgetc(*bloque_file);
-		}
-		posicion_encontrada = string_equals_ignore_case(posicion_leida,
-				posicion_actual);
-		caracter = fgetc(*bloque_file);
-		while(caracter != '\n'){
-			caracter = fgetc(*bloque_file);
-		}
+		printf("Entre al while\n");
+		fseek(*bloque_file, -1, SEEK_CUR);
+		posicion_leida = guardar_hasta('=', bloque_file);
+		posicion_encontrada = string_equals_ignore_case(posicion_leida,posicion_actual);
+		printf("Posicion actual: %s\n", posicion_actual);
+		printf("Posicion leída: %s\n", posicion_leida);
+		avanzar_hasta('\n', bloque_file);
 		free(posicion_leida);
+		caracter = fgetc(*bloque_file);
 	}
+	fseek(*bloque_file, -1, SEEK_CUR);
+	printf("Sali del while\n");
 	return posicion_encontrada;
+}
+
+void actualizar_posicion_ya_cargada(FILE* bloque_file, t_new_pokemon* new_pokemon) {
+	char caracter;
+	char* posterior = string_new();
+	uint32_t cantidad_total;
+	char* cantidad;
+
+	fseek(bloque_file, -1, SEEK_CUR);
+	retroceder_hasta('=', &bloque_file);
+
+	cantidad = guardar_hasta('\n', &bloque_file);
+	cantidad_total = atoi(cantidad);
+	printf("Cantidad_parcial = %s\n", cantidad);
+	cantidad_total += new_pokemon->cantidad;
+	printf("Cantidad_total = %d\n", cantidad_total);
+
+	fseek(bloque_file, -1, SEEK_CUR);
+	guardar_posterior(bloque_file, &posterior);
+	printf("Posterior: %s\n", posterior);
+	fseek(bloque_file, -strlen(posterior), SEEK_CUR);
+	retroceder_hasta('=', &bloque_file);
+	fputs(string_itoa(cantidad_total), bloque_file);
+	fputc('\n', bloque_file);
+	fputs(posterior, bloque_file);
 }
 
 void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
@@ -194,44 +244,29 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 	else{
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
 		printf("Hay bloques\n");
-		char caracter;
-		uint32_t cantidad_total;
+
+
+
 		char* posicion_actual = string_new();
 		string_append_with_format(&posicion_actual, "%s-%s", string_itoa(new_pokemon->pos_x), string_itoa(new_pokemon->pos_y));
-		printf("Ward1\n");
+
 		char* bloque_path = obtener_bloque_path(ultimo_bloque);
 		FILE* bloque_file = fopen(bloque_path, "r+");
 		fseek(bloque_file, 0, SEEK_SET);
 		if(posicion_ya_cargada(&bloque_file, posicion_actual)){
-			printf("Encontré posicion\n");
-			fseek(bloque_file, -2, SEEK_CUR);
-			caracter = fgetc(bloque_file);
-			while(caracter != '='){
-				fseek(bloque_file, -2, SEEK_CUR);
-				caracter=fgetc(bloque_file);
-				printf("Char: %c\n", caracter);
-				sleep(1);
-			}
-			caracter=fgetc(bloque_file);
-			printf("Caracter_final: %c\n", caracter);
-			char* cantidad = string_new();
-			string_append_with_format(&cantidad, "%c", caracter);
-			cantidad_total = atoi(cantidad);
-			printf("Cantidad_parcial = %d\n", cantidad_total);
-			cantidad_total += new_pokemon->cantidad;
-			printf("Cantidad_total = %d\n", cantidad_total);
-			fseek(bloque_file, -1,SEEK_CUR);
-			fputs(string_itoa(cantidad_total), bloque_file);
+			printf("A ver: %c\n", fgetc(bloque_file));
+			fseek(bloque_file, -1, SEEK_CUR);
+			actualizar_posicion_ya_cargada(bloque_file, new_pokemon);
 		}
 		else{
 			printf("Entre al else\n");
 			fseek(bloque_file, 0, SEEK_END);
-			fputs(string_itoa(new_pokemon->pos_x), file);
-			fputc('-', file);
-			fputs(string_itoa(new_pokemon->pos_y), file);
-			fputc('=', file);
-			fwrite(&(new_pokemon->cantidad), sizeof(uint32_t), 1, file);
-			fputc('\n', file);
+			fputs(string_itoa(new_pokemon->pos_x), bloque_file);
+			fputc('-', bloque_file);
+			fputs(string_itoa(new_pokemon->pos_y), bloque_file);
+			fputc('=', bloque_file);
+			fputs(string_itoa(new_pokemon->cantidad), bloque_file);
+			fputc('\n', bloque_file);
 		}
 		fclose(bloque_file);
 	}
