@@ -232,3 +232,4 @@ float calcular_estimado_de_la_proxima_rafaga(float estimado_anterior,
 	return alpha * rafaga_anterior + (1 - alpha) * estimado_anterior;
 }
 
+

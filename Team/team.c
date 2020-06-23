@@ -149,7 +149,10 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i, config_team->estimacion_inicial);
 		pthread_t hilo;
+
+		//pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
 		pthread_create(&hilo, NULL, ejecutar_entrenador_SJF, (void*) entrenador);
+
 		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
 		list_add(entrenadores_deadlock, entrenador);
@@ -449,7 +452,7 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appea
 }
 
 // Codigo de prueba
-// Pensar donde calcular la proxima estimacion :O
+// Pensar donde calcular la proxima estimacion
 t_planificado* elegir_proximo_a_ejecutar_SJF(){
 	int j = 0;
 	t_planificado* planificado = list_get(lista_ready,j);
@@ -481,6 +484,20 @@ void planificar_entrenadores_SJF(){
 	}
 }
 
+//Buscar un mejor nombre jeje
+void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga){
+	float estimacion = calcular_estimado_de_la_proxima_rafaga(entrenador->estimacion, rafaga, config_team->alpha);
+
+
+	printf("entrenador: %d\n", entrenador->indice);
+	printf("rafaga: %d\n", rafaga);
+	printf("estimacion: %f\n", estimacion);
+	printf("estimacion anterior: %f\n", entrenador->estimacion);
+
+	set_estimacion(entrenador, estimacion);
+	set_rafaga_anterior(entrenador, rafaga);
+}
+
 void* ejecutar_entrenador_SJF(void* parametro){
 	t_entrenador* entrenador = parametro;
 
@@ -489,11 +506,8 @@ void* ejecutar_entrenador_SJF(void* parametro){
 
 		u_int32_t rafaga = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
-		float estimacion = calcular_estimado_de_la_proxima_rafaga(entrenador->estimacion, rafaga, config_team->alpha);
 
-		printf("rafaga: %d\n", rafaga);
-		printf("estimacion: %f\n", estimacion);
-		printf("estimacion anterior: %f\n", entrenador->estimacion);
+		modificar_estimacion_y_rafaga(entrenador, rafaga);
 
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 
@@ -510,6 +524,7 @@ void* ejecutar_entrenador_SJF(void* parametro){
 
 			// Comentar si en esta parte hay que calcular la estimacion para
 			// rafaga CPU por atrapar = 1
+			modificar_estimacion_y_rafaga(entrenador, 1);
 
 			atrapar(entrenador, planificado->pokemon);
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
@@ -524,6 +539,40 @@ void* ejecutar_entrenador_SJF(void* parametro){
 	sem_post(&(termino_de_capturar[entrenador->indice]));
 
 	return EXIT_SUCCESS;
+}
+
+// Falta implementar
+void realizar_intercambios_SJF(){
+
+	for(int i = 0; i < list_size(entrenadores); i++){
+		sem_wait(&(termino_de_capturar[i]));
+	}
+
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+
+	while(!list_is_empty(entrenadores_deadlock)){
+		sem_wait(&puede_intercambiar);
+
+		// Aca deberia cambiar
+		// No deberia seleccionar el primero en deadlock
+		// Deberia seleccionar el que menos distancia tiene
+		// a su donador?
+		t_entrenador* entrenador = list_head(entrenadores_deadlock);
+
+		if(!list_is_empty(entrenadores_deadlock)){
+
+			// Buscar donador deberia cambiar para SJF
+			// En vez de usar cola ready deberia usar lista ready
+			t_planificado* planificado = buscar_donador(entrenador);
+
+			intercambiar_pokemon(entrenador, planificado);
+			if(no_cumplio_su_objetivo(entrenador))
+				list_add(entrenadores_deadlock, entrenador);
+		}
+	}
+
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
 }
 
 
@@ -554,6 +603,7 @@ void* iniciar_planificador(){
 
 	while(!pokemons_objetivo_fueron_atrapados()){ // hasta que todos terminen
 		//planificar_entrenadores();
+
 		planificar_entrenadores_SJF();
 	}
 
@@ -568,11 +618,11 @@ void* iniciar_planificador(){
 void* iniciar_planificador_largo_plazo(void* parametro){
 	t_list* entrenadores = parametro;
 
-	while(1){
-		//Poner semáforos
+	while(1){ // Falta condcion
 		sem_wait(&sem_appeared_pokemon);
-		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
+		sem_wait(&sem_entrenadores);
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
+
 		//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 		enreadyar_al_mas_cercano_SJF(entrenadores, appeared_pokemon);
 	}
@@ -678,9 +728,6 @@ void* suscribirse(void* cola){
  * 		  broker.
  */
 void suscribirse_a_colas(){
-
-	// REVISAR
-
 	char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
 	pthread_create(&hilo_appeared, NULL, suscribirse,(void*) mensaje);
@@ -715,8 +762,6 @@ void actualizar_objetivo_global(){
 	list_destroy(auxiliar);
 }
 
-
-
 // Funcion main
 int main (void) {
 
@@ -725,11 +770,8 @@ int main (void) {
 
 	t_config* config = leer_config();
 
-	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);
-
-	printf("alpha: %f\n", config_team->alpha);
 
 	cola_ready = queue_create();
 	lista_ready = list_create(); // Lista para SJF sin desalojo
@@ -749,21 +791,22 @@ int main (void) {
 
 	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
-	suscribirse_a_colas(); // REVISAR
+	suscribirse_a_colas();
 
 	actualizar_objetivo_global();
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	enviar_mensajes_get_pokemon(); // REVISAR
+	enviar_mensajes_get_pokemon();
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_t hilo_planificador_largo_plazo;
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
-	pthread_t hilo_intercambiador;
-	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
+
+	//pthread_t hilo_intercambiador;
+	//pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
     //enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);
@@ -773,7 +816,6 @@ int main (void) {
 	pthread_join(hilo_appeared, NULL);
 	pthread_join(hilo_caught, NULL);
 	pthread_join(hilo_localized, NULL);
-
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
