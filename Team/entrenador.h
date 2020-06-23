@@ -61,7 +61,7 @@ void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon);
 bool cumplio_su_objetivo(void* parametro);
 bool no_cumplio_su_objetivo(void* parametro);
 void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible);
-void set_estimacion(t_entrenador* entrenador, u_int32_t estimacion);
+void set_estimacion(t_entrenador* entrenador, float estimacion);
 void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior);
 
 

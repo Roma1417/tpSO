@@ -452,7 +452,7 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appea
 }
 
 // Codigo de prueba
-// Pensar donde calcular la proxima estimacion
+// Pensar cuando calcular la proxima estimacion
 t_planificado* elegir_proximo_a_ejecutar_SJF(){
 	int j = 0;
 	t_planificado* planificado = list_get(lista_ready,j);
@@ -491,8 +491,8 @@ void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga){
 
 	printf("entrenador: %d\n", entrenador->indice);
 	printf("rafaga: %d\n", rafaga);
-	printf("estimacion: %f\n", estimacion);
-	printf("estimacion anterior: %f\n", entrenador->estimacion);
+	printf("estimacion que ejecuto: %.2f\n", entrenador->estimacion);
+	printf("estimacion proxima: %.2f\n", estimacion);
 
 	set_estimacion(entrenador, estimacion);
 	set_rafaga_anterior(entrenador, rafaga);
@@ -792,6 +792,27 @@ int main (void) {
 	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
 	suscribirse_a_colas();
+
+
+	// codigo de prueba para sjf
+	/*t_entrenador* entrenador0 = list_get(entrenadores,0);
+	entrenador0->estimacion = 7;
+
+	t_entrenador* entrenador1 = list_get(entrenadores,1);
+	entrenador1->estimacion = 10;
+
+	t_entrenador* entrenador2 = list_get(entrenadores,2);
+	entrenador2->estimacion = 4;
+
+	t_entrenador* entrenador3 = list_get(entrenadores,3);
+	entrenador3->estimacion = 15;
+
+	t_entrenador* entrenador4 = list_get(entrenadores,4);
+	entrenador4->estimacion = 20;
+
+	t_entrenador* entrenador5 = list_get(entrenadores,5);
+	entrenador5->estimacion = 3;*/
+
 
 	actualizar_objetivo_global();
 

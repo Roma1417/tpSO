@@ -191,7 +191,7 @@ void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior){
 	entrenador->rafaga_anterior = rafaga_anterior;
 }
 
-void set_estimacion(t_entrenador* entrenador, u_int32_t estimacion){
+void set_estimacion(t_entrenador* entrenador, float estimacion){
 	entrenador->estimacion = estimacion;
 }
 
