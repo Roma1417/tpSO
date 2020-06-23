@@ -482,14 +482,17 @@ int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion) {
 	switch(operacion){
 	case ATRAPAR:
 		return distancia(entrenador->posicion,pokemon_a_atrapar->posicion) + 1;
-
+		break;
 	case INTERCAMBIAR:
 		return 5;
-
+		break;
 	case ENVIAR_MENSAJE:
 		return 1;
 	}
+
+	return 0;
 }
+
 
 
 
