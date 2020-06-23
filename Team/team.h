@@ -42,5 +42,6 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon);
 void actualizar_objetivo_global();
 t_list* obtener_especies();
+int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion);
 
 #endif /* TEAM_H_ */

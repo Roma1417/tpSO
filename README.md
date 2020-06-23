@@ -35,7 +35,7 @@
 
 ### . ALGORITMOS PLANIFICACION
 
-[ ] Editar estructura t_entrenador (agregar rafaga y estimacion_anterior)
+- [ ] Editar estructura t_entrenador (agregar rafaga y estimacion_anterior)
 
 ## TO DO [GameCard]
 

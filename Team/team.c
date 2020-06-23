@@ -74,7 +74,7 @@ void* ejecutar_entrenador(void* parametro){
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 
 		if(entrenador->resultado_caught){
-			cambiar_estado(entrenador, READY); // TODO: Por que pasa a ready?
+			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, planificado->pokemon);
@@ -100,6 +100,64 @@ void* ejecutar_entrenador(void* parametro){
 	sem_post(&(termino_de_capturar[entrenador->indice]));
 
 	return EXIT_SUCCESS;
+}
+
+void* ejecutar_entrenador_RR(void* parametro){
+	t_entrenador* entrenador = parametro;
+	int quantum = config_team->quantum;
+
+	while(puede_seguir_atrapando(entrenador)){
+		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR);
+		sem_wait(&(puede_ejecutar[entrenador->indice]));
+		u_int32_t distancia = entrenador->rafaga - 1;
+		int indice = 0;
+
+		while(entrenador->rafaga > 0){
+			while(indice<quantum) {
+
+				for(int i=0; i<distancia; i++){
+					mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
+					indice++;
+					entrenador->rafaga--;
+				}
+
+				log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+				enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+				cambiar_estado(entrenador, BLOCK);
+				sem_post(&puede_planificar);
+
+				t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+				sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+
+				if(entrenador->resultado_caught){
+					cambiar_estado(entrenador, READY);
+					queue_push(cola_ready, planificado);
+					sem_wait(&(puede_ejecutar[entrenador->indice]));
+					atrapar(entrenador, planificado->pokemon);
+					indice++;
+					entrenador->rafaga--;
+					log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+					actualizar_objetivo_global();
+					entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+				}
+
+			}
+
+			sem_post(&puede_planificar);
+			cambiar_estado(entrenador, READY);
+			queue_push(cola_ready, entrenador);
+
+
+			sem_post(&sem_entrenadores);
+		}
+
+		if(puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
+
+
+	}
+
+	return EXIT_SUCCESS;
+
 }
 
 
@@ -410,9 +468,6 @@ void realizar_intercambios(){
  */
 void planificar_entrenadores(){
 	//Falta un switch para planificar según cada algoritmo
-
-	switch(config_team->algoritmo_planificacion)
-	case "FIFO":
 	if(!queue_is_empty(cola_ready)){
 		sem_wait(&puede_planificar);
 		t_planificado* planificado = queue_pop(cola_ready);
@@ -420,76 +475,23 @@ void planificar_entrenadores(){
 		cambiar_estado(planificado->entrenador, EXEC);
 		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 	}
-
-	case "RR":
-	if(!queue_is_empty(cola_ready)){
-		sem_wait(&puede_planificar);
-		t_planificado* planificado = queue_pop(cola_ready);
-		pokemon_a_atrapar = planificado->pokemon;
-		cambiar_estado(planificado->entrenador, EXEC);
-		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
-
-
-	}
-
 	//Mover entrenador
 }
 
-int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion* operacion) {
-	switch(operacion)
+int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion) {
+	switch(operacion){
 	case ATRAPAR:
 		return distancia(entrenador->posicion,pokemon_a_atrapar->posicion) + 1;
 
 	case INTERCAMBIAR:
 		return 5;
+
 	case ENVIAR_MENSAJE:
 		return 1;
-}
-
-void* ejecutar_entrenador_RR(void* parametro){
-	t_entrenador* entrenador = parametro;
-	int quantum = config_team->quantum;
-
-	while(puede_seguir_atrapando(entrenador)){
-		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR);
-
-		if(entrenador->rafaga < quantum) {
-			mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
-			entrenador->rafaga -= distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
-
-			log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
-			enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
-			cambiar_estado(entrenador, BLOCK);
-			sem_post(&puede_planificar);
-
-			t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
-			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
-
-			if(entrenador->resultado_caught){
-				cambiar_estado(entrenador, READY);
-				queue_push(cola_ready, planificado);
-				sem_wait(&(puede_ejecutar[entrenador->indice]));
-				atrapar(entrenador, planificado->pokemon);
-				log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
-				actualizar_objetivo_global();
-				entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
-			}
-
-			else {
-				for(int i=0; i<quantum; i++) {
-
-				}
-			}
-		if(puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
-		sem_post(&puede_planificar);
-		sem_post(&sem_entrenadores);
-
 	}
-
-	return EXIT_SUCCESS;
-
 }
+
+
 
 /*
  * @NAME: mantener_servidor
