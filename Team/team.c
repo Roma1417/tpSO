@@ -106,8 +106,8 @@ void* ejecutar_entrenador_RR(void* parametro){
 	t_entrenador* entrenador = parametro;
 	int quantum = config_team->quantum;
 
-	while(puede_seguir_atrapando(entrenador)){
-		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR);
+	while(puede_seguir_atrapando(entrenador)){ // Poner semaforo de la cola de ready para c/ vez que se termina el quantum
+		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		u_int32_t distancia = entrenador->rafaga - 1;
 		int indice = 0;
@@ -116,6 +116,9 @@ void* ejecutar_entrenador_RR(void* parametro){
 			while(indice<quantum) {
 
 				for(int i=0; i<distancia; i++){
+					// El indice se tendria que aumentar por cada posicion que se mueve (el mover_de_posicion
+					// adentro del for no tiene sentido asi)
+					// (Lo mismo para la rafaga)
 					mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
 					indice++;
 					entrenador->rafaga--;
@@ -145,7 +148,7 @@ void* ejecutar_entrenador_RR(void* parametro){
 
 			sem_post(&puede_planificar);
 			cambiar_estado(entrenador, READY);
-			queue_push(cola_ready, entrenador);
+			queue_push(cola_ready, entrenador); // Cada vez que termina el quantum -> Vuelve a ingresar a la cola de ready
 
 
 			sem_post(&sem_entrenadores);
@@ -481,7 +484,8 @@ void planificar_entrenadores(){
 int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion) {
 	switch(operacion){
 	case ATRAPAR:
-		return distancia(entrenador->posicion,pokemon_a_atrapar->posicion) + 1;
+		return distancia(entrenador->posicion,pokemon_a_atrapar->posicion) + 1; // Puse +1 pero no se cuantos ciclos implica
+																				// atraparlo en realidad
 		break;
 	case INTERCAMBIAR:
 		return 5;
