@@ -153,7 +153,16 @@ bool list_elem(char* elemento, t_list* lista){
 	return encontrado;
 }
 
-
+void cargar_datos_new_pokemon(t_new_pokemon* new_pokemon) {
+	verificar_existencia_de_archivo(new_pokemon->pokemon);
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(
+			new_pokemon->pokemon);
+	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
+	actualizar_posiciones(file_pokemon, new_pokemon);
+	cerrar_file(file_pokemon);
+	fclose(file_pokemon);
+}
 
 /*
  * @NAME: process_request
@@ -184,14 +193,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
-			verificar_existencia_de_archivo(new_pokemon->pokemon);
-			char* file_pokemon_path = generar_pokemon_metadata_bin_path(new_pokemon->pokemon);
-			FILE* file_pokemon = fopen(file_pokemon_path, "r+");
-			verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
-			actualizar_posiciones(file_pokemon, new_pokemon);
-			cerrar_file(file_pokemon);
-			fclose(file_pokemon);
-
+			cargar_datos_new_pokemon(new_pokemon);
 			break;
 		case CATCH_POKEMON:
 			//printf("Recibi un mensaje CATCH_POKEMON\n");
@@ -201,7 +203,7 @@ void process_request(int cod_op, int cliente_fd) {
 			posicion_x = recibir_entero(cliente_fd);
 			posicion_y = recibir_entero(cliente_fd);
 
-			log_info(logger_gamecard, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", pokemon, posicion_x, posicion_y);
+			log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d", pokemon, posicion_x, posicion_y);
 
 			confirmar_recepcion(id, cliente_fd, id_cola_catch, "CATCH_POKEMON");
 			break;
@@ -262,13 +264,16 @@ void serve_client(int* cliente_fd){
 	switch (cod_op) {
 		case NEW_POKEMON:
 			printf("Recibi un mensaje NEW_POKEMON\n");
+			t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
 			size = recibir_entero(*cliente_fd);
-			pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
-			posicion_x = recibir_entero(*cliente_fd);
-			posicion_y = recibir_entero(*cliente_fd);
-			u_int32_t cantidad = recibir_entero(*cliente_fd);
+			new_pokemon->pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
+			printf("Pokemon recibido: %s\n", new_pokemon->pokemon);
+			new_pokemon->pos_x = recibir_entero(*cliente_fd);
+			new_pokemon->pos_y = recibir_entero(*cliente_fd);
+			new_pokemon->cantidad = recibir_entero(*cliente_fd);
 			id_mensaje = recibir_entero(*cliente_fd);
 
+			cargar_datos_new_pokemon(new_pokemon);
 			break;
 		case CATCH_POKEMON:
 			printf("Recibi un mensaje CATCH_POKEMON\n");

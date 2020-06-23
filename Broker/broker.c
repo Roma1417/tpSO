@@ -12,7 +12,7 @@
 
 int main(void)
 {
-
+	printf("Empieza el Broker\n");
 	for(u_int32_t i = 0; i<6; i++){
 			colas_mensajes[i] = crear_cola_mensajes(i + 1);
 			generador_id_suscriptor[i] = 1;

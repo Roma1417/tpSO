@@ -1,1 +1,1 @@
-./gameboy GAMECARD NEW_POKEMON Pikachu 2 5 10
+./gameboy GAMECARD NEW_POKEMON Pikachu 2 5 10 9

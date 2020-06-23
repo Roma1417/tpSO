@@ -141,22 +141,24 @@ void guardar_posterior(FILE* file, char** posterior) {
 	}
 }
 
-void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
-	//Actualizar en Metadata
-	char caracter;
+void actualizar_size(FILE* file, FILE* bloque) {
 	char* posterior = string_new();
-	uint32_t longitud_file = file_size(bloque);
-	fclose(bloque);
 	fseek(file, 16, SEEK_SET);
 	guardar_posterior(file, &posterior);
 	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
-	fputs(string_itoa(longitud_file), file);
+	fputs(string_itoa(file_size(bloque)), file);
 	fputc('\n', file);
 	fputs(posterior, file);
 	fseek(file, -string_length(posterior), SEEK_END);
 	free(posterior);
-	posterior = string_new();
+}
+
+void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
+	//Actualizar en Metadata
+	char caracter;
+	char* posterior = string_new();
+	actualizar_size(file, bloque);
 	guardar_posterior(file, &posterior);
 	fseek(file, 0, SEEK_SET);
 	caracter = fgetc(file);
@@ -172,6 +174,7 @@ void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
 	fputs(ultimo_bloque, file);
 	fputs(posterior, file);
 	free(posterior);
+	fclose(bloque);
 }
 
 void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon) {
@@ -254,9 +257,8 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 		FILE* bloque_file = fopen(bloque_path, "r+");
 		fseek(bloque_file, 0, SEEK_SET);
 		if(posicion_ya_cargada(&bloque_file, posicion_actual)){
-			printf("A ver: %c\n", fgetc(bloque_file));
-			fseek(bloque_file, -1, SEEK_CUR);
 			actualizar_posicion_ya_cargada(bloque_file, new_pokemon);
+			actualizar_size(file, bloque_file);
 		}
 		else{
 			printf("Entre al else\n");
@@ -267,6 +269,7 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 			fputc('=', bloque_file);
 			fputs(string_itoa(new_pokemon->cantidad), bloque_file);
 			fputc('\n', bloque_file);
+			actualizar_size(file, bloque_file);
 		}
 		fclose(bloque_file);
 	}
