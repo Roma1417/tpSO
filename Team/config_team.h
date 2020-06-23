@@ -20,6 +20,7 @@ typedef struct {
 	int retardo_ciclo_cpu;
 	char* algoritmo_planificacion;
 	//int quantum; por ahora tiene que ser FIFO asi que no hay quantum
+	float alpha; // Agrego el alpha que esta especificado en el enunciado
 	char* ip_broker;
 	int estimacion_inicial;
 	char* puerto_broker;

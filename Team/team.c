@@ -50,6 +50,11 @@ t_config_team* construir_config_team(t_config* config){
 	config_team -> retardo_ciclo_cpu = config_get_int_value(config, "RETARDO_CICLO_CPU");
 	config_team -> estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
 
+	config_team -> alpha = config_get_double_value(config, "ALPHA");
+	// alpha debe ser float? o double?
+	// si es float -> 32bits
+	// si es double -> 64bits
+
 	config_team -> objetivos_entrenadores = pasar_a_lista_de_pokemon(config,"OBJETIVOS_ENTRENADORES");
 	config_team -> pokemon_entrenadores = pasar_a_lista_de_pokemon(config, "POKEMON_ENTRENADORES");
 	config_team -> posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
@@ -142,9 +147,9 @@ t_list* crear_entrenadores(t_config_team* config_team){
 		t_list* pokemon_obtenidos = list_get(pokemon_entrenadores,i);
 		t_posicion* posicion = list_get(posiciones_entrenadores, i);
 
-		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i);
+		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i, config_team->estimacion_inicial);
 		pthread_t hilo;
-		pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
+		pthread_create(&hilo, NULL, ejecutar_entrenador_SJF, (void*) entrenador);
 		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
 		list_add(entrenadores_deadlock, entrenador);
@@ -274,7 +279,6 @@ void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_
 	int distancia_minima = distancia(mas_cercano->posicion,appeared_pokemon->posicion);
 
 	for(int i=1; i<list_size(entrenadores); i++){
-
 		t_entrenador* entrenador_actual = list_get(entrenadores, i);
 		if(puede_ser_planificado(entrenador_actual) && (distancia(entrenador_actual->posicion,appeared_pokemon->posicion) < distancia_minima)){
 			mas_cercano = entrenador_actual;
@@ -420,6 +424,109 @@ void planificar_entrenadores(){
 	//Mover entrenador
 }
 
+// En realidad no creo que sea necesario crear una nueva funcion para esto...
+// Simplemente voy a cambiar la estructura de la cola de ready por una lista
+// De esa manera voy a poder elegir a cualquier entrenador en ready y no solo
+// al primero
+// Por ahi agregue otras funcionalidades como usar la distancia minima
+// para guardarla en
+void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
+	t_entrenador* mas_cercano = list_find(entrenadores, puede_ser_planificado);
+	int distancia_minima = distancia(mas_cercano->posicion,appeared_pokemon->posicion);
+
+	for(int i=1; i<list_size(entrenadores); i++){
+
+		t_entrenador* entrenador_actual = list_get(entrenadores, i);
+		if(puede_ser_planificado(entrenador_actual) && (distancia(entrenador_actual->posicion,appeared_pokemon->posicion) < distancia_minima)){
+			mas_cercano = entrenador_actual;
+			distancia_minima = distancia(entrenador_actual->posicion,appeared_pokemon->posicion);
+		}
+	}
+	cambiar_estado(mas_cercano, READY);
+	cambiar_condicion_ready(mas_cercano);
+	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	list_add(lista_ready, planificado);
+}
+
+// Codigo de prueba
+// Pensar donde calcular la proxima estimacion :O
+t_planificado* elegir_proximo_a_ejecutar_SJF(){
+	int j = 0;
+	t_planificado* planificado = list_get(lista_ready,j);
+	t_entrenador* entrenador = planificado->entrenador;
+	float estimacion_a_ejecutar = entrenador->estimacion;
+
+	for(int i = 0; i < list_size(lista_ready); i++){
+		t_planificado* planificado_auxiliar = list_get(lista_ready,i);
+		t_entrenador* auxiliar = planificado_auxiliar->entrenador;
+		float estimacion_actual = auxiliar->estimacion;
+		if (estimacion_a_ejecutar > estimacion_actual){
+			estimacion_a_ejecutar = estimacion_actual;
+			j = i;
+		}
+	}
+
+	planificado = list_remove(lista_ready, j);
+
+	return planificado;
+}
+
+void planificar_entrenadores_SJF(){
+	if(!list_is_empty(lista_ready)){
+		sem_wait(&puede_planificar);
+		t_planificado* planificado = elegir_proximo_a_ejecutar_SJF();
+		pokemon_a_atrapar = planificado->pokemon;
+		cambiar_estado(planificado->entrenador, EXEC);
+		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+	}
+}
+
+void* ejecutar_entrenador_SJF(void* parametro){
+	t_entrenador* entrenador = parametro;
+
+	while(puede_seguir_atrapando(entrenador)){
+		sem_wait(&(puede_ejecutar[entrenador->indice]));
+
+		u_int32_t rafaga = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
+		float estimacion = calcular_estimado_de_la_proxima_rafaga(entrenador->estimacion, rafaga, config_team->alpha);
+
+		printf("rafaga: %d\n", rafaga);
+		printf("estimacion: %f\n", estimacion);
+		printf("estimacion anterior: %f\n", entrenador->estimacion);
+
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+
+		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+		cambiar_estado(entrenador, BLOCK);
+		sem_post(&puede_planificar);
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+
+		if(entrenador->resultado_caught){
+			cambiar_estado(entrenador, READY);
+			list_add(lista_ready, planificado);
+			sem_wait(&(puede_ejecutar[entrenador->indice]));
+
+			// Comentar si en esta parte hay que calcular la estimacion para
+			// rafaga CPU por atrapar = 1
+
+			atrapar(entrenador, planificado->pokemon);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			actualizar_objetivo_global();
+			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+		}
+		if(puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
+		sem_post(&puede_planificar);
+		sem_post(&sem_entrenadores);
+	}
+
+	sem_post(&(termino_de_capturar[entrenador->indice]));
+
+	return EXIT_SUCCESS;
+}
+
+
 /*
  * @NAME: mantener_servidor
  * @DESC: Inicia y mantiene el servidor abierto para escuchar los mensajes
@@ -445,8 +552,10 @@ void* iniciar_intercambiador(){
  */
 void* iniciar_planificador(){
 
-	while(!pokemons_objetivo_fueron_atrapados()) // hasta que todos terminen
-		planificar_entrenadores();
+	while(!pokemons_objetivo_fueron_atrapados()){ // hasta que todos terminen
+		//planificar_entrenadores();
+		planificar_entrenadores_SJF();
+	}
 
 	return EXIT_SUCCESS;
 }
@@ -464,7 +573,8 @@ void* iniciar_planificador_largo_plazo(void* parametro){
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores); //Falta el signal cuando el entrenador se bloquea
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
-		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+		//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+		enreadyar_al_mas_cercano_SJF(entrenadores, appeared_pokemon);
 	}
 
 	return EXIT_SUCCESS;
@@ -619,7 +729,10 @@ int main (void) {
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);
 
+	printf("alpha: %f\n", config_team->alpha);
+
 	cola_ready = queue_create();
+	lista_ready = list_create(); // Lista para SJF sin desalojo
 	appeared_pokemons = queue_create();
 	entrenadores_deadlock = list_create();
 	id_team = 0;

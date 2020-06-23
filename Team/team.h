@@ -37,4 +37,10 @@ void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon)
 void actualizar_objetivo_global();
 t_list* obtener_especies();
 
+// Funciones SJF (pendientes a revision)
+void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
+void planificar_entrenadores_SJF();
+void* ejecutar_entrenador_SJF(void* parametro);
+t_planificado* elegir_proximo_a_ejecutar_SJF();
+
 #endif /* TEAM_H_ */

@@ -75,6 +75,7 @@ t_list* entrenadores;
 t_list* entrenadores_deadlock; // Lo dijo josi
 t_entrenador* entrenador_en_deadlock;
 t_queue* cola_ready;
+t_list* lista_ready; // Lista para SJF sin desalojo
 int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
