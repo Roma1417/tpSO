@@ -42,5 +42,13 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appea
 void planificar_entrenadores_SJF();
 void* ejecutar_entrenador_SJF(void* parametro);
 t_planificado* elegir_proximo_a_ejecutar_SJF();
+t_planificado* buscar_donador_SJF(t_entrenador* entrenador);
+void realizar_intercambios_SJF();
+t_planificado* buscar_donador_SJF(t_entrenador* entrenador);
+void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planificado);
+void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador);
+u_int32_t buscar_entrenador_con_donador_con_estimacion_mas_baja(t_list* donadores);
+t_list* buscar_donadores_para_cada_entrenador();
+void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga);
 
 #endif /* TEAM_H_ */

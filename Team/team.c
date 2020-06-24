@@ -431,8 +431,10 @@ void planificar_entrenadores(){
 // Simplemente voy a cambiar la estructura de la cola de ready por una lista
 // De esa manera voy a poder elegir a cualquier entrenador en ready y no solo
 // al primero
-// Por ahi agregue otras funcionalidades como usar la distancia minima
-// para guardarla en
+// Otro detalle: Cuando no hay nadie en ready, se enreadya siempre
+// 				 al mas cercano al pokemon a atrapar y se ejecuta ese.
+//               No se tiene en cuenta la estimacion (actua como FIFO).
+//               Para mi tiene sentido pero por si las moscas lo digo jajaja
 void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon){
 	t_entrenador* mas_cercano = list_find(entrenadores, puede_ser_planificado);
 	int distancia_minima = distancia(mas_cercano->posicion,appeared_pokemon->posicion);
@@ -485,14 +487,22 @@ void planificar_entrenadores_SJF(){
 }
 
 //Buscar un mejor nombre jeje
+/*
+ * @NAME: modificar_estimacion_y_rafaga
+ * @DESC: Dados un entrenador y una rafaga, calcula y modifica
+ *        la estimacion de la proxima rafaga del entrenador y
+ *        modifica su rafaga anterior.
+ */
 void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga){
 	float estimacion = calcular_estimado_de_la_proxima_rafaga(entrenador->estimacion, rafaga, config_team->alpha);
 
-
+	// Codigo para hacer pruebas (se puede borrar)
+	printf("----------------------\n");
 	printf("entrenador: %d\n", entrenador->indice);
 	printf("rafaga: %d\n", rafaga);
 	printf("estimacion que ejecuto: %.2f\n", entrenador->estimacion);
 	printf("estimacion proxima: %.2f\n", estimacion);
+	printf("----------------------\n");
 
 	set_estimacion(entrenador, estimacion);
 	set_rafaga_anterior(entrenador, rafaga);
@@ -541,7 +551,68 @@ void* ejecutar_entrenador_SJF(void* parametro){
 	return EXIT_SUCCESS;
 }
 
-// Falta implementar
+// La cuestion aca es buscar un donador por entrenador
+// Y despues elegir al entrenador con el donador con estimacion mas baja
+// Sin embargo habria que ver si en vez de buscar un solo donador hay
+// que buscar todos los donadores de un entrenador...
+// Donadores pasaria a ser una lista de listas
+// Y de cada sublista deberia elegir el donador con estimacion mas baja
+// Despues ahi si, sigue igual a como esta implementado
+t_list* buscar_donadores_para_cada_entrenador(){
+	t_list* donadores = list_create();
+
+	for(int i = 0; i < list_size(entrenadores_deadlock); i++){
+		t_entrenador* entrenador = list_get(entrenadores_deadlock, i);
+		t_planificado* planificado = buscar_donador_SJF(entrenador);
+		list_add(donadores, planificado);
+	}
+
+	return donadores;
+}
+
+// Codigo de prueba
+// En teoria busca al entrenador con el donador con estimacion mas baja
+// Deberia ejecutar siempre primero a los de estimacion mas baja para
+// coincidir con sjf sin desalojo
+u_int32_t buscar_entrenador_con_donador_con_estimacion_mas_baja(t_list* donadores){
+	int j = 0;
+
+	t_planificado* planificado = list_get(donadores,j);
+
+	t_entrenador* donador = planificado->entrenador;
+	float estimacion_a_ejecutar = donador->estimacion;
+
+	for(int i = 0; i < list_size(donadores); i++){
+		t_planificado* planificado_auxiliar = list_get(donadores,i);
+		t_entrenador* auxiliar = planificado_auxiliar->entrenador;
+		float estimacion_actual = auxiliar->estimacion;
+		if (estimacion_a_ejecutar > estimacion_actual){
+			estimacion_a_ejecutar = estimacion_actual;
+			j = i;
+		}
+	}
+
+	//t_entrenador* buscado = list_remove(entrenadores_deadlock, j);
+
+	//list_destroy(donadores);
+	// Creo que falta destruir cada planificado
+
+	return j;
+}
+
+void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador){
+
+	int j = 0;
+
+	for(int i = 0; i < list_size(entrenadores_deadlock); i++){
+		t_entrenador* auxiliar = list_get(entrenadores_deadlock, i);
+		if(entrenador->indice == auxiliar->indice) j = i;
+	}
+
+	list_remove(entrenadores_deadlock, j);
+
+}
+
 void realizar_intercambios_SJF(){
 
 	for(int i = 0; i < list_size(entrenadores); i++){
@@ -555,26 +626,110 @@ void realizar_intercambios_SJF(){
 
 		// Aca deberia cambiar
 		// No deberia seleccionar el primero en deadlock
-		// Deberia seleccionar el que menos distancia tiene
-		// a su donador?
-		t_entrenador* entrenador = list_head(entrenadores_deadlock);
+		// Deberia seleccionar el que cuyo donador tiene la menor estimacion
+		t_list* donadores = buscar_donadores_para_cada_entrenador();
+		u_int32_t indice = buscar_entrenador_con_donador_con_estimacion_mas_baja(donadores);
+
+		t_entrenador* entrenador = list_remove(entrenadores_deadlock, indice);
+
+		// Codigo para hacer pruebas (se puede borrar)
+		printf("----------------------\n");
+		printf("indice del entrenador: %d\n", entrenador->indice);
+		t_planificado* planificado2 = list_get(donadores,indice);
+		printf("indice del donador: %d\n", planificado2->entrenador->indice);
+		printf("estimacion del donador: %.2f\n", planificado2->entrenador->estimacion);
+		printf("pokemon a donar: %s\n", planificado2->pokemon->pokemon);
+		printf("----------------------\n");
 
 		if(!list_is_empty(entrenadores_deadlock)){
 
-			// Buscar donador deberia cambiar para SJF
 			// En vez de usar cola ready deberia usar lista ready
-			t_planificado* planificado = buscar_donador(entrenador);
+			// Aca lo cambie para reutilizar donadores y el indice calculado
 
-			intercambiar_pokemon(entrenador, planificado);
+			t_planificado* planificado = list_remove(donadores, indice);
+
+			t_entrenador* donador = planificado->entrenador;
+
+			cambiar_estado(donador, READY);
+			cambiar_condicion_ready(donador);
+
+			list_add(lista_ready, planificado);
+			sem_post(&puede_planificar);
+
+			intercambiar_pokemon_SJF(entrenador, planificado);
+
 			if(no_cumplio_su_objetivo(entrenador))
 				list_add(entrenadores_deadlock, entrenador);
+			if(cumplio_su_objetivo(donador))
+				sacar_de_los_entrenadores_deadlock(donador);
 		}
+
+		list_destroy(donadores);
 	}
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
 }
 
+// No funciona igual al de fifo
+// Es diferente porque no pone en ready al donador
+t_planificado* buscar_donador_SJF(t_entrenador* entrenador){
+	t_planificado* planificado = NULL;
+	bool encontro_donador = false;
+	for(int i = 0; i < list_size(entrenadores_deadlock) && !encontro_donador;i++){
+		t_entrenador* donador = list_get(entrenadores_deadlock, i);
+		for(int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++){
+			char* obtenido = list_get(donador->pokemon_inservibles, j);
+			encontro_donador = list_elem(obtenido, entrenador->objetivos_faltantes);
+			if (encontro_donador){
+				t_appeared_pokemon* pokemon = appeared_pokemon_create();
+				cambiar_nombre_pokemon(pokemon, obtenido);
+				printf("pokemon a donar por el entrenador %d: %s\n", donador->indice, pokemon->pokemon);
+				planificado = planificado_create(donador, pokemon);
+			}
+		}
+	}
+
+	return planificado;
+}
+
+void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planificado){
+
+	t_entrenador* donador = planificado->entrenador;
+	sem_wait(&(puede_ejecutar[donador->indice]));
+
+	u_int32_t rafaga = distancia(donador->posicion, entrenador->posicion);
+	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
+
+	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", donador->indice, donador->posicion->x, donador->posicion->y);
+
+	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
+
+	// Pensar en las rafagas para el intercambio
+	// Deberia modificar las rafagas de ambos entrenadores (entrenador y donador)?
+	// Una solucion es hacerlo solo para el donador.
+	// Ya que se mueve e intercambia.
+	// Seria la rafaga (cantidad de movimientos) + 5 (intercambio)
+
+	// Falta poner sleep tanto aca como en fifo
+
+	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
+	modificar_estimacion_y_rafaga(entrenador, 5);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
+
+	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+	modificar_estimacion_y_rafaga(donador, rafaga + 5);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible,  planificado->pokemon->pokemon);
+
+	// Hay un error
+	// El error que estaba en fifo persiste en sjf
+	// seguramente si lo arreglamos en fifo
+	// aca sale rapido
+
+	sem_post(&puede_intercambiar);
+
+}
 
 /*
  * @NAME: mantener_servidor
@@ -589,8 +744,9 @@ void* mantener_servidor(){
 }
 
 void* iniciar_intercambiador(){
-	//while(1)
-		realizar_intercambios();
+
+	//realizar_intercambios();
+	realizar_intercambios_SJF();
 
 	return EXIT_SUCCESS;
 }
@@ -603,7 +759,6 @@ void* iniciar_planificador(){
 
 	while(!pokemons_objetivo_fueron_atrapados()){ // hasta que todos terminen
 		//planificar_entrenadores();
-
 		planificar_entrenadores_SJF();
 	}
 
@@ -794,7 +949,7 @@ int main (void) {
 	suscribirse_a_colas();
 
 
-	// codigo de prueba para sjf
+	// Codigo para hacer pruebas (se puede borrar)
 	/*t_entrenador* entrenador0 = list_get(entrenadores,0);
 	entrenador0->estimacion = 7;
 
@@ -825,9 +980,8 @@ int main (void) {
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
-
-	//pthread_t hilo_intercambiador;
-	//pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
+	pthread_t hilo_intercambiador;
+	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
     //enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);
