@@ -108,7 +108,8 @@ void* ejecutar_entrenador_RR(void* parametro){
 
 	while(puede_seguir_atrapando(entrenador)){ // Poner semaforo de la cola de ready para c/ vez que se termina el quantum
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
+		int ciclos = entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
+		log_info(logger_team, "La cantidad de ciclos de CPU necesarios es: %d \n", ciclos);
 
 		while(entrenador->rafaga > 0){
 			int unidad_quantum = 0;
@@ -136,13 +137,17 @@ void* ejecutar_entrenador_RR(void* parametro){
 						unidad_quantum++;
 						sleep(config_team->retardo_ciclo_cpu);
 					}
-				cambiar_estado(entrenador, BLOCK);
-				sem_post(&puede_planificar);
+
+				}
+
+				if(unidad_quantum == quantum) {
+							log_info(logger_team, "Pasa a estado bloqueado por fin de quantum");
+							cambiar_estado(entrenador,BLOCK);
+							sem_post(&puede_planificar);
 				}
 
 				log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 				printf("La unidad de quantum quedo en: %d\n",unidad_quantum);
-				printf("El quantum es: %d\n", quantum);
 				enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 				cambiar_estado(entrenador, BLOCK);
 				sem_post(&puede_planificar);
@@ -163,7 +168,6 @@ void* ejecutar_entrenador_RR(void* parametro){
 				}
 
 			}
-			log_info(logger_team,"Fin de quantum, replanificacion de entrenadores");
 			unidad_quantum = 0; // Cada vez que termina el quantum -> Vuelve a cero la unidad_quantum
 			sem_post(&puede_planificar);
 			cambiar_estado(entrenador, READY);
