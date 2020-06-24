@@ -105,17 +105,19 @@ void* ejecutar_entrenador(void* parametro){
 void* ejecutar_entrenador_RR(void* parametro){
 	t_entrenador* entrenador = parametro;
 	int quantum = config_team->quantum;
+	printf("El quantum disponible es: %d\n",quantum);
 
 	while(puede_seguir_atrapando(entrenador)){ // Poner semaforo de la cola de ready para c/ vez que se termina el quantum
 		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		u_int32_t distancia = (entrenador->rafaga) - 1;
-		int indice = 0;
 
 		while(entrenador->rafaga > 0){
+			int indice = 0;
+			//u_int32_t distancia = distancia(entrenador->posicion,pokemon_a_atrapar->posicion);
+			int distancia = ciclos_necesarios(entrenador,ATRAPAR) -1;
 			while(indice<quantum) {
 
-				for(int i=0; i<distancia; i++){
+				for(int i=0; i<distancia; i++){ // while(posicion entrenador != posicion pokemon)?
 
 					u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
 						for(int i=0; i<distancia_x;i++){
@@ -125,7 +127,7 @@ void* ejecutar_entrenador_RR(void* parametro){
 							entrenador->rafaga--;
 							indice++;
 							sleep(config_team->retardo_ciclo_cpu);
-					}
+						}
 
 					u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
 
@@ -160,7 +162,8 @@ void* ejecutar_entrenador_RR(void* parametro){
 				}
 
 			}
-
+			log_info(logger_team,"Fin de quantum, replanificacion de entrenadores");
+			indice = 0; // Cada vez que termina el quantum -> Vuelve a cero el indice
 			sem_post(&puede_planificar);
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, entrenador); // Cada vez que termina el quantum -> Vuelve a ingresar a la cola de ready
@@ -511,8 +514,6 @@ int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion) {
 
 	return 0;
 }
-
-
 
 
 /*
