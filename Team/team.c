@@ -105,19 +105,18 @@ void* ejecutar_entrenador(void* parametro){
 void* ejecutar_entrenador_RR(void* parametro){
 	t_entrenador* entrenador = parametro;
 	int quantum = config_team->quantum;
-	printf("El quantum disponible es: %d\n",quantum);
 
 	while(puede_seguir_atrapando(entrenador)){ // Poner semaforo de la cola de ready para c/ vez que se termina el quantum
-		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
+		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
 
 		while(entrenador->rafaga > 0){
-			int indice = 0;
+			int unidad_quantum = 0;
 			//u_int32_t distancia = distancia(entrenador->posicion,pokemon_a_atrapar->posicion);
-			int distancia = ciclos_necesarios(entrenador,ATRAPAR) -1;
-			while(indice<quantum) {
+			int distancia = ciclos_necesarios(entrenador, ATRAPAR) -1;
+			while(unidad_quantum < quantum) {
 
-				for(int i=0; i<distancia; i++){ // while(posicion entrenador != posicion pokemon)?
+				for(int i=0; i < distancia && unidad_quantum<quantum; i++){
 
 					u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
 						for(int i=0; i<distancia_x;i++){
@@ -125,23 +124,25 @@ void* ejecutar_entrenador_RR(void* parametro){
 								mover_a_la_derecha(entrenador->posicion);
 							else mover_a_la_izquierda(entrenador->posicion);
 							entrenador->rafaga--;
-							indice++;
+							unidad_quantum++;
 							sleep(config_team->retardo_ciclo_cpu);
 						}
 
 					u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
 
-					for(int j=0; j<distancia_y;j++){
+					for(int j=0; j < distancia_y && unidad_quantum<quantum; j++){
 						if(esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
 							mover_hacia_arriba(entrenador->posicion);
 						else mover_hacia_abajo(entrenador->posicion);
 						entrenador->rafaga--;
-						indice++;
+						unidad_quantum++;
 						sleep(config_team->retardo_ciclo_cpu);
 					}
 				}
 
 				log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+				printf("La unidad de quantum quedo en: %d\n",unidad_quantum);
+				printf("El quantum es: %d\n, quantum", quantum);
 				enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 				cambiar_estado(entrenador, BLOCK);
 				sem_post(&puede_planificar);
@@ -154,7 +155,7 @@ void* ejecutar_entrenador_RR(void* parametro){
 					queue_push(cola_ready, planificado);
 					sem_wait(&(puede_ejecutar[entrenador->indice]));
 					atrapar(entrenador, planificado->pokemon);
-					indice++;
+					unidad_quantum++;
 					entrenador->rafaga--;
 					log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 					actualizar_objetivo_global();
@@ -163,7 +164,7 @@ void* ejecutar_entrenador_RR(void* parametro){
 
 			}
 			log_info(logger_team,"Fin de quantum, replanificacion de entrenadores");
-			indice = 0; // Cada vez que termina el quantum -> Vuelve a cero el indice
+			unidad_quantum = 0; // Cada vez que termina el quantum -> Vuelve a cero la unidad_quantum
 			sem_post(&puede_planificar);
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, entrenador); // Cada vez que termina el quantum -> Vuelve a ingresar a la cola de ready
@@ -224,7 +225,7 @@ t_list* crear_entrenadores(t_config_team* config_team){
 
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i);
 		pthread_t hilo;
-		pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
+		pthread_create(&hilo, NULL, ejecutar_entrenador_RR, (void*) entrenador);
 		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
 		list_add(entrenadores_deadlock, entrenador);
@@ -503,7 +504,7 @@ int ciclos_necesarios(t_entrenador* entrenador, tipo_operacion operacion) {
 	switch(operacion){
 	case ATRAPAR:
 		return distancia(entrenador->posicion,pokemon_a_atrapar->posicion) + 1; // Puse +1 pero no se cuantos ciclos implica
-																				// atraparlo en realidad
+																	 // atraparlo en realidad
 		break;
 	case INTERCAMBIAR:
 		return 5;
