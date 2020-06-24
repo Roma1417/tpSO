@@ -115,11 +115,9 @@ void* ejecutar_entrenador_RR(void* parametro){
 			//u_int32_t distancia = distancia(entrenador->posicion,pokemon_a_atrapar->posicion);
 			int distancia = ciclos_necesarios(entrenador, ATRAPAR) -1;
 			while(unidad_quantum < quantum) {
-
-				for(int i=0; i < distancia && unidad_quantum<quantum; i++){
-
+				for(int i=0; i < distancia; i++){
 					u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
-						for(int i=0; i<distancia_x;i++){
+						for(int i=0; i<distancia_x && unidad_quantum<quantum;i++){
 							if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
 								mover_a_la_derecha(entrenador->posicion);
 							else mover_a_la_izquierda(entrenador->posicion);
@@ -138,11 +136,13 @@ void* ejecutar_entrenador_RR(void* parametro){
 						unidad_quantum++;
 						sleep(config_team->retardo_ciclo_cpu);
 					}
+				cambiar_estado(entrenador, BLOCK);
+				sem_post(&puede_planificar);
 				}
 
 				log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 				printf("La unidad de quantum quedo en: %d\n",unidad_quantum);
-				printf("El quantum es: %d\n, quantum", quantum);
+				printf("El quantum es: %d\n", quantum);
 				enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 				cambiar_estado(entrenador, BLOCK);
 				sem_post(&puede_planificar);
