@@ -1888,3 +1888,84 @@
 [INFO] 19:12:50:525 Broker/(3904:5115): El suscriptor 4 ha sido agregado a la cola 5 (GET_POKEMON).
 [INFO] 19:12:50:525 Broker/(3904:3904): Se ha conectado un proceso al servidor (Socket: 17)
 [INFO] 19:12:50:526 Broker/(3904:5119): El suscriptor 4 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:39:45:386 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 19:39:45:387 Broker/(9266:9290): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:39:45:387 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 19:39:45:387 Broker/(9266:9293): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:39:45:387 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 19:39:45:388 Broker/(9266:9297): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:40:59:108 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 19:40:59:109 Broker/(9266:9477): El suscriptor 2 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:40:59:109 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 19:40:59:110 Broker/(9266:9480): El suscriptor 2 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:40:59:110 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 19:40:59:110 Broker/(9266:9484): El suscriptor 2 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:43:13:794 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 19:43:13:799 Broker/(9266:9753): El suscriptor 3 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:43:13:799 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 19:43:13:800 Broker/(9266:9756): El suscriptor 3 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:43:13:800 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 19:43:13:800 Broker/(9266:9759): El suscriptor 3 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:44:47:360 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 19:44:47:361 Broker/(9266:10012): El suscriptor 4 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:44:47:361 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 19:44:47:362 Broker/(9266:10015): El suscriptor 4 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:44:47:362 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 19:44:47:362 Broker/(9266:10019): El suscriptor 4 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:45:42:763 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 19:45:42:764 Broker/(9266:10136): El suscriptor 5 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:45:42:764 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 19:45:42:764 Broker/(9266:10139): El suscriptor 5 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:45:42:764 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 19:45:42:765 Broker/(9266:10143): El suscriptor 5 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:47:23:928 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 19:47:23:929 Broker/(9266:10372): El suscriptor 6 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:47:23:929 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 22)
+[INFO] 19:47:23:930 Broker/(9266:10375): El suscriptor 6 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:47:23:931 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 23)
+[INFO] 19:47:23:931 Broker/(9266:10379): El suscriptor 6 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 19:48:17:703 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 24)
+[INFO] 19:48:17:704 Broker/(9266:10491): El suscriptor 7 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 19:48:17:704 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 25)
+[INFO] 19:48:17:705 Broker/(9266:10495): El suscriptor 7 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 19:48:17:705 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 26)
+[INFO] 19:48:17:705 Broker/(9266:10498): El suscriptor 7 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 20:03:34:8 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 27)
+[INFO] 20:03:34:9 Broker/(9266:11923): El suscriptor 8 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 20:03:34:9 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 28)
+[INFO] 20:03:34:9 Broker/(9266:11926): El suscriptor 8 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 20:03:34:9 Broker/(9266:9266): Se ha conectado un proceso al servidor (Socket: 29)
+[INFO] 20:03:34:10 Broker/(9266:11930): El suscriptor 8 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:01:59:989 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 08:02:00:22 Broker/(5279:5295): El suscriptor 1 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 08:02:00:22 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 08:02:00:22 Broker/(5279:5297): El suscriptor 1 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 08:02:00:22 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 08:02:00:22 Broker/(5279:5299): El suscriptor 1 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:03:28:933 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 08:03:28:936 Broker/(5279:5599): El suscriptor 2 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 08:03:28:936 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 08:03:28:937 Broker/(5279:5602): El suscriptor 2 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 08:03:28:937 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 08:03:28:937 Broker/(5279:5606): El suscriptor 2 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:04:10:996 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 08:04:10:999 Broker/(5279:5696): El suscriptor 3 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 08:04:10:999 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 13)
+[INFO] 08:04:10:0 Broker/(5279:5699): El suscriptor 3 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 08:04:10:0 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 14)
+[INFO] 08:04:10:0 Broker/(5279:5703): El suscriptor 3 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:05:37:55 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 15)
+[INFO] 08:05:37:56 Broker/(5279:5877): El suscriptor 4 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 08:05:37:56 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 16)
+[INFO] 08:05:37:57 Broker/(5279:5881): El suscriptor 4 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 08:05:37:57 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 17)
+[INFO] 08:05:37:57 Broker/(5279:5884): El suscriptor 4 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:10:18:311 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 18)
+[INFO] 08:10:18:315 Broker/(5279:6570): El suscriptor 5 ha sido agregado a la cola 3 (CATCH_POKEMON).
+[INFO] 08:10:18:315 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 19)
+[INFO] 08:10:18:316 Broker/(5279:6573): El suscriptor 5 ha sido agregado a la cola 5 (GET_POKEMON).
+[INFO] 08:10:18:316 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 20)
+[INFO] 08:10:18:316 Broker/(5279:6577): El suscriptor 5 ha sido agregado a la cola 1 (NEW_POKEMON).
+[INFO] 08:10:22:508 Broker/(5279:5279): Se ha conectado un proceso al servidor (Socket: 21)
+[INFO] 08:10:22:508 Broker/(5279:6588): Se ha recibido un mensaje del tipo 2(APPEARED_POKEMON).
+[INFO] 08:10:22:508 Broker/(5279:6588): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)

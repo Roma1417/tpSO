@@ -194,6 +194,9 @@ void process_request(int cod_op, int cliente_fd) {
 			confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
 
 			cargar_datos_new_pokemon(new_pokemon);
+
+			enviar_appeared_pokemon(id, new_pokemon);
+
 			break;
 		case CATCH_POKEMON:
 			//printf("Recibi un mensaje CATCH_POKEMON\n");
@@ -247,6 +250,21 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo){
 	}
 }
 
+void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon) {
+	uint32_t conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
+	char** mensaje_appeared_pokemon = malloc((sizeof(char*)) * 6);
+	mensaje_appeared_pokemon[0] = string_new();
+	string_append(&(mensaje_appeared_pokemon[0]), "BROKER");
+	mensaje_appeared_pokemon[1] = string_new();
+	string_append(&(mensaje_appeared_pokemon[1]), "APPEARED_POKEMON");
+	mensaje_appeared_pokemon[2] = new_pokemon->pokemon;
+	mensaje_appeared_pokemon[3] = string_itoa(new_pokemon->pos_x);
+	mensaje_appeared_pokemon[4] = string_itoa(new_pokemon->pos_y);
+	mensaje_appeared_pokemon[5] = string_itoa(id_mensaje);
+	enviar_mensaje(mensaje_appeared_pokemon, conexion);
+	liberar_conexion(conexion);
+}
+
 void serve_client(int* cliente_fd){
 	int cod_op;
 
@@ -274,6 +292,9 @@ void serve_client(int* cliente_fd){
 			id_mensaje = recibir_entero(*cliente_fd);
 
 			cargar_datos_new_pokemon(new_pokemon);
+
+			enviar_appeared_pokemon(id_mensaje, new_pokemon);
+
 			break;
 		case CATCH_POKEMON:
 			printf("Recibi un mensaje CATCH_POKEMON\n");
@@ -320,7 +341,6 @@ u_int32_t recibir_entero(int socket_cliente){
 void* serializar_paquete(t_paquete* paquete, u_int32_t *bytes){
 	u_int32_t size_serializado = sizeof(paquete->codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 	void* buffer = malloc(size_serializado);
-
 	u_int32_t bytes_escritos = 0;
 
 	memcpy(buffer + bytes_escritos, &(paquete->codigo_operacion), sizeof(paquete->codigo_operacion));
@@ -376,7 +396,6 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	u_int32_t size = obtener_size(argv, tipo);
 	paquete->buffer->size = size;
 	void* stream = generar_stream(argv, paquete);
-
 	paquete->buffer->stream = stream;
 
 	u_int32_t size_serializado;
@@ -425,14 +444,12 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 	void* stream = malloc(paquete->buffer->size);
 
 	switch(paquete->codigo_operacion){
-	    case CATCH_POKEMON:
+	    case APPEARED_POKEMON:
 	    	agregar_string(&offset, argumentos[2], &stream);
 	    	agregar_entero(&offset, argumentos[3], &stream);
 	    	agregar_entero(&offset, argumentos[4], &stream);
+	    	agregar_entero(&offset, argumentos[5], &stream);
 	    	break;
-		case GET_POKEMON:
-			agregar_string(&offset, argumentos[2], &stream);
-			break;
 		case SUSCRIPTOR:
 			agregar_string(&offset, argumentos[2], &stream);
 			agregar_entero(&offset, argumentos[3], &stream);
@@ -461,11 +478,8 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo){
 	u_int32_t size = 0;
 	switch(tipo){
-		case CATCH_POKEMON:
-			size = sizeof(u_int32_t) * 3 + strlen(argumentos[2]);
-			break;
-		case GET_POKEMON:
-			size = sizeof(u_int32_t) + strlen(argumentos[2]);
+		case APPEARED_POKEMON:
+			size = sizeof(u_int32_t) * 4 + strlen(argumentos[2]);
 			break;
 		case SUSCRIPTOR:
 			size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]);
