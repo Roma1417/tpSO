@@ -109,19 +109,34 @@ void* ejecutar_entrenador_RR(void* parametro){
 	while(puede_seguir_atrapando(entrenador)){ // Poner semaforo de la cola de ready para c/ vez que se termina el quantum
 		entrenador->rafaga = ciclos_necesarios(entrenador, ATRAPAR); // TODO: Revisar funcion ciclos_necesarios
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		u_int32_t distancia = entrenador->rafaga - 1;
+		u_int32_t distancia = (entrenador->rafaga) - 1;
 		int indice = 0;
 
 		while(entrenador->rafaga > 0){
 			while(indice<quantum) {
 
 				for(int i=0; i<distancia; i++){
-					// El indice se tendria que aumentar por cada posicion que se mueve (el mover_de_posicion
-					// adentro del for no tiene sentido asi)
-					// (Lo mismo para la rafaga)
-					mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
-					indice++;
-					entrenador->rafaga--;
+
+					u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
+						for(int i=0; i<distancia_x;i++){
+							if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
+								mover_a_la_derecha(entrenador->posicion);
+							else mover_a_la_izquierda(entrenador->posicion);
+							entrenador->rafaga--;
+							indice++;
+							sleep(config_team->retardo_ciclo_cpu);
+					}
+
+					u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
+
+					for(int j=0; j<distancia_y;j++){
+						if(esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
+							mover_hacia_arriba(entrenador->posicion);
+						else mover_hacia_abajo(entrenador->posicion);
+						entrenador->rafaga--;
+						indice++;
+						sleep(config_team->retardo_ciclo_cpu);
+					}
 				}
 
 				log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
