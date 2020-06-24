@@ -69,6 +69,7 @@ void liberar_conexion(u_int32_t socket_cliente);
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo);
 void recibir_mensaje(int* socket);
 bool list_elem(char* elemento, t_list* lista);
+void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon);
 
 
 
