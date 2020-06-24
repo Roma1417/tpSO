@@ -124,50 +124,64 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		t_planificado* planificado = planificado_create(entrenador,pokemon_a_atrapar);
-		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
-		entrenador->rafaga = distance + ciclos_necesarios(ATRAPAR);
-		log_info(logger_team,"La cantidad de ciclos de CPU necesarios del entrenador %d es: %d", entrenador->indice, distance);
+		t_planificado* planificado = planificado_create(entrenador,
+				pokemon_a_atrapar);
+		int distance = distancia(entrenador->posicion,
+				pokemon_a_atrapar->posicion);
+		entrenador->rafaga = distance + ATRAPAR;
+		log_info(logger_team,
+				"La cantidad de ciclos de CPU necesarios del entrenador %d es: %d",
+				entrenador->indice, distance);
 
-		for(int i=0; i<distance;i++) {
-			u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
-				for(int i=0; i<distancia_x;i++){
-					if(esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
-						mover_a_la_derecha(entrenador->posicion);
-					else mover_a_la_izquierda(entrenador->posicion);
+		for (int i = 0; i < distance; i++) {
+			u_int32_t distancia_x = distancia_en_x(entrenador->posicion,
+					pokemon_a_atrapar->posicion);
+			for (int i = 0; i < distancia_x; i++) {
+				if (esta_mas_a_la_derecha(pokemon_a_atrapar->posicion,
+						entrenador->posicion))
+					mover_a_la_derecha(entrenador->posicion);
+				else
+					mover_a_la_izquierda(entrenador->posicion);
 
-					sleep(config_team->retardo_ciclo_cpu);
-					quantum_acumulado++;
-					entrenador->rafaga--;
+				sleep(config_team->retardo_ciclo_cpu);
+				quantum_acumulado++;
+				entrenador->rafaga--;
 
-					if(quantum_acumulado == quantum) {
-						log_info(logger_team, "El entrenador %d vuelve al fin de la cola de ready por fin de quantum", entrenador->indice);
-						cambiar_estado(entrenador, READY);
-						queue_push(cola_ready, planificado);
-						sem_post(&(puede_planificar));
-						sem_wait(&puede_ejecutar[entrenador->indice]);
-						quantum_acumulado = 0;
-					}
+				if (quantum_acumulado == quantum) {
+					log_info(logger_team,
+							"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
+							entrenador->indice);
+					cambiar_estado(entrenador, READY);
+					queue_push(cola_ready, planificado);
+					sem_post(&(puede_planificar));
+					sem_wait(&puede_ejecutar[entrenador->indice]);
+					quantum_acumulado = 0;
 				}
-				u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
-				for(int j=0; j<distancia_y;j++){
-					if(esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
-						mover_hacia_arriba(entrenador->posicion);
-					else mover_hacia_abajo(entrenador->posicion);
+			}
+			u_int32_t distancia_y = distancia_en_y(entrenador->posicion,
+					pokemon_a_atrapar->posicion);
+			for (int j = 0; j < distancia_y; j++) {
+				if (esta_mas_arriba(pokemon_a_atrapar->posicion,
+						entrenador->posicion))
+					mover_hacia_arriba(entrenador->posicion);
+				else
+					mover_hacia_abajo(entrenador->posicion);
 
-					sleep(config_team->retardo_ciclo_cpu);
-					quantum_acumulado++;
-					entrenador->rafaga--;
+				sleep(config_team->retardo_ciclo_cpu);
+				quantum_acumulado++;
+				entrenador->rafaga--;
 
-					if(quantum_acumulado == quantum) {
-						log_info(logger_team, "El entrenador %d vuelve al fin de la cola de ready por fin de quantum", entrenador->indice);
-						cambiar_estado(entrenador, READY);
-					    queue_push(cola_ready, planificado);
-						sem_post(&(puede_planificar));
-					    sem_wait(&puede_ejecutar[entrenador->indice]);
-						quantum_acumulado = 0;
-					}
+				if (quantum_acumulado == quantum) {
+					log_info(logger_team,
+							"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
+							entrenador->indice);
+					cambiar_estado(entrenador, READY);
+					queue_push(cola_ready, planificado);
+					sem_post(&(puede_planificar));
+					sem_wait(&puede_ejecutar[entrenador->indice]);
+					quantum_acumulado = 0;
 				}
+			}
 
 		}
 
@@ -184,6 +198,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, planificado->pokemon);
+			entrenador->rafaga--;
 			log_info(logger_team,
 					"El entrenador %d atrapo a %s en la posicion (%d,%d)",
 					entrenador->indice, planificado->pokemon->pokemon,
@@ -212,8 +227,6 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 	return EXIT_SUCCESS;
 }
-
-
 
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon) {
 
@@ -478,6 +491,91 @@ void intercambiar_pokemon(t_entrenador* entrenador, t_planificado* planificado) 
 
 }
 
+void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificado) {
+
+	t_entrenador* donador = planificado->entrenador;
+	sem_wait(&(puede_ejecutar[donador->indice]));
+	int distance = distancia(entrenador->posicion, donador->posicion);
+	donador->rafaga = distance + INTERCAMBIAR;
+	int quantum = config_team->quantum;
+	int quantum_acumulado = 0;
+
+	for (int i = 0; i < distance; i++) {
+		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, donador->posicion);
+		for (int i = 0; i < distancia_x; i++) {
+			if (esta_mas_a_la_derecha(donador->posicion, entrenador->posicion))
+				mover_a_la_derecha(donador->posicion);
+			else
+				mover_a_la_izquierda(donador->posicion);
+
+			sleep(config_team->retardo_ciclo_cpu);
+			quantum_acumulado++;
+			donador->rafaga--;
+
+			if (quantum_acumulado == quantum) {
+				log_info(logger_team,
+						"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
+						entrenador->indice);
+				cambiar_estado(entrenador, READY);
+				queue_push(cola_ready, planificado);
+				sem_post(&(puede_planificar));
+				sem_wait(&puede_ejecutar[entrenador->indice]);
+				quantum_acumulado = 0;
+			}
+		}
+		u_int32_t distancia_y = distancia_en_y(entrenador->posicion, donador->posicion);
+		for (int j = 0; j < distancia_y; j++) {
+			if (esta_mas_arriba(donador->posicion,entrenador->posicion))
+				mover_hacia_arriba(donador->posicion);
+			else
+				mover_hacia_abajo(donador->posicion);
+
+			sleep(config_team->retardo_ciclo_cpu);
+			quantum_acumulado++;
+			donador->rafaga--;
+
+			if (quantum_acumulado == quantum) {
+				log_info(logger_team,
+						"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
+						entrenador->indice);
+				cambiar_estado(entrenador, READY);
+				queue_push(cola_ready, planificado);
+				sem_post(&(puede_planificar));
+				sem_wait(&puede_ejecutar[entrenador->indice]);
+				quantum_acumulado = 0;
+			}
+		}
+
+	}
+
+	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)",
+			entrenador->indice, entrenador->posicion->x,
+			entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)",
+			donador->indice, donador->posicion->x, donador->posicion->y);
+
+	char* inservible = find_first(donador->objetivos_faltantes,
+			entrenador->pokemon_inservibles);
+	for(int i =0; i<INTERCAMBIAR; i++) {
+		if(quantum_acumulado == quantum) {
+			cambiar_estado(donador, READY);
+			queue_push(cola_ready, planificado);
+			sem_post(&puede_planificar);
+			sem_wait(&puede_ejecutar[donador->indice]);
+			quantum_acumulado = 0;
+		}
+	}
+	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s",
+			entrenador->indice, planificado->pokemon->pokemon, inservible);
+	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s",
+			donador->indice, inservible, planificado->pokemon->pokemon);
+
+	sem_post(&puede_intercambiar);
+
+}
+
 t_planificado* buscar_donador(t_entrenador* entrenador) {
 	t_planificado* planificado = NULL;
 	bool encontro_donador = false;
@@ -540,6 +638,28 @@ void realizar_intercambios() {
 
 }
 
+void realizar_intercambios_RR() {
+	for (int i = 0; i < list_size(entrenadores); i++) {
+		sem_wait(&(termino_de_capturar[i]));
+	}
+
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+
+	while (!list_is_empty(entrenadores_deadlock)) {
+		sem_wait(&puede_intercambiar);
+		t_entrenador* entrenador = list_head(entrenadores_deadlock);
+		if (!list_is_empty(entrenadores_deadlock)) {
+			t_planificado* planificado = buscar_donador(entrenador);
+			intercambiar_pokemon_RR(entrenador, planificado);
+			if (no_cumplio_su_objetivo(entrenador))
+				list_add(entrenadores_deadlock, entrenador);
+		}
+	}
+
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
+}
+
 /*
  * @NAME: planificar_entrenadores
  * @DESC: pendiente
@@ -556,20 +676,6 @@ void planificar_entrenadores() {
 	//Mover entrenador
 }
 
-int ciclos_necesarios(tipo_operacion operacion) {
-	switch (operacion) {
-	case ATRAPAR:
-		return 1;
-	case INTERCAMBIAR:
-		return 5;
-		break;
-	case ENVIAR_MENSAJE:
-		return 1;
-	}
-
-	return 0;
-}
-
 /*
  * @NAME: mantener_servidor
  * @DESC: Inicia y mantiene el servidor abierto para escuchar los mensajes
@@ -584,7 +690,7 @@ void* mantener_servidor() {
 
 void* iniciar_intercambiador() {
 	//while(1)
-	realizar_intercambios();
+	realizar_intercambios_RR();
 
 	return EXIT_SUCCESS;
 }
