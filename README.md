@@ -29,7 +29,7 @@
 
 ## TO DO [GameCard]
 
-- [ ] Implementación del procedimiento al recibir mensaje NEW_POKEMON (IN_PROGRESS)
+- [X] Implementación del procedimiento al recibir mensaje NEW_POKEMON (IN_PROGRESS)
 - [ ] Implementación del procedimiento al recibir mensaje CATCH_POKEMON
 - [ ] Implementación del procedimiento al recibir mensaje GET_POKEMON
 - [ ] Separar funciones de Archivos en un .c distinto
@@ -38,7 +38,7 @@
 
 - [X] Verificar existencia de archivo del pokemon. En caso contrario crearlo con su metadata.bin
 - [X] Verificar si se puede abrir el archivo
-- [ ] Verificar si las posiciones ya existen en el archivo y actualizarlas. En caso contrario agregarlas en una nueva línea
-- [ ] Esperar la cantidad de segundos definidas en el .config
-- [ ] Enviar mensaje APPEARED_POKEMON al Broker
+- [X] Verificar si las posiciones ya existen en el archivo y actualizarlas. En caso contrario agregarlas en una nueva línea
+- [X] Esperar la cantidad de segundos definidas en el .config
+- [X] Enviar mensaje APPEARED_POKEMON al Broker
 

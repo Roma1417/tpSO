@@ -294,3 +294,39 @@
 [INFO] 18:36:51:595 gamecard/(25628:25648): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
 [INFO] 18:36:51:596 gamecard/(25628:25651): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
 [INFO] 18:36:51:601 gamecard/(25628:25653): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:43:16:920 gamecard/(5149:5160): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:43:16:940 gamecard/(5149:5163): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:43:16:940 gamecard/(5149:5165): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:43:16:941 gamecard/(5149:5167): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:52:06:651 gamecard/(6036:6047): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:52:06:651 gamecard/(6036:6049): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:52:06:652 gamecard/(6036:6051): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:52:06:652 gamecard/(6036:6053): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:54:10:844 gamecard/(6290:6301): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:54:10:845 gamecard/(6290:6303): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:54:10:846 gamecard/(6290:6305): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:54:10:846 gamecard/(6290:6307): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:55:10:918 gamecard/(6431:6442): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:55:10:919 gamecard/(6431:6444): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:55:10:919 gamecard/(6431:6446): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:55:10:920 gamecard/(6431:6448): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:55:47:975 gamecard/(6536:6547): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:55:47:976 gamecard/(6536:6550): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:55:47:976 gamecard/(6536:6551): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:55:47:979 gamecard/(6536:6553): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:58:27:93 gamecard/(6844:6855): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:58:27:93 gamecard/(6844:6857): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:58:27:94 gamecard/(6844:6859): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:58:27:95 gamecard/(6844:6861): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:59:07:389 gamecard/(6946:6957): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:59:07:389 gamecard/(6946:6959): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:59:07:390 gamecard/(6946:6961): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:59:07:390 gamecard/(6946:6963): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:59:18:702 gamecard/(7006:7017): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:59:18:703 gamecard/(7006:7019): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:59:18:704 gamecard/(7006:7021): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:59:18:704 gamecard/(7006:7023): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 19:02:07:56 gamecard/(7363:7374): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 19:02:07:57 gamecard/(7363:7376): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 19:02:07:58 gamecard/(7363:7378): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 19:02:07:59 gamecard/(7363:7380): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix

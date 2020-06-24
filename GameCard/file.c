@@ -111,6 +111,7 @@ char* obtener_bloque_disponible(){
 	for(int i=0; i<(metadata_general->blocks) && !encontrado; i++){
 		if(bitarray_test_bit(bitmap, i) == 0){
 			bloque_disponible = i+1;
+			printf("Bloque_disponible: %d\n", bloque_disponible);
 			encontrado = true;
 			bitarray_set_bit(bitmap, i);
 		}
@@ -155,42 +156,47 @@ void actualizar_size(FILE* file, FILE* bloque) {
 	free(posterior);
 }
 
-void actualizar_metadata(FILE* bloque, FILE* file, char* ultimo_bloque) {
+void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque, char* bloque) {
 	//Actualizar en Metadata
 	char caracter;
 	char* posterior = string_new();
-	actualizar_size(file, bloque);
+	actualizar_size(file, bloque_file);
 	guardar_posterior(file, &posterior);
 	fseek(file, 0, SEEK_SET);
 	caracter = fgetc(file);
 	while (caracter != ']') {
 		caracter = fgetc(file);
+		printf("Caracter_imp: %c\n", caracter);
 	}
-	while (caracter != ',' && caracter != '[' ) {
+	/*while (caracter != ',' && caracter != '[' ) {
 		fseek(file, -2, SEEK_CUR);
 		caracter = fgetc(file);
 		//printf("Char: %c\n", caracter);
-	}
+	}*/
+	fseek(file, -1, SEEK_CUR);
+	printf("Bloque: %s\n", bloque);
+	printf("Resultado: %d\n", bloque);
+	if(!string_equals_ignore_case(bloque, "")) fputc(',', file);
 	string_append(&ultimo_bloque, "]\n");
 	fputs(ultimo_bloque, file);
 	fputs(posterior, file);
 	free(posterior);
-	fclose(bloque);
+	fclose(bloque_file);
 }
 
-void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon) {
+void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon, char* bloque) {
 	//Crear nuevo bloque
 	char* ultimo_bloque = obtener_bloque_disponible();
-	FILE* bloque = fopen(obtener_bloque_path(ultimo_bloque), "w+b");
-	fputs(string_itoa(new_pokemon->pos_x), bloque);
-	fputc('-', bloque);
-	fputs(string_itoa(new_pokemon->pos_y), bloque);
-	fputc('=', bloque);
-	fputs(string_itoa(new_pokemon->cantidad), bloque);
-	fputc('\n', bloque);
+	FILE* bloque_file = fopen(obtener_bloque_path(ultimo_bloque), "w+b");
+	fputs(string_itoa(new_pokemon->pos_x), bloque_file);
+	fputc('-', bloque_file);
+	fputs(string_itoa(new_pokemon->pos_y), bloque_file);
+	fputc('=', bloque_file);
+	fputs(string_itoa(new_pokemon->cantidad), bloque_file);
+	fputc('\n', bloque_file);
 
 	//Actualizar en Metadata
-	actualizar_metadata(bloque, file, ultimo_bloque);
+	actualizar_metadata(bloque_file, file, ultimo_bloque, bloque);
 }
 
 char** obtener_bloques_del_pokemon(FILE* file){
@@ -209,6 +215,7 @@ bool posicion_ya_cargada(FILE* file, char* posicion_actual, FILE** bloque_encont
 	char* bloque_path;
 	FILE* bloque_file;
 	char** bloques = obtener_bloques_del_pokemon(file);
+	printf("Bloques: %s\n",*bloques);
 	int longitud = (sizeof(bloques)/sizeof(bloques[0]));
 	printf("Longitud: %d\n", longitud);
 	for(int i=0; (i<longitud) && !posicion_encontrada; i++){
@@ -260,11 +267,28 @@ void actualizar_posicion_ya_cargada(FILE* bloque_file, t_new_pokemon* new_pokemo
 	fputs(posterior, bloque_file);
 }
 
+
+bool no_entra_en_bloque(FILE* file, t_new_pokemon* new_pokemon, char* ultimo_bloque){
+	char* cadena_a_agregar = string_new();
+	string_append_with_format(&cadena_a_agregar, "%s-%s=%s\n", string_itoa(new_pokemon->pos_x),string_itoa(new_pokemon->pos_y), string_itoa(new_pokemon->cantidad));
+	char* bloque_path = obtener_bloque_path(ultimo_bloque);
+	FILE* bloque_file = fopen(bloque_path, "r+");
+	printf("Block_size: %d\n", metadata_general->block_size);
+	printf("File_size: %d\n", file_size(bloque_file));
+	printf("String_length: %d\n", string_length(cadena_a_agregar));
+	int diferencia_de_sizes = (metadata_general->block_size - (file_size(bloque_file) + string_length(cadena_a_agregar)));
+	printf("Diferencia_de_sizes: %d\n", diferencia_de_sizes);
+	bool entra_en_bloque = (diferencia_de_sizes >= 0);
+	printf("Entra_en_bloque: %d\n", entra_en_bloque);
+	fclose(bloque_file);
+	return !entra_en_bloque;
+}
+
 void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon){
 	char* ultimo_bloque = obtener_ultimo_bloque(file);
-	if(string_equals_ignore_case(ultimo_bloque,"")){
+	if(string_equals_ignore_case(ultimo_bloque,"") || no_entra_en_bloque(file, new_pokemon, ultimo_bloque)){
 		//Crear nuevo bloque
-		crear_nuevo_bloque(file, new_pokemon);
+		crear_nuevo_bloque(file, new_pokemon, ultimo_bloque);
 	}
 	else{
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
