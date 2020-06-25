@@ -71,11 +71,16 @@ void* ejecutar_entrenador(void* parametro) {
 
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion,
-				config_team);
-		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)",
-				entrenador->indice, entrenador->posicion->x,
-				entrenador->posicion->y);
+
+		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		int ciclos = distance + ATRAPAR;
+
+		sem_wait(&(mutex_ciclos_cpu_totales));
+		ciclos_cpu_totales += ciclos;
+		sem_post(&(mutex_ciclos_cpu_totales));
+
+		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
@@ -88,10 +93,7 @@ void* ejecutar_entrenador(void* parametro) {
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, planificado->pokemon);
-			log_info(logger_team,
-					"El entrenador %d atrapo a %s en la posicion (%d,%d)",
-					entrenador->indice, planificado->pokemon->pokemon,
-					entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(
 					entrenadores_deadlock);
@@ -124,21 +126,21 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-		t_planificado* planificado = planificado_create(entrenador,
-				pokemon_a_atrapar);
-		int distance = distancia(entrenador->posicion,
-				pokemon_a_atrapar->posicion);
-		entrenador->rafaga = distance + ATRAPAR;
-		log_info(logger_team,
-				"La cantidad de ciclos de CPU necesarios del entrenador %d es: %d",
-				entrenador->indice, distance);
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		int ciclos = distance + ATRAPAR;
+
+		sem_wait(&(mutex_ciclos_cpu_totales));
+		ciclos_cpu_totales += ciclos;
+		sem_post(&(mutex_ciclos_cpu_totales));
+
+		entrenador->rafaga = ciclos;
+		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %d es: %d", entrenador->indice, distance);
 
 		for (int i = 0; i < distance; i++) {
-			u_int32_t distancia_x = distancia_en_x(entrenador->posicion,
-					pokemon_a_atrapar->posicion);
+			u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
 			for (int i = 0; i < distancia_x; i++) {
-				if (esta_mas_a_la_derecha(pokemon_a_atrapar->posicion,
-						entrenador->posicion))
+				if (esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
 					mover_a_la_derecha(entrenador->posicion);
 				else
 					mover_a_la_izquierda(entrenador->posicion);
@@ -148,9 +150,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 				entrenador->rafaga--;
 
 				if (quantum_acumulado == quantum) {
-					log_info(logger_team,
-							"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
-							entrenador->indice);
+					log_info(logger_team, "El entrenador %d vuelve al fin de la cola de ready por fin de quantum", entrenador->indice);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
 					sem_post(&(puede_planificar));
@@ -158,11 +158,9 @@ void* ejecutar_entrenador_RR(void* parametro) {
 					quantum_acumulado = 0;
 				}
 			}
-			u_int32_t distancia_y = distancia_en_y(entrenador->posicion,
-					pokemon_a_atrapar->posicion);
+			u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
 			for (int j = 0; j < distancia_y; j++) {
-				if (esta_mas_arriba(pokemon_a_atrapar->posicion,
-						entrenador->posicion))
+				if (esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
 					mover_hacia_arriba(entrenador->posicion);
 				else
 					mover_hacia_abajo(entrenador->posicion);
@@ -172,9 +170,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 				entrenador->rafaga--;
 
 				if (quantum_acumulado == quantum) {
-					log_info(logger_team,
-							"El entrenador %d vuelve al fin de la cola de ready por fin de quantum",
-							entrenador->indice);
+					log_info(logger_team, "El entrenador %d vuelve al fin de la cola de ready por fin de quantum", entrenador->indice);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
 					sem_post(&(puede_planificar));
@@ -185,9 +181,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 		}
 
-		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)",
-				entrenador->indice, entrenador->posicion->x,
-				entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
@@ -199,13 +193,9 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, planificado->pokemon);
 			entrenador->rafaga--;
-			log_info(logger_team,
-					"El entrenador %d atrapo a %s en la posicion (%d,%d)",
-					entrenador->indice, planificado->pokemon->pokemon,
-					entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
-			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(
-					entrenadores_deadlock);
+			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		if (puede_seguir_atrapando(entrenador))
 			cambiar_condicion_ready(entrenador);
@@ -231,8 +221,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon) {
 
 	char** mensaje = malloc(sizeof(char*) * 5);
-	int conexion = crear_conexion(config_team->ip_broker,
-			config_team->puerto_broker);
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	mensaje[0] = string_new();
 	string_append(&(mensaje[0]), "BROKER");
 
@@ -248,6 +237,10 @@ void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon)
 	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
+
+	sem_wait(&(mutex_ciclos_cpu_totales));
+	ciclos_cpu_totales += ENVIAR_MENSAJE;
+	sem_post(&(mutex_ciclos_cpu_totales));
 }
 
 /**
@@ -269,8 +262,7 @@ t_list* crear_entrenadores(t_config_team* config_team) {
 		t_list* pokemon_obtenidos = list_get(pokemon_entrenadores, i);
 		t_posicion* posicion = list_get(posiciones_entrenadores, i);
 
-		t_entrenador* entrenador = entrenador_create(posicion,
-				pokemon_obtenidos, objetivo, i);
+		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i);
 		pthread_t hilo;
 		pthread_create(&hilo, NULL, ejecutar_entrenador_RR, (void*) entrenador);
 		set_hilo(entrenador, hilo);
@@ -365,8 +357,7 @@ void terminar_programa(t_log* logger, t_config* config) {
 void* enviar_get_pokemon(void* parametro) {
 	char* pokemon = parametro;
 	char** mensaje = malloc(sizeof(char*) * 3);
-	int conexion = crear_conexion(config_team->ip_broker,
-			config_team->puerto_broker);
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	mensaje[0] = string_new();
 	string_append(&(mensaje[0]), "BROKER");
 
@@ -486,9 +477,14 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador,
 	sem_wait(&(puede_ejecutar[donador->indice]));
 
 	int distance = distancia(entrenador->posicion, donador->posicion);
-	donador->rafaga = distance + INTERCAMBIAR;
+	int ciclos = distance + INTERCAMBIAR;
+	donador->rafaga = ciclos;
 	int quantum = config_team->quantum;
 	int quantum_acumulado = 0;
+
+	sem_wait(&(mutex_ciclos_cpu_totales));
+	ciclos_cpu_totales += ciclos;
+	sem_post(&(mutex_ciclos_cpu_totales));
 
 	for (int i = 0; i < distance; i++) {
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, donador->posicion);
@@ -526,14 +522,10 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador,
 
 	}
 
-	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)",
-			entrenador->indice, entrenador->posicion->x,
-			entrenador->posicion->y);
-	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)",
-			donador->indice, donador->posicion->x, donador->posicion->y);
+	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", donador->indice, donador->posicion->x, donador->posicion->y);
 
-	char* inservible = find_first(donador->objetivos_faltantes,
-			entrenador->pokemon_inservibles);
+	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 	for (int i = 0; i < INTERCAMBIAR; i++) {
 		if (quantum_acumulado == quantum) {
 			cambiar_estado(donador, READY);
@@ -544,11 +536,9 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador,
 		}
 	}
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s",
-			entrenador->indice, planificado->pokemon->pokemon, inservible);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s",
-			donador->indice, inservible, planificado->pokemon->pokemon);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
 
 	sem_post(&puede_intercambiar);
 
@@ -607,8 +597,10 @@ void realizar_intercambios() {
 		if (!list_is_empty(entrenadores_deadlock)) {
 			t_planificado* planificado = buscar_donador(entrenador);
 			intercambiar_pokemon_RR(entrenador, planificado);
-			if (no_cumplio_su_objetivo(entrenador))
+			if(no_cumplio_su_objetivo(entrenador))
 				list_add(entrenadores_deadlock, entrenador);
+			if(cumplio_su_objetivo(planificado->entrenador))
+				sacar_de_los_entrenadores_deadlock(planificado->entrenador);
 		}
 	}
 
@@ -630,6 +622,19 @@ void planificar_entrenadores() {
 		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 	}
 	//Mover entrenador
+}
+
+void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador){
+
+	int j = 0;
+
+	for(int i = 0; i < list_size(entrenadores_deadlock); i++){
+		t_entrenador* auxiliar = list_get(entrenadores_deadlock, i);
+		if(entrenador->indice == auxiliar->indice) j = i;
+	}
+
+	list_remove(entrenadores_deadlock, j);
+
 }
 
 /*
@@ -767,8 +772,7 @@ void* suscribirse(void* cola) {
 
 	pthread_t thread_suscriptor;
 	while (1) { // Falta condicion
-		pthread_create(&thread_suscriptor, NULL, (void*) recibir_mensaje,
-				&conexion);
+		pthread_create(&thread_suscriptor, NULL, (void*) recibir_mensaje,&conexion);
 		pthread_join(thread_suscriptor, NULL);
 	}
 
@@ -827,6 +831,7 @@ int main(void) {
 	//signal(SIGINT,liberar_todo); // Mostrar
 
 	t_config* config = leer_config();
+	ciclos_cpu_totales = 0;
 
 	// REVISAR SI ES NECESARIO QUE SEA GLOBAL
 	config_team = construir_config_team(config);
@@ -840,6 +845,7 @@ int main(void) {
 	sem_init(&sem_appeared_pokemon, 0, 0);
 	sem_init(&puede_planificar, 0, 1);
 	sem_init(&puede_intercambiar, 0, 1);
+	sem_init(&mutex_ciclos_cpu_totales, 0, 1);
 	puede_ejecutar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 	llega_mensaje_caught = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 

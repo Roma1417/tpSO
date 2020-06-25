@@ -25,6 +25,9 @@
 
 #define IP "127.0.0.3"
 #define PUERTO "37229"
+#define ATRAPAR 1
+#define INTERCAMBIAR 5
+#define ENVIAR_MENSAJE 1
 
 typedef enum{
 	NEW_POKEMON = 1,
@@ -83,10 +86,12 @@ sem_t puede_intercambiar;
 sem_t* termino_de_capturar;
 sem_t* puede_ejecutar;
 sem_t* llega_mensaje_caught;
+sem_t mutex_ciclos_cpu_totales;
 t_appeared_pokemon* pokemon_a_atrapar;
 u_int32_t id_cola_localized;
 u_int32_t id_cola_caught;
 u_int32_t id_cola_appeared;
+u_int32_t ciclos_cpu_totales;
 
 // Funciones Servidor
 
