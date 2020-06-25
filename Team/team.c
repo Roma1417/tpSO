@@ -74,6 +74,7 @@ void* ejecutar_entrenador(void* parametro) {
 
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance + ATRAPAR;
+		entrenador->ciclos_cpu += ciclos;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
 		ciclos_cpu_totales += ciclos;
@@ -135,6 +136,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		sem_post(&(mutex_ciclos_cpu_totales));
 
 		entrenador->rafaga = ciclos;
+		entrenador->ciclos_cpu+=ciclos;
 		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %d es: %d", entrenador->indice, distance);
 
 		for (int i = 0; i < distance; i++) {
@@ -415,6 +417,12 @@ void intercambiar_pokemon(t_entrenador* entrenador, t_planificado* planificado) 
 
 	t_entrenador* donador = planificado->entrenador;
 	sem_wait(&(puede_ejecutar[donador->indice]));
+
+	int distance = distancia(entrenador->posicion, donador->posicion);
+	int ciclos = distance + INTERCAMBIAR;
+	donador->rafaga = ciclos;
+	donador->ciclos_cpu+=ciclos;
+
 	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
 
 	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
@@ -479,6 +487,7 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador,
 	int distance = distancia(entrenador->posicion, donador->posicion);
 	int ciclos = distance + INTERCAMBIAR;
 	donador->rafaga = ciclos;
+	donador->ciclos_cpu+=ciclos;
 	int quantum = config_team->quantum;
 	int quantum_acumulado = 0;
 
@@ -604,6 +613,8 @@ void realizar_intercambios() {
 		}
 	}
 
+	actualizar_objetivo_global();
+
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
 }
@@ -650,8 +661,9 @@ void* mantener_servidor() {
 }
 
 void* iniciar_intercambiador() {
-	//while(1)
+	while(!objetivo_global_cumplido()) {
 	realizar_intercambios();
+	}
 
 	return EXIT_SUCCESS;
 }
@@ -824,6 +836,19 @@ void actualizar_objetivo_global() {
 	list_destroy(auxiliar);
 }
 
+bool objetivo_global_cumplido() {
+	return list_is_empty(objetivo_global);
+}
+
+void informar_resultados() {
+	log_info(logger_team, "La cantidad total de ciclos de cpu utilizados fue: %d \n", ciclos_cpu_totales);
+
+	for (int i=0; i<list_size(entrenadores);i++){
+		t_entrenador* entrenador = list_get(entrenadores,i);
+		log_info(logger_team, "La cantidad de ciclos de cpu utilizados por el entrenador: %d fueron: %d \n",entrenador->indice,entrenador->ciclos_cpu);
+	}
+}
+
 // Funcion main
 int main(void) {
 
@@ -875,10 +900,17 @@ int main(void) {
 	//planificar_entrenadores(cola_ready);
 
 	pthread_join(hilo_planificador, NULL);
+	pthread_join(hilo_intercambiador, NULL);
+
+	informar_resultados();
+	log_info(logger_team, "El objetivo global fue cumplido \n");
+
 	pthread_join(hilo_servidor, NULL);
 	pthread_join(hilo_appeared, NULL);
 	pthread_join(hilo_caught, NULL);
 	pthread_join(hilo_localized, NULL);
+
+
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
