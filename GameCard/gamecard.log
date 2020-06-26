@@ -330,3 +330,4 @@
 [INFO] 19:02:07:57 gamecard/(7363:7376): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 19:02:07:58 gamecard/(7363:7378): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 19:02:07:59 gamecard/(7363:7380): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 19:16:36:223 gamecard/(6992:7007): No existe el pokemon que se quiere atrapar

@@ -68,7 +68,7 @@ char* guardar_hasta(char caracter_de_paro, FILE** file) {
 }
 
 char* guardar_hasta_con_EOF(char caracter_de_paro, FILE** file,
-		bool* llego_al_final) {
+bool* llego_al_final) {
 	char caracter = fgetc(*file);
 	char* cadena_guardada = string_new();
 	while (caracter != caracter_de_paro && caracter != EOF) {
@@ -85,6 +85,7 @@ char* guardar_hasta_con_EOF(char caracter_de_paro, FILE** file,
 
 void verificar_estado_de_apertura_de_archivo_pokemon(FILE* file) {
 	while (esta_abierto(file))
+		//cambiar por semáforo
 		sleep(config_gamecard->tiempo_de_reintento_operacion);
 
 	abrir_file(file);
@@ -142,6 +143,7 @@ uint32_t file_size(FILE* file) {
 	while (caracter != EOF) {
 		contador++;
 		caracter = fgetc(file);
+		printf("Caracter_leido: %c\n", caracter);
 	}
 	return contador;
 }
@@ -159,13 +161,35 @@ void guardar_posterior(FILE* file, char** posterior) {
 	}
 }
 
-void actualizar_size(FILE* file, FILE* bloque) {
+uint32_t obtener_file_size(FILE* file, t_list* bloques_file){
+	FILE* bloque_file = NULL;
+	uint32_t size_total = 0;
+	printf("Ward4\n");
+	posicionar_en_inicio(bloques_file, bloque_file);
+	printf("Ward4.1\n");
+	for(int i=0; i<list_size(bloques_file); i++){
+		bloque_file = list_get(bloques_file, i);
+		size_total += file_size(bloque_file);
+		printf("Bloque %d size: %d\n", i,file_size(bloque_file));
+	}
+	printf("Ward4.2\n");
+	posicionar_en_inicio(bloques_file, bloque_file);
+	printf("Size_total: %d\n", size_total);
+
+	return size_total;
+}
+
+void actualizar_size(FILE* file, t_list* bloques_file) {
 	char* posterior = string_new();
 	fseek(file, 16, SEEK_SET);
+	printf("Ward1\n");
 	guardar_posterior(file, &posterior);
+	printf("Ward2\n");
 	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
-	fputs(string_itoa(file_size(bloque)), file);
+	printf("Ward2.5\n");
+	fputs(string_itoa(obtener_file_size(file, bloques_file)), file);
+	printf("Ward3\n");
 	fputc('\n', file);
 	fputs(posterior, file);
 	fseek(file, -string_length(posterior), SEEK_END);
@@ -180,7 +204,6 @@ void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
 	string_append(&bloque_string, ultimo_bloque);
 	char* posterior = string_new();
 	fseek(file, 0, SEEK_SET);
-	//actualizar_size(file, bloque_file);
 	avanzar_hasta(']', &file);
 	guardar_posterior(file, &posterior);
 	fseek(file, 0, SEEK_SET);
@@ -231,9 +254,10 @@ t_list* obtener_bloques_del_pokemon(FILE* file) {
 	printf("Bloques: %s\n", bloques_string);
 	int i = 0;
 	while (bloques_string[i] != '\0') {
-		if (bloques_string[i] != ',' && bloques_string[i] != '[' && bloques_string[i] != ']')
+		if (bloques_string[i] != ',' && bloques_string[i] != '['
+				&& bloques_string[i] != ']')
 			string_append_with_format(&bloque_leido, "%c", bloques_string[i]);
-		else if (bloques_string[i] == ',' || bloques_string[i] == ']'){
+		else if (bloques_string[i] == ',' || bloques_string[i] == ']') {
 			list_add(bloques, string_duplicate(bloque_leido));
 			free(bloque_leido);
 			bloque_leido = string_new();
@@ -250,32 +274,6 @@ bool posicion_ya_cargada(char* posicion_actual, t_list* posiciones) {
 		return string_starts_with(posicion, posicion_actual);
 	}
 	return list_any_satisfy(posiciones, es_la_posicion_buscada);
-}
-
-void actualizar_posicion_ya_cargada(FILE* bloque_file,
-		t_new_pokemon* new_pokemon) {
-	char caracter;
-	char* posterior = string_new();
-	uint32_t cantidad_total;
-	char* cantidad;
-	printf("Llegue aca\n");
-	//fseek(bloque_file, 2, SEEK_CUR);
-	retroceder_hasta('=', &bloque_file);
-	printf("Llegue aca tambien\n");
-	cantidad = guardar_hasta('\n', &bloque_file);
-	cantidad_total = atoi(cantidad);
-	printf("Cantidad_parcial = %s\n", cantidad);
-	cantidad_total += new_pokemon->cantidad;
-	printf("Cantidad_total = %d\n", cantidad_total);
-
-	fseek(bloque_file, -1, SEEK_CUR);
-	guardar_posterior(bloque_file, &posterior);
-	printf("Posterior: %s\n", posterior);
-	fseek(bloque_file, -strlen(posterior), SEEK_CUR);
-	retroceder_hasta('=', &bloque_file);
-	fputs(string_itoa(cantidad_total), bloque_file);
-	fputc('\n', bloque_file);
-	fputs(posterior, bloque_file);
 }
 
 bool no_entra_en_bloque(FILE* file, t_new_pokemon* new_pokemon,
@@ -303,34 +301,24 @@ t_list* obtener_posiciones_actuales(FILE* file, t_list* bloques_file,
 	FILE* bloque_file;
 	char* posicion;
 	char* auxiliar;
-	char caracter;
 	bool llego_al_final = false;
 	int i = 0;
 	t_list* posiciones = list_create();
-	//for (int i = 0; i < list_size(bloques); i++) {
-		printf("Bloque: %s\n", list_get(bloques, i));
-		bloque_file = list_get(bloques_file, i);
-		printf("Ward2\n");
-		fseek(bloque_file, 1, SEEK_SET);
-		while (!feof(bloque_file)) {
-			fseek(bloque_file, -1, SEEK_CUR);
-			printf("Ward3\n");
-			posicion = guardar_hasta_con_EOF('\n', &bloque_file,
-					&llego_al_final);
-			printf("Ward4\n");
-			printf("Llego_al_final: %d\n", llego_al_final);
-			if (llego_al_final) {
-				i++;
-				bloque_file = list_get(bloques_file, i);
-				auxiliar = guardar_hasta('\n', &bloque_file);
-				string_append_with_format(&posicion, auxiliar);
-			}
-			string_append(&posicion, "\n");
-			list_add(posiciones, posicion);
-			fgetc(bloque_file);
+	bloque_file = list_get(bloques_file, i);
+	fseek(bloque_file, 1, SEEK_SET);
+	while (!feof(bloque_file)) {
+		fseek(bloque_file, -1, SEEK_CUR);
+		posicion = guardar_hasta_con_EOF('\n', &bloque_file, &llego_al_final);
+		if (llego_al_final) {
+			i++;
+			bloque_file = list_get(bloques_file, i);
+			auxiliar = guardar_hasta('\n', &bloque_file);
+			string_append_with_format(&posicion, auxiliar);
 		}
-		printf("Salí del while\n");
-	//}
+		string_append(&posicion, "\n");
+		list_add(posiciones, posicion);
+		fgetc(bloque_file);
+	}
 
 	return posiciones;
 }
@@ -369,139 +357,169 @@ t_list* obtener_bloques_actuales(FILE* file, t_list* bloques) {
 	return bloques_file;
 }
 
-void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
-	char* ultimo_bloque = obtener_ultimo_bloque(file);
-	if (string_equals_ignore_case(ultimo_bloque, "")) { // || no_entra_en_bloque(file, new_pokemon, ultimo_bloque)){
-		//Crear nuevo bloque
-		crear_nuevo_bloque(file, new_pokemon, ultimo_bloque);
-	} else {
-		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
-		printf("Hay bloques\n");
-		char* posicion_actual = string_new();
-		string_append_with_format(&posicion_actual, "%s-%s=",
-				string_itoa(new_pokemon->pos_x),
-				string_itoa(new_pokemon->pos_y));
-		t_list* bloques = obtener_bloques_del_pokemon(file);
-		for(int i=0;i<list_size(bloques); i++) printf("Bloque %d: %s\n", i, list_get(bloques, i));
-		t_list* bloques_file = obtener_bloques_actuales(file, bloques);
-		printf("Bloques_file_size: %d\n", list_size(bloques_file));
-		t_list* posiciones = obtener_posiciones_actuales(file, bloques_file,
-				bloques);
-		char* bloque;
-		FILE* bloque_file;
+int obtener_indice_del_encontrado(int* indice_del_encontrado,
+		t_list* posiciones, char* posicion_actual) {
+	bool encontrado = false;
+	for (int i = 0; i < list_size(posiciones) && !encontrado; i++) {
+		encontrado = string_starts_with(list_get(posiciones, i),
+				posicion_actual);
+		if (encontrado)
+			*indice_del_encontrado = i;
+	}
+	return *indice_del_encontrado;
+}
 
-		for (int i = 0; i < list_size(posiciones); i++) {
-			printf("Posicion: %s\n", (char*) list_get(posiciones, i));
-		}
+char* obtener_posicion_actual(t_new_pokemon* new_pokemon) {
+	char* posicion_actual = string_new();
+	string_append_with_format(&posicion_actual, "%s-%s=",
+			string_itoa(new_pokemon->pos_x), string_itoa(new_pokemon->pos_y));
+	return posicion_actual;
+}
 
-		if (posicion_ya_cargada(posicion_actual, posiciones)) {
-			printf("Entre al IF\n");
-			int indice_del_encontrado = 0;
-			bool encontrado = false;
-			uint32_t cantidad = 0;
-			for (int i = 0; i < list_size(posiciones) && !encontrado; i++) {
-				encontrado = string_starts_with(list_get(posiciones, i),posicion_actual);
-				if (encontrado)
-					indice_del_encontrado = i;
+char* cargar_nueva_posicion(uint32_t cantidad, char* posicion) {
+	char** xey = string_split(posicion, "=");
+	free(posicion);
+	posicion = xey[0];
+	string_append(&posicion, "=");
+	string_append(&posicion, string_itoa(cantidad));
+	string_append(&posicion, "\n");
+	return posicion;
+}
+
+FILE* posicionar_en_inicio(t_list* bloques_file, FILE* bloque_file) {
+	printf("Size_bloques_file= %d\n", list_size(bloques_file));
+	for (int i = 0; i < list_size(bloques_file); i++) {
+		bloque_file = list_get(bloques_file, i);
+		printf("Ward5.5\n");
+		fseek(bloque_file, 0, SEEK_SET);
+	}
+	printf("Ward6\n");
+	return bloque_file;
+}
+
+void actualizar_posiciones_ya_cargadas(t_list* posiciones, FILE* bloque_file,
+		t_list* bloques_file, char* bloque, FILE* file, char* ultimo_bloque) {
+	char* pos;
+	int contador = 0;
+	int k = 0;
+	for (int i = 0; i < list_size(posiciones); i++) {
+		pos = list_get(posiciones, i);
+		for (int j = 0; j < string_length(pos); j++) {
+			if (contador < (metadata_general->block_size)) {
+				bloque_file = list_get(bloques_file, k);
+				fputc(pos[j], bloque_file);
+				contador++;
+			} else if (k < (list_size(bloques_file) - 1)) {
+				contador = 0;
+				k++;
+				bloque_file = list_get(bloques_file, k);
+				fputc(pos[j], bloque_file);
+			} else {
+				contador = 0;
+				//Crear nuevo bloque y ponerlo ahí
+				bloque = obtener_bloque_disponible();
+				actualizar_metadata(bloque_file, file, bloque, ultimo_bloque);
+				bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
+				free(ultimo_bloque);
+				list_add(bloques_file, bloque_file);
+				k++;
+				fputc(pos[j], list_get(bloques_file, k));
 			}
-			printf("Indice: %d\n", indice_del_encontrado);
-			char* posicion = list_get(posiciones, indice_del_encontrado);
-			//printf("Posicion_encontrada: %s\n", posicion);
-
-			cantidad = obtener_cantidad(posicion) + new_pokemon->cantidad;
-			char** xey = string_split(posicion, "=");
-			free(posicion);
-			posicion = xey[0];
-			string_append(&posicion, "=");
-			string_append(&posicion, string_itoa(cantidad));
-			string_append(&posicion, "\n");
-			printf("Posicion_cargada: %s\n", posicion);
-			list_replace(posiciones, indice_del_encontrado, posicion);
-			char* pos;
-			int contador = 0;
-			for(int i=0; i<list_size(posiciones);i++){
-				printf("Posicion %d: %s\n", i, list_get(posiciones, i));
-			}
-
-			for (int i = 0; i < list_size(bloques_file); i++) {
-				bloque_file = list_get(bloques_file, i);
-				fseek(bloque_file, 0, SEEK_SET);
-			}
-
-			int k = 0;
-
-			for (int i = 0; i < list_size(posiciones); i++) {
-				pos = list_get(posiciones, i);
-
-				for (int j = 0; j < string_length(pos); j++) {
-					if (contador < (metadata_general->block_size)) {
-						bloque_file = list_get(bloques_file, k);
-						fputc(pos[j], bloque_file);
-						printf("Puse caracter %c en bloque %d\n", pos[j],
-								k + 1);
-						contador++;
-					} else if (k < (list_size(bloques_file) - 1)) {
-						contador = 0;
-						k++;
-						bloque_file = list_get(bloques_file, k);
-						fputc(pos[j], bloque_file);
-					} else {
-						contador = 0;
-						//Crear nuevo bloque y ponerlo ahí
-						bloque = obtener_bloque_disponible();
-						actualizar_metadata(bloque_file, file, bloque,ultimo_bloque);
-						bloque_file = fopen(obtener_bloque_path(bloque),
-								"w+b");
-						free(ultimo_bloque);
-						list_add(bloques_file, bloque_file);
-						k++;
-						fputc(pos[j], list_get(bloques_file, k));
-					}
-				}
-				//fputc('\n', bloque_file);
-			}
-
-			for (int i = 0; i < list_size(bloques_file); i++) {
-				bloque_file = list_get(bloques_file, i);
-				fclose(bloque_file);
-			}
-		} else {
-			printf("Entre al else\n");
-			char* bloque_path = obtener_bloque_path(ultimo_bloque);
-			printf("Ultimo_bloque: %s\n", ultimo_bloque);
-			bloque_file = fopen(bloque_path, "r+");
-			int contador = file_size(bloque_file);
-			char* posicion_a_agregar = string_new();
-			string_append_with_format(&posicion_a_agregar, "%s-%s=%s\n",
-					string_itoa(new_pokemon->pos_x),
-					string_itoa(new_pokemon->pos_y),
-					string_itoa(new_pokemon->cantidad));
-			fseek(bloque_file, 0, SEEK_END);
-			for (int j = 0; j < string_length(posicion_a_agregar); j++) {
-				printf("Contador: %d\n",contador);
-				if (contador < (metadata_general->block_size)) {
-					fputc(posicion_a_agregar[j], bloque_file);
-					printf("Puse caracter %c\n", posicion_a_agregar[j]);
-					contador++;
-				} else {
-					contador = 0;
-					//Crear nuevo bloque y ponerlo ahí
-					bloque = obtener_bloque_disponible();
-					printf("Bloque_disp: %s\n", bloque);
-					actualizar_metadata(bloque_file, file, bloque,
-							ultimo_bloque);
-					printf("Bloque_path: %s\n", obtener_bloque_path(bloque));
-					fclose(bloque_file);
-					bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
-					//free(bloque);
-					list_add(bloques_file, bloque_file);
-					fputc(posicion_a_agregar[j], bloque_file);
-				}
-			}
-			//fputc('\n', bloque_file);
-			fclose(bloque_file);
 		}
 	}
+	actualizar_size(file, bloques_file);
+}
+
+void cerrar_bloques_file(t_list* bloques_file, FILE* bloque_file) {
+	for (int i = 0; i < list_size(bloques_file); i++) {
+		bloque_file = list_get(bloques_file, i);
+		fclose(bloque_file);
+	}
+}
+
+FILE* cargar_posiciones_inexistentes(int contador, char* posicion_a_agregar,
+		FILE* bloque_file, char* bloque, FILE* file, char* ultimo_bloque,
+		t_list* bloques_file) {
+
+	for (int j = 0; j < string_length(posicion_a_agregar); j++) {
+		printf("Contador: %d\n", contador);
+		if (contador < (metadata_general->block_size)) {
+			fputc(posicion_a_agregar[j], bloque_file);
+			printf("Puse caracter %c\n", posicion_a_agregar[j]);
+			contador++;
+
+		} else {
+			contador = 0;
+			//Crear nuevo bloque y ponerlo ahí
+			bloque = obtener_bloque_disponible();
+			printf("Bloque_disp: %s\n", bloque);
+			actualizar_metadata(bloque_file, file, bloque, ultimo_bloque);
+			//actualizar_size(file, bloques_file);
+			printf("Bloque_path: %s\n", obtener_bloque_path(bloque));
+			//fclose(bloque_file);
+			bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
+			//free(bloque);
+			list_add(bloques_file, bloque_file);
+			fputc(posicion_a_agregar[j], bloque_file);
+		}
+
+	}
+	actualizar_size(file, bloques_file);
+	return bloque_file;
+}
+
+void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
+	char* ultimo_bloque = obtener_ultimo_bloque(file);
+	t_list* bloques;
+	t_list* bloques_file;
+	FILE* bloque_file;
+
+	if (string_equals_ignore_case(ultimo_bloque, "")) {
+		//Crear nuevo bloque
+		crear_nuevo_bloque(file, new_pokemon, ultimo_bloque);
+		bloques = obtener_bloques_del_pokemon(file);
+		bloques_file = obtener_bloques_actuales(file, bloques);
+		actualizar_size(file, bloques_file);
+		cerrar_bloques_file(bloques_file, bloque_file);
+	} else {
+		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
+		char* bloque;
+		char* posicion_actual = obtener_posicion_actual(new_pokemon);
+		bloques = obtener_bloques_del_pokemon(file);
+		bloques_file = obtener_bloques_actuales(file, bloques);
+		t_list* posiciones = obtener_posiciones_actuales(file, bloques_file,
+				bloques);
+
+		if (posicion_ya_cargada(posicion_actual, posiciones)) {
+			int indice_del_encontrado = 0;
+
+			uint32_t cantidad = 0;
+			obtener_indice_del_encontrado(&indice_del_encontrado, posiciones, posicion_actual);
+			char* posicion = list_get(posiciones, indice_del_encontrado);
+
+			cantidad = obtener_cantidad(posicion) + new_pokemon->cantidad;
+			posicion = cargar_nueva_posicion(cantidad, posicion);
+			list_replace(posiciones, indice_del_encontrado, posicion);
+
+			posicionar_en_inicio(bloques_file, bloque_file);
+
+			actualizar_posiciones_ya_cargadas(posiciones, bloque_file, bloques_file, bloque, file, ultimo_bloque);
+
+
+
+		} else {
+			/*char* bloque_path = obtener_bloque_path(ultimo_bloque);
+			bloque_file = fopen(bloque_path, "r+");*/
+			bloque_file = list_get(bloques_file, list_size(bloques_file)-1);
+			int contador = file_size(bloque_file);
+			char* posicion_a_agregar = string_new();
+			string_append_with_format(&posicion_a_agregar, "%s-%s=%s\n",string_itoa(new_pokemon->pos_x),string_itoa(new_pokemon->pos_y),string_itoa(new_pokemon->cantidad));
+			fseek(bloque_file, 0, SEEK_END);
+			bloque_file = cargar_posiciones_inexistentes(contador,posicion_a_agregar, bloque_file, bloque, file, ultimo_bloque, bloques_file);
+		}
+		cerrar_bloques_file(bloques_file, bloque_file);
+	}
+
 }
 
 char* generar_nombre(char* parametro) {
