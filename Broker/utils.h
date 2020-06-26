@@ -53,6 +53,8 @@ void esperar_confirmacion(t_suscriptor*);
 void enviar_a_suscriptores(t_mensaje*, t_list*);
 void agregar_suscriptor(u_int32_t, t_cola_mensajes*);
 t_suscriptor* actualizar_suscriptor(u_int32_t, t_cola_mensajes*, u_int32_t);
+bool recibio_mensaje(t_suscriptor*, t_mensaje*);
+
 bool es_cola_correlativa(tipo_mensaje);
 
 #endif /* CONEXIONES_H_ */

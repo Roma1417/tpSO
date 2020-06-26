@@ -101,10 +101,8 @@ void destruir_mensaje(t_mensaje* mensaje){
 }
 
 t_mensaje* buscar_mensaje(t_list* lista_mensajes, u_int32_t id_mensaje){
-	printf("ward 2.1 \n");
 	for(u_int32_t x=0; x < list_size(lista_mensajes); x++){
 		t_mensaje* aux_mensaje = list_get(lista_mensajes, x);
-		printf("ward 2.2 \n");
 		if(aux_mensaje->paquete->id_mensaje == id_mensaje) return aux_mensaje;
 	}
 
