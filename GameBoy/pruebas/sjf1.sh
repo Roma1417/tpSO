@@ -1,0 +1,6 @@
+./gameboy TEAM APPEARED_POKEMON Pikachu 1 1
+./gameboy TEAM APPEARED_POKEMON Pikachu 9 7
+./gameboy TEAM APPEARED_POKEMON Pikachu 2 2
+./gameboy TEAM APPEARED_POKEMON Pikachu 20 20
+./gameboy TEAM APPEARED_POKEMON Pikachu 4 4
+./gameboy TEAM APPEARED_POKEMON Pikachu 5 5

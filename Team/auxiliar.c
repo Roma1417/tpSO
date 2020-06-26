@@ -218,3 +218,18 @@ t_list* pasar_a_lista_de_posiciones(t_config* config, char* cadena) {
   return posiciones;
 }
 
+/*
+ * @NAME: calcular_estimado_de_la_proxima_rafaga
+ * @DESC: Dados una estimacion (de tipo flotante) y
+ * 		  una rafaga (de tipo entero) anteriores, mas
+ * 		  un alpha (de tipo flotante),
+ * 		  calcula el estimado de la proxima rafaga
+ * 		  para el algoritmo SJF.
+ */
+
+float calcular_estimado_de_la_proxima_rafaga(float estimado_anterior,
+		u_int32_t rafaga_anterior, float alpha){
+	return alpha * rafaga_anterior + (1 - alpha) * estimado_anterior;
+}
+
+

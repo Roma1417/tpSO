@@ -69,8 +69,7 @@ typedef struct{
 t_cola_mensajes* colas_mensajes[6];
 u_int32_t generador_id_suscriptor[6];
 u_int32_t generador_id_mensaje;
-int mutex_id_suscriptor;
-int mutex_id_mensaje;
+
 
 
 
