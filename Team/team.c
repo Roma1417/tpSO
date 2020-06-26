@@ -715,7 +715,6 @@ void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planifica
 	// Falta poner sleep tanto aca como en fifo
 
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	modificar_estimacion_y_rafaga(entrenador, 5);
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
