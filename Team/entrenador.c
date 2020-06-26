@@ -31,6 +31,7 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->capturas_disponibles = list_size(entrenador->objetivos_faltantes);
 	//printf("capturas disponibles: %d\n",entrenador->capturas_disponibles); Me dijo Juan
 	entrenador->pokemon_inservibles = list_create();
+	entrenador->rafaga = 0;
 
 	// Agrego cosas para SJF sin desalojo (para discutirlas)
 	entrenador->estimacion = estimacion_inicial;

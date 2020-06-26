@@ -203,6 +203,7 @@ void crear_archivos(){
 }*/
 
 int main(){
+	printf("Empieza el GameCard\n");
 	t_config* config = leer_config();
 	config_gamecard = construir_config_gamecard(config);
 	logger_gamecard = iniciar_logger();

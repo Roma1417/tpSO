@@ -117,3 +117,216 @@
 [INFO] 12:11:12:600 gamecard/(15089:15102): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 2
 [INFO] 12:11:13:604 gamecard/(15089:15106): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 2
 [INFO] 12:11:50:709 gamecard/(15089:15107): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Magikarp 7 1 6
+[INFO] 15:52:23:823 gamecard/(6248:6261): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 15:55:06:939 gamecard/(6863:6876): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 15:59:08:359 gamecard/(7458:7471): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 15:59:50:905 gamecard/(7458:7481): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 3
+[INFO] 16:03:35:362 gamecard/(8126:8139): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 16:03:36:367 gamecard/(8126:8143): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 3
+[INFO] 16:05:38:693 gamecard/(8448:8461): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 16:05:39:695 gamecard/(8448:8465): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 3
+[INFO] 16:06:15:946 gamecard/(8572:8585): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 16:06:16:949 gamecard/(8572:8596): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 3
+[INFO] 16:06:43:136 gamecard/(8572:8597): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 1 7 6
+[INFO] 16:09:31:730 gamecard/(15805:15818): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2
+[INFO] 16:09:50:215 gamecard/(15805:15875): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 5
+[INFO] 16:09:59:257 gamecard/(15805:15923): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 233
+[INFO] 16:10:16:70 gamecard/(15805:15951): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pichu 7 1 2334444
+[INFO] 16:19:40:957 gamecard/(5149:5162): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:19:54:133 gamecard/(5149:5167): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:20:17:366 gamecard/(5149:5195): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:26:32:908 gamecard/(6181:6194): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:26:44:915 gamecard/(6181:6228): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:26:47:916 gamecard/(6181:6234): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:30:44:14 gamecard/(6885:6898): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:31:05:461 gamecard/(6973:6986): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:31:17:467 gamecard/(6973:7013): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:31:18:468 gamecard/(6973:7022): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:32:52:822 gamecard/(7299:7312): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:33:04:825 gamecard/(7299:7340): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:40:16:747 gamecard/(8097:8110): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:40:19:750 gamecard/(8097:8125): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:41:05:178 gamecard/(8246:8259): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:41:17:183 gamecard/(8246:8277): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:43:52:660 gamecard/(8702:8715): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:44:20:908 gamecard/(8785:8798): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:44:32:917 gamecard/(8785:8821): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:44:56:769 gamecard/(8785:8822): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:48:37:925 gamecard/(9276:9289): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:48:37:928 gamecard/(9276:9292): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:48:37:929 gamecard/(9276:9294): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:49:10:545 gamecard/(9358:9371): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:49:10:547 gamecard/(9358:9374): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:49:10:548 gamecard/(9358:9376): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:50:39:691 gamecard/(9546:9559): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:50:39:693 gamecard/(9546:9562): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:50:39:695 gamecard/(9546:9564): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:51:16:924 gamecard/(9788:9801): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:51:16:925 gamecard/(9788:9804): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:51:18:926 gamecard/(9788:9823): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:53:46:264 gamecard/(10181:10194): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:53:46:267 gamecard/(10181:10197): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:54:53:468 gamecard/(10320:10333): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:54:53:471 gamecard/(10320:10336): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:56:40:204 gamecard/(10557:10570): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:56:51:209 gamecard/(10557:10588): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:56:52:210 gamecard/(10557:10590): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 16:58:48:722 gamecard/(10835:10848): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 16:58:59:728 gamecard/(10835:10868): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 16:59:00:731 gamecard/(10835:10870): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:04:38:597 gamecard/(11724:11737): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:04:49:602 gamecard/(11724:11760): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:04:50:603 gamecard/(11724:11762): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:06:35:463 gamecard/(11984:11997): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:06:35:465 gamecard/(11984:12000): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:06:35:467 gamecard/(11984:12002): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:14:02:858 gamecard/(13083:13096): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:14:02:859 gamecard/(13083:13099): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:14:02:865 gamecard/(13083:13101): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:17:36:97 gamecard/(13500:13513): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:17:36:98 gamecard/(13500:13516): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:17:36:100 gamecard/(13500:13518): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:19:48:9 gamecard/(13788:13801): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:19:48:10 gamecard/(13788:13803): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:19:48:11 gamecard/(13788:13805): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:20:03:284 gamecard/(13856:13869): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:20:03:286 gamecard/(13856:13872): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:20:03:288 gamecard/(13856:13874): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:20:11:702 gamecard/(13856:13876): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:21:43:746 gamecard/(14076:14089): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:21:43:748 gamecard/(14076:14092): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:21:44:749 gamecard/(14076:14095): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:21:45:749 gamecard/(14076:14097): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:23:15:861 gamecard/(14264:14277): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:23:15:864 gamecard/(14264:14280): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:23:15:865 gamecard/(14264:14282): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:23:15:866 gamecard/(14264:14284): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:24:00:17 gamecard/(14397:14410): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:24:00:19 gamecard/(14397:14413): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:24:00:20 gamecard/(14397:14415): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:24:00:21 gamecard/(14397:14417): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:26:07:535 gamecard/(14655:14668): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:26:07:538 gamecard/(14655:14671): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:26:08:539 gamecard/(14655:14674): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:26:10:539 gamecard/(14655:14676): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:29:38:538 gamecard/(15064:15077): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:29:38:541 gamecard/(15064:15080): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:29:38:542 gamecard/(15064:15082): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:29:38:544 gamecard/(15064:15084): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:30:54:152 gamecard/(15227:15240): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:30:54:155 gamecard/(15227:15243): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:30:54:157 gamecard/(15227:15245): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:30:54:158 gamecard/(15227:15248): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:31:10:128 gamecard/(15227:15249): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:37:35:907 gamecard/(16132:16145): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:37:35:909 gamecard/(16132:16148): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:37:35:911 gamecard/(16132:16150): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:37:35:912 gamecard/(16132:16152): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:37:35:913 gamecard/(16132:16155): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:39:39:3 gamecard/(16382:16395): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:39:39:5 gamecard/(16382:16398): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:39:39:7 gamecard/(16382:16401): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:39:39:8 gamecard/(16382:16404): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:39:39:9 gamecard/(16382:16406): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:43:47:955 gamecard/(16826:16839): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 17:43:47:958 gamecard/(16826:16842): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 17:43:47:959 gamecard/(16826:16844): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 17:43:47:960 gamecard/(16826:16846): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 17:43:47:961 gamecard/(16826:16849): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 18:00:43:332 gamecard/(18025:18038): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 18:00:43:334 gamecard/(18025:18041): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 18:00:43:336 gamecard/(18025:18043): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 18:00:43:337 gamecard/(18025:18045): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 18:00:43:338 gamecard/(18025:18048): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 18:12:06:204 gamecard/(19152:19165): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 2
+[INFO] 18:12:06:207 gamecard/(19152:19168): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 8
+[INFO] 18:12:06:209 gamecard/(19152:19170): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 18:12:06:211 gamecard/(19152:19173): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 90
+[INFO] 18:12:06:214 gamecard/(19152:19175): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 90
+[INFO] 18:12:45:660 gamecard/(19152:19176): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 1 5
+[INFO] 18:13:11:58 gamecard/(19152:19275): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:13:29:915 gamecard/(19152:19346): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:22:07:747 gamecard/(23710:23723): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:22:09:988 gamecard/(23710:23740): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:22:22:407 gamecard/(23710:23746): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:22:27:972 gamecard/(23710:23771): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:22:42:92 gamecard/(23710:23784): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:23:14:221 gamecard/(23710:23802): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:27:15:824 gamecard/(24349:24362): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:27:15:825 gamecard/(24349:24365): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:27:15:829 gamecard/(24349:24368): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:27:15:835 gamecard/(24349:24372): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:27:15:838 gamecard/(24349:24374): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:27:15:841 gamecard/(24349:24376): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:28:07:825 gamecard/(24496:24509): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:28:07:828 gamecard/(24496:24512): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:28:07:829 gamecard/(24496:24514): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:28:07:831 gamecard/(24496:24516): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:28:07:832 gamecard/(24496:24519): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:28:07:837 gamecard/(24496:24521): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:29:41:124 gamecard/(24709:24722): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:29:41:126 gamecard/(24709:24725): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:29:41:127 gamecard/(24709:24727): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:29:41:129 gamecard/(24709:24729): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:29:41:130 gamecard/(24709:24732): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:29:41:135 gamecard/(24709:24734): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:30:58:692 gamecard/(24882:24895): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:30:58:694 gamecard/(24882:24898): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:30:58:696 gamecard/(24882:24900): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:30:58:697 gamecard/(24882:24902): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:30:58:698 gamecard/(24882:24905): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:30:58:704 gamecard/(24882:24907): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:31:52:880 gamecard/(25018:25031): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:31:52:883 gamecard/(25018:25034): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:31:52:884 gamecard/(25018:25036): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:31:52:885 gamecard/(25018:25038): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:31:52:886 gamecard/(25018:25041): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:31:52:892 gamecard/(25018:25043): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:36:41:501 gamecard/(25575:25588): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:36:41:502 gamecard/(25575:25591): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:36:41:504 gamecard/(25575:25593): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:36:41:506 gamecard/(25575:25596): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:36:41:508 gamecard/(25575:25599): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:36:41:513 gamecard/(25575:25601): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:36:51:591 gamecard/(25628:25641): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:36:51:593 gamecard/(25628:25644): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 10
+[INFO] 18:36:51:594 gamecard/(25628:25646): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 3 2 12
+[INFO] 18:36:51:595 gamecard/(25628:25648): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 7 0 5
+[INFO] 18:36:51:596 gamecard/(25628:25651): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:36:51:601 gamecard/(25628:25653): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Raichu 7 0 5
+[INFO] 18:43:16:920 gamecard/(5149:5160): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:43:16:940 gamecard/(5149:5163): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:43:16:940 gamecard/(5149:5165): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:43:16:941 gamecard/(5149:5167): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:52:06:651 gamecard/(6036:6047): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:52:06:651 gamecard/(6036:6049): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:52:06:652 gamecard/(6036:6051): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:52:06:652 gamecard/(6036:6053): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:54:10:844 gamecard/(6290:6301): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:54:10:845 gamecard/(6290:6303): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:54:10:846 gamecard/(6290:6305): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:54:10:846 gamecard/(6290:6307): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:55:10:918 gamecard/(6431:6442): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:55:10:919 gamecard/(6431:6444): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:55:10:919 gamecard/(6431:6446): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:55:10:920 gamecard/(6431:6448): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:55:47:975 gamecard/(6536:6547): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:55:47:976 gamecard/(6536:6550): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:55:47:976 gamecard/(6536:6551): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:55:47:979 gamecard/(6536:6553): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:58:27:93 gamecard/(6844:6855): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:58:27:93 gamecard/(6844:6857): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:58:27:94 gamecard/(6844:6859): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:58:27:95 gamecard/(6844:6861): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:59:07:389 gamecard/(6946:6957): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:59:07:389 gamecard/(6946:6959): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:59:07:390 gamecard/(6946:6961): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:59:07:390 gamecard/(6946:6963): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 18:59:18:702 gamecard/(7006:7017): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 18:59:18:703 gamecard/(7006:7019): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 18:59:18:704 gamecard/(7006:7021): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 18:59:18:704 gamecard/(7006:7023): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 19:02:07:56 gamecard/(7363:7374): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 19:02:07:57 gamecard/(7363:7376): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 19:02:07:58 gamecard/(7363:7378): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 19:02:07:59 gamecard/(7363:7380): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix

@@ -39,6 +39,8 @@ typedef struct {
 	u_int32_t id_caught;
 	u_int32_t resultado_caught;
 	bool puede_pasar_a_ready;
+	u_int32_t rafaga;
+	u_int32_t ciclos_cpu;
 
 	float estimacion;
 	u_int32_t rafaga_anterior;
