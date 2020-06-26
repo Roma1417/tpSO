@@ -13,7 +13,8 @@
  *        una lista con los objetivos y un hilo,
  *        crea y devuelve un puntero a una estructura t_entrenador.
  */
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice){
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
+		t_list* objetivos, u_int32_t indice, float estimacion_inicial){
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
@@ -31,6 +32,15 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	//printf("capturas disponibles: %d\n",entrenador->capturas_disponibles); Me dijo Juan
 	entrenador->pokemon_inservibles = list_create();
 	entrenador->rafaga = 0;
+
+	// Agrego cosas para SJF sin desalojo (para discutirlas)
+	entrenador->estimacion = estimacion_inicial;
+	entrenador->rafaga_anterior = 0;
+
+	// NOTA: La rafaga inicial la puse inicialmente como 0.
+	// En el enunciado no hay nada especificado para rafagas anteriores al
+	// inicio del problema. PREGUNTAR
+
 
 	return entrenador;
 
@@ -176,6 +186,14 @@ void decrementar_capturas_disponibles(t_entrenador* entrenador){
  */
 void set_hilo(t_entrenador* entrenador, pthread_t hilo){
 	entrenador->hilo = hilo;
+}
+
+void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior){
+	entrenador->rafaga_anterior = rafaga_anterior;
+}
+
+void set_estimacion(t_entrenador* entrenador, float estimacion){
+	entrenador->estimacion = estimacion;
 }
 
 bool cumplio_su_objetivo(void* parametro){

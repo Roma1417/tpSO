@@ -19,6 +19,7 @@ typedef struct {
 	int tiempo_reconexion;
 	int retardo_ciclo_cpu;
 	char* algoritmo_planificacion;
+	float alpha; // Agrego el alpha que esta especificado en el enunciado
 	int quantum;
 	char* ip_broker;
 	int estimacion_inicial;
