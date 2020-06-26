@@ -11,7 +11,6 @@
 #include <pthread.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <commons/collections/list.h>
 #include <sys/stat.h>
 #include <commons/config.h>
 #include <commons/log.h>

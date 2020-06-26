@@ -14,6 +14,7 @@
 #include <string.h>
 #include <commons/string.h>
 #include <commons/bitarray.h>
+#include <commons/collections/list.h>
 #include <stdint.h>
 #include <dirent.h>
 #include <unistd.h>

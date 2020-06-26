@@ -155,8 +155,7 @@ bool list_elem(char* elemento, t_list* lista){
 
 void cargar_datos_new_pokemon(t_new_pokemon* new_pokemon) {
 	verificar_existencia_de_archivo(new_pokemon->pokemon);
-	char* file_pokemon_path = generar_pokemon_metadata_bin_path(
-			new_pokemon->pokemon);
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(new_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
 	actualizar_posiciones(file_pokemon, new_pokemon);
