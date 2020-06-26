@@ -19,7 +19,7 @@ typedef struct {
 	int tiempo_reconexion;
 	int retardo_ciclo_cpu;
 	char* algoritmo_planificacion;
-	//int quantum; por ahora tiene que ser FIFO asi que no hay quantum
+	int quantum;
 	char* ip_broker;
 	int estimacion_inicial;
 	char* puerto_broker;

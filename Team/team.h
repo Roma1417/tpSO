@@ -18,11 +18,12 @@
 #include "auxiliar.h"
 #include "planificado.h"
 
+#define ATRAPAR 1
+#define INTERCAMBIAR 5
+#define ENVIAR_MENSAJE 1
+
 u_int32_t id_team;
 t_config_team* config_team;
-pthread_t hilo_appeared;
-pthread_t hilo_localized;
-pthread_t hilo_caught;
 
 void planificar_entrenadores();
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
@@ -36,5 +37,8 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
 void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon);
 void actualizar_objetivo_global();
 t_list* obtener_especies();
+void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador);
+void informar_resultados();
+bool objetivo_global_cumplido();
 
 #endif /* TEAM_H_ */
