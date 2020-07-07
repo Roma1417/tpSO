@@ -93,6 +93,7 @@ u_int32_t id_cola_localized;
 u_int32_t id_cola_caught;
 u_int32_t id_cola_appeared;
 u_int32_t ciclos_cpu_totales;
+u_int32_t cambios_contexto;
 
 // Funciones Servidor
 
