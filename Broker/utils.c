@@ -59,7 +59,7 @@ void esperar_cliente(int socket_servidor)
 	}
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
-	pthread_join(thread, NULL);
+	pthread_detach(thread);
 
 }
 
@@ -75,6 +75,7 @@ void serve_client(int* socket)
 
 void process_request(int cod_op, int cliente_fd) {
 	t_cola_mensajes* cola_mensajes;
+	u_int32_t id_mensaje;
 
 	switch (cod_op) {
 	case NEW_POKEMON:
@@ -91,17 +92,22 @@ void process_request(int cod_op, int cliente_fd) {
 
 		printf("La size recibida fue: %d\n", size);
 
-		if (es_cola_correlativa(cod_op)){
-			agregar_stream(memoria, stream + sizeof(uint32_t), size - sizeof(uint32_t));
-		} else {
-			agregar_stream(memoria, stream, size);
+		id_mensaje = generar_id_mensaje();
+		uint32_t id_correlativo = 0;
+
+		if (es_cola_correlativa(cod_op)) {
+			size -= sizeof(uint32_t);
+			memcpy(&id_correlativo, stream, sizeof(uint32_t));
 		}
 
+		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
 
-		printf("Parametro cadena: %s\n",stream+4);
+		agregar_stream(memoria, stream, size, obtener_id_particion_libre(algoritmo_particion_libre), timer_lru++, cod_op, id_mensaje, id_correlativo, true);
+
+		printf("Id correlativo: %d\n", id_correlativo);
 
 		t_buffer* buffer = crear_buffer(size, stream);
-		t_paquete* paquete = crear_paquete(generar_id_mensaje(), 0, cod_op, buffer);
+		t_paquete* paquete = crear_paquete(id_mensaje, id_correlativo, cod_op, buffer);
 		t_mensaje* mensaje = crear_mensaje(paquete);
 		cola_mensajes = get_cola_mensajes(cod_op);
 
@@ -109,14 +115,9 @@ void process_request(int cod_op, int cliente_fd) {
 
 		enviar_mensaje(paquete, cliente_fd);
 
-
-		printf("Asignado el mensaje de ID %d a la cola %s\n", mensaje->paquete->id_mensaje, obtener_tipo_mensaje_string(cola_mensajes->id));
-
-		printf("El tamaño de la cola de mensajes ahora es %d\n", list_size(cola_mensajes->mensajes));
-
 		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
 
-		printf("GG\n");
+
 
 		break;
 
@@ -146,7 +147,6 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
 
 
-
 		break;
 
 	case CONFIRMAR:
@@ -156,7 +156,7 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("La size recibida fue: %d\n", size);
 		u_int32_t id_cola_mensajes = recibir_entero(cliente_fd);
 		printf("La cola recibida fue: %d\n", id_cola_mensajes);
-		u_int32_t id_mensaje = recibir_entero(cliente_fd);
+		id_mensaje = recibir_entero(cliente_fd);
 		printf("La mensaje recibida fue: %d\n", id_mensaje);
 		u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
 		printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
@@ -195,7 +195,7 @@ void* recibir_cadena(int socket_cliente, int* size)
 	printf("Size: %d\n", *size);
 	cadena = malloc(*size);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
-	printf("Cadena: %s\n", (char*) cadena);
+	printf("Cadena: %s\n", (char*) cadena + 4 );
 	return cadena;
 }
 
@@ -251,13 +251,15 @@ char* consultar_config_por_string(char* path, char* key){
 
 
 void finalizar_servidor(){
+	generar_dump(memoria);
 	for (int i=1; i<=6; i++){
 		t_cola_mensajes* cola_mensajes = get_cola_mensajes(i);
 		printf("Tipo msj %s\n", obtener_tipo_mensaje_string(i));
 		destruir_cola_mensajes(cola_mensajes);
-		log_destroy(logger);
 	}
-	exit(2);
+	log_destroy(logger);
+	config_destroy(config);
+	exit(0);
 }
 
 
@@ -312,7 +314,7 @@ void enviar_a_suscriptor(t_mensaje* mensaje, t_suscriptor* suscriptor){
 void esperar_confirmacion(t_suscriptor* suscriptor){
 	pthread_t nuevo;
 	pthread_create(&nuevo,NULL,(void*)serve_client,&suscriptor->numero_socket);
-	pthread_join(nuevo, NULL);
+	pthread_detach(nuevo);
 }
 
 void enviar_a_suscriptores(t_mensaje* mensaje, t_list* suscriptores){
@@ -333,11 +335,15 @@ void agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){
 	list_add(cola_mensajes->suscriptores, suscriptor);
 	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).", suscriptor->id, cola_mensajes->id, obtener_tipo_mensaje_string(cola_mensajes->id));
 
+	t_list* particiones = memoria->particiones;
+	t_particion* particion_actual;
 
-	t_list* mensajes = cola_mensajes->mensajes;
-
-	for(int i = 0; i < list_size(mensajes); i++){
-		enviar_a_suscriptor(list_get(mensajes, i), suscriptor);
+	for(int i = 0; i < list_size(particiones); i++){
+		particion_actual = list_get(particiones, i);
+		if(particion_actual->cola_mensajes == cola_mensajes->id){
+			enviar_a_suscriptor(buscar_mensaje(cola_mensajes->mensajes, particion_actual->id_mensaje), suscriptor);
+			particion_actual->lru = timer_lru++;
+		}
 	}
 }
 
@@ -348,11 +354,19 @@ t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mens
 	printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->numero_socket);
 
 	t_list* mensajes = cola_mensajes->mensajes;
+	t_list* particiones = memoria->particiones;
 
-	for(int i = 0; i < list_size(mensajes); i++){
-		t_mensaje* mensaje = list_get(mensajes, i);
-		if(buscar_suscriptor(mensaje->suscriptores_confirmados, id_suscriptor)==NULL){
-			enviar_a_suscriptor(mensaje, suscriptor);
+	t_particion* particion_actual;
+	t_mensaje* mensaje_actual;
+
+	for(uint32_t i = 0; i < list_size(particiones); i++){
+		particion_actual = list_get(particiones, i);
+		if(particion_actual->cola_mensajes == cola_mensajes->id){
+			mensaje_actual = buscar_mensaje(cola_mensajes->mensajes, particion_actual->id_mensaje);
+			if(!recibio_mensaje(suscriptor, mensaje_actual)){
+				enviar_a_suscriptor(mensaje_actual, suscriptor);
+				particion_actual->lru = timer_lru++;
+			}
 		}
 	}
 
@@ -360,6 +374,14 @@ t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mens
 
 }
 
+
+bool recibio_mensaje(t_suscriptor* suscriptor, t_mensaje* mensaje){
+	t_list* confirmados = mensaje->suscriptores_confirmados;
+	for(uint32_t i = 0; i < list_size(confirmados); i++){
+		if (suscriptor == list_get(confirmados, i)) return true;
+	}
+	return false;
+}
 
 bool es_cola_correlativa(tipo_mensaje tipo){
 	return tipo == 2 || tipo == 4 || tipo == 6;

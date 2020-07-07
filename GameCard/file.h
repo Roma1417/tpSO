@@ -27,6 +27,13 @@ typedef struct
 	uint32_t cantidad;
 } t_new_pokemon;
 
+typedef struct
+{
+	char* pokemon;
+	uint32_t pos_x;
+	uint32_t pos_y;
+} t_catch_pokemon;
+
 typedef struct {
 	uint32_t tiempo_de_reintento_conexion;
 	uint32_t tiempo_de_reintento_operacion;
@@ -62,6 +69,12 @@ char* generar_nombre(char* parametro);
 char* generar_pokemon_metadata_bin_path(char* pokemon);
 void generar_metadata_bin(char* pokemon);
 char* obtener_metadata_general_path();
+t_list* obtener_bloques_del_pokemon(FILE* file);
+FILE* posicionar_en_inicio(t_list* bloques_file, FILE* bloque_file);
+t_list* obtener_bloques_del_pokemon(FILE* file);
+t_list* obtener_bloques_actuales(FILE* file, t_list* bloques);
+void cerrar_bloques_file(t_list* bloques_file, FILE* bloque_file);
+void actualizar_size(FILE* file, t_list* bloques_file);
 
 
 #endif /* FILE_H_ */

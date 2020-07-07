@@ -6,51 +6,42 @@
  */
 
 #include<stdio.h>
+#include<signal.h>
 #include "broker.h"
 
-
+void _dumpear_memoria(){
+	generar_dump(memoria);
+}
 
 int main(void)
 {
-	printf("Empieza el Broker\n");
+	signal(SIGINT, finalizar_servidor);
+	signal(SIGUSR1, _dumpear_memoria);
+
+
 	for(u_int32_t i = 0; i<6; i++){
 			colas_mensajes[i] = crear_cola_mensajes(i + 1);
 			generador_id_suscriptor[i] = 1;
 		}
 	generador_id_mensaje = 1;
 
-	t_config* config = config_create("broker.config");
+	config = config_create("./broker.config");
+
 	uint32_t tamanio_memoria = config_get_int_value(config, "TAMANO_MEMORIA");
 	tamano_minimo_particion = config_get_int_value(config, "TAMANO_MINIMO_PARTICION");
 	algoritmo_memoria = config_get_string_value(config, "ALGORITMO_MEMORIA");
 	algoritmo_particion_libre = config_get_string_value(config, "ALGORITMO_PARTICION_LIBRE");
-	algoritmo_reemplazo = config_get_string_value(config, "ALGORTIMO_REEMPLAZO");
+	algoritmo_reemplazo = config_get_string_value(config, "ALGORITMO_REEMPLAZO");
 	frecuencia_compactacion = config_get_int_value(config, "FRECUENCIA_COMPACTACION");
 	log_file = config_get_string_value(config, "LOG_FILE");
-	config_destroy(config);
+	timer_lru = 0;
+	clock_compactacion = frecuencia_compactacion;
+
 
 	memoria = crear_memoria(tamanio_memoria);
+	cola_victimas = queue_create();
 
 	logger = log_create("./broker.log", "Broker", 0, LOG_LEVEL_INFO);
-
-
-
-
-	//probando memoria
-
-
-
-	/*agregar_stream(memoria, "asadsaf", strlen("asadsaf")+1);
-	agregar_stream(memoria, "boca campeon", strlen("boca campeon")+1);
-	agregar_stream(memoria, "chau", strlen("chau")+1);
-	agregar_stream(memoria, "pepe", strlen("pepe")+1);
-	agregar_stream(memoria, "qwert", strlen("qwert")+1);
-	liberar_particion(memoria, 1);
-	liberar_particion(memoria, 3);
-	mostrar_memoria(memoria);
-	printf("\n\nCompactada:");
-	compactar_memoria(memoria);
-	mostrar_memoria(memoria);*/
 
 
 
