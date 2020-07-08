@@ -234,3 +234,21 @@
 [INFO] 11:33:29:489 Broker/(31656:31723): Se ha almacenado un mensaje dentro de la memoria. (Base: 150)
 [INFO] 11:33:29:489 Broker/(31656:31723): Se envio el mensaje de ID 14 al suscriptor 1. (Socket: 20)
 [INFO] 11:33:29:491 Broker/(31656:31725): El suscriptor 1 confirmo confirmó haber recibido el mensaje 14 de la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:15:53:37 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 5)
+[INFO] 20:15:53:38 Broker/(8419:8565): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:15:53:38 Broker/(8419:8565): Se ha almacenado un mensaje dentro de la memoria. (Base: 0)
+[INFO] 20:15:53:38 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 20:15:53:39 Broker/(8419:8570): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 20:15:53:39 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 20:15:53:39 Broker/(8419:8573): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 20:15:53:39 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 20:15:53:42 Broker/(8419:8576): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 20:15:53:42 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 20:15:53:42 Broker/(8419:8582): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:15:53:42 Broker/(8419:8582): Se ha almacenado un mensaje dentro de la memoria. (Base: 12)
+[INFO] 20:15:53:42 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 11)
+[INFO] 20:15:53:45 Broker/(8419:8583): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:15:53:46 Broker/(8419:8583): Se ha almacenado un mensaje dentro de la memoria. (Base: 23)
+[INFO] 20:15:53:46 Broker/(8419:8419): Se ha conectado un proceso al servidor (Socket: 12)
+[INFO] 20:15:53:46 Broker/(8419:8584): Se ha recibido un mensaje del tipo 5(GET_POKEMON).
+[INFO] 20:15:53:46 Broker/(8419:8584): Se ha almacenado un mensaje dentro de la memoria. (Base: 33)

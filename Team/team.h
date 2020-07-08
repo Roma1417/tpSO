@@ -23,7 +23,6 @@
 #define ENVIAR_MENSAJE 1
 
 u_int32_t id_team;
-t_config_team* config_team;
 
 void planificar_entrenadores();
 void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);

@@ -65,6 +65,7 @@ typedef struct
 	int cantidad;
 } t_especie;
 
+t_config_team* config_team;
 t_log* logger_team;
 t_log* logger_prueba;
 pthread_t thread;

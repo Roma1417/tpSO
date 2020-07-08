@@ -206,7 +206,8 @@ void serve_client(int* socket){
 	}
 }
 
-void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proceso, char* mensaje) {
+void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensaje) {
+	int cliente_fd = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	char** argv = malloc(sizeof(char*) * 5);
 	for (int i = 0; i < 5; i++) {
 		argv[i] = string_new();
@@ -217,6 +218,7 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd, u_int32_t id_proc
 	string_append(&(argv[3]), string_itoa(id_mensaje));
 	string_append(&(argv[4]), string_itoa(id_proceso));
 	enviar_mensaje(argv, cliente_fd);
+	liberar_conexion(cliente_fd);
 }
 
 char* obtener_resultado(u_int32_t resultado){
@@ -257,7 +259,7 @@ void process_request(int cod_op, int cliente_fd) {
 				sem_post(&sem_appeared_pokemon);
 			} else appeared_pokemon_destroy(appeared_pokemon);
 
-			confirmar_recepcion(id, cliente_fd, id_cola_appeared, "APPEARED_POKEMON");
+			confirmar_recepcion(id, id_cola_appeared, "APPEARED_POKEMON");
 
 			break;
 		}
@@ -287,7 +289,7 @@ void process_request(int cod_op, int cliente_fd) {
 				}
 			}
 
-			confirmar_recepcion(id, cliente_fd, id_cola_caught, "CAUGHT_POKEMON");
+			confirmar_recepcion(id, id_cola_caught, "CAUGHT_POKEMON");
 
 			break;
 		}
@@ -301,7 +303,7 @@ void process_request(int cod_op, int cliente_fd) {
 			u_int32_t y = recibir_entero(cliente_fd);
 			recibir_entero(cliente_fd);
 
-			confirmar_recepcion(id, cliente_fd, id_cola_localized, "LOCALIZED_POKEMON");
+			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;
 		case SUSCRIPTOR:{
 			u_int32_t id_cola = recibir_entero(cliente_fd);
