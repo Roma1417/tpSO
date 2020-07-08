@@ -214,19 +214,24 @@ void process_request(int cod_op, int cliente_fd) {
 		enviar_appeared_pokemon(id, new_pokemon);
 
 		break;
-	case CATCH_POKEMON:
+	case CATCH_POKEMON:;
 		//printf("Recibi un mensaje CATCH_POKEMON\n");
+		t_catch_pokemon* catch_pokemon = malloc(sizeof(t_catch_pokemon));
 		id = recibir_entero(cliente_fd);
 		size = recibir_entero(cliente_fd);
-		pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-		posicion_x = recibir_entero(cliente_fd);
-		posicion_y = recibir_entero(cliente_fd);
+		catch_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+		catch_pokemon->pos_x = recibir_entero(cliente_fd);
+		catch_pokemon->pos_y = recibir_entero(cliente_fd);
 
 		log_info(logger_gamecard,
 				"Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d",
 				pokemon, posicion_x, posicion_y);
 
 		confirmar_recepcion(id, cliente_fd, id_cola_catch, "CATCH_POKEMON");
+
+		bool resultado_captura = generar_resultado_captura(catch_pokemon);
+		enviar_caught_pokemon(id, resultado_captura);
+
 		break;
 	case GET_POKEMON:
 		//printf("Recibi un mensaje GET_POKEMON\n");
@@ -290,22 +295,116 @@ void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon) {
 bool existe_directorio_pokemon(t_catch_pokemon* catch_pokemon) {
 	char* path_pokemon_file = generar_pokemon_file_path(catch_pokemon->pokemon);
 	DIR* directorio_pokemon = opendir(path_pokemon_file);
-	bool existe_directorio = directorio_pokemon == NULL;
+	bool existe_directorio = directorio_pokemon != NULL;
 	free(path_pokemon_file);
 	closedir(directorio_pokemon);
 	return existe_directorio;
 }
 
+void actualizar_size_catch_pokemon(t_list* posiciones, FILE* file_pokemon, t_catch_pokemon* catch_pokemon){
+	fseek(file_pokemon, 0, SEEK_SET);
+	char* contenido = string_new();
+	char* auxiliar = guardar_hasta('Z', &file_pokemon);
+	string_append(&contenido,auxiliar);
+	string_append(&contenido,"Z");
+	free(auxiliar);
+	auxiliar = guardar_hasta('=', &file_pokemon);
+	string_append(&contenido,auxiliar);
+	free(auxiliar);
+	string_append(&contenido,"=");
+	uint32_t size_total = 0;
+	for(int i=0; i<list_size(posiciones); i++){
+		size_total += string_length(list_get(posiciones, i));
+	}
+	string_append(&contenido,string_itoa(size_total));
+	printf("Llegué hasta acá\n");
+	avanzar_hasta('\n', &file_pokemon);
+	string_append(&contenido,"\n");
+	auxiliar = guardar_hasta_EOF(&file_pokemon);
+	string_append(&contenido, auxiliar);
+	free(auxiliar);
+	fclose(file_pokemon);
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
+	file_pokemon = fopen(file_pokemon_path, "wb");
+	printf("Contenido: %s\n", contenido);
+	fputs(contenido, file_pokemon);
+	printf("Y hasta acá\n");
+	cerrar_file(file_pokemon);
+	fclose(file_pokemon);
+}
+
+t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
+		char* posicion_actual, t_list* bloques_file, FILE** bloque_file,
+		t_list* bloques, t_catch_pokemon* catch_pokemon) {
+	//Esto se va a delegar
+	char* ultimo_bloque = obtener_ultimo_bloque(file_pokemon);
+	int indice_del_encontrado = 0;
+	obtener_indice_del_encontrado(&indice_del_encontrado, posiciones,
+			posicion_actual);
+	char* posicion = list_get(posiciones, indice_del_encontrado);
+	uint32_t nueva_cantidad = obtener_cantidad(posicion) - 1;
+	if (nueva_cantidad == 0) {
+		list_remove(posiciones, indice_del_encontrado);
+		cerrar_bloques_file(bloques_file, *bloque_file);
+		list_destroy(bloques_file);
+		bloques_file = list_create();
+		char* bloque_path;
+		for (int i = 0; i < list_size(bloques); i++) {
+			bloque_path = obtener_bloque_path(list_get(bloques, i));
+			printf("Bloque_path: %s\n", bloque_path);
+			*bloque_file = fopen(bloque_path, "wb");
+			list_add(bloques_file, *bloque_file);
+			free(bloque_path);
+		}
+	} else {
+		posicion = cargar_nueva_posicion(nueva_cantidad, posicion);
+		list_replace(posiciones, indice_del_encontrado, posicion);
+		posicionar_en_inicio(bloques_file, *bloque_file);
+	}
+	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
+			file_pokemon, ultimo_bloque);
+	actualizar_size_catch_pokemon(posiciones, file_pokemon, catch_pokemon);
+	return bloques_file;
+}
+
 bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
+	printf("Llegué a la función\n");
 	if(!existe_directorio_pokemon(catch_pokemon)) return false;
+	printf("Existe el archivo\n");
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
+	printf("Pude abrir el archivo\n");
+
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
 	t_list* bloques_file = obtener_bloques_actuales(file_pokemon, bloques);
 	t_list* posiciones = obtener_posiciones_actuales(file_pokemon, bloques_file,bloques);
+	FILE* bloque_file = NULL;
+	char* posicion_actual = string_new();
+	string_append_with_format(&posicion_actual, "%s-%s=",string_itoa(catch_pokemon->pos_x), string_itoa(catch_pokemon->pos_y));
 
-	return false;
+	if(!posicion_ya_cargada(posicion_actual, posiciones)) return false;
+	printf("Existe la posicion buscada\n");
+
+	bloques_file = capturar_pokemon(file_pokemon, posiciones, posicion_actual,bloques_file, &bloque_file, bloques, catch_pokemon);
+	cerrar_bloques_file(bloques_file, bloque_file);
+
+
+
+	return true;
+}
+
+void enviar_caught_pokemon(uint32_t id_mensaje, bool resultado_catch){
+	uint32_t conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
+	char** mensaje_appeared_pokemon = malloc((sizeof(char*)) * 4);
+	mensaje_appeared_pokemon[0] = string_new();
+	string_append(&(mensaje_appeared_pokemon[0]), "BROKER");
+	mensaje_appeared_pokemon[1] = string_new();
+	string_append(&(mensaje_appeared_pokemon[1]), "CAUGHT_POKEMON");
+	mensaje_appeared_pokemon[2] = string_itoa(id_mensaje);
+	mensaje_appeared_pokemon[3] = string_itoa(resultado_catch);
+	enviar_mensaje(mensaje_appeared_pokemon, conexion);
+	liberar_conexion(conexion);
 }
 
 void serve_client(int* cliente_fd) {
@@ -349,6 +448,7 @@ void serve_client(int* cliente_fd) {
 		id_mensaje = recibir_entero(*cliente_fd);
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
+		enviar_caught_pokemon(id_mensaje, resultado_captura);
 
 		break;
 	case GET_POKEMON:

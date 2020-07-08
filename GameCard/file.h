@@ -75,6 +75,15 @@ t_list* obtener_bloques_del_pokemon(FILE* file);
 t_list* obtener_bloques_actuales(FILE* file, t_list* bloques);
 void cerrar_bloques_file(t_list* bloques_file, FILE* bloque_file);
 void actualizar_size(FILE* file, t_list* bloques_file);
-
+bool posicion_ya_cargada(char* posicion_actual, t_list* posiciones);
+uint32_t obtener_cantidad(char* posicion);
+void actualizar_posiciones_ya_cargadas(t_list* posiciones, FILE* bloque_file, t_list* bloques_file, FILE* file, char* ultimo_bloque);
+FILE* posicionar_en_inicio(t_list* bloques_file, FILE* bloque_file);
+char* cargar_nueva_posicion(uint32_t cantidad, char* posicion);
+int obtener_indice_del_encontrado(int* indice_del_encontrado,t_list* posiciones, char* posicion_actual);
+t_list* obtener_posiciones_actuales(FILE* file, t_list* bloques_file, t_list* bloques);
+char* guardar_hasta(char caracter_de_paro, FILE** file);
+char* guardar_hasta_EOF(FILE** file);
+void avanzar_hasta(char caracter_de_paro, FILE** file);
 
 #endif /* FILE_H_ */

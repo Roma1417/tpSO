@@ -67,6 +67,16 @@ char* guardar_hasta(char caracter_de_paro, FILE** file) {
 	return cadena_guardada;
 }
 
+char* guardar_hasta_EOF(FILE** file) {
+	char caracter = fgetc(*file);
+	char* cadena_guardada = string_new();
+	while (caracter != EOF) {
+		string_append_with_format(&cadena_guardada, "%c", caracter);
+		caracter = fgetc(*file);
+	}
+	return cadena_guardada;
+}
+
 char* guardar_hasta_con_EOF(char caracter_de_paro, FILE** file,
 bool* llego_al_final) {
 	char caracter = fgetc(*file);
@@ -398,10 +408,12 @@ FILE* posicionar_en_inicio(t_list* bloques_file, FILE* bloque_file) {
 }
 
 void actualizar_posiciones_ya_cargadas(t_list* posiciones, FILE* bloque_file,
-		t_list* bloques_file, char* bloque, FILE* file, char* ultimo_bloque) {
+		t_list* bloques_file, FILE* file, char* ultimo_bloque) {
 	char* pos;
+	char* bloque;
 	int contador = 0;
 	int k = 0;
+
 	for (int i = 0; i < list_size(posiciones); i++) {
 		pos = list_get(posiciones, i);
 		for (int j = 0; j < string_length(pos); j++) {
@@ -427,7 +439,7 @@ void actualizar_posiciones_ya_cargadas(t_list* posiciones, FILE* bloque_file,
 			}
 		}
 	}
-	actualizar_size(file, bloques_file);
+
 }
 
 void cerrar_bloques_file(t_list* bloques_file, FILE* bloque_file) {
@@ -503,9 +515,9 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
 
 			posicionar_en_inicio(bloques_file, bloque_file);
 
-			actualizar_posiciones_ya_cargadas(posiciones, bloque_file, bloques_file, bloque, file, ultimo_bloque);
+			actualizar_posiciones_ya_cargadas(posiciones, bloque_file, bloques_file, file, ultimo_bloque);
 
-
+			actualizar_size(file, bloques_file);
 
 		} else {
 			/*char* bloque_path = obtener_bloque_path(ultimo_bloque);
