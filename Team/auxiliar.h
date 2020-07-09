@@ -24,7 +24,6 @@
 u_int32_t distancia(t_posicion* posicion1, t_posicion* posicion2);
 t_list* convertir_string_a_lista_de_listas(char** cadenas);
 t_list* convertir_string_a_lista_de_posiciones(char** cadenas);
-bool list_elem(char* elemento, t_list* lista);
 t_list* eliminar_repetidos(t_list* objetivo_global);
 t_list* list_flatten(t_list* listas);
 t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena);

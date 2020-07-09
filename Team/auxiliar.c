@@ -51,20 +51,6 @@ t_list* filtrar_entrenadores_con_objetivos(t_list* lista){
 	return lista;
 }
 
-/*
- * @NAME: list_elem
- * @DESC: Dados un elemento (tipo string) y una lista, me dice si ese
- * 	      elemento se encuentra en la lista.
- */
-bool list_elem(char* elemento, t_list* lista){
-	bool encontrado = false;
-	for(int i = 0; i < list_size(lista) && !encontrado; i++){
-		char* pokemon = list_get(lista, i);
-		encontrado = string_equals_ignore_case(pokemon, elemento);
-	}
-	return encontrado;
-}
-
 void* list_head(t_list* lista){
 	t_list* lista_auxiliar = list_take_and_remove(lista, 1);
 	void* auxiliar = list_get(lista_auxiliar, 0);

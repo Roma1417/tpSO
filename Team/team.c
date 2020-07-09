@@ -80,12 +80,16 @@ void* ejecutar_entrenador(void* parametro) {
 
 		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
-		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 		t_planificado* planificado = planificado_create(entrenador,
 						pokemon_a_atrapar);
-		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+
+		if(conexion_catch == 0) // Karen, esto es culpa de Ale
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
@@ -182,10 +186,13 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		}
 
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
-		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
-		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+
+		if(conexion_catch == 0) // Karen, esto es culpa de Ale
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
@@ -210,7 +217,6 @@ void* ejecutar_entrenador_RR(void* parametro) {
 	 while(!cumplio_su_objetivo(entrenador)){
 	 sem_wait(&(puede_ejecutar[entrenador->indice]));
 
-
 	 }*/
 
 	sem_post(&(termino_de_capturar[entrenador->indice]));
@@ -231,11 +237,15 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 
-		enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
-		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+
+		if(conexion_catch == 0) // Karen, esto es culpa de Ale
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
@@ -262,11 +272,13 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 	return EXIT_SUCCESS;
 }
 
+int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon) {
 
-void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon) {
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+
+	if (conexion < 0) return conexion;
 
 	char** mensaje = malloc(sizeof(char*) * 5);
-	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	mensaje[0] = string_new();
 	string_append(&(mensaje[0]), "BROKER");
 
@@ -286,6 +298,8 @@ void enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon)
 	sem_wait(&(mutex_ciclos_cpu_totales));
 	ciclos_cpu_totales += ENVIAR_MENSAJE;
 	sem_post(&(mutex_ciclos_cpu_totales));
+
+	return 0;
 }
 
 /**
@@ -901,6 +915,8 @@ void* iniciar_planificador() {
 		//planificar_entrenadores_SJF();
 	}
 
+	printf("no se que pasa, estoy muy loco \n");
+
 	return EXIT_SUCCESS;
 }
 /*
@@ -1060,7 +1076,7 @@ void liberar_todo(int n) {
 void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
-	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	int conexion = crear_y_reintentar_conexion(config_team->ip_broker, config_team->puerto_broker);
 
 	char** mensaje = malloc(sizeof(char*) * 4);
 
@@ -1099,17 +1115,25 @@ void* suscribirse(void* cola) {
  */
 void suscribirse_a_colas() {
 
-	char* mensaje = string_new();
+	/*char* mensaje = string_new();
 	string_append(&mensaje, "APPEARED_POKEMON");
-	pthread_create(&hilo_appeared, NULL, suscribirse, (void*) mensaje);
+	pthread_create(&hilo_appeared, NULL, suscribirse, (void*) mensaje);*/
 
-	mensaje = string_new();
+	pthread_create(&hilo_appeared, NULL, suscribirse, "APPEARED_POKEMON");
+
+	/*mensaje = string_new();
 	string_append(&mensaje, "LOCALIZED_POKEMON");
-	pthread_create(&hilo_localized, NULL, suscribirse, (void*) mensaje);
+	pthread_create(&hilo_localized, NULL, suscribirse, (void*) mensaje);*/
 
-	mensaje = string_new();
+	pthread_create(&hilo_appeared, NULL, suscribirse, "LOCALIZED_POKEMON");
+
+	/*mensaje = string_new();
 	string_append(&mensaje, "CAUGHT_POKEMON");
-	pthread_create(&hilo_caught, NULL, suscribirse, (void*) mensaje);
+	pthread_create(&hilo_caught, NULL, suscribirse, (void*) mensaje);*/
+
+	pthread_create(&hilo_appeared, NULL, suscribirse, "CAUGHT_POKEMON");
+
+
 
 }
 
@@ -1203,7 +1227,7 @@ int main(void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	enviar_mensajes_get_pokemon();
+	//senviar_mensajes_get_pokemon();
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_t hilo_planificador_largo_plazo;
@@ -1216,8 +1240,15 @@ int main(void) {
 	//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon, cola_ready);
 	//planificar_entrenadores(cola_ready);
 
+	printf("WARD PROTECTOR 1 --------------------- \n");
+
 	pthread_join(hilo_planificador, NULL);
+
+	printf("WARD PROTECTOR 2 --------------------- \n");
+
 	pthread_join(hilo_intercambiador, NULL);
+
+	printf("WARD PROTECTOR 3 --------------------- \n");
 
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");

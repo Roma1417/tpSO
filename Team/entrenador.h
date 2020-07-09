@@ -65,6 +65,7 @@ bool no_cumplio_su_objetivo(void* parametro);
 void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible);
 void set_estimacion(t_entrenador* entrenador, float estimacion);
 void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior);
+bool list_elem(char* elemento, t_list* lista);
 
 
 #endif /* ENTRENADOR_H_ */

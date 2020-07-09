@@ -124,6 +124,7 @@ bool pokemons_objetivo_fueron_atrapados(){
 
 	for(int i = 0; i < list_size(objetivo_global) && objetivo_cumplido; i++){
 		t_list* objetivos = list_get(objetivo_global, i);
+
 		objetivo_cumplido = list_is_empty(objetivos);
 	}
 
@@ -316,7 +317,7 @@ void process_request(int cod_op, int cliente_fd) {
 			pthread_exit(NULL);
 		case -1:
 			pthread_exit(NULL);
-		}
+	}
 }
 
 void asignar_id_caught(t_entrenador* entrenador, int conexion){
@@ -404,8 +405,36 @@ int crear_conexion(char *ip, char* puerto){
 
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
-	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-		printf("error");
+	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0){
+		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		return -1;
+	} else log_info(logger_team, "Se pudo establecer la conexion con el Broker");
+
+	freeaddrinfo(server_info);
+
+	return socket_cliente;
+}
+
+int crear_y_reintentar_conexion(char *ip, char* puerto){
+	struct addrinfo hints;
+	struct addrinfo *server_info;
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_PASSIVE;
+
+	getaddrinfo(ip, puerto, &hints, &server_info);
+
+	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+
+	while(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0){
+		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
+		sleep(config_team->tiempo_reconexion);
+	}
+
+	log_info(logger_team, "Se pudo establecer la conexion con el Broker");
 
 	freeaddrinfo(server_info);
 

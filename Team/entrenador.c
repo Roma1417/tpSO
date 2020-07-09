@@ -46,6 +46,20 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 
 }
 
+/*
+ * @NAME: list_elem
+ * @DESC: Dados un elemento (tipo string) y una lista, me dice si ese
+ * 	      elemento se encuentra en la lista.
+ */
+bool list_elem(char* elemento, t_list* lista){
+	bool encontrado = false;
+	for(int i = 0; i < list_size(lista) && !encontrado; i++){
+		char* pokemon = list_get(lista, i);
+		encontrado = string_equals_ignore_case(pokemon, elemento);
+	}
+	return encontrado;
+}
+
 bool le_sirve(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
 	return list_elem(appeared_pokemon->pokemon, entrenador->objetivos_faltantes);
 }

@@ -110,6 +110,7 @@ char* recibir_cadena(int socket_cliente, u_int32_t* size);
 // Funciones Cliente
 
 int crear_conexion(char* ip, char* puerto);
+int crear_y_reintentar_conexion(char *ip, char* puerto);
 void enviar_mensaje(char* argv[], u_int32_t socket_cliente);
 void liberar_conexion(u_int32_t socket_cliente);
 void serializar_mensaje(tipo_mensaje tipo, char** argv,u_int32_t socket_cliente, u_int32_t tamanio);
