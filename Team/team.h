@@ -24,11 +24,19 @@
 
 u_int32_t id_team;
 
+typedef enum {
+	FIFO = 1,
+	RR = 2,
+	SJF = 3,
+	SJFCD = 4
+} algoritmo_planificacion;
+
 void planificar_entrenadores();
-void enreadyar_al_mas_cercano(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
-t_config* leer_config (void);
-t_log* iniciar_logger (char* path);
-t_list* get_objetivo_global ();
+algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config);
+void enreadyar_al_mas_cercano(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
+t_config* leer_config(void);
+t_log* iniciar_logger(char* path);
+t_list* get_objetivo_global();
 t_config_team* construir_config_team(t_config* config);
 void enviar_mensajes_get_pokemon(); // (int conexion);
 void* enviar_get_pokemon(void* pokemon);
@@ -39,9 +47,11 @@ t_list* obtener_especies();
 void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador);
 void informar_resultados();
 bool objetivo_global_cumplido();
+void* ejecutar_entrenador_RR(void* parametro);
+void* ejecutar_entrenador_FIFO(void* parametro);
 
 // Funciones SJF (pendientes a revision)
-void enreadyar_al_mas_cercano_SJF(t_list* entrenadores,t_appeared_pokemon* appeared_pokemon);
+void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
 void planificar_entrenadores_SJF();
 void* ejecutar_entrenador_SJF(void* parametro);
 t_planificado* elegir_proximo_a_ejecutar_SJF();

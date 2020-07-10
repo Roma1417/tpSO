@@ -64,7 +64,7 @@ t_config_team* construir_config_team(t_config* config) {
 }
 
 //Codigo de prueba
-void* ejecutar_entrenador(void* parametro) {
+void* ejecutar_entrenador_FIFO(void* parametro) {
 	t_entrenador* entrenador = parametro;
 
 	while (puede_seguir_atrapando(entrenador)) {
@@ -302,6 +302,17 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	return 0;
 }
 
+algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config){
+	algoritmo_planificacion tipo;
+	char* algoritmo = config->algoritmo_planificacion;
+	if(strcmp(algoritmo, "FIFO") == 0) tipo = FIFO;
+	if(strcmp(algoritmo, "RR") == 0) tipo = RR;
+	if(strcmp(algoritmo, "SJF") == 0) tipo = SJF;
+	if(strcmp(algoritmo, "SJFCD") == 0) tipo = SJFCD;
+
+	return tipo;
+}
+
 /**
  * @NAME: crear_entrenadores
  * @DESC: Crea y devuelve un puntero a una t_list con referencias a
@@ -315,6 +326,9 @@ t_list* crear_entrenadores(t_config_team* config_team) {
 	t_list* objetivos_entrenadores = config_team->objetivos_entrenadores;
 	t_list* pokemon_entrenadores = config_team->pokemon_entrenadores;
 	t_list* posiciones_entrenadores = config_team->posiciones_entrenadores;
+	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
+
+	printf("El algoritmo de planificacion es: %d\n", algoritmo);
 
 	for (int i = 0; i < list_size(objetivos_entrenadores); i++) {
 		t_list* objetivo = list_get(objetivos_entrenadores, i);
@@ -324,9 +338,20 @@ t_list* crear_entrenadores(t_config_team* config_team) {
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i, config_team->estimacion_inicial);
 		pthread_t hilo;
 
+		switch (algoritmo) {
+					case (FIFO): pthread_create(&hilo, NULL, ejecutar_entrenador_FIFO, (void*) entrenador);
+						break;
+					case (RR): pthread_create(&hilo, NULL, ejecutar_entrenador_RR, (void*) entrenador);
+						break;
+					case (SJF): pthread_create(&hilo, NULL, ejecutar_entrenador_SJF, (void*) entrenador);
+						break;
+					case (SJFCD) :
+						break;
+				}
+
 		//pthread_create(&hilo, NULL, ejecutar_entrenador, (void*) entrenador);
 		//pthread_create(&hilo, NULL, ejecutar_entrenador_SJF, (void*) entrenador);
-		pthread_create(&hilo, NULL, ejecutar_entrenador_RR, (void*) entrenador);
+		//pthread_create(&hilo, NULL, ejecutar_entrenador_RR, (void*) entrenador);
 
 		set_hilo(entrenador, hilo);
 		list_add(entrenadores, entrenador);
@@ -896,8 +921,22 @@ void* mantener_servidor() {
 }
 
 void* iniciar_intercambiador() {
+
+	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
+
 	while (!objetivo_global_cumplido()) {
-		realizar_intercambios();
+
+		switch (algoritmo) {
+					case (FIFO): realizar_intercambios();
+						break;
+					case (RR): realizar_intercambios();
+						break;
+					case (SJF): realizar_intercambios_SJF();
+						break;
+					case(SJFCD):
+						break;
+				}
+		//realizar_intercambios();
 		//realizar_intercambios_SJF();
 	}
 
@@ -910,8 +949,22 @@ void* iniciar_intercambiador() {
  */
 
 void* iniciar_planificador() {
+
+	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
+
 	while(!pokemons_objetivo_fueron_atrapados()){ // hasta que todos terminen
-		planificar_entrenadores();
+
+		switch (algoritmo) {
+					case (FIFO): planificar_entrenadores();
+						break;
+					case (RR): planificar_entrenadores();
+						break;
+					case (SJF): planificar_entrenadores_SJF();
+						break;
+					case(SJFCD):
+						break;
+				}
+		//planificar_entrenadores();
 		//planificar_entrenadores_SJF();
 	}
 
@@ -926,13 +979,25 @@ void* iniciar_planificador() {
  */
 void* iniciar_planificador_largo_plazo(void* parametro) {
 	t_list* entrenadores = parametro;
+	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
 
 	while (1) { // Falta condcion
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores);
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
 
-		enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+		switch(algoritmo) {
+			case FIFO: enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+				break;
+			case RR: enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
+				break;
+			case SJF: enreadyar_al_mas_cercano_SJF(entrenadores, appeared_pokemon);
+				break;
+			case SJFCD:
+				break;
+		}
+
+		//enreadyar_al_mas_cercano(entrenadores, appeared_pokemon);
 		//enreadyar_al_mas_cercano_SJF(entrenadores, appeared_pokemon);
 	}
 
