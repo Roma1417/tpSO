@@ -441,7 +441,7 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appe
 	list_add(lista_ready, planificado);
 }
 
-void intercambiar_pokemon(t_entrenador* entrenador, t_planificado* planificado) {
+void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planificado) {
 
 	t_entrenador* donador = planificado->entrenador;
 	sem_wait(&(puede_ejecutar[donador->indice]));
@@ -506,8 +506,7 @@ void intercambiar_pokemon(t_entrenador* entrenador, t_planificado* planificado) 
 
 }
 
-void intercambiar_pokemon_RR(t_entrenador* entrenador,
-				t_planificado* planificado) {
+void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificado) {
 
 	t_entrenador* donador = planificado->entrenador;
 	sem_wait(&(puede_ejecutar[donador->indice]));
@@ -610,7 +609,44 @@ t_planificado* buscar_donador(t_entrenador* entrenador) {
 	return planificado;
 }
 
-void realizar_intercambios() {
+void realizar_intercambios_FIFO() {
+	// Falta implementar en otro hilo
+	// while segun ALE
+	// hasta que se cumplio el objetivo posta posta (literal) segun JOSI
+	// implementar con el entrenador global en principio
+	// Usamos lista entrenadores_deadlock
+	// Buscar dos en deadlock y mandar a uno a planificar y el
+	// otro seria variable global, segun ALE
+
+	for (int i = 0; i < list_size(entrenadores); i++) {
+		sem_wait(&(termino_de_capturar[i]));
+	}
+
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+
+	// Ahora vendria lo que dijo ale
+	// Agarro a un entrenador
+
+	while (!list_is_empty(entrenadores_deadlock)) {
+		sem_wait(&puede_intercambiar);
+		t_entrenador* entrenador = list_head(entrenadores_deadlock);
+		if (!list_is_empty(entrenadores_deadlock)) {
+			t_planificado* planificado = buscar_donador(entrenador);
+			intercambiar_pokemon_FIFO(entrenador, planificado);
+			if (no_cumplio_su_objetivo(entrenador))
+				list_add(entrenadores_deadlock, entrenador);
+			if (cumplio_su_objetivo(planificado->entrenador))
+				sacar_de_los_entrenadores_deadlock(planificado->entrenador);
+		}
+	}
+
+	actualizar_objetivo_global();
+
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
+}
+
+void realizar_intercambios_RR() {
 	// Falta implementar en otro hilo
 	// while segun ALE
 	// hasta que se cumplio el objetivo posta posta (literal) segun JOSI
@@ -927,9 +963,9 @@ void* iniciar_intercambiador() {
 	while (!objetivo_global_cumplido()) {
 
 		switch (algoritmo) {
-					case (FIFO): realizar_intercambios();
+					case (FIFO): realizar_intercambios_FIFO();
 						break;
-					case (RR): realizar_intercambios();
+					case (RR): realizar_intercambios_RR();
 						break;
 					case (SJF): realizar_intercambios_SJF();
 						break;
@@ -1089,9 +1125,7 @@ void destruir_appeared_pokemons() {
  * @PARAM: config_team, entrenadores, cola_ready, objetivo_global y
  * 	      especies_requeridas.
  */
-void liberar_estructuras(t_config_team* config_team, t_list* entrenadores,
-				t_queue* cola_ready, t_list* objetivo_global,
-				t_list* especies_requeridas) {
+void liberar_estructuras(t_config_team* config_team, t_list* entrenadores, t_queue* cola_ready, t_list* objetivo_global, t_list* especies_requeridas) {
 
 	for (int i = 0; i < list_size(entrenadores); i++) {
 		t_entrenador* entrenador = list_get(entrenadores, i);

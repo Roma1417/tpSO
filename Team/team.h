@@ -31,37 +31,55 @@ typedef enum {
 	SJFCD = 4
 } algoritmo_planificacion;
 
-void planificar_entrenadores();
 algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config);
-void enreadyar_al_mas_cercano(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
 t_config* leer_config(void);
+t_config_team* construir_config_team(t_config* config);
 t_log* iniciar_logger(char* path);
 t_list* get_objetivo_global();
-t_config_team* construir_config_team(t_config* config);
-void enviar_mensajes_get_pokemon(); // (int conexion);
-void* enviar_get_pokemon(void* pokemon);
+t_list* obtener_especies();
+t_list* crear_entrenadores(t_config_team* config_team);
 sem_t* inicializar_vector_de_semaforos(u_int32_t longitud);
 int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokemon);
+void liberar_estructuras(t_config_team* config_team, t_list* entrenadores, t_queue* cola_ready, t_list* objetivo_global, t_list* especies_requeridas);
+void enreadyar_al_mas_cercano(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
+void enviar_mensajes_get_pokemon(); // (int conexion);
+void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planificado);
+void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificado);
+void* enviar_get_pokemon(void* pokemon);
 void actualizar_objetivo_global();
-t_list* obtener_especies();
-void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador);
 void informar_resultados();
-bool objetivo_global_cumplido();
-void* ejecutar_entrenador_RR(void* parametro);
 void* ejecutar_entrenador_FIFO(void* parametro);
+void* ejecutar_entrenador_RR(void* parametro);
+void* iniciar_planificador_largo_plazo(void* parametro);
+void* iniciar_planificador();
+void* iniciar_intercambiador();
+void realizar_intercambios_FIFO();
+void realizar_intercambios_RR();
+void planificar_entrenadores();
+void* mantener_servidor();
+void* suscribirse(void* cola);
+void suscribirse_a_colas();
+void destruir_config_team(t_config_team* config_team);
+void destruir_appeared_pokemons();
+void terminar_programa(t_log* logger, t_config* config);
+void liberar_todo(int n);
+bool objetivo_global_cumplido();
+bool elem_especies(t_list* especies, char* pokemon);
+t_planificado* buscar_donador(t_entrenador* entrenador);
+
+
 
 // Funciones SJF (pendientes a revision)
 void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
 void planificar_entrenadores_SJF();
 void* ejecutar_entrenador_SJF(void* parametro);
-t_planificado* elegir_proximo_a_ejecutar_SJF();
-t_planificado* buscar_donador_SJF(t_entrenador* entrenador);
 void realizar_intercambios_SJF();
-t_planificado* buscar_donador_SJF(t_entrenador* entrenador);
 void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planificado);
 void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador);
+void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga);
+t_planificado* elegir_proximo_a_ejecutar_SJF();
+t_planificado* buscar_donador_SJF(t_entrenador* entrenador);
 u_int32_t buscar_entrenador_con_donador_con_estimacion_mas_baja(t_list* donadores);
 t_list* buscar_donadores_para_cada_entrenador();
-void modificar_estimacion_y_rafaga(t_entrenador* entrenador, u_int32_t rafaga);
 
 #endif /* TEAM_H_ */
