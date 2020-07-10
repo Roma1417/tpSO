@@ -11,10 +11,10 @@
 #include "entrenador.h"
 #include "appeared_pokemon.h"
 
-typedef struct{
+typedef struct {
 	t_entrenador* entrenador;
 	t_appeared_pokemon* pokemon;
-}t_planificado;
+} t_planificado;
 
 void planificado_destroy(t_planificado* planificado);
 t_planificado* planificado_create(t_entrenador* entrenador, t_appeared_pokemon* pokemon);

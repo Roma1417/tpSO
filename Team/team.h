@@ -72,8 +72,6 @@ t_planificado* buscar_donador(t_entrenador* entrenador);
 
 t_planificado* elegir_proximo_a_ejecutar_SJFCD();
 
-
-
 // Funciones SJF (pendientes a revision)
 void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon);
 void planificar_entrenadores_SJF();

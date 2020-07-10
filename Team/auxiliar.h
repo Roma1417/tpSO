@@ -8,7 +8,6 @@
 #ifndef AUXILIAR_H_
 #define AUXILIAR_H_
 
-
 #include <pthread.h>
 #include <stdlib.h>
 #include <commons/log.h>
@@ -32,6 +31,5 @@ t_list* filtrar_entrenadores_con_objetivos(t_list* lista);
 void* list_head(t_list* lista);
 char* find_first(t_list* objetivos, t_list* inservibles);
 float calcular_estimado_de_la_proxima_rafaga(float estimado_anterior, u_int32_t rafaga_anterior, float alpha);
-
 
 #endif /* AUXILIAR_H_ */

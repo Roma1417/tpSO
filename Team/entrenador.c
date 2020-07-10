@@ -13,8 +13,7 @@
  *        una lista con los objetivos y un hilo,
  *        crea y devuelve un puntero a una estructura t_entrenador.
  */
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
-		t_list* objetivos, u_int32_t indice, float estimacion_inicial){
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice, float estimacion_inicial) {
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
@@ -42,7 +41,6 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	// En el enunciado no hay nada especificado para rafagas anteriores al
 	// inicio del problema. PREGUNTAR
 
-
 	return entrenador;
 
 }
@@ -52,33 +50,32 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
  * @DESC: Dados un elemento (tipo string) y una lista, me dice si ese
  * 	      elemento se encuentra en la lista.
  */
-bool list_elem(char* elemento, t_list* lista){
+bool list_elem(char* elemento, t_list* lista) {
 	bool encontrado = false;
-	for(int i = 0; i < list_size(lista) && !encontrado; i++){
+	for (int i = 0; i < list_size(lista) && !encontrado; i++) {
 		char* pokemon = list_get(lista, i);
 		encontrado = string_equals_ignore_case(pokemon, elemento);
 	}
 	return encontrado;
 }
 
-bool le_sirve(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
+bool le_sirve(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon) {
 	return list_elem(appeared_pokemon->pokemon, entrenador->objetivos_faltantes);
 }
 
-void cambiar_condicion_ready(t_entrenador* entrenador){
+void cambiar_condicion_ready(t_entrenador* entrenador) {
 	entrenador->puede_pasar_a_ready = !entrenador->puede_pasar_a_ready;
 }
 
-void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon){
-	if(!le_sirve(entrenador, appeared_pokemon))
-		list_add(entrenador->pokemon_inservibles, appeared_pokemon->pokemon);
+void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon) {
+	if (!le_sirve(entrenador, appeared_pokemon)) list_add(entrenador->pokemon_inservibles, appeared_pokemon->pokemon);
 	else list_add(entrenador->pokemon_obtenidos, appeared_pokemon->pokemon);
 	decrementar_capturas_disponibles(entrenador);
 }
 
-void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible){
+void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible) {
 
-	bool _es_el_inservible(void* parametro){
+	bool _es_el_inservible(void* parametro) {
 		char* auxiliar = parametro;
 		return auxiliar == inservible;
 	}
@@ -93,7 +90,7 @@ void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible){
  * @DESC: Dado un entrenador y un estado pasados por parametro,
  * 		  cambia el estado del entrenador.
  */
-void cambiar_estado(t_entrenador* entrenador, t_estado estado){
+void cambiar_estado(t_entrenador* entrenador, t_estado estado) {
 	entrenador->estado = estado;
 }
 
@@ -102,7 +99,7 @@ void cambiar_estado(t_entrenador* entrenador, t_estado estado){
  * @DESC: Dado un entrenador, devuelve si este puede pasar o no
  *        a estado READY.
  */
-bool puede_ser_planificado(void* parametro){
+bool puede_ser_planificado(void* parametro) {
 	t_entrenador* entrenador = parametro;
 	return (entrenador->puede_pasar_a_ready);
 	//return ((entrenador->estado == NEW) || (entrenador->estado == BLOCK));
@@ -114,9 +111,9 @@ bool puede_ser_planificado(void* parametro){
  * 		  remueve de la lista la primer aparicion repetida de ese nombre.
  * 		  // revisar
  */
-void remover_elemento_repetido(t_list* lista, char* un_pokemon){
+void remover_elemento_repetido(t_list* lista, char* un_pokemon) {
 	bool encontrado = false;
-	for (int i = 0; i < list_size(lista) && !encontrado; i++){
+	for (int i = 0; i < list_size(lista) && !encontrado; i++) {
 		char* otro_pokemon = list_get(lista, i);
 		encontrado = string_equals_ignore_case(un_pokemon, otro_pokemon);
 		if (encontrado) list_remove(lista, i);
@@ -128,10 +125,10 @@ void remover_elemento_repetido(t_list* lista, char* un_pokemon){
  * @DESC: Dado un entrenador, saca de sus objetivos los pokemon que ya obtuvo.
  * 		  Devuelve la lista de objetivos modificada.
  */
-t_list* get_objetivos_faltantes(t_entrenador* entrenador){
+t_list* get_objetivos_faltantes(t_entrenador* entrenador) {
 	t_list* objetivos_faltantes = list_create();
 	list_add_all(objetivos_faltantes, entrenador->objetivos);
-	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++) {
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
 		remover_elemento_repetido(objetivos_faltantes, pokemon);
 	}
@@ -145,7 +142,7 @@ t_list* get_objetivos_faltantes(t_entrenador* entrenador){
  * @NAME: get_objetivos_faltantes
  * @DESC: Dado un entrenador, devuelve sus objetivos.
  */
-t_list* get_objetivos(t_entrenador* entrenador){
+t_list* get_objetivos(t_entrenador* entrenador) {
 
 	return entrenador->objetivos;
 
@@ -155,18 +152,18 @@ t_list* get_objetivos(t_entrenador* entrenador){
  * @NAME: get_objetivos_faltantes
  * @DESC: Destruye una estructura t_entrenador.
  */
-void entrenador_destroy(t_entrenador* entrenador){
+void entrenador_destroy(t_entrenador* entrenador) {
 
 	free(entrenador->posicion);
 
-	for(int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
+	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++) {
 		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
 		free(pokemon);
 	}
 
 	list_destroy(entrenador->pokemon_obtenidos);
 
-	for(int i = 0; i < list_size(entrenador->objetivos); i++){
+	for (int i = 0; i < list_size(entrenador->objetivos); i++) {
 		char* pokemon = list_get(entrenador->objetivos, i);
 		free(pokemon);
 	}
@@ -183,7 +180,7 @@ void entrenador_destroy(t_entrenador* entrenador){
  * @NAME: puede_seguir_atrapando
  * @DESC: Verifica si un entrenador tiene capturas disponibles.
  */
-bool puede_seguir_atrapando(t_entrenador* entrenador){
+bool puede_seguir_atrapando(t_entrenador* entrenador) {
 	return entrenador->capturas_disponibles > 0;
 }
 
@@ -191,32 +188,32 @@ bool puede_seguir_atrapando(t_entrenador* entrenador){
  * @NAME: decrementar_capturas_disponibles
  * @DESC: Dado un entrenador se decrementa en uno sus capturas disponibles.
  */
-void decrementar_capturas_disponibles(t_entrenador* entrenador){
-	entrenador->capturas_disponibles-=1;
+void decrementar_capturas_disponibles(t_entrenador* entrenador) {
+	entrenador->capturas_disponibles -= 1;
 }
 
 /*
  * @NAME: set_hilo
  * @DESC: Settea un hilo pasado por parámetro en un entrenador.
  */
-void set_hilo(t_entrenador* entrenador, pthread_t hilo){
+void set_hilo(t_entrenador* entrenador, pthread_t hilo) {
 	entrenador->hilo = hilo;
 }
 
-void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior){
+void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior) {
 	entrenador->rafaga_anterior = rafaga_anterior;
 }
 
-void set_estimacion(t_entrenador* entrenador, float estimacion){
+void set_estimacion(t_entrenador* entrenador, float estimacion) {
 	entrenador->estimacion = estimacion;
 }
 
-bool cumplio_su_objetivo(void* parametro){
+bool cumplio_su_objetivo(void* parametro) {
 	t_entrenador* entrenador = parametro;
 	return list_is_empty(entrenador->objetivos_faltantes);
 }
 
-bool no_cumplio_su_objetivo(void* parametro){
+bool no_cumplio_su_objetivo(void* parametro) {
 	return !cumplio_su_objetivo(parametro);
 }
 

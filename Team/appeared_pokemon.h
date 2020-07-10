@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include "posicion.h"
 
-typedef struct{
+typedef struct {
 
 	u_int32_t size_pokemon;
 	char* pokemon;

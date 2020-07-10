@@ -17,7 +17,7 @@
 #include "posicion.h"
 #include "appeared_pokemon.h"
 
-typedef enum{
+typedef enum {
 	NEW = 1,
 	READY = 2,
 	EXEC = 3,
@@ -47,11 +47,9 @@ typedef struct {
 
 } t_entrenador;
 
-
-
 void cambiar_estado(t_entrenador* entrenador, t_estado estado);
 bool puede_ser_planificado(void* parametro);
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,t_list* objetivos, u_int32_t indice, float estimacion_inicial);
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice, float estimacion_inicial);
 t_list* get_objetivos(t_entrenador* entrenador);
 t_list* get_objetivos_faltantes(t_entrenador* entrenador);
 void entrenador_destroy(t_entrenador* entrenador);
@@ -66,6 +64,5 @@ void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible);
 void set_estimacion(t_entrenador* entrenador, float estimacion);
 void set_rafaga_anterior(t_entrenador* entrenador, u_int32_t rafaga_anterior);
 bool list_elem(char* elemento, t_list* lista);
-
 
 #endif /* ENTRENADOR_H_ */

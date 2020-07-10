@@ -26,6 +26,6 @@ typedef struct {
 	char* puerto_broker;
 	char* log_file;
 
-}t_config_team;
+} t_config_team;
 
 #endif /* CONFIG_TEAM_H_ */
