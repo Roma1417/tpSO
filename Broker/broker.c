@@ -20,7 +20,7 @@ int main(void)
 
 
 	for(u_int32_t i = 0; i<6; i++){
-			colas_mensajes[i] = crear_cola_mensajes(i + 1);
+			lista_suscriptores[i] = list_create();
 			generador_id_suscriptor[i] = 1;
 		}
 	generador_id_mensaje = 1;
@@ -36,10 +36,14 @@ int main(void)
 	log_file = config_get_string_value(config, "LOG_FILE");
 	timer_lru = 0;
 	clock_compactacion = frecuencia_compactacion;
+	ip = config_get_string_value(config, "IP_BROKER");
+	puerto = config_get_string_value(config, "PUERTO_BROKER");
 
 
 	memoria = crear_memoria(tamanio_memoria);
 	cola_victimas = queue_create();
+
+
 
 	logger = log_create("./broker.log", "Broker", 0, LOG_LEVEL_INFO);
 

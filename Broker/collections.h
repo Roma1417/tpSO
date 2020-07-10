@@ -35,13 +35,6 @@ typedef enum{
 
 
 typedef struct{
-	tipo_mensaje id;
-	t_list* mensajes;
-	t_list* suscriptores;
-}t_cola_mensajes;
-
-
-typedef struct{
 	u_int32_t id;
 	int numero_socket;
 }t_suscriptor;
@@ -61,33 +54,52 @@ typedef struct
 } t_paquete;
 
 typedef struct{
-	t_paquete* paquete;
+	void* base;
+	uint32_t tamanio;
+	t_list* particiones;
+}t_memoria;
+
+typedef struct{
+	uint32_t lru;
+	uint32_t cola_mensajes;
+	uint32_t id_mensaje;
+	uint32_t id_correlativo;
 	t_list* suscriptores_enviados;
 	t_list* suscriptores_confirmados;
-}t_mensaje;
+}t_atributos_particion;
 
-t_cola_mensajes* colas_mensajes[6];
+typedef struct{
+	void* base;
+	uint32_t tamanio;
+	bool ocupada;
+	t_atributos_particion* atributos;
+}t_particion;
+
+
+t_list* lista_suscriptores[6];
 u_int32_t generador_id_suscriptor[6];
 u_int32_t generador_id_mensaje;
 
+t_memoria* crear_memoria(uint32_t);
 
+t_particion* crear_particion(void*, uint32_t, bool, t_atributos_particion*);
+t_particion* buscar_particion(t_memoria*, uint32_t);
+void destruir_particion(t_particion* particion);
 
-
-t_cola_mensajes* crear_cola_mensajes(tipo_mensaje);
-void destruir_cola_mensajes(t_cola_mensajes*);
-void* get_cola_mensajes(tipo_mensaje);
+t_atributos_particion* crear_atributos_particion(uint32_t, uint32_t, uint32_t, uint32_t);
+void destruir_atributos_particion(t_atributos_particion* atributos_particion);
 
 t_suscriptor* crear_suscriptor(u_int32_t, int32_t);
-t_suscriptor* generar_suscriptor(u_int32_t, t_cola_mensajes*);
+t_suscriptor* generar_suscriptor(u_int32_t, uint32_t);
 t_suscriptor* buscar_suscriptor(t_list*, u_int32_t);
 u_int32_t generar_id_suscriptor(tipo_mensaje);
+t_list* obtener_lista_suscriptores(uint32_t);
+void destruir_suscriptor(void* suscriptor);
 
-t_mensaje* crear_mensaje(t_paquete*);
-void destruir_mensaje(t_mensaje*);
-t_mensaje* buscar_mensaje(t_list*, u_int32_t);
 u_int32_t generar_id_mensaje();
 
 t_paquete* crear_paquete(u_int32_t, uint32_t, tipo_mensaje, t_buffer*);
+t_paquete* generar_paquete(t_particion* particion);
 void destruir_paquete(t_paquete*);
 
 t_buffer* crear_buffer(u_int32_t, void*);

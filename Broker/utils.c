@@ -20,8 +20,6 @@ void iniciar_servidor(void)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	char* ip = consultar_config_por_string("./broker.config", "IP_BROKER");
-	char* puerto = consultar_config_por_string("./broker.config", "PUERTO_BROKER");
 
 	getaddrinfo(ip, puerto, &hints, &servinfo);
 
@@ -74,7 +72,6 @@ void serve_client(int* socket)
 
 
 void process_request(int cod_op, int cliente_fd) {
-	t_cola_mensajes* cola_mensajes;
 	u_int32_t id_mensaje;
 
 	switch (cod_op) {
@@ -93,31 +90,28 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("La size recibida fue: %d\n", size);
 
 		id_mensaje = generar_id_mensaje();
+
+		printf("La id recibida fue: %d\n", id_mensaje);
+
 		uint32_t id_correlativo = 0;
 
 		if (es_cola_correlativa(cod_op)) {
 			size -= sizeof(uint32_t);
 			memcpy(&id_correlativo, stream, sizeof(uint32_t));
+			stream += sizeof(uint32_t);
 		}
 
 		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
 
-		agregar_stream(memoria, stream, size, obtener_id_particion_libre(algoritmo_particion_libre), timer_lru++, cod_op, id_mensaje, id_correlativo, true);
+		t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo);
+		t_particion* particion_agregada = agregar_stream(memoria, stream, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
 
 		printf("Id correlativo: %d\n", id_correlativo);
 
-		t_buffer* buffer = crear_buffer(size, stream);
-		t_paquete* paquete = crear_paquete(id_mensaje, id_correlativo, cod_op, buffer);
-		t_mensaje* mensaje = crear_mensaje(paquete);
-		cola_mensajes = get_cola_mensajes(cod_op);
+		enviar_mensaje(generar_paquete(particion_agregada), cliente_fd);
 
-		list_add(cola_mensajes->mensajes, mensaje);
-
-		enviar_mensaje(paquete, cliente_fd);
-
-		enviar_a_suscriptores(mensaje, cola_mensajes->suscriptores);
-
-
+		enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
+		printf("Envie todo\n", id_correlativo);
 
 		break;
 
@@ -135,16 +129,14 @@ void process_request(int cod_op, int cliente_fd) {
 		u_int32_t id_suscriptor = recibir_entero(cliente_fd);
 		printf("La id recibida fue: %d\n", id_suscriptor);
 
-		cola_mensajes = get_cola_mensajes(obtener_tipo_mensaje(cola_nombre));
 
 
 		if(id_suscriptor == 0){
-			agregar_suscriptor(cliente_fd, cola_mensajes);
+			agregar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre));
 		} else {
-			actualizar_suscriptor(cliente_fd, cola_mensajes, id_suscriptor);
+			actualizar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre), id_suscriptor);
 		}
-
-		printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(cola_mensajes->suscriptores));
+		printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(obtener_lista_suscriptores(obtener_tipo_mensaje(cola_nombre))));
 
 
 		break;
@@ -160,11 +152,10 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("La mensaje recibida fue: %d\n", id_mensaje);
 		u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
 		printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
-		cola_mensajes = get_cola_mensajes(id_cola_mensajes);
-		t_mensaje* mensaje_confirmado = buscar_mensaje(cola_mensajes->mensajes, id_mensaje);
-		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(mensaje_confirmado->suscriptores_enviados, id_suscriptor_confirmado);
+		t_particion* particion_confirmada = buscar_particion(memoria, id_mensaje);
+		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(particion_confirmada->atributos->suscriptores_enviados, id_suscriptor_confirmado);
 
-		list_add(mensaje_confirmado->suscriptores_confirmados, suscriptor_confirmado);
+		list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
 
 		log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
@@ -192,12 +183,12 @@ void* recibir_cadena(int socket_cliente, int* size)
 	void * cadena;
 
 	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
-	printf("Size: %d\n", *size);
 	cadena = malloc(*size);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
 	printf("Cadena: %s\n", (char*) cadena + 4 );
 	return cadena;
 }
+
 
 char* recibir_string(int socket_cliente, u_int32_t* size)
 {
@@ -238,32 +229,25 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 }
 
 
-char* consultar_config_por_string(char* path, char* key){
-
-	t_config* config = config_create(path);
-
-	char* cadena = string_from_format("%s",config_get_string_value(config, key));
-
-	config_destroy(config);
-
-	return cadena;
-}
-
-
-void finalizar_servidor(){
-	generar_dump(memoria);
-	for (int i=1; i<=6; i++){
-		t_cola_mensajes* cola_mensajes = get_cola_mensajes(i);
-		printf("Tipo msj %s\n", obtener_tipo_mensaje_string(i));
-		destruir_cola_mensajes(cola_mensajes);
-	}
-	log_destroy(logger);
-	config_destroy(config);
-	exit(0);
-}
-
-
 void* serializar_paquete(t_paquete* paquete, size_t bytes){
+	void* magic = malloc(bytes);
+	int desplazamiento = 0;
+
+	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, &(paquete->id_correlativo), sizeof(u_int32_t));
+	desplazamiento += sizeof(u_int32_t);
+	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+	desplazamiento += paquete->buffer->size;
+
+	return magic;
+}
+
+void* serializar_paquete_correlativo(t_paquete* paquete, size_t bytes){
 	void* magic = malloc(bytes);
 	int desplazamiento = 0;
 
@@ -280,6 +264,7 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 }
 
 
+
 void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){ //envio al suscriptor un mensaje de argumentos (id, SUSCRIPTOR, cola)
 	void* stream = malloc(sizeof(tipo_mensaje));
 	memcpy(stream, &tipo_mensaje, sizeof(tipo_mensaje));
@@ -287,85 +272,90 @@ void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje
 	t_paquete* paquete = crear_paquete(suscriptor->id, 0, SUSCRIPTOR, buffer);
 
 	enviar_mensaje(paquete, suscriptor->numero_socket);
-
-	destruir_paquete(paquete);
+	printf("Se envio un mensaje 3\n");
+	//destruir_paquete(paquete);
 }
 
 
 u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
-
-
 	size_t bytes = paquete->buffer->size + 3*sizeof(int32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	printf("Se envio un mensaje\n");
 	u_int32_t envio = send(socket, a_enviar, bytes, MSG_NOSIGNAL);
+	printf("%d\n", envio);
 	free(a_enviar);
 	return envio;
 }
 
-void enviar_a_suscriptor(t_mensaje* mensaje, t_suscriptor* suscriptor){
-	u_int32_t envio = enviar_mensaje(mensaje->paquete, suscriptor->numero_socket);
-	printf("Se envio el mensaje de ID %d al suscriptor %d (%d)\n", mensaje->paquete->id_mensaje, suscriptor->id, envio);
-	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)", mensaje->paquete->id_mensaje, suscriptor->id, envio);
-	list_add(mensaje->suscriptores_enviados, suscriptor);
+
+void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor){
+
+	t_buffer* buffer = crear_buffer(particion->tamanio, particion->base);
+	t_paquete* paquete = crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
+
+	uint32_t envio = enviar_mensaje(paquete, suscriptor->numero_socket);
+
+	list_add(particion->atributos->suscriptores_enviados, suscriptor);
+	printf("Se envio un mensaje3\n");
+	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)", particion->atributos->id_mensaje, suscriptor->id, envio);
 	esperar_confirmacion(suscriptor);
 }
 
 void esperar_confirmacion(t_suscriptor* suscriptor){
 	pthread_t nuevo;
 	pthread_create(&nuevo,NULL,(void*)serve_client,&suscriptor->numero_socket);
-	pthread_detach(nuevo);
+	pthread_join(nuevo, NULL);
 }
 
-void enviar_a_suscriptores(t_mensaje* mensaje, t_list* suscriptores){
+void enviar_a_suscriptores(t_particion* particion, t_list* suscriptores){
 	for (u_int32_t i = 0; i < list_size(suscriptores); i++){
 		t_suscriptor* suscriptor = (void*)list_get(suscriptores, i);
-		enviar_a_suscriptor(mensaje, suscriptor);
-		list_add(mensaje->suscriptores_enviados, suscriptor);
+		enviar_a_suscriptor(particion, suscriptor);
+		list_add(particion->atributos->suscriptores_enviados, suscriptor);
 	}
 
 }
 
-void agregar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes){
+void agregar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes){
 
-	t_suscriptor* suscriptor = generar_suscriptor(socket,cola_mensajes);
+
+	t_suscriptor* suscriptor = generar_suscriptor(socket,id_cola_mensajes);
 	printf("Asignada ID a nuevo suscriptor:%d\n", suscriptor->id);
-	notificar_id_suscriptor(suscriptor, cola_mensajes->id);
+	notificar_id_suscriptor(suscriptor, id_cola_mensajes);
 
-	list_add(cola_mensajes->suscriptores, suscriptor);
-	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).", suscriptor->id, cola_mensajes->id, obtener_tipo_mensaje_string(cola_mensajes->id));
+	list_add(obtener_lista_suscriptores(id_cola_mensajes), suscriptor);
+	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).", suscriptor->id, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
 	t_list* particiones = memoria->particiones;
 	t_particion* particion_actual;
 
 	for(int i = 0; i < list_size(particiones); i++){
 		particion_actual = list_get(particiones, i);
-		if(particion_actual->cola_mensajes == cola_mensajes->id){
-			enviar_a_suscriptor(buscar_mensaje(cola_mensajes->mensajes, particion_actual->id_mensaje), suscriptor);
-			particion_actual->lru = timer_lru++;
+		if(particion_actual->atributos->cola_mensajes == id_cola_mensajes){
+			enviar_a_suscriptor(particion_actual, suscriptor);
+			particion_actual->atributos->lru = timer_lru++;
 		}
 	}
 }
 
-t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mensajes, u_int32_t id_suscriptor){
+t_suscriptor* actualizar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes, u_int32_t id_suscriptor){
 
-	t_suscriptor* suscriptor = buscar_suscriptor(cola_mensajes->suscriptores, id_suscriptor);
+	t_suscriptor* suscriptor = buscar_suscriptor(obtener_lista_suscriptores(id_cola_mensajes), id_suscriptor);
 	suscriptor->numero_socket = socket;
 	printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->numero_socket);
 
-	t_list* mensajes = cola_mensajes->mensajes;
+
 	t_list* particiones = memoria->particiones;
 
 	t_particion* particion_actual;
-	t_mensaje* mensaje_actual;
+	;
 
 	for(uint32_t i = 0; i < list_size(particiones); i++){
 		particion_actual = list_get(particiones, i);
-		if(particion_actual->cola_mensajes == cola_mensajes->id){
-			mensaje_actual = buscar_mensaje(cola_mensajes->mensajes, particion_actual->id_mensaje);
-			if(!recibio_mensaje(suscriptor, mensaje_actual)){
-				enviar_a_suscriptor(mensaje_actual, suscriptor);
-				particion_actual->lru = timer_lru++;
+		if(particion_actual->atributos->cola_mensajes == id_cola_mensajes){
+			if(!confirmo_mensaje(suscriptor, particion_actual)){
+				enviar_a_suscriptor(particion_actual, suscriptor);
+				particion_actual->atributos->lru = timer_lru++;
 			}
 		}
 	}
@@ -375,8 +365,8 @@ t_suscriptor* actualizar_suscriptor(u_int32_t socket, t_cola_mensajes* cola_mens
 }
 
 
-bool recibio_mensaje(t_suscriptor* suscriptor, t_mensaje* mensaje){
-	t_list* confirmados = mensaje->suscriptores_confirmados;
+bool confirmo_mensaje(t_suscriptor* suscriptor, t_particion* particion){
+	t_list* confirmados = particion->atributos->suscriptores_confirmados;
 	for(uint32_t i = 0; i < list_size(confirmados); i++){
 		if (suscriptor == list_get(confirmados, i)) return true;
 	}
@@ -385,4 +375,17 @@ bool recibio_mensaje(t_suscriptor* suscriptor, t_mensaje* mensaje){
 
 bool es_cola_correlativa(tipo_mensaje tipo){
 	return tipo == 2 || tipo == 4 || tipo == 6;
+}
+
+
+void finalizar_servidor(){
+	generar_dump(memoria);
+
+	for(uint32_t i = 0; i < 6; i++){
+		list_destroy_and_destroy_elements(lista_suscriptores[i], destruir_suscriptor);
+	}
+	destruir_memoria(memoria);
+	log_destroy(logger);
+	config_destroy(config);
+	exit(0);
 }
