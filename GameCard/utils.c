@@ -333,6 +333,22 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE* file_pokemon, t_cat
 	fclose(file_pokemon);
 }
 
+t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
+		t_list* bloques) {
+	cerrar_bloques_file(bloques_file, *bloque_file);
+	list_destroy(bloques_file);
+	bloques_file = list_create();
+	char* bloque_path;
+	for (int i = 0; i < list_size(bloques); i++) {
+		bloque_path = obtener_bloque_path(list_get(bloques, i));
+		printf("Bloque_path: %s\n", bloque_path);
+		*bloque_file = fopen(bloque_path, "wb");
+		list_add(bloques_file, *bloque_file);
+		free(bloque_path);
+	}
+	return bloques_file;
+}
+
 t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 		char* posicion_actual, t_list* bloques_file, FILE** bloque_file,
 		t_list* bloques, t_catch_pokemon* catch_pokemon) {
@@ -345,22 +361,14 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 	uint32_t nueva_cantidad = obtener_cantidad(posicion) - 1;
 	if (nueva_cantidad == 0) {
 		list_remove(posiciones, indice_del_encontrado);
-		cerrar_bloques_file(bloques_file, *bloque_file);
-		list_destroy(bloques_file);
-		bloques_file = list_create();
-		char* bloque_path;
-		for (int i = 0; i < list_size(bloques); i++) {
-			bloque_path = obtener_bloque_path(list_get(bloques, i));
-			printf("Bloque_path: %s\n", bloque_path);
-			*bloque_file = fopen(bloque_path, "wb");
-			list_add(bloques_file, *bloque_file);
-			free(bloque_path);
-		}
+		bloques_file = reiniciar_bloques_file(bloques_file, bloque_file, bloques);
 	} else {
 		posicion = cargar_nueva_posicion(nueva_cantidad, posicion);
 		list_replace(posiciones, indice_del_encontrado, posicion);
+		bloques_file = reiniciar_bloques_file(bloques_file, bloque_file, bloques);
 		posicionar_en_inicio(bloques_file, *bloque_file);
 	}
+	for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i, list_get(posiciones,i));
 	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
 			file_pokemon, ultimo_bloque);
 	actualizar_size_catch_pokemon(posiciones, file_pokemon, catch_pokemon);
@@ -435,7 +443,7 @@ void serve_client(int* cliente_fd) {
 
 		cargar_datos_new_pokemon(new_pokemon);
 
-		enviar_appeared_pokemon(id_mensaje, new_pokemon);
+		//enviar_appeared_pokemon(id_mensaje, new_pokemon);
 
 		break;
 	case CATCH_POKEMON:
@@ -448,7 +456,7 @@ void serve_client(int* cliente_fd) {
 		id_mensaje = recibir_entero(*cliente_fd);
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
-		enviar_caught_pokemon(id_mensaje, resultado_captura);
+		//enviar_caught_pokemon(id_mensaje, resultado_captura);
 
 		break;
 	case GET_POKEMON:

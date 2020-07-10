@@ -221,7 +221,7 @@ int main(){
 	//crear_directorios();
 	//crear_archivos();
 
-	suscribirse_a_colas();
+	//suscribirse_a_colas();
 
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
