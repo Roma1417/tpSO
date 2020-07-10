@@ -200,7 +200,10 @@ void serve_client(int* socket){
 
 		if (list_elem(appeared_pokemon->pokemon, objetivo_global)
 				&& sigue_en_falta_especie(appeared_pokemon->pokemon)){
+
+			sem_wait(&puede_ser_pusheado);
 			queue_push(appeared_pokemons, appeared_pokemon);
+
 			sem_post(&sem_appeared_pokemon);
 		} else appeared_pokemon_destroy(appeared_pokemon);
 

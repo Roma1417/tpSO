@@ -83,6 +83,7 @@ t_list* lista_ready; // Lista para SJF sin desalojo
 int socket_servidor;
 sem_t sem_appeared_pokemon;
 sem_t sem_entrenadores;
+sem_t puede_ser_pusheado;
 sem_t puede_planificar;
 sem_t puede_intercambiar;
 sem_t* termino_de_capturar;

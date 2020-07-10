@@ -23,6 +23,9 @@
 #define ENVIAR_MENSAJE 1
 
 u_int32_t id_team;
+u_int32_t cantidad_deadlocks;
+u_int32_t largo_lista_ready;
+sem_t mutex_largo_lista_ready;
 
 typedef enum {
 	FIFO = 1,
@@ -66,6 +69,8 @@ void liberar_todo(int n);
 bool objetivo_global_cumplido();
 bool elem_especies(t_list* especies, char* pokemon);
 t_planificado* buscar_donador(t_entrenador* entrenador);
+
+t_planificado* elegir_proximo_a_ejecutar_SJFCD();
 
 
 

@@ -224,6 +224,122 @@ void* ejecutar_entrenador_RR(void* parametro) {
 	return EXIT_SUCCESS;
 }
 
+void verificar_llegada_de_entrenador(t_planificado* planificado_actual, u_int32_t* tamanio_antes){
+	sem_wait(&mutex_largo_lista_ready);
+
+	printf("------------------------\n");
+	printf("tamanio_antes: %d\n", *tamanio_antes);
+	printf("largo_lista_ready: %d\n", largo_lista_ready);
+	printf("------------------------\n");
+
+	if((*tamanio_antes) != largo_lista_ready){
+		sem_post(&mutex_largo_lista_ready);
+		t_planificado* planificado = list_get(lista_ready, list_size(lista_ready) - 1);
+		u_int32_t rafaga_entrenador = planificado->entrenador->rafaga;
+
+		if (rafaga_entrenador < planificado->entrenador->rafaga){
+			log_info(logger_team, "El entrenador %d se desaloja para poner en ejecucion al entrenador %d", planificado_actual->entrenador->indice, planificado->entrenador->indice);
+			cambiar_estado(planificado_actual->entrenador, READY);
+			cambiar_estado(planificado->entrenador, EXEC);
+			list_remove(lista_ready, list_size(lista_ready) - 1);
+			list_add(lista_ready, planificado_actual);
+			sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+			sem_post(&puede_ser_pusheado); // Ale cree que si
+			sem_wait(&(puede_ejecutar[planificado_actual->entrenador->indice]));
+			*tamanio_antes = list_size(lista_ready);
+		} else sem_post(&puede_ser_pusheado);
+	} else{
+		sem_post(&mutex_largo_lista_ready);
+		sem_post(&puede_ser_pusheado);
+	}
+}
+
+void* ejecutar_entrenador_SJFCD(void* parametro) {
+	t_entrenador* entrenador = parametro;
+
+	while (puede_seguir_atrapando(entrenador)) {
+		sem_wait(&(puede_ejecutar[entrenador->indice]));
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		int ciclos = distance + ATRAPAR;
+
+		u_int32_t tamanio_antes_de_ejecutar = list_size(lista_ready);
+
+		sem_wait(&(mutex_ciclos_cpu_totales));
+		ciclos_cpu_totales += ciclos;
+		sem_post(&(mutex_ciclos_cpu_totales));
+
+		entrenador->rafaga = ciclos;
+		entrenador->ciclos_cpu += ciclos;
+		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %d es: %d", entrenador->indice, distance);
+
+
+		for (int i = 0; i < distance; i++) {
+			u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
+			for (int i = 0; i < distancia_x; i++) {
+				if (esta_mas_a_la_derecha(pokemon_a_atrapar->posicion, entrenador->posicion))
+					mover_a_la_derecha(entrenador->posicion);
+				else mover_a_la_izquierda(entrenador->posicion);
+
+				sleep(config_team->retardo_ciclo_cpu);
+				entrenador->rafaga--;
+
+				verificar_llegada_de_entrenador(planificado, &tamanio_antes_de_ejecutar);
+			}
+
+			u_int32_t distancia_y = distancia_en_y(entrenador->posicion, pokemon_a_atrapar->posicion);
+			for (int j = 0; j < distancia_y; j++) {
+				if (esta_mas_arriba(pokemon_a_atrapar->posicion, entrenador->posicion))
+					mover_hacia_arriba(entrenador->posicion);
+				else
+					mover_hacia_abajo(entrenador->posicion);
+
+				sleep(config_team->retardo_ciclo_cpu);
+				entrenador->rafaga--;
+				verificar_llegada_de_entrenador(planificado, &tamanio_antes_de_ejecutar);
+			}
+
+		}
+
+		modificar_estimacion_y_rafaga(entrenador, distance);
+
+		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+
+		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+
+		cambiar_estado(entrenador, BLOCK);
+		sem_post(&puede_planificar);
+		planificado = planificado_create(entrenador, pokemon_a_atrapar);
+
+		if(conexion_catch == 0) // Karen, esto es culpa de Ale
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+		else entrenador->resultado_caught = 1;
+
+		if (entrenador->resultado_caught) {
+			cambiar_estado(entrenador, READY);
+			list_add(lista_ready, planificado);
+			sem_wait(&(puede_ejecutar[entrenador->indice]));
+
+			// Comentar si en esta parte hay que calcular la estimacion para
+			// rafaga CPU por atrapar = 1
+			modificar_estimacion_y_rafaga(entrenador, 1);
+
+			atrapar(entrenador, planificado->pokemon);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			actualizar_objetivo_global();
+			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+		}
+		if (puede_seguir_atrapando(entrenador))
+			cambiar_condicion_ready(entrenador);
+		sem_post(&puede_planificar);
+		sem_post(&sem_entrenadores);
+	}
+
+	sem_post(&(termino_de_capturar[entrenador->indice]));
+
+	return EXIT_SUCCESS;
+}
+
 void* ejecutar_entrenador_SJF(void* parametro) {
 	t_entrenador* entrenador = parametro;
 
@@ -307,8 +423,7 @@ algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config){
 	char* algoritmo = config->algoritmo_planificacion;
 	if(strcmp(algoritmo, "FIFO") == 0) tipo = FIFO;
 	if(strcmp(algoritmo, "RR") == 0) tipo = RR;
-	if(strcmp(algoritmo, "SJF") == 0) tipo = SJF;
-	if(strcmp(algoritmo, "SJFCD") == 0) tipo = SJFCD;
+	if(strcmp(algoritmo, "SJF-CD") == 0) tipo = SJFCD;
 
 	return tipo;
 }
@@ -345,7 +460,7 @@ t_list* crear_entrenadores(t_config_team* config_team) {
 						break;
 					case (SJF): pthread_create(&hilo, NULL, ejecutar_entrenador_SJF, (void*) entrenador);
 						break;
-					case (SJFCD) :
+					case (SJFCD): pthread_create(&hilo, NULL, ejecutar_entrenador_SJFCD, (void*) entrenador);
 						break;
 				}
 
@@ -439,6 +554,36 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appe
 	cambiar_condicion_ready(mas_cercano);
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
 	list_add(lista_ready, planificado);
+}
+
+void enreadyar_al_mas_cercano_SJFCD(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon) {
+	t_entrenador* mas_cercano = list_find(entrenadores, puede_ser_planificado);
+	int distancia_minima = distancia(mas_cercano->posicion, appeared_pokemon->posicion);
+
+	for (int i = 1; i < list_size(entrenadores); i++) {
+
+		t_entrenador* entrenador_actual = list_get(entrenadores, i);
+		if (puede_ser_planificado(entrenador_actual) && (distancia(entrenador_actual->posicion, appeared_pokemon->posicion) < distancia_minima)) {
+			mas_cercano = entrenador_actual;
+			distancia_minima = distancia(entrenador_actual->posicion, appeared_pokemon->posicion);
+		}
+	}
+
+	mas_cercano->rafaga = distancia_minima;
+
+	cambiar_estado(mas_cercano, READY);
+	cambiar_condicion_ready(mas_cercano);
+	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	list_add(lista_ready, planificado);
+
+	printf("WARD AZULGRANA 1 \n");
+
+	sem_wait(&mutex_largo_lista_ready);
+	largo_lista_ready = list_size(lista_ready);
+	printf("----------\n");
+	printf("Llego un nuevo entrenador\n");
+	printf("----------\n");
+	sem_post(&mutex_largo_lista_ready);
 }
 
 void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planificado) {
@@ -638,6 +783,7 @@ void realizar_intercambios_FIFO() {
 			if (cumplio_su_objetivo(planificado->entrenador))
 				sacar_de_los_entrenadores_deadlock(planificado->entrenador);
 		}
+		cantidad_deadlocks++;
 	}
 
 	actualizar_objetivo_global();
@@ -717,6 +863,42 @@ void planificar_entrenadores_SJF() {
 		cambios_contexto += 2;
 		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 	}
+}
+
+void planificar_entrenadores_SJFCD() {
+	if (!list_is_empty(lista_ready)) {
+		sem_wait(&puede_planificar);
+		t_planificado* planificado = elegir_proximo_a_ejecutar_SJFCD();
+		pokemon_a_atrapar = planificado->pokemon;
+		cambiar_estado(planificado->entrenador, EXEC);
+		cambios_contexto += 2;
+		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+	}
+}
+
+t_planificado* elegir_proximo_a_ejecutar_SJFCD() {
+	int j = 0;
+	t_planificado* planificado = list_get(lista_ready, j);
+	t_entrenador* entrenador = planificado->entrenador;
+	float estimacion_a_ejecutar = entrenador->estimacion;
+
+	for (int i = 0; i < list_size(lista_ready); i++) {
+		t_planificado* planificado_auxiliar = list_get(lista_ready, i);
+		t_entrenador* auxiliar = planificado_auxiliar->entrenador;
+		float estimacion_actual = auxiliar->estimacion;
+		if (estimacion_a_ejecutar > estimacion_actual) {
+			estimacion_a_ejecutar = estimacion_actual;
+			j = i;
+		}
+	}
+
+	planificado = list_remove(lista_ready, j);
+
+	sem_wait(&mutex_largo_lista_ready);
+	largo_lista_ready = list_size(lista_ready);
+	sem_post(&mutex_largo_lista_ready);
+
+	return planificado;
 }
 
 // Codigo de prueba
@@ -824,6 +1006,10 @@ void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador) {
 	}
 
 	list_remove(entrenadores_deadlock, j);
+
+}
+
+void realizar_intercambios_SJFCD(){
 
 }
 
@@ -969,7 +1155,7 @@ void* iniciar_intercambiador() {
 						break;
 					case (SJF): realizar_intercambios_SJF();
 						break;
-					case(SJFCD):
+					case(SJFCD): realizar_intercambios_SJFCD();
 						break;
 				}
 		//realizar_intercambios();
@@ -997,7 +1183,7 @@ void* iniciar_planificador() {
 						break;
 					case (SJF): planificar_entrenadores_SJF();
 						break;
-					case(SJFCD):
+					case(SJFCD): planificar_entrenadores_SJFCD();
 						break;
 				}
 		//planificar_entrenadores();
@@ -1029,7 +1215,7 @@ void* iniciar_planificador_largo_plazo(void* parametro) {
 				break;
 			case SJF: enreadyar_al_mas_cercano_SJF(entrenadores, appeared_pokemon);
 				break;
-			case SJFCD:
+			case SJFCD: enreadyar_al_mas_cercano_SJFCD(entrenadores, appeared_pokemon);
 				break;
 		}
 
@@ -1268,6 +1454,8 @@ void informar_resultados() {
 		t_entrenador* entrenador = list_get(entrenadores, i);
 		log_info(logger_team, "La cantidad de ciclos de cpu utilizados por el entrenador %d fueron: %d \n", entrenador->indice, entrenador->ciclos_cpu);
 	}
+
+	log_info(logger_team, "La cantidad de deadlocks fueron: %d\n", cantidad_deadlocks);
 }
 // Funcion main
 int main(void) {
@@ -1278,12 +1466,18 @@ int main(void) {
 	t_config* config = leer_config();
 	ciclos_cpu_totales = 0;
 	cambios_contexto = 0;
+	cantidad_deadlocks = 0;
 
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);
 
 	cola_ready = queue_create();
 	lista_ready = list_create(); // Lista para SJF sin desalojo
+	largo_lista_ready = 0;
+	sem_init(&mutex_largo_lista_ready, 0, 1);
+
+	sem_init(&puede_ser_pusheado, 0, 1);
+
 	appeared_pokemons = queue_create();
 	entrenadores_deadlock = list_create();
 	id_team = 0;
