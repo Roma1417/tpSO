@@ -292,8 +292,8 @@ void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon) {
 	liberar_conexion(conexion);
 }
 
-bool existe_directorio_pokemon(t_catch_pokemon* catch_pokemon) {
-	char* path_pokemon_file = generar_pokemon_file_path(catch_pokemon->pokemon);
+bool existe_directorio_pokemon(char* pokemon) {
+	char* path_pokemon_file = generar_pokemon_file_path(pokemon);
 	DIR* directorio_pokemon = opendir(path_pokemon_file);
 	bool existe_directorio = directorio_pokemon != NULL;
 	free(path_pokemon_file);
@@ -377,7 +377,7 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 
 bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 	printf("Llegué a la función\n");
-	if(!existe_directorio_pokemon(catch_pokemon)) return false;
+	if(!existe_directorio_pokemon(catch_pokemon->pokemon)) return false;
 	printf("Existe el archivo\n");
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
@@ -403,7 +403,7 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 }
 
 void enviar_caught_pokemon(uint32_t id_mensaje, bool resultado_catch){
-	uint32_t conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
+	int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** mensaje_appeared_pokemon = malloc((sizeof(char*)) * 4);
 	mensaje_appeared_pokemon[0] = string_new();
 	string_append(&(mensaje_appeared_pokemon[0]), "BROKER");
@@ -413,6 +413,69 @@ void enviar_caught_pokemon(uint32_t id_mensaje, bool resultado_catch){
 	mensaje_appeared_pokemon[3] = string_itoa(resultado_catch);
 	enviar_mensaje(mensaje_appeared_pokemon, conexion);
 	liberar_conexion(conexion);
+}
+
+char* quitar_cantidad(char* posicion){
+	char** posicion_en_partes = string_split(posicion, "=");
+	posicion = posicion_en_partes[0];
+	printf("Posicion sin cantidad: %s\n", posicion);
+	return posicion;
+}
+
+t_list* obtener_posiciones_del_pokemon(char* pokemon){
+	if(!existe_directorio_pokemon(pokemon)) return list_create();
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(pokemon);
+	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
+
+	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
+	t_list* bloques_file = obtener_bloques_actuales(file_pokemon, bloques);
+	t_list* posiciones = obtener_posiciones_actuales(file_pokemon, bloques_file,bloques);
+	FILE* bloque_file = NULL;
+	t_list* posiciones_sin_cantidad = list_map(posiciones, (void*) quitar_cantidad);
+	cerrar_file(file_pokemon);
+	fclose(file_pokemon);
+	return posiciones_sin_cantidad;
+}
+
+void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
+	uint32_t cantidad_posiciones = list_size(posiciones);
+	printf("Cantidad de posiciones: %d\n", cantidad_posiciones);
+	char* pos_x;
+	char* pos_y;
+	char* posicion_actual;
+
+	//int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
+	char** mensaje_localized_pokemon = malloc((sizeof(char*)) * (4 + cantidad_posiciones * 2));
+	mensaje_localized_pokemon[0] = string_new();
+	string_append(&(mensaje_localized_pokemon[0]), "BROKER");
+	mensaje_localized_pokemon[1] = string_new();
+	string_append(&(mensaje_localized_pokemon[1]), "LOCALIZED");
+	mensaje_localized_pokemon[2] = pokemon;
+	mensaje_localized_pokemon[3] = string_itoa(cantidad_posiciones);
+	int k = 4;
+	for(int i=0;i<cantidad_posiciones;i++){
+		posicion_actual = list_get(posiciones, i);
+		printf("Posicion_actual: %s\n", posicion_actual);
+		mensaje_localized_pokemon[k] = string_new();
+		mensaje_localized_pokemon[k+1] = string_new();
+
+		int j=0;
+		for(; posicion_actual[j] != '-'; j++){
+			printf("Caracter_cargado: %c\n", posicion_actual[j]);
+			string_append_with_format(&(mensaje_localized_pokemon[k]),"%c",posicion_actual[j]);
+		}
+		j++;
+		for(; j<string_length(posicion_actual); j++){
+			string_append_with_format(&(mensaje_localized_pokemon[k+1]),"%c",posicion_actual[j]);
+		}
+		k+=2;
+	}
+
+	for(int i=0 ; i < (4 + cantidad_posiciones * 2); i++) printf("Mensaje[%d]: %s\n", i, mensaje_localized_pokemon[i]);
+
+	//enviar_mensaje(mensaje_localized_pokemon, conexion);
+	//liberar_conexion(conexion);
 }
 
 void serve_client(int* cliente_fd) {
@@ -467,6 +530,12 @@ void serve_client(int* cliente_fd) {
 		printf("size_Pokemon: %d\n", size_pokemon);
 		printf("Pokemon: %s\n", pokemon);
 		id_mensaje = recibir_entero(*cliente_fd);
+
+		t_list* posiciones = obtener_posiciones_del_pokemon(pokemon);
+
+		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
+
+		enviar_mensaje_localized(pokemon, posiciones);
 
 		break;
 	default:
