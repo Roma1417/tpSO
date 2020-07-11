@@ -8,10 +8,14 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <pthread.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <netdb.h>
 #include <string.h>
 #include <signal.h>
@@ -91,6 +95,8 @@ u_int32_t id_cola_caught;
 u_int32_t id_cola_appeared;
 u_int32_t ciclos_cpu_totales;
 u_int32_t cambios_contexto;
+bool inicio_deadlock;
+bool fin_deadlock;
 
 // Funciones Servidor
 

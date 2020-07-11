@@ -245,16 +245,12 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 
 	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
-	printf("tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
-	printf("id_mensaje: %d\n", paquete->id_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
-	printf("buffer->size: %d\n", paquete->buffer->size);
 	memcpy(magic + desplazamiento, &(paquete->id_correlativo), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
-	printf("id_correlativo: %d\n", paquete->id_correlativo);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
 	desplazamiento += paquete->buffer->size;
 	/*int tipo;

@@ -106,6 +106,9 @@ void iniciar_servidor(void) {
 		break;
 	}
 
+	int flags = fcntl(socket_servidor, F_GETFL, 0);
+	fcntl(socket_servidor, F_SETFL, flags | O_NONBLOCK);
+
 	listen(socket_servidor, SOMAXCONN);
 
 	freeaddrinfo(servinfo);
@@ -117,8 +120,9 @@ void iniciar_servidor(void) {
 	// se cumplio entonces -> sem_servidor = 0;
 
 	// Cambiar por algo mas feliz (para Josi)
-	while (!pokemons_objetivo_fueron_atrapados())
+	while (!pokemons_objetivo_fueron_atrapados()){
 		esperar_cliente(socket_servidor);
+	}
 
 }
 
@@ -152,6 +156,7 @@ void esperar_cliente(int socket_servidor) {
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	pthread_create(&thread, NULL, (void*) serve_client, &socket_cliente);
+
 	pthread_join(thread, NULL);
 
 }
@@ -184,12 +189,15 @@ bool sigue_en_falta_especie(char* pokemon) {
 
 void serve_client(int* socket) {
 	int cod_op;
+
 	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
+
 	if (cod_op == APPEARED_POKEMON) {
 		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 		recibir_entero(*socket);
 
 		char* cadena = recibir_cadena(*socket, &(appeared_pokemon->size_pokemon));
+
 		//*(cadena+appeared_pokemon->size_pokemon)=0; //Es un toque inestable, pero funciona
 		cambiar_nombre_pokemon(appeared_pokemon, cadena);
 		u_int32_t x = recibir_entero(*socket);
@@ -209,7 +217,6 @@ void serve_client(int* socket) {
 			sem_post(&sem_appeared_pokemon);
 		}
 		else appeared_pokemon_destroy(appeared_pokemon);
-
 		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
 
 	}
@@ -316,14 +323,9 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		case SUSCRIPTOR: {
 			u_int32_t id_cola = recibir_entero(cliente_fd);
-			printf("id_cola: %d\n", id_cola);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
-			printf("Ward1\n");
 			u_int32_t id_correlativo = recibir_entero(cliente_fd);
-			printf("Ward2\n");
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
-			printf("Ward3\n");
-			printf("tipo: %d\n", tipo);
 			asignar_id_cola_de_mensajes(id_cola, tipo);
 
 			break;
@@ -337,16 +339,14 @@ void process_request(int cod_op, int cliente_fd) {
 
 void asignar_id_caught(t_entrenador* entrenador, int conexion) {
 	tipo_mensaje tipo = recibir_entero(conexion);
-	printf("tipo_mensaje: %d\n", tipo);
 	if (tipo == CATCH_POKEMON) {
 		entrenador->id_caught = recibir_entero(conexion);
-		printf("id_caught: %d\n", entrenador->id_caught);
-		printf("buffer_size: %d\n", recibir_entero(conexion));
-		printf("id_correlativo: %d\n", recibir_entero(conexion));
+		recibir_entero(conexion);
+		recibir_entero(conexion);
 		int size;
-		printf("Pokemon: %s\n", recibir_cadena(conexion, &size));
-		printf("pos_x: %d\n", recibir_entero(conexion));
-		printf("pos_y: %d\n", recibir_entero(conexion));
+		recibir_cadena(conexion, &size);
+		recibir_entero(conexion);
+		recibir_entero(conexion);
 	}
 	else exit(1);
 	// Ale dijo que no hay que hacer free de los mensajes
@@ -452,6 +452,7 @@ int crear_y_reintentar_conexion(char *ip, char* puerto) {
 		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
 		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
 		sleep(config_team->tiempo_reconexion);
+		if (inicio_deadlock) return -1;
 	}
 
 	log_info(logger_team, "Se pudo establecer la conexion con el Broker");
