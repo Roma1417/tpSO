@@ -103,12 +103,13 @@ void process_request(int cod_op, int cliente_fd) {
 
 		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
 
-		t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo);
+		t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo, size);
 		t_particion* particion_agregada = agregar_stream(memoria, stream, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
 
 		printf("Id correlativo: %d\n", id_correlativo);
 
-		t_paquete* paquete = malloc(sizeof(t_paquete));//generar_paquete(particion_agregada);
+		t_paquete* paquete = generar_paquete(particion_agregada);
+		/*t_paquete* paquete = malloc(sizeof(t_paquete));
 		paquete->tipo_mensaje = cod_op;
 		printf("tipo_mensaje_paquete: %d\n", paquete->tipo_mensaje);
 		paquete->id_mensaje = id_mensaje;
@@ -116,13 +117,22 @@ void process_request(int cod_op, int cliente_fd) {
 		paquete->buffer = malloc(sizeof(t_buffer));
 		paquete->buffer->size = size;
 		paquete->buffer->stream = malloc(size);
-		memcpy(paquete->buffer->stream, particion_agregada->base, size);
+		memcpy(paquete->buffer->stream, particion_agregada->base, size);*/
+
+
+		printf("p tipo_mensaje: %d\n", paquete->tipo_mensaje);
+		printf("p id mensaje: %d\n", paquete->id_mensaje);
+		printf("p id correlativo: %d\n", paquete->id_correlativo);
+		printf("p size buffer: %d\n", paquete->buffer->size);
+
 
 		enviar_mensaje(paquete, cliente_fd);
-
+		printf("Casi envie todo\n");
 		enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
-		printf("Envie todo\n", id_correlativo);
+		printf("Envie todo\n");
 
+		//destruir_paquete(paquete);
+		//free(stream);
 		break;
 
 	case SUSCRIPTOR:
@@ -148,7 +158,7 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 		printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(obtener_lista_suscriptores(obtener_tipo_mensaje(cola_nombre))));
 
-
+		free(cola_nombre);
 		break;
 
 	case CONFIRMAR:
@@ -190,7 +200,7 @@ int recibir_entero(int socket_cliente){
 
 void* recibir_cadena(int socket_cliente, int* size)
 {
-	void * cadena;
+	void* cadena;
 
 	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
 	cadena = malloc(*size);
@@ -257,29 +267,9 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 	printf("id_correlativo: %d\n", paquete->id_correlativo);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
 	desplazamiento += paquete->buffer->size;
-	/*int tipo;
-	memcpy(&tipo, paquete->buffer->stream, paquete->buffer->size);
-	printf("buffer->stream: %d\n", tipo);*/
 
 	return magic;
 }
-
-void* serializar_paquete_correlativo(t_paquete* paquete, size_t bytes){
-	void* magic = malloc(bytes);
-	int desplazamiento = 0;
-
-	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
-	desplazamiento += sizeof(u_int32_t);
-	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
-	desplazamiento += sizeof(u_int32_t);
-	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
-	desplazamiento += sizeof(u_int32_t);
-	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento += paquete->buffer->size;
-
-	return magic;
-}
-
 
 
 void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){ //envio al suscriptor un mensaje de argumentos (id, SUSCRIPTOR, cola)
@@ -290,7 +280,8 @@ void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje
 
 	enviar_mensaje(paquete, suscriptor->numero_socket);
 	printf("Se envio un mensaje 3\n");
-	//destruir_paquete(paquete);
+	free(stream);
+	destruir_paquete(paquete);
 }
 
 
@@ -298,9 +289,10 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 	size_t bytes = paquete->buffer->size + 4*sizeof(int32_t);
 	printf("Paquete_tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	void* a_enviar = serializar_paquete(paquete, bytes);
-	printf("Se envio un mensaje\n");
-	u_int32_t envio = send(socket, a_enviar, bytes, MSG_NOSIGNAL);
-	printf("%d\n", envio);
+	printf("Se envio un mensaje.\n");
+	uint32_t envio = send(socket, a_enviar, bytes, MSG_NOSIGNAL);
+	printf("Ward 1\n");
+	printf("Envio: %d\n", envio);
 	free(a_enviar);
 	return envio;
 }
@@ -308,15 +300,19 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 
 void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor){
 
-	t_buffer* buffer = crear_buffer(particion->tamanio, particion->base);
-	t_paquete* paquete = crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
+	//t_buffer* buffer = crear_buffer(particion->tamanio, particion->base);
+	 //crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
+
+	t_paquete* paquete = generar_paquete(particion);
 
 	uint32_t envio = enviar_mensaje(paquete, suscriptor->numero_socket);
 
 	list_add(particion->atributos->suscriptores_enviados, suscriptor);
-	printf("Se envio un mensaje3\n");
+	printf("Se envio un mensaje 1\n");
 	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)", particion->atributos->id_mensaje, suscriptor->id, envio);
-	esperar_confirmacion(suscriptor);
+	//esperar_confirmacion(suscriptor);
+
+	destruir_paquete(paquete);
 }
 
 void esperar_confirmacion(t_suscriptor* suscriptor){

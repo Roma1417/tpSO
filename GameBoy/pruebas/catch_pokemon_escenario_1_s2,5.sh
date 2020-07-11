@@ -1,0 +1,2 @@
+./gameboy TEAM CAUGHT_POKEMON 7 OK
+./gameboy TEAM CAUGHT_POKEMON 8 OK

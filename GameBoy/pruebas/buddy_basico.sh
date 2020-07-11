@@ -5,6 +5,6 @@
 
 ./gameboy BROKER CATCH_POKEMON Onyx 4 5
 
-./gameboy SUSCRIPTOR NEW_POKEMON 10
+./gameboy SUSCRIPTOR NEW_POKEMON 2
 
 ./gameboy BROKER CATCH_POKEMON Charmander 4 5

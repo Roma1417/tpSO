@@ -15,14 +15,20 @@ t_memoria* crear_memoria(uint32_t tamanio){
 	memoria->base = malloc(tamanio);
 	memoria->tamanio = tamanio;
 	memoria->particiones = list_create();
-	t_particion* particion_base = crear_particion(memoria->base, memoria->tamanio, false, crear_atributos_particion(0, 0, 0, 0));
+	t_particion* particion_base = crear_particion(memoria->base, memoria->tamanio, false, crear_atributos_particion(0, 0, 0, 0, 0));
 	list_add(memoria->particiones, particion_base);
 	return memoria;
 }
 
 void destruir_memoria(t_memoria* memoria){
 	free(memoria->base);
-	list_destroy_and_destroy_elements(memoria->particiones, destruir_particion);
+
+	/*for(uint32_t i = 0; i < list_size(memoria->particiones); i++){
+		t_particion* particion = list_get(memoria->particiones, i);
+		destruir_particion(particion);
+	}
+
+	list_destroy(memoria->particiones);*/
 	free(memoria);
 }
 
@@ -57,13 +63,14 @@ t_particion* buscar_particion(t_memoria* memoria, uint32_t id_mensaje){
 
 
 
-t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_mensajes, uint32_t id_mensaje, uint32_t id_correlativo){
+t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_mensajes, uint32_t id_mensaje, uint32_t id_correlativo, uint32_t stream_size){
 	t_atributos_particion* atributos = malloc(sizeof(t_atributos_particion));
 
 	atributos->lru = lru;
 	atributos->cola_mensajes = cola_mensajes;
 	atributos->id_mensaje = id_mensaje;
 	atributos->id_correlativo = id_correlativo;
+	atributos->stream_size = stream_size;
 	atributos->suscriptores_enviados = list_create();
 	atributos->suscriptores_confirmados = list_create();
 
@@ -142,7 +149,7 @@ t_paquete* crear_paquete(u_int32_t id_mensaje, uint32_t id_correlativo, tipo_men
 }
 
 t_paquete* generar_paquete(t_particion* particion){
-	uint32_t size = min(strlen(particion->base),particion->tamanio);
+	uint32_t size = particion->atributos->stream_size;
 	void* stream = malloc(size);
 	memcpy(stream, particion->base, size);
 	t_buffer* buffer = crear_buffer(size, stream);
