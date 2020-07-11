@@ -64,6 +64,7 @@ typedef struct{
 	uint32_t cola_mensajes;
 	uint32_t id_mensaje;
 	uint32_t id_correlativo;
+	uint32_t stream_size;
 	t_list* suscriptores_enviados;
 	t_list* suscriptores_confirmados;
 }t_atributos_particion;
@@ -86,7 +87,7 @@ t_particion* crear_particion(void*, uint32_t, bool, t_atributos_particion*);
 t_particion* buscar_particion(t_memoria*, uint32_t);
 void destruir_particion(t_particion* particion);
 
-t_atributos_particion* crear_atributos_particion(uint32_t, uint32_t, uint32_t, uint32_t);
+t_atributos_particion* crear_atributos_particion(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 void destruir_atributos_particion(t_atributos_particion* atributos_particion);
 
 t_suscriptor* crear_suscriptor(u_int32_t, int32_t);

@@ -72,7 +72,7 @@ t_particion* agregar_particion(t_list* particiones, uint32_t indice, void* strea
 	case PD:
 		particion_seleccionada = list_get(particiones, indice);
 		if (particion_seleccionada->tamanio - tamanio != 0){
-			t_particion* particion_libre = crear_particion(particion_seleccionada->base + tamanio, particion_seleccionada->tamanio - tamanio, false, crear_atributos_particion(0, 0, 0, 0));
+			t_particion* particion_libre = crear_particion(particion_seleccionada->base + tamanio, particion_seleccionada->tamanio - tamanio, false, crear_atributos_particion(0, 0, 0, 0, 0));
 			list_add_in_index(particiones, indice + 1,particion_libre);
 		}
 		particion_seleccionada->tamanio = tamanio;
@@ -87,6 +87,7 @@ t_particion* agregar_particion(t_list* particiones, uint32_t indice, void* strea
 
 
 	particion_seleccionada->ocupada =true;
+	//destruir_atributos_particion(particion_seleccionada->atributos);
 	particion_seleccionada->atributos = atributos;
 
 
@@ -153,6 +154,7 @@ void combinar_particiones(t_list* particiones, uint32_t indice){
 
 	particion->tamanio += particion_siguiente->tamanio;
 	list_remove(particiones, indice + 1);
+	destruir_particion(particion_siguiente);
 }
 
 
@@ -196,7 +198,7 @@ void optimizar_memoria(t_memoria* memoria){
 void liberar_memoria(t_memoria* memoria){
 	uint32_t indice_victima = obtener_indice_particion_victima(memoria);
 	void* stream_a_liberar = liberar_particion(memoria, indice_victima, true);
-	//free(stream_a_liberar);
+	free(stream_a_liberar);
 }
 
 
@@ -287,7 +289,7 @@ uint32_t obtener_indice_particion_victima(t_memoria* memoria){
 
 
 id_algoritmo_memoria obtener_id_algoritmo_memoria(char* nombre_algoritmo){
-	if(string_equals_ignore_case(nombre_algoritmo,"PD")) return PD;
+	if(string_equals_ignore_case(nombre_algoritmo,"PARTICIONES")) return PD;
 	if(string_equals_ignore_case(nombre_algoritmo,"BS")) return BS;
 	return -1;
 }
