@@ -108,7 +108,17 @@ void process_request(int cod_op, int cliente_fd) {
 
 		printf("Id correlativo: %d\n", id_correlativo);
 
-		enviar_mensaje(generar_paquete(particion_agregada), cliente_fd);
+		t_paquete* paquete = malloc(sizeof(t_paquete));//generar_paquete(particion_agregada);
+		paquete->tipo_mensaje = cod_op;
+		printf("tipo_mensaje_paquete: %d\n", paquete->tipo_mensaje);
+		paquete->id_mensaje = id_mensaje;
+		paquete->id_correlativo = id_correlativo;
+		paquete->buffer = malloc(sizeof(t_buffer));
+		paquete->buffer->size = size;
+		paquete->buffer->stream = malloc(size);
+		memcpy(paquete->buffer->stream, particion_agregada->base, size);
+
+		enviar_mensaje(paquete, cliente_fd);
 
 		enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
 		printf("Envie todo\n", id_correlativo);
@@ -235,14 +245,21 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 
 	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("id_mensaje: %d\n", paquete->id_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("buffer->size: %d\n", paquete->buffer->size);
 	memcpy(magic + desplazamiento, &(paquete->id_correlativo), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("id_correlativo: %d\n", paquete->id_correlativo);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
 	desplazamiento += paquete->buffer->size;
+	/*int tipo;
+	memcpy(&tipo, paquete->buffer->stream, paquete->buffer->size);
+	printf("buffer->stream: %d\n", tipo);*/
 
 	return magic;
 }
@@ -278,7 +295,8 @@ void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje
 
 
 u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
-	size_t bytes = paquete->buffer->size + 3*sizeof(int32_t);
+	size_t bytes = paquete->buffer->size + 4*sizeof(int32_t);
+	printf("Paquete_tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	printf("Se envio un mensaje\n");
 	u_int32_t envio = send(socket, a_enviar, bytes, MSG_NOSIGNAL);

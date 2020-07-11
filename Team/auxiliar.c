@@ -6,6 +6,17 @@
  */
 #include "auxiliar.h"
 
+
+algoritmo_planificacion get_algoritmo_planificacion() {
+	algoritmo_planificacion tipo;
+	char* algoritmo = config_team->algoritmo_planificacion;
+	if (strcmp(algoritmo, "FIFO") == 0) tipo = FIFO;
+	if (strcmp(algoritmo, "RR") == 0) tipo = RR;
+	if (strcmp(algoritmo, "SJF-CD") == 0) tipo = SJFCD;
+
+	return tipo;
+}
+
 /*
  * @NAME: distancia
  * @DESC: Dados un entrenador y un appeared_pokemon, nos devuelve

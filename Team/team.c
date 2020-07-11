@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./team_SJF.config");
+	t_config* config = config_create("./team.config");
 	return config;
 }
 
@@ -414,7 +414,7 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	mensaje[4] = string_itoa(pokemon->posicion->y);
 
 	enviar_mensaje(mensaje, conexion);
-
+	printf("Envie mensaje\n");
 	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
@@ -424,16 +424,6 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	sem_post(&(mutex_ciclos_cpu_totales));
 
 	return 0;
-}
-
-algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config) {
-	algoritmo_planificacion tipo;
-	char* algoritmo = config->algoritmo_planificacion;
-	if (strcmp(algoritmo, "FIFO") == 0) tipo = FIFO;
-	if (strcmp(algoritmo, "RR") == 0) tipo = RR;
-	if (strcmp(algoritmo, "SJF-CD") == 0) tipo = SJFCD;
-
-	return tipo;
 }
 
 /**

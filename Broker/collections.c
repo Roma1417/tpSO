@@ -146,6 +146,7 @@ t_paquete* generar_paquete(t_particion* particion){
 	void* stream = malloc(size);
 	memcpy(stream, particion->base, size);
 	t_buffer* buffer = crear_buffer(size, stream);
+	//printf("tipo mensaje: %d\n", particion->atributos->cola_mensajes);
 	return crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
 }
 

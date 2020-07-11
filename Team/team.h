@@ -27,14 +27,7 @@ u_int32_t cantidad_deadlocks;
 u_int32_t largo_lista_ready;
 sem_t mutex_largo_lista_ready;
 
-typedef enum {
-	FIFO = 1,
-	RR = 2,
-	SJF = 3,
-	SJFCD = 4
-} algoritmo_planificacion;
 
-algoritmo_planificacion get_algoritmo_planificacion(t_config_team* config);
 t_config* leer_config(void);
 t_config_team* construir_config_team(t_config* config);
 t_log* iniciar_logger(char* path);

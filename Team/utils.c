@@ -202,7 +202,7 @@ void serve_client(int* socket) {
 
 		if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
 
-			sem_wait(&puede_ser_pusheado);
+			if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 
 			queue_push(appeared_pokemons, appeared_pokemon);
 
@@ -316,8 +316,14 @@ void process_request(int cod_op, int cliente_fd) {
 			break;
 		case SUSCRIPTOR: {
 			u_int32_t id_cola = recibir_entero(cliente_fd);
+			printf("id_cola: %d\n", id_cola);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
+			printf("Ward1\n");
+			u_int32_t id_correlativo = recibir_entero(cliente_fd);
+			printf("Ward2\n");
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
+			printf("Ward3\n");
+			printf("tipo: %d\n", tipo);
 			asignar_id_cola_de_mensajes(id_cola, tipo);
 
 			break;
@@ -331,13 +337,16 @@ void process_request(int cod_op, int cliente_fd) {
 
 void asignar_id_caught(t_entrenador* entrenador, int conexion) {
 	tipo_mensaje tipo = recibir_entero(conexion);
+	printf("tipo_mensaje: %d\n", tipo);
 	if (tipo == CATCH_POKEMON) {
 		entrenador->id_caught = recibir_entero(conexion);
-		recibir_entero(conexion);
+		printf("id_caught: %d\n", entrenador->id_caught);
+		printf("buffer_size: %d\n", recibir_entero(conexion));
+		printf("id_correlativo: %d\n", recibir_entero(conexion));
 		int size;
-		recibir_cadena(conexion, &size);
-		recibir_entero(conexion);
-		recibir_entero(conexion);
+		printf("Pokemon: %s\n", recibir_cadena(conexion, &size));
+		printf("pos_x: %d\n", recibir_entero(conexion));
+		printf("pos_y: %d\n", recibir_entero(conexion));
 	}
 	else exit(1);
 	// Ale dijo que no hay que hacer free de los mensajes
