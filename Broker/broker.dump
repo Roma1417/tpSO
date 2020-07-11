@@ -1,3 +1,2 @@
 Particion 0: (nil) - 0x13.	[X]	Size: 19b	LRU:0	Cola 3	ID:1
-Particion 1: 0x13 - 0x17.	[X]	Size: 4b	LRU:1	Cola 4	ID:2
-Particion 2: 0x17 - 0x200.	[L]	Size: 489b
+Particion 1: 0x13 - 0x200.	[L]	Size: 493b

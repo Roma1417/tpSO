@@ -35,6 +35,7 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 
 	// Agrego cosas para SJF sin desalojo (para discutirlas)
 	entrenador->estimacion = estimacion_inicial;
+	entrenador->estimacion_restante = estimacion_inicial;
 	entrenador->rafaga_anterior = 0;
 
 	// NOTA: La rafaga inicial la puse inicialmente como 0.

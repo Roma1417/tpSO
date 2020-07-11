@@ -43,6 +43,7 @@ typedef struct {
 	u_int32_t ciclos_cpu;
 
 	float estimacion;
+	float estimacion_restante;
 	u_int32_t rafaga_anterior;
 
 } t_entrenador;
