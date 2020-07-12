@@ -71,8 +71,9 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
-		int ciclos = distance + ATRAPAR;
+		int ciclos = distance;
 		entrenador->ciclos_cpu += ciclos;
+		entrenador->rafaga = ciclos;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
 		ciclos_cpu_totales += ciclos;
@@ -117,8 +118,9 @@ void* ejecutar_entrenador_RR(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
-		int ciclos = distance + ATRAPAR;
+		int ciclos = distance;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
 		ciclos_cpu_totales += ciclos;
@@ -245,13 +247,13 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
-		int ciclos = distance + ATRAPAR;
-
-		u_int32_t tamanio_antes_de_ejecutar = list_size(lista_ready);
+		int ciclos = distance;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
 		ciclos_cpu_totales += ciclos;
 		sem_post(&(mutex_ciclos_cpu_totales));
+
+		u_int32_t tamanio_antes_de_ejecutar = list_size(lista_ready);
 
 		entrenador->rafaga = ciclos;
 		entrenador->ciclos_cpu += ciclos;
@@ -263,6 +265,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 				else mover_a_la_izquierda(entrenador->posicion);
 
 				sleep(config_team->retardo_ciclo_cpu);
+
 				entrenador->rafaga--;
 				entrenador->estimacion_restante--;
 				verificar_llegada_de_entrenador(planificado, &tamanio_antes_de_ejecutar);
@@ -329,6 +332,13 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 
 		u_int32_t rafaga = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+
+		sem_wait(&(mutex_ciclos_cpu_totales));
+		ciclos_cpu_totales += rafaga;
+		sem_post(&(mutex_ciclos_cpu_totales));
+
+		entrenador->ciclos_cpu += rafaga;
+
 		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
 
 		modificar_estimacion_y_rafaga(entrenador, rafaga);
@@ -392,9 +402,7 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 
 	liberar_conexion(conexion);
 
-	sem_wait(&(mutex_ciclos_cpu_totales));
-	ciclos_cpu_totales += ENVIAR_MENSAJE;
-	sem_post(&(mutex_ciclos_cpu_totales));
+	entrenador->ciclos_cpu += ENVIAR_MENSAJE;
 
 	return 0;
 }
@@ -565,6 +573,10 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 	donador->rafaga = ciclos;
 	donador->ciclos_cpu += ciclos;
 
+	sem_wait(&(mutex_ciclos_cpu_totales));
+	ciclos_cpu_totales += ciclos;
+	sem_post(&(mutex_ciclos_cpu_totales));
+
 	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
 
 	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
@@ -573,8 +585,14 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+
+	for (int i = 0; i < INTERCAMBIAR; i++) {
+		sleep(config_team->retardo_ciclo_cpu);
+		donador->rafaga--;
+	}
+
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
 
 	// Hay un error
@@ -680,10 +698,13 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 			sem_wait(&puede_ejecutar[donador->indice]);
 			quantum_acumulado = 0;
 		}
+		sleep(config_team->retardo_ciclo_cpu);
+		donador->rafaga--;
 	}
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
 
 	sem_post(&puede_intercambiar);
@@ -769,6 +790,9 @@ void realizar_intercambios_RR() {
 		sem_wait(&(termino_de_capturar[i]));
 	}
 
+	inicio_deadlock = true;
+	sem_post(&sem_appeared_pokemon);
+
 	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
 
 	// Ahora vendria lo que dijo ale
@@ -786,6 +810,8 @@ void realizar_intercambios_RR() {
 	}
 
 	actualizar_objetivo_global();
+
+	fin_deadlock = true;
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
@@ -968,6 +994,9 @@ void realizar_intercambios_SJF() {
 		sem_wait(&(termino_de_capturar[i]));
 	}
 
+	inicio_deadlock = true;
+	sem_post(&sem_appeared_pokemon);
+
 	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
 
 	while (!list_is_empty(entrenadores_deadlock)) {
@@ -1005,6 +1034,8 @@ void realizar_intercambios_SJF() {
 		list_destroy(donadores);
 	}
 
+	fin_deadlock = true;
+
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
 }
@@ -1036,6 +1067,14 @@ void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planifica
 	sem_wait(&(puede_ejecutar[donador->indice]));
 
 	u_int32_t rafaga = distancia(donador->posicion, entrenador->posicion);
+	u_int32_t ciclos = rafaga + INTERCAMBIAR;
+	donador->rafaga = ciclos;
+	donador->ciclos_cpu += ciclos;
+
+	sem_wait(&(mutex_ciclos_cpu_totales));
+	ciclos_cpu_totales += ciclos;
+	sem_post(&(mutex_ciclos_cpu_totales));
+
 	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
 
 	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
@@ -1052,10 +1091,14 @@ void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planifica
 	// Falta poner sleep tanto aca como en fifo
 
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
-
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
-	modificar_estimacion_y_rafaga(donador, rafaga + 5);
+	modificar_estimacion_y_rafaga(donador, ciclos);
+
+	for (int i = 0; i < INTERCAMBIAR; i++) {
+		sleep(config_team->retardo_ciclo_cpu);
+	}
+
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
 
 	// Hay un error
