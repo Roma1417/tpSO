@@ -244,6 +244,15 @@ char* obtener_resultado(u_int32_t resultado) {
 	return string;
 }
 
+t_appeared_pokemon* crear_localized_pokemon(char* pokemon, uint32_t pos_x, uint32_t pos_y){
+	t_appeared_pokemon* localized_pokemon = malloc(sizeof(t_appeared_pokemon));
+	localized_pokemon->pokemon = pokemon;
+	localized_pokemon->posicion->x = pos_x;
+	localized_pokemon->posicion->y = pos_y;
+
+	return localized_pokemon;
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -313,11 +322,21 @@ void process_request(int cod_op, int cliente_fd) {
 			id = recibir_entero(cliente_fd);
 			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
 			size = recibir_entero(cliente_fd);
-			u_int32_t size_pokemon;
+			uint32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			u_int32_t x = recibir_entero(cliente_fd);
-			u_int32_t y = recibir_entero(cliente_fd);
-			recibir_entero(cliente_fd);
+			uint32_t cantidad_posiciones = recibir_entero(cliente_fd);
+			uint32_t pos_x;
+			uint32_t pos_y;
+
+			for(int i=0; i<cantidad_posiciones; i++){
+				pos_x = recibir_entero(cliente_fd);
+				pos_y = recibir_entero(cliente_fd);
+				//Falta verificar si ya se recibió especie
+				if((list_elem(pokemon, objetivo_global) && sigue_en_falta_especie(pokemon))){ //&& (!ya_recibio_especie())
+					printf("Agrego a %s a appeared_pokemons\n", pokemon);
+					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+				}
+			}
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;

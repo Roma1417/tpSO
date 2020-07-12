@@ -1469,7 +1469,7 @@ int main(void) {
 
 	especies_requeridas = obtener_especies(objetivo_global);
 
-	//enviar_mensajes_get_pokemon();
+	enviar_mensajes_get_pokemon();
 	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_t hilo_planificador_largo_plazo;
