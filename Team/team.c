@@ -63,6 +63,15 @@ t_config_team* construir_config_team(t_config* config) {
 	return config_team;
 }
 
+void agregar_especie_requerida(char* pokemon){
+	t_especie* especie;
+	for(int i=0; i<list_size(especies_requeridas); i++){
+		especie = list_get(especies_requeridas, i);
+		if(string_equals_ignore_case(especie->nombre, pokemon)) (especie->cantidad)++;
+
+	}
+}
+
 //Codigo de prueba
 void* ejecutar_entrenador_FIFO(void* parametro) {
 	t_entrenador* entrenador = parametro;
@@ -99,6 +108,9 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+		}
+		else{
+			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
@@ -188,6 +200,9 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+		}
+		else{
+			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
@@ -315,6 +330,9 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
+		else{
+			agregar_especie_requerida(planificado->pokemon->pokemon);
+		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
@@ -368,6 +386,9 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
+		}
+		else{
+			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
