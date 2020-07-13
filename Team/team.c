@@ -57,17 +57,27 @@ t_config_team* construir_config_team(t_config* config) {
 	// si es float -> 32bits
 	// si es double -> 64bits
 
-	config_team->objetivos_entrenadores = pasar_a_lista_de_pokemon(config, "OBJETIVOS_ENTRENADORES");
-	config_team->pokemon_entrenadores = pasar_a_lista_de_pokemon(config, "POKEMON_ENTRENADORES");
-	config_team->posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
+	//config_team->objetivos_entrenadores = pasar_a_lista_de_pokemon(config, "OBJETIVOS_ENTRENADORES");
+	//config_team->pokemon_entrenadores = pasar_a_lista_de_pokemon(config, "POKEMON_ENTRENADORES");
+	//config_team->posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
+
+	if (strcmp(config_get_string_value(config, "OBJETIVOS_ENTRENADORES"), "[]") != 0) config_team->objetivos_entrenadores = pasar_a_lista_de_pokemon(config, "OBJETIVOS_ENTRENADORES");
+	else config_team->objetivos_entrenadores = list_create();
+
+	if (strcmp(config_get_string_value(config, "POKEMON_ENTRENADORES"), "[]") != 0) config_team->pokemon_entrenadores = pasar_a_lista_de_pokemon(config, "POKEMON_ENTRENADORES");
+	else config_team->pokemon_entrenadores = list_create();
+
+	if (strcmp(config_get_string_value(config, "POSICIONES_ENTRENADORES"), "[]") != 0) config_team->posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
+	else config_team->posiciones_entrenadores = list_create();
+
 	return config_team;
 }
 
-void agregar_especie_requerida(char* pokemon){
+void agregar_especie_requerida(char* pokemon) {
 	t_especie* especie;
-	for(int i=0; i<list_size(especies_requeridas); i++){
+	for (int i = 0; i < list_size(especies_requeridas); i++) {
 		especie = list_get(especies_requeridas, i);
-		if(string_equals_ignore_case(especie->nombre, pokemon)) (especie->cantidad)++;
+		if (string_equals_ignore_case(especie->nombre, pokemon)) (especie->cantidad)++;
 
 	}
 }
@@ -109,7 +119,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
-		else{
+		else {
 			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
@@ -201,7 +211,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
-		else{
+		else {
 			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
@@ -330,7 +340,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
-		else{
+		else {
 			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
@@ -387,7 +397,7 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
-		else{
+		else {
 			agregar_especie_requerida(planificado->pokemon->pokemon);
 		}
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
@@ -447,7 +457,8 @@ t_list* crear_entrenadores(t_config_team* config_team) {
 
 	for (int i = 0; i < list_size(objetivos_entrenadores); i++) {
 		t_list* objetivo = list_get(objetivos_entrenadores, i);
-		t_list* pokemon_obtenidos = list_get(pokemon_entrenadores, i);
+		t_list* pokemon_obtenidos;
+		if (!list_is_empty(pokemon_entrenadores)) pokemon_obtenidos = list_get(pokemon_entrenadores, i);
 		t_posicion* posicion = list_get(posiciones_entrenadores, i);
 
 		t_entrenador* entrenador = entrenador_create(posicion, pokemon_obtenidos, objetivo, i, config_team->estimacion_inicial);
