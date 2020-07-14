@@ -347,14 +347,24 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 		case LOCALIZED_POKEMON:
 			id = recibir_entero(cliente_fd);
+			printf("id: %d\n", id);
 			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
 			size = recibir_entero(cliente_fd);
+			printf("size: %d\n", size);
 			id_correlativo = recibir_entero(cliente_fd);
+			printf("id_correlativo: %d\n", id_correlativo);
 			uint32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+			printf("Size_pokemon: %d\n");
+			printf("Pokemon: %s\n", pokemon);
 			uint32_t cantidad_posiciones = recibir_entero(cliente_fd);
+			printf("Cantidad pos: %d\n", cantidad_posiciones);
 			uint32_t pos_x;
 			uint32_t pos_y;
+
+			//Agregar al log_info las posiciones
+			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d", pokemon, cantidad_posiciones);
+
 
 			if ((list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))) {
 				recibir_pokemon(pokemon);
@@ -371,8 +381,6 @@ void process_request(int cod_op, int cliente_fd) {
 				}
 			}
 
-			//Agregar al log_info las posiciones
-			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d", pokemon, cantidad_posiciones);
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;
