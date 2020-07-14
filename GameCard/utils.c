@@ -142,8 +142,8 @@ void recibir_mensaje(int* socket) {
 	process_request(cod_op, *socket);
 }
 
-void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd,
-		u_int32_t id_proceso, char* mensaje) {
+void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensaje) {
+	int cliente_fd = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** argv = malloc(sizeof(char*) * 5);
 	for (int i = 0; i < 5; i++) {
 		argv[i] = string_new();
@@ -155,6 +155,7 @@ void confirmar_recepcion(u_int32_t id_mensaje, int cliente_fd,
 	string_append(&(argv[4]), string_itoa(id_proceso));
 	enviar_mensaje(argv, cliente_fd);
 	printf("Mandé confirmación\n");
+	liberar_conexion(cliente_fd);
 }
 
 bool list_elem(char* elemento, t_list* lista) {
@@ -187,15 +188,17 @@ void process_request(int cod_op, int cliente_fd) {
 	void* msg;
 	char* pokemon;
 	u_int32_t size_pokemon;
+	uint32_t id_correlativo;
 	u_int32_t posicion_x;
 	u_int32_t posicion_y;
-
+	printf("Cod_op: %d\n", cod_op);
 	switch (cod_op) {
 	case NEW_POKEMON:
 		printf("Recibi un mensaje NEW_POKEMON\n");
 		t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
 		id = recibir_entero(cliente_fd);
 		size = recibir_entero(cliente_fd);
+		id_correlativo = recibir_entero(cliente_fd);
 		new_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
 		printf("Pokemon: %s\n", new_pokemon->pokemon);
 		new_pokemon->pos_x = recibir_entero(cliente_fd);
@@ -207,7 +210,7 @@ void process_request(int cod_op, int cliente_fd) {
 				new_pokemon->pokemon, new_pokemon->pos_x, new_pokemon->pos_y,
 				new_pokemon->cantidad);
 
-		confirmar_recepcion(id, cliente_fd, id_cola_new, "NEW_POKEMON");
+		confirmar_recepcion(id, id_cola_new, "NEW_POKEMON");
 
 		cargar_datos_new_pokemon(new_pokemon);
 
@@ -218,16 +221,21 @@ void process_request(int cod_op, int cliente_fd) {
 		//printf("Recibi un mensaje CATCH_POKEMON\n");
 		t_catch_pokemon* catch_pokemon = malloc(sizeof(t_catch_pokemon));
 		id = recibir_entero(cliente_fd);
+		printf("id: %d\n", id);
 		size = recibir_entero(cliente_fd);
+		printf("size: %d\n", size);
+		id_correlativo = recibir_entero(cliente_fd);
+		printf("id_correlativo: %d\n", id_correlativo);
 		catch_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+		printf("catch_pokemon->pokemon : %s\n", catch_pokemon->pokemon);
 		catch_pokemon->pos_x = recibir_entero(cliente_fd);
+		printf("catch_pokemon->pos_x : %d\n", catch_pokemon->pos_x);
 		catch_pokemon->pos_y = recibir_entero(cliente_fd);
+		printf("catch_pokemon->pos_y : %d\n", catch_pokemon->pos_y);
 
-		log_info(logger_gamecard,
-				"Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d",
-				pokemon, posicion_x, posicion_y);
+		log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d",pokemon, posicion_x, posicion_y);
 
-		confirmar_recepcion(id, cliente_fd, id_cola_catch, "CATCH_POKEMON");
+		confirmar_recepcion(id, id_cola_catch, "CATCH_POKEMON");
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
 		enviar_caught_pokemon(id, resultado_captura);
@@ -236,19 +244,33 @@ void process_request(int cod_op, int cliente_fd) {
 	case GET_POKEMON:
 		//printf("Recibi un mensaje GET_POKEMON\n");
 		id = recibir_entero(cliente_fd);
+		printf("id: %d\n", id);
 		size = recibir_entero(cliente_fd);
+		printf("size: %d\n", size);
+		id_correlativo = recibir_entero(cliente_fd);
+		printf("id_correlativo: %d\n", id_correlativo);
 		pokemon = recibir_cadena(cliente_fd, &size_pokemon);
+		printf("Pokemon: %s\n", pokemon);
 
 		log_info(logger_gamecard,
 				"Recibí un mensaje de tipo GET_POKEMON y sus datos son: %s",
 				pokemon);
 
-		confirmar_recepcion(id, cliente_fd, id_cola_get, "GET_POKEMON");
+		confirmar_recepcion(id, id_cola_get, "GET_POKEMON");
+
+		t_list* posiciones = obtener_posiciones_del_pokemon(pokemon);
+
+		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
+
+		enviar_mensaje_localized(pokemon, posiciones);
+
+
 		break;
 
 	case SUSCRIPTOR: {
 		u_int32_t id_cola = recibir_entero(cliente_fd);
 		u_int32_t size_2 = recibir_entero(cliente_fd);
+		id_correlativo = recibir_entero(cliente_fd);
 		tipo_mensaje tipo = recibir_entero(cliente_fd);
 		asignar_id_cola_de_mensajes(id_cola, tipo);
 		break;
@@ -445,12 +467,12 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
 	char* pos_y;
 	char* posicion_actual;
 
-	//int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
+	int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** mensaje_localized_pokemon = malloc((sizeof(char*)) * (4 + cantidad_posiciones * 2));
 	mensaje_localized_pokemon[0] = string_new();
 	string_append(&(mensaje_localized_pokemon[0]), "BROKER");
 	mensaje_localized_pokemon[1] = string_new();
-	string_append(&(mensaje_localized_pokemon[1]), "LOCALIZED");
+	string_append(&(mensaje_localized_pokemon[1]), "LOCALIZED_POKEMON");
 	mensaje_localized_pokemon[2] = pokemon;
 	mensaje_localized_pokemon[3] = string_itoa(cantidad_posiciones);
 	int k = 4;
@@ -474,8 +496,9 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
 
 	for(int i=0 ; i < (4 + cantidad_posiciones * 2); i++) printf("Mensaje[%d]: %s\n", i, mensaje_localized_pokemon[i]);
 
-	//enviar_mensaje(mensaje_localized_pokemon, conexion);
-	//liberar_conexion(conexion);
+	enviar_mensaje(mensaje_localized_pokemon, conexion);
+	printf("Envié localized_pokemon\n");
+	liberar_conexion(conexion);
 }
 
 void serve_client(int* cliente_fd) {
@@ -506,7 +529,7 @@ void serve_client(int* cliente_fd) {
 
 		cargar_datos_new_pokemon(new_pokemon);
 
-		//enviar_appeared_pokemon(id_mensaje, new_pokemon);
+		enviar_appeared_pokemon(id_mensaje, new_pokemon);
 
 		break;
 	case CATCH_POKEMON:
@@ -519,7 +542,7 @@ void serve_client(int* cliente_fd) {
 		id_mensaje = recibir_entero(*cliente_fd);
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
-		//enviar_caught_pokemon(id_mensaje, resultado_captura);
+		enviar_caught_pokemon(id_mensaje, resultado_captura);
 
 		break;
 	case GET_POKEMON:
@@ -621,12 +644,13 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente) {
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = tipo;
+	printf("Cod_op: %d\n", tipo);
 	paquete->buffer = malloc(sizeof(t_buffer));
 	u_int32_t size = obtener_size(argv, tipo);
 	paquete->buffer->size = size;
 	void* stream = generar_stream(argv, paquete);
 	paquete->buffer->stream = stream;
-
+	printf("SIZE: %d\n", size);
 	u_int32_t size_serializado;
 
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
@@ -679,6 +703,20 @@ void* generar_stream(char** argumentos, t_paquete* paquete) {
 		agregar_entero(&offset, argumentos[4], &stream);
 		agregar_entero(&offset, argumentos[5], &stream);
 		break;
+	case CAUGHT_POKEMON:
+		agregar_entero(&offset, argumentos[2], &stream);
+		agregar_entero(&offset, argumentos[3], &stream);
+		break;
+	case LOCALIZED_POKEMON:
+		agregar_string(&offset, argumentos[2], &stream);
+		agregar_entero(&offset, argumentos[3], &stream);
+		int indice = 4;
+		for(int i=0; i<atoi(argumentos[3]); i++){
+			agregar_entero(&offset, argumentos[indice], &stream);
+			agregar_entero(&offset, argumentos[indice+1], &stream);
+			indice +=2;
+		}
+		break;
 	case SUSCRIPTOR:
 		agregar_string(&offset, argumentos[2], &stream);
 		agregar_entero(&offset, argumentos[3], &stream);
@@ -709,6 +747,12 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo) {
 	switch (tipo) {
 	case APPEARED_POKEMON:
 		size = sizeof(u_int32_t) * 4 + strlen(argumentos[2]);
+		break;
+	case CAUGHT_POKEMON:
+		size = sizeof(u_int32_t) * 2;
+		break;
+	case LOCALIZED_POKEMON:
+		size = sizeof(u_int32_t) * (2+2*atoi(argumentos[3])) + strlen(argumentos[2]);
 		break;
 	case SUSCRIPTOR:
 		size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]);

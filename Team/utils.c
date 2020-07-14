@@ -187,6 +187,18 @@ bool sigue_en_falta_especie(char* pokemon) {
 	return en_falta;
 }
 
+void recibir_pokemon(char* pokemon){
+	bool se_encontro = false;
+	t_especie* especie;
+	for(int i=0; i<list_size(especies_requeridas) && !se_encontro; i++){
+		especie = list_get(especies_requeridas, i);
+		if(string_equals_ignore_case(pokemon, especie->nombre)){
+			se_encontro = true;
+			especie->fueRecibida = true;
+		}
+	}
+}
+
 void serve_client(int* socket) {
 	int cod_op;
 
@@ -209,7 +221,7 @@ void serve_client(int* socket) {
 		// Posible uso de semaforos en esta parte
 
 		if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
-
+			recibir_pokemon(appeared_pokemon->pokemon);
 			if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 
 			queue_push(appeared_pokemons, appeared_pokemon);
@@ -253,6 +265,15 @@ t_appeared_pokemon* crear_localized_pokemon(char* pokemon, uint32_t pos_x, uint3
 	return localized_pokemon;
 }
 
+bool ya_recibio_especie(char* pokemon){
+	t_especie* especie;
+	for(int i=0; i<list_size(especies_requeridas); i++){
+		especie = list_get(especies_requeridas, i);
+		if(string_equals_ignore_case(pokemon, especie->nombre)) return especie->fueRecibida;
+	}
+	return false;
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -261,24 +282,28 @@ void process_request(int cod_op, int cliente_fd) {
 	int size;
 	void* msg;
 	u_int32_t id;
+	u_int32_t id_correlativo;
 	switch (cod_op) {
 		case APPEARED_POKEMON: {
 			id = recibir_entero(cliente_fd);
 			t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
 			recibir_entero(cliente_fd);
+			id_correlativo = recibir_entero(cliente_fd);
 			char* cadena = recibir_cadena(cliente_fd, &(appeared_pokemon->size_pokemon));
 			cambiar_nombre_pokemon(appeared_pokemon, cadena);
 			u_int32_t x = recibir_entero(cliente_fd);
 			u_int32_t y = recibir_entero(cliente_fd);
 			t_posicion* posicion = posicion_create(x, y);
 			cambiar_posicion(appeared_pokemon, posicion);
-			u_int32_t id_correlativo = recibir_entero(cliente_fd);
+
 
 			// Posible uso de semaforos en esta parte
 
 			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d", cadena, x, y, id_correlativo);
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
+				recibir_pokemon(appeared_pokemon->pokemon);
+				if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);
 			}
@@ -295,6 +320,8 @@ void process_request(int cod_op, int cliente_fd) {
 			id = recibir_entero(cliente_fd);
 
 			size = recibir_entero(cliente_fd);
+
+			id_correlativo = recibir_entero(cliente_fd);
 
 			u_int32_t id_mensaje = recibir_entero(cliente_fd);
 
@@ -322,21 +349,30 @@ void process_request(int cod_op, int cliente_fd) {
 			id = recibir_entero(cliente_fd);
 			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
 			size = recibir_entero(cliente_fd);
+			id_correlativo = recibir_entero(cliente_fd);
 			uint32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
 			uint32_t cantidad_posiciones = recibir_entero(cliente_fd);
 			uint32_t pos_x;
 			uint32_t pos_y;
 
-			for(int i=0; i<cantidad_posiciones; i++){
-				pos_x = recibir_entero(cliente_fd);
-				pos_y = recibir_entero(cliente_fd);
-				//Falta verificar si ya se recibió especie
-				if((list_elem(pokemon, objetivo_global) && sigue_en_falta_especie(pokemon))){ //&& (!ya_recibio_especie())
-					printf("Agrego a %s a appeared_pokemons\n", pokemon);
-					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+			if ((list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))) {
+				recibir_pokemon(pokemon);
+				for (int i = 0; i < cantidad_posiciones; i++) {
+					pos_x = recibir_entero(cliente_fd);
+					pos_y = recibir_entero(cliente_fd);
+
+					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
+						printf("Agrego a %s a appeared_pokemons\n", pokemon);
+						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
+						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+						sem_post(&sem_appeared_pokemon);
+					}
 				}
 			}
+
+			//Agregar al log_info las posiciones
+			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d", pokemon, cantidad_posiciones);
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;

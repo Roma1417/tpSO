@@ -62,6 +62,7 @@ typedef struct {
 typedef struct {
 	char* nombre;
 	int cantidad;
+	bool fueRecibida;
 } t_especie;
 
 t_config_team* config_team;

@@ -68,7 +68,7 @@ t_particion* buscar_particion(t_memoria* memoria, uint32_t id_mensaje){
 
 t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_mensajes, uint32_t id_mensaje, uint32_t id_correlativo, uint32_t stream_size){
 	t_atributos_particion* atributos = malloc(sizeof(t_atributos_particion));
-
+	printf("Ward1\n");
 	atributos->lru = lru;
 	atributos->cola_mensajes = cola_mensajes;
 	atributos->id_mensaje = id_mensaje;
@@ -76,19 +76,19 @@ t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_men
 	atributos->stream_size = stream_size;
 	atributos->suscriptores_enviados = list_create();
 	atributos->suscriptores_confirmados = list_create();
-
+	printf("Ward2\n");
 	return atributos;
 }
 
 void destruir_atributos_particion(t_atributos_particion* atributos_particion){
 	if (atributos_particion != NULL) {
-	list_destroy(atributos_particion->suscriptores_enviados);
-	list_destroy(atributos_particion->suscriptores_confirmados);
+	//list_destroy(atributos_particion->suscriptores_enviados);
+	//list_destroy(atributos_particion->suscriptores_confirmados);
 
 
 
 	}
-	free(atributos_particion);
+	//free(atributos_particion);
 }
 
 t_suscriptor* crear_suscriptor(u_int32_t id, int32_t socket){

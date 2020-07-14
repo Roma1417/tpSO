@@ -1371,6 +1371,7 @@ t_list* obtener_especies() {
 			t_especie* especie = malloc(sizeof(t_especie));
 			especie->nombre = pokemon;
 			especie->cantidad = 1;
+			especie->fueRecibida = false;
 			list_add(especies, especie);
 		}
 

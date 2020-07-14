@@ -72,6 +72,7 @@ void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon);
 bool generar_resultado_captura(t_catch_pokemon* catch_pokemon);
 void enviar_caught_pokemon(uint32_t id_mensaje, bool resultado_catch);
 t_list* obtener_posiciones_del_pokemon(char* pokemon);
+void enviar_mensaje_localized(char* pokemon, t_list* posiciones);
 
 
 #endif /* UTILS_H_ */
