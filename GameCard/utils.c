@@ -214,6 +214,8 @@ void process_request(int cod_op, int cliente_fd) {
 
 		cargar_datos_new_pokemon(new_pokemon);
 
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
+
 		enviar_appeared_pokemon(id, new_pokemon);
 
 		break;
@@ -233,11 +235,13 @@ void process_request(int cod_op, int cliente_fd) {
 		catch_pokemon->pos_y = recibir_entero(cliente_fd);
 		printf("catch_pokemon->pos_y : %d\n", catch_pokemon->pos_y);
 
-		log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d",pokemon, posicion_x, posicion_y);
+		log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d",catch_pokemon->pokemon, catch_pokemon->pos_x, catch_pokemon->pos_y);
 
 		confirmar_recepcion(id, id_cola_catch, "CATCH_POKEMON");
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
+
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
 		enviar_caught_pokemon(id, resultado_captura);
 
 		break;
@@ -262,7 +266,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
 
-		enviar_mensaje_localized(pokemon, posiciones);
+		enviar_mensaje_localized(pokemon, posiciones, id);
 
 
 		break;
@@ -460,7 +464,7 @@ t_list* obtener_posiciones_del_pokemon(char* pokemon){
 	return posiciones_sin_cantidad;
 }
 
-void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
+void enviar_mensaje_localized(char* pokemon, t_list* posiciones, uint32_t id){
 	uint32_t cantidad_posiciones = list_size(posiciones);
 	printf("Cantidad de posiciones: %d\n", cantidad_posiciones);
 	char* pos_x;
@@ -468,14 +472,15 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
 	char* posicion_actual;
 
 	int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
-	char** mensaje_localized_pokemon = malloc((sizeof(char*)) * (4 + cantidad_posiciones * 2));
+	char** mensaje_localized_pokemon = malloc((sizeof(char*)) * (5 + cantidad_posiciones * 2));
 	mensaje_localized_pokemon[0] = string_new();
 	string_append(&(mensaje_localized_pokemon[0]), "BROKER");
 	mensaje_localized_pokemon[1] = string_new();
 	string_append(&(mensaje_localized_pokemon[1]), "LOCALIZED_POKEMON");
-	mensaje_localized_pokemon[2] = pokemon;
-	mensaje_localized_pokemon[3] = string_itoa(cantidad_posiciones);
-	int k = 4;
+	mensaje_localized_pokemon[2] = string_itoa(id);
+	mensaje_localized_pokemon[3] = pokemon;
+	mensaje_localized_pokemon[4] = string_itoa(cantidad_posiciones);
+	int k = 5;
 	for(int i=0;i<cantidad_posiciones;i++){
 		posicion_actual = list_get(posiciones, i);
 		printf("Posicion_actual: %s\n", posicion_actual);
@@ -494,7 +499,7 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones){
 		k+=2;
 	}
 
-	for(int i=0 ; i < (4 + cantidad_posiciones * 2); i++) printf("Mensaje[%d]: %s\n", i, mensaje_localized_pokemon[i]);
+	for(int i=0 ; i < (5 + cantidad_posiciones * 2); i++) printf("Mensaje[%d]: %s\n", i, mensaje_localized_pokemon[i]);
 
 	enviar_mensaje(mensaje_localized_pokemon, conexion);
 	printf("Envié localized_pokemon\n");
@@ -558,7 +563,7 @@ void serve_client(int* cliente_fd) {
 
 		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
 
-		enviar_mensaje_localized(pokemon, posiciones);
+		enviar_mensaje_localized(pokemon, posiciones, id_mensaje);
 
 		break;
 	default:
@@ -708,13 +713,15 @@ void* generar_stream(char** argumentos, t_paquete* paquete) {
 		agregar_entero(&offset, argumentos[3], &stream);
 		break;
 	case LOCALIZED_POKEMON:
-		agregar_string(&offset, argumentos[2], &stream);
-		agregar_entero(&offset, argumentos[3], &stream);
-		int indice = 4;
-		for(int i=0; i<atoi(argumentos[3]); i++){
+		agregar_entero(&offset, argumentos[2], &stream);
+		agregar_string(&offset, argumentos[3], &stream);
+		agregar_entero(&offset, argumentos[4], &stream);
+		int indice = 5;
+		for(int i=0; i<atoi(argumentos[4]); i++){
 			agregar_entero(&offset, argumentos[indice], &stream);
-			agregar_entero(&offset, argumentos[indice+1], &stream);
-			indice +=2;
+			indice++;
+			agregar_entero(&offset, argumentos[indice], &stream);
+			indice ++;
 		}
 		break;
 	case SUSCRIPTOR:
@@ -752,7 +759,7 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo) {
 		size = sizeof(u_int32_t) * 2;
 		break;
 	case LOCALIZED_POKEMON:
-		size = sizeof(u_int32_t) * (2+2*atoi(argumentos[3])) + strlen(argumentos[2]);
+		size = sizeof(u_int32_t) * (3+2*atoi(argumentos[4])) + strlen(argumentos[3]);
 		break;
 	case SUSCRIPTOR:
 		size = sizeof(u_int32_t) * 2 + strlen(argumentos[2]);

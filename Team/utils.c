@@ -28,6 +28,9 @@ tipo_mensaje obtener_tipo_mensaje(char* tipo) {
 	else if (strcasecmp(tipo, "GET_POKEMON") == 0) {
 		tipo_mensaje = GET_POKEMON;
 	}
+	else if (strcasecmp(tipo, "LOCALIZED_POKEMON") == 0) {
+		tipo_mensaje = LOCALIZED_POKEMON;
+	}
 	else if (strcasecmp(tipo, "SUSCRIPTOR") == 0) {
 		tipo_mensaje = SUSCRIPTOR;
 	}
@@ -48,7 +51,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo) {
 	if (tipo == CATCH_POKEMON) return "CATCH_POKEMON";
 	if (tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
 	if (tipo == GET_POKEMON) return "GET_POKEMON";
-	if (tipo == LOCALIZED_POKEMON) return "LOCALIZED";
+	if (tipo == LOCALIZED_POKEMON) return "LOCALIZED_POKEMON";
 	if (tipo == SUSCRIPTOR) return "SUSCRIPTOR";
 	if (tipo == CONFIRMAR) return "CONFIRMAR";
 	return "DESCONOCIDO";
@@ -240,6 +243,7 @@ void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensa
 	for (int i = 0; i < 5; i++) {
 		argv[i] = string_new();
 	}
+
 	string_append(&(argv[0]), "BROKER");
 	string_append(&(argv[1]), "CONFIRMAR");
 	argv[2] = mensaje;
@@ -259,8 +263,9 @@ char* obtener_resultado(u_int32_t resultado) {
 t_appeared_pokemon* crear_localized_pokemon(char* pokemon, uint32_t pos_x, uint32_t pos_y){
 	t_appeared_pokemon* localized_pokemon = malloc(sizeof(t_appeared_pokemon));
 	localized_pokemon->pokemon = pokemon;
-	localized_pokemon->posicion->x = pos_x;
-	localized_pokemon->posicion->y = pos_y;
+
+	t_posicion* posicion = posicion_create(pos_x, pos_y);
+	localized_pokemon->posicion = posicion;
 
 	return localized_pokemon;
 }
@@ -323,19 +328,19 @@ void process_request(int cod_op, int cliente_fd) {
 
 			id_correlativo = recibir_entero(cliente_fd);
 
-			u_int32_t id_mensaje = recibir_entero(cliente_fd);
+			//u_int32_t id_mensaje = recibir_entero(cliente_fd);
 
 			u_int32_t resultado = recibir_entero(cliente_fd);
 
 			char* cadena = obtener_resultado(resultado);
 
-			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %s", id_mensaje, cadena);
+			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %s", id_correlativo, cadena);
 
 			free(cadena);
 
 			for (int i = 0; i < list_size(entrenadores); i++) {
 				t_entrenador* entrenador = list_get(entrenadores, i);
-				if (entrenador->id_caught == id_mensaje) {
+				if (entrenador->id_caught == id_correlativo) {
 					sem_post(&(llega_mensaje_caught[entrenador->indice]));
 					entrenador->resultado_caught = resultado;
 				}
@@ -355,7 +360,7 @@ void process_request(int cod_op, int cliente_fd) {
 			printf("id_correlativo: %d\n", id_correlativo);
 			uint32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Size_pokemon: %d\n");
+			printf("Size_pokemon: %d\n", size_pokemon);
 			printf("Pokemon: %s\n", pokemon);
 			uint32_t cantidad_posiciones = recibir_entero(cliente_fd);
 			printf("Cantidad pos: %d\n", cantidad_posiciones);
@@ -375,7 +380,9 @@ void process_request(int cod_op, int cliente_fd) {
 					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
 						printf("Agrego a %s a appeared_pokemons\n", pokemon);
 						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
+						printf("Azul y\n");
 						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+						printf("Oro\n");
 						sem_post(&sem_appeared_pokemon);
 					}
 				}

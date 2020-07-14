@@ -100,10 +100,10 @@ void* generar_stream(char** argumentos, t_paquete* paquete){
 			break;
 		}	
 		case APPEARED_POKEMON:
+			if(string_equals_ignore_case(argumentos[0],"BROKER"))agregar_entero(&offset, argumentos[5], &stream);
 			agregar_string(&offset, argumentos[2], &stream);
 
-			if(string_equals_ignore_case(argumentos[0],"BROKER")) i_max=6;
-			else i_max = 5;
+			i_max = 5;
 
 			for(int i=3; i<i_max; i++){
 				agregar_entero(&offset, argumentos[i], &stream);

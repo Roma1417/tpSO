@@ -108,7 +108,7 @@ void process_request(int cod_op, int cliente_fd) {
 		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
 
 		t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo, size);
-		t_particion* particion_agregada = agregar_stream(memoria, stream, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
+		t_particion* particion_agregada = agregar_stream(memoria, stream_a_agregar, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
 
 		printf("Id correlativo: %d\n", id_correlativo);
 
@@ -259,12 +259,16 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 
 	memcpy(magic + desplazamiento, &(paquete->tipo_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->id_mensaje), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("id_mensaje: %d\n", paquete->id_mensaje);
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("buffer->size: %d\n", paquete->buffer->size);
 	memcpy(magic + desplazamiento, &(paquete->id_correlativo), sizeof(u_int32_t));
 	desplazamiento += sizeof(u_int32_t);
+	printf("id_correlativo: %d\n", paquete->id_correlativo);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
 	desplazamiento += paquete->buffer->size;
 	printf("Buffer->stream: %s\n", ((char*) paquete->buffer->stream)+4);
