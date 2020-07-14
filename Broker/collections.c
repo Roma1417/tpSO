@@ -23,12 +23,14 @@ t_memoria* crear_memoria(uint32_t tamanio){
 void destruir_memoria(t_memoria* memoria){
 	free(memoria->base);
 
+
+	list_clean_and_destroy_elements(memoria->particiones, destruir_particion);
 	/*for(uint32_t i = 0; i < list_size(memoria->particiones); i++){
 		t_particion* particion = list_get(memoria->particiones, i);
 		destruir_particion(particion);
-	}
+	}*/
 
-	list_destroy(memoria->particiones);*/
+	//list_destroy(memoria->particiones);
 	free(memoria);
 }
 
@@ -48,6 +50,7 @@ void destruir_particion(t_particion* particion){
 	if (particion != NULL){
 	destruir_atributos_particion(particion->atributos);
 	}
+	free(particion);
 }
 
 
@@ -79,9 +82,13 @@ t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_men
 
 void destruir_atributos_particion(t_atributos_particion* atributos_particion){
 	if (atributos_particion != NULL) {
-	list_destroy_and_destroy_elements(atributos_particion->suscriptores_enviados, destruir_suscriptor);
-	list_destroy_and_destroy_elements(atributos_particion->suscriptores_confirmados, destruir_suscriptor);
+	list_destroy(atributos_particion->suscriptores_enviados);
+	list_destroy(atributos_particion->suscriptores_confirmados);
+
+
+
 	}
+	free(atributos_particion);
 }
 
 t_suscriptor* crear_suscriptor(u_int32_t id, int32_t socket){
@@ -127,6 +134,7 @@ u_int32_t generar_id_suscriptor(tipo_mensaje id_cola){
 
 void destruir_suscriptor(void* suscriptor){
  //No hago nada, pero a lo mejor en algun momento sea de utilidad.
+	free(suscriptor);
 }
 
 
@@ -154,7 +162,9 @@ t_paquete* generar_paquete(t_particion* particion){
 	memcpy(stream, particion->base, size);
 	t_buffer* buffer = crear_buffer(size, stream);
 	//printf("tipo mensaje: %d\n", particion->atributos->cola_mensajes);
+	free(stream);
 	return crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
+
 }
 
 void destruir_paquete(t_paquete* paquete){

@@ -95,10 +95,14 @@ void process_request(int cod_op, int cliente_fd) {
 
 		uint32_t id_correlativo = 0;
 
+		void* stream_a_agregar;
+
 		if (es_cola_correlativa(cod_op)) {
 			size -= sizeof(uint32_t);
 			memcpy(&id_correlativo, stream, sizeof(uint32_t));
-			stream += sizeof(uint32_t);
+			stream_a_agregar = stream + sizeof(uint32_t);
+		} else{
+			stream_a_agregar = stream;
 		}
 
 		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
@@ -131,8 +135,8 @@ void process_request(int cod_op, int cliente_fd) {
 		enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
 		printf("Envie todo\n");
 
-		//destruir_paquete(paquete);
-		//free(stream);
+		destruir_paquete(paquete);
+		free(stream);
 		break;
 
 	case SUSCRIPTOR:
@@ -205,7 +209,7 @@ void* recibir_cadena(int socket_cliente, int* size)
 	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
 	cadena = malloc(*size);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
-	printf("Cadena: %s\n", (char*) cadena + 4 );
+	//printf("Cadena: %s\n", (char*) cadena + 4 );
 	return cadena;
 }
 
@@ -295,9 +299,6 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 
 
 void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor){
-
-	//t_buffer* buffer = crear_buffer(particion->tamanio, particion->base);
-	 //crear_paquete(particion->atributos->id_mensaje, particion->atributos->id_correlativo, particion->atributos->cola_mensajes, buffer);
 
 	t_paquete* paquete = generar_paquete(particion);
 

@@ -87,7 +87,7 @@ t_particion* agregar_particion(t_list* particiones, uint32_t indice, void* strea
 
 
 	particion_seleccionada->ocupada =true;
-	//destruir_atributos_particion(particion_seleccionada->atributos);
+	destruir_atributos_particion(particion_seleccionada->atributos);
 	particion_seleccionada->atributos = atributos;
 
 
