@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamEsperaCircular.config");
+	t_config* config = config_create("./team.config");
 	return config;
 }
 
@@ -964,7 +964,8 @@ void spoiler_alert(){
 				}
 				for(int j=0; j<list_size(entrenadores_deadlock_fake);j++){
 					auxiliar = list_get(entrenadores_deadlock_fake, j);
-					auxiliar->cantidad_apariciones_deadlock = 0;
+					if(auxiliar->cantidad_apariciones_deadlock != 2)
+						auxiliar->cantidad_apariciones_deadlock = 0;
 				}
 			}
 			printf("Cantidad de Deadlocks parcial: %d\n", cant_deadlocks);

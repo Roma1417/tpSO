@@ -1,19 +1,12 @@
-Particion 0: (nil) - 0x20.	[X]	Size: 32b	LRU:176	Cola 2	ID:177
-Particion 1: 0x20 - 0x40.	[X]	Size: 32b	LRU:177	Cola 2	ID:178
-Particion 2: 0x40 - 0x60.	[X]	Size: 32b	LRU:178	Cola 2	ID:179
-Particion 3: 0x60 - 0x80.	[X]	Size: 32b	LRU:179	Cola 2	ID:180
-Particion 4: 0x80 - 0xa0.	[X]	Size: 32b	LRU:180	Cola 2	ID:181
-Particion 5: 0xa0 - 0xc0.	[X]	Size: 32b	LRU:181	Cola 2	ID:182
-Particion 6: 0xc0 - 0xe0.	[X]	Size: 32b	LRU:182	Cola 2	ID:183
-Particion 7: 0xe0 - 0x100.	[X]	Size: 32b	LRU:183	Cola 2	ID:184
-Particion 8: 0x100 - 0x120.	[X]	Size: 32b	LRU:184	Cola 2	ID:185
-Particion 9: 0x120 - 0x140.	[X]	Size: 32b	LRU:185	Cola 2	ID:186
-Particion 10: 0x140 - 0x160.	[X]	Size: 32b	LRU:186	Cola 2	ID:187
-Particion 11: 0x160 - 0x180.	[X]	Size: 32b	LRU:187	Cola 2	ID:188
-Particion 12: 0x180 - 0x1a0.	[X]	Size: 32b	LRU:188	Cola 2	ID:189
-Particion 13: 0x1a0 - 0x1c0.	[X]	Size: 32b	LRU:189	Cola 2	ID:190
-Particion 14: 0x1c0 - 0x1e0.	[X]	Size: 32b	LRU:190	Cola 2	ID:191
-Particion 15: 0x1e0 - 0x1e4.	[X]	Size: 4b	LRU:191	Cola 4	ID:192
-Particion 16: 0x1e4 - 0x1e8.	[L]	Size: 4b
-Particion 17: 0x1e8 - 0x1f0.	[L]	Size: 8b
-Particion 18: 0x1f0 - 0x200.	[L]	Size: 16b
+Particion 0: (nil) - 0x10.	[X]	Size: 16b	LRU:0	Cola 5	ID:1
+Particion 1: 0x10 - 0x20.	[X]	Size: 16b	LRU:1	Cola 5	ID:2
+Particion 2: 0x20 - 0x30.	[X]	Size: 16b	LRU:2	Cola 5	ID:3
+Particion 3: 0x30 - 0x40.	[X]	Size: 16b	LRU:3	Cola 5	ID:4
+Particion 4: 0x40 - 0x50.	[X]	Size: 16b	LRU:4	Cola 5	ID:5
+Particion 5: 0x50 - 0x60.	[L]	Size: 16b
+Particion 6: 0x60 - 0x80.	[X]	Size: 32b	LRU:5	Cola 3	ID:6
+Particion 7: 0x80 - 0xa0.	[X]	Size: 32b	LRU:6	Cola 3	ID:7
+Particion 8: 0xa0 - 0xc0.	[X]	Size: 32b	LRU:7	Cola 3	ID:8
+Particion 9: 0xc0 - 0xe0.	[X]	Size: 32b	LRU:8	Cola 3	ID:9
+Particion 10: 0xe0 - 0x100.	[X]	Size: 32b	LRU:9	Cola 3	ID:10
+Particion 11: 0x100 - 0x200.	[L]	Size: 256b
