@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./team.config");
+	t_config* config = config_create("./teamEsperaCircular.config");
 	return config;
 }
 
@@ -821,6 +821,172 @@ t_planificado* buscar_donador(t_entrenador* entrenador) {
 	return planificado;
 }
 
+void quitar_de_deadlock_fake(uint32_t indice_entrenador, t_list* entrenadores_deadlock_fake){
+	bool se_encontro = false;
+	t_entrenador* entrenador;
+	for(int i=0; i<list_size(entrenadores_deadlock_fake) && !se_encontro; i++){
+		entrenador = list_get(entrenadores_deadlock_fake, i);
+		se_encontro = (indice_entrenador == (entrenador->indice));
+		if(se_encontro){
+			list_remove(entrenadores_deadlock_fake, i);
+		}
+	}
+}
+
+void quitar_de_objetivos_faltantes(t_planificado* planificado) {
+	bool se_encontro = false;
+	char* pokemon;
+	for (int i = 0; i < list_size(planificado->entrenador->objetivos_faltantes) && !se_encontro; i++) {
+		pokemon = list_get(planificado->entrenador->objetivos_faltantes, i);
+		se_encontro = (string_equals_ignore_case(pokemon, planificado->pokemon->pokemon));
+		if (se_encontro) {
+			list_remove(planificado->entrenador->objetivos_faltantes, i);
+		}
+	}
+}
+
+t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* entrenadores_deadlock_fake, t_list* entrenadores_fin_deadlock) {
+	t_planificado* planificado_donador = NULL;
+	t_entrenador* donador;
+	bool encontro_donador = false;
+	printf("El entrenador %d busca un %s\n", planificado->entrenador->indice, planificado->pokemon->pokemon);
+	for (int i = 0; i < list_size(entrenadores_deadlock_fake) && !encontro_donador; i++) {
+		donador = list_get(entrenadores_deadlock_fake, i);
+
+		for (int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++) {
+
+			char* obtenido = list_get(donador->pokemon_inservibles, j);
+			printf("Obtenido: %s\n", obtenido);
+
+			encontro_donador = string_equals_ignore_case(obtenido, planificado->pokemon->pokemon);
+
+			if(encontro_donador){
+				printf("El donador es el entrenador %d\n", donador->indice);
+				char* pokemon_faltante = list_get(donador->objetivos_faltantes, 0);
+				t_appeared_pokemon* pokemon = appeared_pokemon_create();
+				cambiar_nombre_pokemon(pokemon, pokemon_faltante);
+				planificado_donador = planificado_create(donador, pokemon);
+				list_remove(donador->pokemon_inservibles, j);
+				quitar_de_objetivos_faltantes(planificado);
+				printf("Se quito %s de objetivos faltantes y pokemon inservibles\n", obtenido);
+			}
+			if((list_size(donador->pokemon_inservibles) == 0) && (list_size(donador->objetivos_faltantes) == 0)){
+				list_add(entrenadores_fin_deadlock, donador);
+				list_remove(entrenadores_deadlock_fake, i);
+				printf("Se quita donador de deadlock\n");
+			}
+			if((list_size(planificado->entrenador->pokemon_inservibles) == 0) && (list_size(planificado->entrenador->objetivos_faltantes) == 0)){
+				list_add(entrenadores_fin_deadlock, planificado->entrenador);
+				quitar_de_deadlock_fake(planificado->entrenador->indice, entrenadores_deadlock_fake);
+				printf("Se quita entrenador de deadlock\n");
+			}
+		}
+	}
+
+	return planificado_donador;
+}
+
+void spoiler_alert(){
+	printf("INICIA EL SPOILER ALERT\n");
+	t_list* entrenadores_deadlock_fake = list_duplicate(entrenadores_deadlock);
+	t_list* entrenadores_fin_deadlock = list_create();
+	t_list* objetivos_faltantes = list_create();
+	t_list* pokemons_inservibles = list_create();
+	t_entrenador* entrenador_auxiliar;
+	char* pokemon_auxiliar;
+
+	for(int i=0;i<list_size(entrenadores_deadlock); i++){
+		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
+		t_list* sublista_obj_faltantes = list_create();
+		for(int j=0; j<list_size(entrenador_auxiliar->objetivos_faltantes); j++){
+			pokemon_auxiliar= string_duplicate(list_get(entrenador_auxiliar->objetivos_faltantes, j));
+			printf("Se agrega %s a sublista obj_faltantes de entrenador %d\n", pokemon_auxiliar, entrenador_auxiliar->indice);
+			list_add(sublista_obj_faltantes, pokemon_auxiliar);
+		}
+		list_add(objetivos_faltantes, sublista_obj_faltantes);
+
+		t_list* sublista_pkm_ins = list_create();
+		for (int j = 0; j < list_size(entrenador_auxiliar->pokemon_inservibles); j++) {
+			pokemon_auxiliar= string_duplicate(list_get(entrenador_auxiliar->pokemon_inservibles, j));
+			printf("Se agrega %s a sublista pkm_inservibles de entrenador %d\n", pokemon_auxiliar, entrenador_auxiliar->indice);
+			list_add(sublista_pkm_ins, pokemon_auxiliar);
+		}
+		list_add(pokemons_inservibles, sublista_pkm_ins);
+	}
+	printf("List_size objs faltantes: %d\n", list_size(objetivos_faltantes));
+	printf("List_size pkms inservibles: %d\n", list_size(pokemons_inservibles));
+
+	/*for(int i=0; i<list_size(objetivos_faltantes); i++){
+		t_list* sublista = list_get(objetivos_faltantes, i);
+		for(int j=0;j<list_size(sublista); j++){
+			printf("Pokemon de sublista %d: %s\n", i, list_get(sublista, j));
+		}
+	}*/
+
+	uint32_t cant_deadlocks = 0;
+
+	if(!list_is_empty(entrenadores_deadlock_fake)){
+		t_entrenador* entrenador;
+		t_planificado* planificado_entrenador;
+		char* nombre_pokemon_entrenador;
+		t_appeared_pokemon* pokemon_entrenador;
+		t_planificado* donador;
+		t_entrenador* auxiliar;
+
+		while(!list_is_empty(entrenadores_deadlock_fake)){
+			entrenador = list_get(entrenadores_deadlock_fake, 0);
+			nombre_pokemon_entrenador = list_get(entrenador->objetivos_faltantes, 0);
+			pokemon_entrenador = appeared_pokemon_create();
+			cambiar_nombre_pokemon(pokemon_entrenador, nombre_pokemon_entrenador);
+			planificado_entrenador = planificado_create(entrenador, pokemon_entrenador);
+			entrenador->cantidad_apariciones_deadlock++;
+
+			printf("List_size: %d\n", list_size(entrenadores_deadlock_fake));
+			donador = buscar_donador_simulacion(planificado_entrenador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
+			printf("Ward0\n");
+			donador->entrenador->cantidad_apariciones_deadlock++;
+
+			printf("Ward1\n");
+			while(donador->entrenador->indice != planificado_entrenador->entrenador->indice){
+				donador = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
+				printf("Ward2\n");
+				donador->entrenador->cantidad_apariciones_deadlock++;
+				printf("Ward3\n");
+			}
+			printf("Ward4\n");
+
+			for(int i=0;i<list_size(entrenadores_fin_deadlock);i++){
+				entrenador = list_get(entrenadores_fin_deadlock, i);
+				printf("Cantidad de apariciones deadlock de entrenador %d: %d\n", entrenador->indice, entrenador->cantidad_apariciones_deadlock);
+				if(entrenador->cantidad_apariciones_deadlock > 1){
+					cant_deadlocks += (entrenador->cantidad_apariciones_deadlock/2);
+					list_remove(entrenadores_fin_deadlock, i);
+				}
+				for(int j=0; j<list_size(entrenadores_deadlock_fake);j++){
+					auxiliar = list_get(entrenadores_deadlock_fake, j);
+					auxiliar->cantidad_apariciones_deadlock = 0;
+				}
+			}
+			printf("Cantidad de Deadlocks parcial: %d\n", cant_deadlocks);
+		}
+
+
+
+	}
+
+	for(int i; i<list_size(entrenadores_deadlock); i++){
+		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
+		t_list* sublista1 = list_get(objetivos_faltantes, i);
+		entrenador_auxiliar->objetivos_faltantes = sublista1;
+		t_list* sublista2 = list_get(pokemons_inservibles, i);
+		entrenador_auxiliar->pokemon_inservibles = sublista2;
+	}
+
+	printf("----------------------------------\n");
+	printf("CANTIDAD DE DEADLOCKS: %d\n", cant_deadlocks);
+	printf("----------------------------------\n");
+}
+
 void realizar_intercambios_FIFO() {
 	// Falta implementar en otro hilo
 	// while segun ALE
@@ -833,6 +999,9 @@ void realizar_intercambios_FIFO() {
 	for (int i = 0; i < list_size(entrenadores); i++) {
 		sem_wait(&(termino_de_capturar[i]));
 	}
+
+	//REVISAR
+	spoiler_alert();
 
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
@@ -876,6 +1045,9 @@ void realizar_intercambios_RR() {
 	for (int i = 0; i < list_size(entrenadores); i++) {
 		sem_wait(&(termino_de_capturar[i]));
 	}
+
+	//REVISAR
+	spoiler_alert();
 
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);

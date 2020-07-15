@@ -38,6 +38,8 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->estimacion_restante = estimacion_inicial;
 	entrenador->rafaga_anterior = 0;
 
+	entrenador->cantidad_apariciones_deadlock = 0;
+
 	// NOTA: La rafaga inicial la puse inicialmente como 0.
 	// En el enunciado no hay nada especificado para rafagas anteriores al
 	// inicio del problema. PREGUNTAR

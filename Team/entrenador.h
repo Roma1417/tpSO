@@ -45,6 +45,7 @@ typedef struct {
 	float estimacion;
 	float estimacion_restante;
 	u_int32_t rafaga_anterior;
+	uint32_t cantidad_apariciones_deadlock;
 
 } t_entrenador;
 
