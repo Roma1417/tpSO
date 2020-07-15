@@ -442,7 +442,6 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	mensaje[4] = string_itoa(pokemon->posicion->y);
 
 	enviar_mensaje(mensaje, conexion);
-	printf("Envie mensaje\n");
 	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
@@ -523,7 +522,6 @@ void* enviar_get_pokemon(void* parametro) {
 	string_append(&(mensaje[1]), "GET_POKEMON");
 
 	mensaje[2] = pokemon;
-	printf("Pokemon enviado: %s\n", pokemon);
 	enviar_mensaje(mensaje, conexion);
 	liberar_conexion(conexion);
 
@@ -811,36 +809,30 @@ t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* ent
 	t_planificado* planificado_donador = NULL;
 	t_entrenador* donador;
 	bool encontro_donador = false;
-	printf("El entrenador %d busca un %s\n", planificado->entrenador->indice, planificado->pokemon->pokemon);
 	for (int i = 0; i < list_size(entrenadores_deadlock_fake) && !encontro_donador; i++) {
 		donador = list_get(entrenadores_deadlock_fake, i);
 
 		for (int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++) {
 
 			char* obtenido = list_get(donador->pokemon_inservibles, j);
-			printf("Obtenido: %s\n", obtenido);
 
 			encontro_donador = string_equals_ignore_case(obtenido, planificado->pokemon->pokemon);
 
 			if(encontro_donador){
-				printf("El donador es el entrenador %d\n", donador->indice);
 				char* pokemon_faltante = list_get(donador->objetivos_faltantes, 0);
 				t_appeared_pokemon* pokemon = appeared_pokemon_create();
 				cambiar_nombre_pokemon(pokemon, pokemon_faltante);
 				planificado_donador = planificado_create(donador, pokemon);
 				list_remove(donador->pokemon_inservibles, j);
 				quitar_de_objetivos_faltantes(planificado);
-				printf("Se quito %s de objetivos faltantes y pokemon inservibles\n", obtenido);
 			}
 			if((list_size(donador->pokemon_inservibles) == 0) && (list_size(donador->objetivos_faltantes) == 0)){
 				list_add(entrenadores_fin_deadlock, donador);
 				list_remove(entrenadores_deadlock_fake, i);
-				printf("Se quita donador de deadlock\n");
 			}
 			if((list_size(planificado->entrenador->pokemon_inservibles) == 0) && (list_size(planificado->entrenador->objetivos_faltantes) == 0)){
 				list_add(entrenadores_fin_deadlock, planificado->entrenador);
 				quitar_de_deadlock_fake(planificado->entrenador->indice, entrenadores_deadlock_fake);
-				printf("Se quita entrenador de deadlock\n");
 			}
 		}
 	}
@@ -849,7 +841,6 @@ t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* ent
 }
 
 void spoiler_alert(){
-	printf("INICIA EL SPOILER ALERT\n");
 	t_list* entrenadores_deadlock_fake = list_duplicate(entrenadores_deadlock);
 	t_list* entrenadores_fin_deadlock = list_create();
 	t_list* objetivos_faltantes = list_create();
@@ -862,7 +853,6 @@ void spoiler_alert(){
 		t_list* sublista_obj_faltantes = list_create();
 		for(int j=0; j<list_size(entrenador_auxiliar->objetivos_faltantes); j++){
 			pokemon_auxiliar= string_duplicate(list_get(entrenador_auxiliar->objetivos_faltantes, j));
-			printf("Se agrega %s a sublista obj_faltantes de entrenador %d\n", pokemon_auxiliar, entrenador_auxiliar->indice);
 			list_add(sublista_obj_faltantes, pokemon_auxiliar);
 		}
 		list_add(objetivos_faltantes, sublista_obj_faltantes);
@@ -870,13 +860,10 @@ void spoiler_alert(){
 		t_list* sublista_pkm_ins = list_create();
 		for (int j = 0; j < list_size(entrenador_auxiliar->pokemon_inservibles); j++) {
 			pokemon_auxiliar= string_duplicate(list_get(entrenador_auxiliar->pokemon_inservibles, j));
-			printf("Se agrega %s a sublista pkm_inservibles de entrenador %d\n", pokemon_auxiliar, entrenador_auxiliar->indice);
 			list_add(sublista_pkm_ins, pokemon_auxiliar);
 		}
 		list_add(pokemons_inservibles, sublista_pkm_ins);
 	}
-	printf("List_size objs faltantes: %d\n", list_size(objetivos_faltantes));
-	printf("List_size pkms inservibles: %d\n", list_size(pokemons_inservibles));
 
 	/*for(int i=0; i<list_size(objetivos_faltantes); i++){
 		t_list* sublista = list_get(objetivos_faltantes, i);
@@ -903,23 +890,16 @@ void spoiler_alert(){
 			planificado_entrenador = planificado_create(entrenador, pokemon_entrenador);
 			entrenador->cantidad_apariciones_deadlock++;
 
-			printf("List_size: %d\n", list_size(entrenadores_deadlock_fake));
 			donador = buscar_donador_simulacion(planificado_entrenador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
-			printf("Ward0\n");
 			donador->entrenador->cantidad_apariciones_deadlock++;
 
-			printf("Ward1\n");
 			while(donador->entrenador->indice != planificado_entrenador->entrenador->indice){
 				donador = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
-				printf("Ward2\n");
 				donador->entrenador->cantidad_apariciones_deadlock++;
-				printf("Ward3\n");
 			}
-			printf("Ward4\n");
 
 			for(int i=0;i<list_size(entrenadores_fin_deadlock);i++){
 				entrenador = list_get(entrenadores_fin_deadlock, i);
-				printf("Cantidad de apariciones deadlock de entrenador %d: %d\n", entrenador->indice, entrenador->cantidad_apariciones_deadlock);
 				if(entrenador->cantidad_apariciones_deadlock > 1){
 					cant_deadlocks += (entrenador->cantidad_apariciones_deadlock/2);
 					list_remove(entrenadores_fin_deadlock, i);
@@ -930,7 +910,6 @@ void spoiler_alert(){
 						auxiliar->cantidad_apariciones_deadlock = 0;
 				}
 			}
-			printf("Cantidad de Deadlocks parcial: %d\n", cant_deadlocks);
 		}
 
 
@@ -944,10 +923,6 @@ void spoiler_alert(){
 		t_list* sublista2 = list_get(pokemons_inservibles, i);
 		entrenador_auxiliar->pokemon_inservibles = sublista2;
 	}
-
-	printf("----------------------------------\n");
-	printf("CANTIDAD DE DEADLOCKS: %d\n", cant_deadlocks);
-	printf("----------------------------------\n");
 }
 
 void realizar_intercambios_FIFO() {
@@ -1721,26 +1696,6 @@ int main(void) {
 	sem_init(&sem_entrenadores, 0, list_size(entrenadores));
 
 	suscribirse_a_colas();
-
-	// Codigo para hacer pruebas (se puede borrar)
-	/*t_entrenador* entrenador0 = list_get(entrenadores,0);
-	 entrenador0->estimacion = 7;
-
-	 t_entrenador* entrenador1 = list_get(entrenadores,1);
-	 entrenador1->estimacion = 10;
-
-	 t_entrenador* entrenador2 = list_get(entrenadores,2);
-	 entrenador2->estimacion = 4;
-
-	 t_entrenador* entrenador3 = list_get(entrenadores,3);
-	 entrenador3->estimacion = 15;
-
-	 t_entrenador* entrenador4 = list_get(entrenadores,4);
-	 entrenador4->estimacion = 20;
-
-	 t_entrenador* entrenador5 = list_get(entrenadores,5);
-	 entrenador5->estimacion = 3;*/
-
 	actualizar_objetivo_global();
 
 	especies_requeridas = obtener_especies(objetivo_global);
