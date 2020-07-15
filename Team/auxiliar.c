@@ -118,6 +118,7 @@ void agregar_a_la_lista(t_list* lista_pokemon, char* pokemon) {
 
 char** get_array_value(char* string) {
 	int length_value = strlen(string) - 1;
+
 	int contador = 2;
 
 	for (int i = 0; i < length_value; i++) {
@@ -179,6 +180,7 @@ t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena) {
 	string_iterate_lines(read_array, (void*) free);
 
 	free(read_array);
+
 	return pokemon;
 }
 

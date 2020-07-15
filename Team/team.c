@@ -70,6 +70,20 @@ t_config_team* construir_config_team(t_config* config) {
 	if (strcmp(config_get_string_value(config, "POSICIONES_ENTRENADORES"), "[]") != 0) config_team->posiciones_entrenadores = pasar_a_lista_de_posiciones(config, "POSICIONES_ENTRENADORES");
 	else config_team->posiciones_entrenadores = list_create();
 
+	u_int32_t cantidad_faltante = list_size(config_team->posiciones_entrenadores) - list_size(config_team->pokemon_entrenadores);
+	if (cantidad_faltante > 0){
+		for (int i = 0; i < cantidad_faltante; i++){
+			list_add(config_team->pokemon_entrenadores, list_create());
+		}
+	}
+
+	cantidad_faltante = list_size(config_team->posiciones_entrenadores) - list_size(config_team->objetivos_entrenadores);
+	if (cantidad_faltante > 0){
+		for (int i = 0; i < cantidad_faltante; i++){
+			list_add(config_team->objetivos_entrenadores, list_create());
+		}
+	}
+
 	return config_team;
 }
 
