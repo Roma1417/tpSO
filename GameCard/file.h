@@ -43,7 +43,7 @@ typedef struct {
 }t_config_gamecard;
 
 typedef struct {
-	uint32_t block_size;
+	float block_size;
 	uint32_t blocks;
 	char* magic_number;
 }t_metadata_general;

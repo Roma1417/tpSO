@@ -327,14 +327,14 @@ bool existe_directorio_pokemon(char* pokemon) {
 	return existe_directorio;
 }
 
-void actualizar_size_catch_pokemon(t_list* posiciones, FILE* file_pokemon, t_catch_pokemon* catch_pokemon){
-	fseek(file_pokemon, 0, SEEK_SET);
+void actualizar_size_catch_pokemon(t_list* posiciones, FILE** file_pokemon, t_catch_pokemon* catch_pokemon){
+	fseek(*file_pokemon, 0, SEEK_SET);
 	char* contenido = string_new();
-	char* auxiliar = guardar_hasta('Z', &file_pokemon);
+	char* auxiliar = guardar_hasta('Z', file_pokemon);
 	string_append(&contenido,auxiliar);
 	string_append(&contenido,"Z");
 	free(auxiliar);
-	auxiliar = guardar_hasta('=', &file_pokemon);
+	auxiliar = guardar_hasta('=', file_pokemon);
 	string_append(&contenido,auxiliar);
 	free(auxiliar);
 	string_append(&contenido,"=");
@@ -344,16 +344,16 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE* file_pokemon, t_cat
 	}
 	string_append(&contenido,string_itoa(size_total));
 	printf("Llegué hasta acá\n");
-	avanzar_hasta('\n', &file_pokemon);
+	avanzar_hasta('\n', file_pokemon);
 	string_append(&contenido,"\n");
-	auxiliar = guardar_hasta_EOF(&file_pokemon);
+	auxiliar = guardar_hasta_EOF(file_pokemon);
 	string_append(&contenido, auxiliar);
 	free(auxiliar);
-	fclose(file_pokemon);
+	fclose(*file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
-	file_pokemon = fopen(file_pokemon_path, "wb");
+	*file_pokemon = fopen(file_pokemon_path, "wb");
 	printf("Contenido: %s\n", contenido);
-	fputs(contenido, file_pokemon);
+	fputs(contenido, *file_pokemon);
 	printf("Y hasta acá\n");
 	//cerrar_file(file_pokemon);
 	//fclose(file_pokemon);
@@ -435,14 +435,14 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
 			file_pokemon, ultimo_bloque);
 	printf("Llegué aca\n");
-	actualizar_size_catch_pokemon(posiciones, file_pokemon, catch_pokemon);
+	actualizar_size_catch_pokemon(posiciones, &file_pokemon, catch_pokemon);
 
-	//cerrar_file(file_pokemon);
+	cerrar_file(file_pokemon);
 	fclose(file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	file_pokemon = fopen(file_pokemon_path, "r");
 
-	uint32_t contador = 0;
+	float contador = 0;
 	char* posicion_auxiliar;
 	for (int i = 0; i < list_size(posiciones); i++) {
 		posicion_auxiliar = list_get(posiciones, i);
@@ -451,11 +451,13 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 		}
 	}
 	printf("Contador: %d\n", contador);
-	if ((contador / metadata_general->block_size) < list_size(bloques_file)) {
+	float division = contador / metadata_general->block_size;
+	printf("NUMERO: %2.f\n", division);
+	if (division <= (list_size(bloques_file)-1)) {
 		printf("Ward1\n");
 		quitar_ultimo_bloque(&file_pokemon, bloques, catch_pokemon->pokemon);
 		printf("Ward2\n");
-		uint32_t numero_de_bloque = atoi(list_get(bloques, list_size(bloques) - 1));
+		uint32_t numero_de_bloque = atoi(list_get(bloques, list_size(bloques) - 1))-1;
 		printf("Ward3\n");
 		bitarray_clean_bit(bitmap, numero_de_bloque);
 		printf("Ward4\n");
@@ -465,11 +467,12 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 		printf("Ward6\n");
 		list_remove(bloques_file, list_size(bloques_file) - 1);
 		printf("Ward7\n");
+
+
 	}
 
 	cerrar_file(file_pokemon);
 	fclose(file_pokemon);
-
 
 	return bloques_file;
 }

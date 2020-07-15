@@ -56,7 +56,6 @@ void retroceder_hasta(char caracter_de_paro, FILE** file) {
 		printf("Caracter: %c\n", caracter);
 		fseek(*file, -2, SEEK_CUR);
 		caracter = fgetc(*file);
-		sleep(1);
 	}
 }
 
