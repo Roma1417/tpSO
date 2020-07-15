@@ -673,17 +673,8 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 
 void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificado) {
 
-	printf("WARD ANGELITO CORREA 1 ----------- \n");
-
 	t_entrenador* donador = planificado->entrenador;
-
-	printf("ciclos_CPU: %d\n", donador->ciclos_cpu);
-
-	printf("donador indice: %d \n", donador->indice); // Aca tira error
-
-	sem_wait(&(puede_ejecutar[donador->indice])); // Aca tambien -> F
-
-	printf("WARD ANGELITO CORREA 2 ----------- \n");
+	sem_wait(&(puede_ejecutar[donador->indice]));
 
 	int distance = distancia(entrenador->posicion, donador->posicion);
 	int ciclos = distance + INTERCAMBIAR;
@@ -692,23 +683,12 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 	int quantum = config_team->quantum;
 	int quantum_acumulado = 0;
 
-	printf("WARD ANGELITO CORREA 3 ----------- \n");
-
 	sem_wait(&(mutex_ciclos_cpu_totales));
 	ciclos_cpu_totales += ciclos;
 	sem_post(&(mutex_ciclos_cpu_totales));
-
-	printf("WARD ANGELITO CORREA 4 ----------- \n");
-
 	for (int i = 0; i < distance; i++) {
-
-		printf("WARD ANGELITO CORREA 5 ----------- \n");
-
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, donador->posicion);
 		for (int i = 0; i < distancia_x; i++) {
-
-			printf("WARD ANGELITO CORREA 6 ----------- \n");
-
 			if (esta_mas_a_la_derecha(entrenador->posicion, donador->posicion)) mover_a_la_derecha(donador->posicion);
 			else mover_a_la_izquierda(donador->posicion);
 
@@ -723,9 +703,6 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 		}
 		u_int32_t distancia_y = distancia_en_y(entrenador->posicion, donador->posicion);
 		for (int j = 0; j < distancia_y; j++) {
-
-			printf("WARD ANGELITO CORREA 7 ----------- \n");
-
 			if (esta_mas_arriba(entrenador->posicion, donador->posicion)) mover_hacia_arriba(donador->posicion);
 			else mover_hacia_abajo(donador->posicion);
 
@@ -746,8 +723,6 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
-	printf("WARD INTERCAMBIADOR 1 -----------------------------\n");
-
 	for (int i = 0; i < INTERCAMBIAR; i++) {
 		if (quantum_acumulado == quantum) {
 			cambiar_estado(donador, READY);
@@ -758,52 +733,28 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 		}
 		sleep(config_team->retardo_ciclo_cpu);
 		donador->rafaga--;
-		printf("WARD INTERCAMBIADOR 2 -----------------------------\n");
 	}
-
-	printf("WARD INTERCAMBIADOR 3 -----------------------------\n");
 
 	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
 
-	printf("WARD INTERCAMBIADOR 4 -----------------------------\n");
-
 	intercambiar(donador, inservible, planificado->pokemon->pokemon);
-
-	printf("WARD INTERCAMBIADOR 5 -----------------------------\n");
 
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
 	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
 
 	sem_post(&puede_intercambiar);
-
-	printf("WARD INTERCAMBIADOR 6 -----------------------------\n");
-
 }
 
 t_planificado* buscar_donador(t_entrenador* entrenador) {
 	t_planificado* planificado = NULL;
 	bool encontro_donador = false;
 	for (int i = 0; i < list_size(entrenadores_deadlock) && !encontro_donador; i++) {
-
-		printf("WARD SAN TORRICO 1 -------------- \n");
-
 		t_entrenador* donador = list_get(entrenadores_deadlock, i);
-
-		printf("cantidad de pokemon inservibles del entrenador %d: %d\n", donador->indice, list_size(donador->pokemon_inservibles));
-
 		for (int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++) {
 
-			printf("WARD SAN TORRICO 2 -------------- \n");
-
 			char* obtenido = list_get(donador->pokemon_inservibles, j);
-
-			printf("inservibles del entrenador %d: %s\n", donador->indice, obtenido);
-
 			encontro_donador = list_elem(obtenido, entrenador->objetivos_faltantes);
 			if (encontro_donador) {
-
-				printf("WARD SAN TORRICO 3 -------------- \n");
-
 				t_appeared_pokemon* pokemon = appeared_pokemon_create();
 				cambiar_nombre_pokemon(pokemon, obtenido);
 				cambiar_estado(donador, READY);
@@ -811,9 +762,6 @@ t_planificado* buscar_donador(t_entrenador* entrenador) {
 				planificado = planificado_create(donador, pokemon);
 				queue_push(cola_ready, planificado);
 				sem_post(&puede_planificar);
-
-				printf("WARD SAN TORRICO 4 -------------- \n");
-
 			}
 		}
 	}
@@ -1061,45 +1009,23 @@ void realizar_intercambios_RR() {
 	while (!list_is_empty(entrenadores_deadlock)) {
 		sem_wait(&puede_intercambiar);
 
-		printf("WARD NACHITO PIATTI 1 ----------- \n");
-
 		t_entrenador* entrenador = list_head(entrenadores_deadlock);
-
-		printf("entrenador indice: %d\n", entrenador->indice);
-
-		printf("WARD NACHITO PIATTI 2 ----------- \n");
 
 		if (!list_is_empty(entrenadores_deadlock)) {
 
-			printf("entrenadores en deadlock: %d \n", list_size(entrenadores_deadlock));
-
-			printf("WARD NACHITO PIATTI 3 ----------- \n");
-
 			t_planificado* planificado = buscar_donador(entrenador);
-
-			printf("WARD NACHITO PIATTI 4 ----------- \n");
 
 			intercambiar_pokemon_RR(entrenador, planificado);
 
-			printf("WARD NACHITO PIATTI 5 ----------- \n");
-
 			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
 
-			printf("WARD NACHITO PIATTI 6 ----------- \n");
-
 			if (cumplio_su_objetivo(planificado->entrenador)) sacar_de_los_entrenadores_deadlock(planificado->entrenador);
-
-			printf("WARD NACHITO PIATTI 7 ----------- \n");
 		}
 
 		cantidad_deadlocks++;
 	}
 
-	printf("WARD NACHITO PIATTI 8 ----------- \n");
-
 	actualizar_objetivo_global();
-
-	printf("WARD NACHITO PIATTI 9 ----------- \n");
 
 	fin_deadlock = true;
 
@@ -1823,20 +1749,9 @@ int main(void) {
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");
 
-	printf("WARD PROTECTOR 1 --------\n");
-
 	pthread_join(hilo_appeared, NULL);
-
-	printf("WARD PROTECTOR 2 --------\n");
-
 	pthread_join(hilo_caught, NULL);
-
-	printf("WARD PROTECTOR 3 --------\n");
-
 	pthread_join(hilo_localized, NULL);
-
-	printf("WARD PROTECTOR 4 --------\n");
-
 	pthread_join(hilo_servidor, NULL);
 
 	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");

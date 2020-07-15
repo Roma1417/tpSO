@@ -77,35 +77,15 @@ void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon) {
 }
 
 void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible) {
-
-	printf("WARD MAURO MATOS 1 -------- \n");
-
 	bool _es_el_inservible(void* parametro) {
 		char* auxiliar = parametro;
 		return auxiliar == inservible;
 	}
-
-	printf("WARD MAURO MATOS 2 -------- \n");
-
-	printf("SePARAdor\n");
-
-	for (int i = 0; i < list_size(entrenador->pokemon_obtenidos); i++){
-		char* pokemon = list_get(entrenador->pokemon_obtenidos, i);
-		printf("pokemon obtenido por %d: %s\n",entrenador->indice, pokemon);
-	}
-
 	if (!le_sirve(entrenador, objetivo)) list_add(entrenador->pokemon_inservibles, objetivo);
 	else list_add(entrenador->pokemon_obtenidos, objetivo);
 
-	printf("WARD MAURO MATOS 3 -------- \n");
-
 	list_remove_by_condition(entrenador->pokemon_inservibles, _es_el_inservible);
-
-	printf("WARD MAURO MATOS 4 -------- \n");
-
 	get_objetivos_faltantes(entrenador);
-
-	printf("WARD MAURO MATOS 5 -------- \n");
 }
 
 /*
