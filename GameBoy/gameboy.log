@@ -925,3 +925,443 @@
 [INFO] 09:22:54:56 gameboy/(15628:15628): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
 [INFO] 09:22:54:56 gameboy/(15631:15631): Se realiza una conexión al proceso TEAM
 [INFO] 09:22:54:56 gameboy/(15631:15631): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+[INFO] 10:30:50:784 gameboy/(16524:16524): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:50:797 gameboy/(16524:16524): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:626 gameboy/(16537:16537): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:626 gameboy/(16537:16537): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:630 gameboy/(16539:16539): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:630 gameboy/(16539:16539): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:634 gameboy/(16542:16542): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:634 gameboy/(16542:16542): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:639 gameboy/(16545:16545): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:639 gameboy/(16545:16545): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:643 gameboy/(16548:16548): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:643 gameboy/(16548:16548): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:648 gameboy/(16551:16551): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:648 gameboy/(16551:16551): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:656 gameboy/(16554:16554): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:656 gameboy/(16554:16554): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:30:56:659 gameboy/(16557:16557): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:30:56:659 gameboy/(16557:16557): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:32:08:694 gameboy/(16723:16723): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:32:08:694 gameboy/(16723:16723): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:34:35:730 gameboy/(17019:17019): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:35:730 gameboy/(17019:17019): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:489 gameboy/(17023:17023): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:490 gameboy/(17023:17023): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:493 gameboy/(17025:17025): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:493 gameboy/(17025:17025): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:497 gameboy/(17028:17028): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:497 gameboy/(17028:17028): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:502 gameboy/(17031:17031): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:502 gameboy/(17031:17031): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:505 gameboy/(17034:17034): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:505 gameboy/(17034:17034): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:509 gameboy/(17037:17037): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:510 gameboy/(17037:17037): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:513 gameboy/(17038:17038): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:513 gameboy/(17038:17038): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:37:521 gameboy/(17043:17043): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:37:521 gameboy/(17043:17043): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:34:39:673 gameboy/(17055:17055): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:34:39:673 gameboy/(17055:17055): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:35:21:18 gameboy/(17161:17161): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:21:18 gameboy/(17161:17161): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:36:114 gameboy/(17207:17207): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:36:114 gameboy/(17207:17207): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:962 gameboy/(17218:17218): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:962 gameboy/(17218:17218): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:965 gameboy/(17220:17220): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:965 gameboy/(17220:17220): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:969 gameboy/(17223:17223): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:969 gameboy/(17223:17223): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:975 gameboy/(17226:17226): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:975 gameboy/(17226:17226): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:978 gameboy/(17229:17229): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:978 gameboy/(17229:17229): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:983 gameboy/(17232:17232): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:983 gameboy/(17232:17232): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:991 gameboy/(17235:17235): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:992 gameboy/(17235:17235): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:39:994 gameboy/(17238:17238): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:39:994 gameboy/(17238:17238): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:35:42:786 gameboy/(17250:17250): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:35:42:786 gameboy/(17250:17250): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:37:05:594 gameboy/(17501:17501): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:05:614 gameboy/(17501:17501): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:692 gameboy/(17512:17512): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:692 gameboy/(17512:17512): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:695 gameboy/(17514:17514): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:695 gameboy/(17514:17514): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:699 gameboy/(17517:17517): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:699 gameboy/(17517:17517): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:705 gameboy/(17520:17520): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:705 gameboy/(17520:17520): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:708 gameboy/(17523:17523): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:708 gameboy/(17523:17523): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:713 gameboy/(17526:17526): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:713 gameboy/(17526:17526): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:719 gameboy/(17528:17528): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:719 gameboy/(17528:17528): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:07:724 gameboy/(17532:17532): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:07:724 gameboy/(17532:17532): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:37:09:354 gameboy/(17537:17537): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:37:09:354 gameboy/(17537:17537): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:38:19:994 gameboy/(17701:17701): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:19:994 gameboy/(17701:17701): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:578 gameboy/(17705:17705): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:579 gameboy/(17705:17705): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:582 gameboy/(17707:17707): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:582 gameboy/(17707:17707): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:586 gameboy/(17710:17710): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:586 gameboy/(17710:17710): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:592 gameboy/(17713:17713): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:592 gameboy/(17713:17713): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:595 gameboy/(17716:17716): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:595 gameboy/(17716:17716): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:600 gameboy/(17719:17719): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:600 gameboy/(17719:17719): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:605 gameboy/(17721:17721): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:605 gameboy/(17721:17721): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:38:21:612 gameboy/(17723:17723): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:38:21:612 gameboy/(17723:17723): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:54:195 gameboy/(18016:18016): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:54:195 gameboy/(18016:18016): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:451 gameboy/(18020:18020): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:451 gameboy/(18020:18020): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:454 gameboy/(18022:18022): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:454 gameboy/(18022:18022): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:458 gameboy/(18025:18025): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:458 gameboy/(18025:18025): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:464 gameboy/(18028:18028): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:464 gameboy/(18028:18028): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:468 gameboy/(18031:18031): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:468 gameboy/(18031:18031): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:472 gameboy/(18034:18034): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:473 gameboy/(18034:18034): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:482 gameboy/(18037:18037): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:482 gameboy/(18037:18037): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:56:484 gameboy/(18040:18040): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:56:484 gameboy/(18040:18040): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:40:59:923 gameboy/(18052:18052): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:40:59:923 gameboy/(18052:18052): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:42:16:683 gameboy/(18207:18207): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:16:684 gameboy/(18207:18207): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:907 gameboy/(18211:18211): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:907 gameboy/(18211:18211): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:911 gameboy/(18213:18213): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:911 gameboy/(18213:18213): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:915 gameboy/(18216:18216): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:915 gameboy/(18216:18216): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:921 gameboy/(18219:18219): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:921 gameboy/(18219:18219): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:924 gameboy/(18222:18222): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:924 gameboy/(18222:18222): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:928 gameboy/(18225:18225): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:928 gameboy/(18225:18225): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:936 gameboy/(18226:18226): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:936 gameboy/(18226:18226): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:17:940 gameboy/(18231:18231): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:17:940 gameboy/(18231:18231): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:42:30:107 gameboy/(18252:18252): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:42:30:107 gameboy/(18252:18252): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:43:47:187 gameboy/(18429:18429): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:47:187 gameboy/(18429:18429): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:571 gameboy/(18437:18437): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:571 gameboy/(18437:18437): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:579 gameboy/(18439:18439): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:579 gameboy/(18439:18439): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:587 gameboy/(18442:18442): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:587 gameboy/(18442:18442): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:594 gameboy/(18445:18445): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:594 gameboy/(18445:18445): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:606 gameboy/(18448:18448): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:606 gameboy/(18448:18448): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:610 gameboy/(18451:18451): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:610 gameboy/(18451:18451): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:617 gameboy/(18454:18454): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:617 gameboy/(18454:18454): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:48:625 gameboy/(18457:18457): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:48:625 gameboy/(18457:18457): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:43:53:779 gameboy/(18469:18469): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:43:53:779 gameboy/(18469:18469): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:44:40:627 gameboy/(18573:18573): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:40:627 gameboy/(18573:18573): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:923 gameboy/(18578:18578): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:923 gameboy/(18578:18578): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:927 gameboy/(18580:18580): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:927 gameboy/(18580:18580): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:935 gameboy/(18583:18583): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:935 gameboy/(18583:18583): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:938 gameboy/(18587:18587): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:938 gameboy/(18587:18587): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:943 gameboy/(18590:18590): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:943 gameboy/(18590:18590): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:947 gameboy/(18593:18593): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:947 gameboy/(18593:18593): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:955 gameboy/(18596:18596): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:956 gameboy/(18596:18596): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:41:960 gameboy/(18599:18599): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:41:960 gameboy/(18599:18599): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:44:43:939 gameboy/(18604:18604): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:44:43:940 gameboy/(18604:18604): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:47:54:414 gameboy/(18996:18996): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:54:414 gameboy/(18996:18996): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:55:996 gameboy/(19000:19000): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:55:996 gameboy/(19000:19000): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:55:1 gameboy/(19002:19002): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:55:1 gameboy/(19002:19002): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:5 gameboy/(19005:19005): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:5 gameboy/(19005:19005): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:14 gameboy/(19008:19008): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:14 gameboy/(19008:19008): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:17 gameboy/(19011:19011): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:17 gameboy/(19011:19011): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:28 gameboy/(19014:19014): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:28 gameboy/(19014:19014): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:34 gameboy/(19017:19017): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:34 gameboy/(19017:19017): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:47:56:38 gameboy/(19018:19018): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:47:56:38 gameboy/(19018:19018): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:48:00:956 gameboy/(19037:19037): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:48:00:956 gameboy/(19037:19037): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:49:30:276 gameboy/(19259:19259): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:30:276 gameboy/(19259:19259): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:748 gameboy/(19263:19263): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:748 gameboy/(19263:19263): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:754 gameboy/(19265:19265): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:754 gameboy/(19265:19265): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:756 gameboy/(19268:19268): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:756 gameboy/(19268:19268): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:762 gameboy/(19271:19271): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:762 gameboy/(19271:19271): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:765 gameboy/(19274:19274): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:765 gameboy/(19274:19274): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:769 gameboy/(19277:19277): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:769 gameboy/(19277:19277): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:776 gameboy/(19278:19278): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:776 gameboy/(19278:19278): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:33:780 gameboy/(19282:19282): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:33:781 gameboy/(19282:19282): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:49:36:101 gameboy/(19295:19295): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:49:36:101 gameboy/(19295:19295): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:51:00:244 gameboy/(19473:19473): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:00:244 gameboy/(19473:19473): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:956 gameboy/(19484:19484): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:956 gameboy/(19484:19484): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:962 gameboy/(19486:19486): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:962 gameboy/(19486:19486): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:967 gameboy/(19489:19489): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:967 gameboy/(19489:19489): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:974 gameboy/(19492:19492): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:974 gameboy/(19492:19492): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:979 gameboy/(19495:19495): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:979 gameboy/(19495:19495): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:987 gameboy/(19496:19496): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:987 gameboy/(19496:19496): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:990 gameboy/(19499:19499): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:990 gameboy/(19499:19499): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:01:995 gameboy/(19502:19502): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:01:995 gameboy/(19502:19502): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:51:03:972 gameboy/(19509:19509): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:03:972 gameboy/(19509:19509): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:51:58:765 gameboy/(19637:19637): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:51:58:765 gameboy/(19637:19637): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:37 gameboy/(19644:19644): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:37 gameboy/(19644:19644): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:41 gameboy/(19646:19646): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:41 gameboy/(19646:19646): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:45 gameboy/(19649:19649): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:45 gameboy/(19649:19649): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:51 gameboy/(19652:19652): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:51 gameboy/(19652:19652): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:54 gameboy/(19655:19655): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:54 gameboy/(19655:19655): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:59 gameboy/(19658:19658): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:59 gameboy/(19658:19658): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:65 gameboy/(19660:19660): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:65 gameboy/(19660:19660): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:01:72 gameboy/(19664:19664): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:01:72 gameboy/(19664:19664): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:04:941 gameboy/(19676:19676): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:04:941 gameboy/(19676:19676): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:52:40:821 gameboy/(19764:19764): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:40:821 gameboy/(19764:19764): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:77 gameboy/(19768:19768): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:77 gameboy/(19768:19768): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:79 gameboy/(19770:19770): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:80 gameboy/(19770:19770): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:81 gameboy/(19773:19773): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:81 gameboy/(19773:19773): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:81 gameboy/(19774:19774): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:81 gameboy/(19774:19774): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:82 gameboy/(19775:19775): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:82 gameboy/(19775:19775): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:83 gameboy/(19776:19776): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:83 gameboy/(19776:19776): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:83 gameboy/(19777:19777): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:83 gameboy/(19777:19777): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:42:84 gameboy/(19778:19778): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:42:84 gameboy/(19778:19778): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:52:43:781 gameboy/(19780:19780): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:52:43:781 gameboy/(19780:19780): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:53:01:589 gameboy/(19842:19842): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:01:589 gameboy/(19842:19842): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:405 gameboy/(19846:19846): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:405 gameboy/(19846:19846): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:408 gameboy/(19848:19848): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:408 gameboy/(19848:19848): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:412 gameboy/(19851:19851): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:412 gameboy/(19851:19851): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:418 gameboy/(19854:19854): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:418 gameboy/(19854:19854): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:421 gameboy/(19857:19857): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:421 gameboy/(19857:19857): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:427 gameboy/(19860:19860): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:427 gameboy/(19860:19860): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:435 gameboy/(19863:19863): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:435 gameboy/(19863:19863): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:03:438 gameboy/(19866:19866): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:03:438 gameboy/(19866:19866): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:53:06:101 gameboy/(19878:19878): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:53:06:101 gameboy/(19878:19878): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:54:33:69 gameboy/(20094:20094): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:33:69 gameboy/(20094:20094): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:605 gameboy/(20098:20098): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:605 gameboy/(20098:20098): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:609 gameboy/(20100:20100): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:609 gameboy/(20100:20100): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:612 gameboy/(20103:20103): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:612 gameboy/(20103:20103): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:618 gameboy/(20106:20106): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:618 gameboy/(20106:20106): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:621 gameboy/(20109:20109): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:622 gameboy/(20109:20109): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:625 gameboy/(20112:20112): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:625 gameboy/(20112:20112): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:629 gameboy/(20115:20115): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:629 gameboy/(20115:20115): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:34:636 gameboy/(20116:20116): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:34:636 gameboy/(20116:20116): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:54:36:429 gameboy/(20130:20130): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:54:36:429 gameboy/(20130:20130): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:59:15:998 gameboy/(20581:20581): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:15:998 gameboy/(20581:20581): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:326 gameboy/(20592:20592): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:326 gameboy/(20592:20592): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:329 gameboy/(20594:20594): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:329 gameboy/(20594:20594): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:334 gameboy/(20597:20597): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:334 gameboy/(20597:20597): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:340 gameboy/(20600:20600): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:340 gameboy/(20600:20600): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:343 gameboy/(20603:20603): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:343 gameboy/(20603:20603): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:347 gameboy/(20606:20606): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:347 gameboy/(20606:20606): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:353 gameboy/(20609:20609): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:353 gameboy/(20609:20609): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:17:358 gameboy/(20612:20612): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:17:358 gameboy/(20612:20612): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:18:678 gameboy/(20617:20617): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:18:678 gameboy/(20617:20617): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 10:59:54:750 gameboy/(20706:20706): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:54:750 gameboy/(20706:20706): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:398 gameboy/(20710:20710): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:398 gameboy/(20710:20710): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:404 gameboy/(20712:20712): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:404 gameboy/(20712:20712): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:407 gameboy/(20713:20713): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:407 gameboy/(20713:20713): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:417 gameboy/(20718:20718): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:417 gameboy/(20718:20718): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:420 gameboy/(20721:20721): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:420 gameboy/(20721:20721): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:427 gameboy/(20724:20724): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:427 gameboy/(20724:20724): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:436 gameboy/(20727:20727): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:436 gameboy/(20727:20727): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:56:440 gameboy/(20730:20730): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:56:440 gameboy/(20730:20730): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 10:59:58:838 gameboy/(20742:20742): Se realiza una conexión al proceso GAMECARD
+[INFO] 10:59:58:838 gameboy/(20742:20742): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 11:03:04:735 gameboy/(21065:21065): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:04:735 gameboy/(21065:21065): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:23 gameboy/(21069:21069): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:23 gameboy/(21069:21069): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:26 gameboy/(21071:21071): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:26 gameboy/(21071:21071): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:30 gameboy/(21074:21074): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:30 gameboy/(21074:21074): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:36 gameboy/(21076:21076): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:36 gameboy/(21076:21076): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:39 gameboy/(21080:21080): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:39 gameboy/(21080:21080): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:45 gameboy/(21083:21083): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:45 gameboy/(21083:21083): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:53 gameboy/(21084:21084): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:53 gameboy/(21084:21084): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:06:56 gameboy/(21089:21089): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:06:56 gameboy/(21089:21089): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:03:07:310 gameboy/(21094:21094): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:03:07:311 gameboy/(21094:21094): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 11:07:34:71 gameboy/(21539:21539): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:34:71 gameboy/(21539:21539): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:911 gameboy/(21543:21543): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:911 gameboy/(21543:21543): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:915 gameboy/(21545:21545): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:915 gameboy/(21545:21545): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:919 gameboy/(21548:21548): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:919 gameboy/(21548:21548): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:925 gameboy/(21551:21551): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:925 gameboy/(21551:21551): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:929 gameboy/(21554:21554): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:929 gameboy/(21554:21554): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:933 gameboy/(21557:21557): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:933 gameboy/(21557:21557): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:937 gameboy/(21560:21560): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:937 gameboy/(21560:21560): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:35:945 gameboy/(21561:21561): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:35:945 gameboy/(21561:21561): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:07:37:888 gameboy/(21575:21575): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:07:37:888 gameboy/(21575:21575): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 11:10:47:472 gameboy/(21917:21917): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:47:472 gameboy/(21917:21917): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:928 gameboy/(21921:21921): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:928 gameboy/(21921:21921): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:931 gameboy/(21923:21923): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:931 gameboy/(21923:21923): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:935 gameboy/(21926:21926): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:935 gameboy/(21926:21926): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:941 gameboy/(21929:21929): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:941 gameboy/(21929:21929): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:945 gameboy/(21932:21932): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:945 gameboy/(21932:21932): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:950 gameboy/(21935:21935): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:950 gameboy/(21935:21935): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:961 gameboy/(21938:21938): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:961 gameboy/(21938:21938): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:48:967 gameboy/(21941:21941): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:48:967 gameboy/(21941:21941): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:10:50:304 gameboy/(21946:21946): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:10:50:304 gameboy/(21946:21946): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD
+[INFO] 11:13:05:536 gameboy/(22225:22225): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:05:537 gameboy/(22225:22225): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:400 gameboy/(22229:22229): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:401 gameboy/(22229:22229): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:404 gameboy/(22231:22231): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:404 gameboy/(22231:22231): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:407 gameboy/(22234:22234): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:408 gameboy/(22234:22234): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:413 gameboy/(22237:22237): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:413 gameboy/(22237:22237): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:417 gameboy/(22240:22240): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:417 gameboy/(22240:22240): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:421 gameboy/(22243:22243): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:421 gameboy/(22243:22243): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:424 gameboy/(22245:22245): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:424 gameboy/(22245:22245): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:07:432 gameboy/(22248:22248): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:07:432 gameboy/(22248:22248): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 11:13:09:337 gameboy/(22258:22258): Se realiza una conexión al proceso GAMECARD
+[INFO] 11:13:09:337 gameboy/(22258:22258): Se ha enviado el mensaje CATCH_POKEMON al proceso GAMECARD

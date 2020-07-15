@@ -24,6 +24,16 @@ void verificar_existencia_de_archivo(char* pokemon) {
 	closedir(directorio_pokemon);
 }
 
+void verificar_existencia_de_carpeta(char* nombre) {
+	char* path_directorio = generar_nombre(nombre);
+	DIR* directorio_pokemon = opendir(path_directorio);
+	if (directorio_pokemon == NULL) {
+		mkdir(path_directorio, 0777);
+	}
+	free(path_directorio);
+	closedir(directorio_pokemon);
+}
+
 bool esta_abierto(FILE* file) {
 	fseek(file, -sizeof(char), SEEK_END);
 	char abierto = (char) fgetc(file);

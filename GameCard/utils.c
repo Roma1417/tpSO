@@ -355,8 +355,8 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE* file_pokemon, t_cat
 	printf("Contenido: %s\n", contenido);
 	fputs(contenido, file_pokemon);
 	printf("Y hasta acá\n");
-	cerrar_file(file_pokemon);
-	fclose(file_pokemon);
+	//cerrar_file(file_pokemon);
+	//fclose(file_pokemon);
 }
 
 t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
@@ -373,6 +373,43 @@ t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
 		free(bloque_path);
 	}
 	return bloques_file;
+}
+
+void quitar_ultimo_bloque(FILE** file_pokemon, t_list* bloques, char* pokemon){
+	fseek(*file_pokemon, 0, SEEK_SET);
+	printf("WardA\n");
+	char* anterior = guardar_hasta('B', file_pokemon);
+	printf("WardB\n");
+	string_append_with_format(&anterior, "%c", 'B');
+	string_append(&anterior, guardar_hasta('=', file_pokemon));
+	printf("WardC\n");
+	string_append_with_format(&anterior, "%c", '=');
+	printf("Anterior: %s\n", anterior);
+	avanzar_hasta('\n', file_pokemon);
+	char* posterior = guardar_hasta_EOF(file_pokemon);
+	printf("Posterior: %s\n", posterior);
+	fseek(*file_pokemon, -string_length(posterior), SEEK_CUR);
+	retroceder_hasta('=', file_pokemon);
+	char* array_bloques=string_new();
+	string_append_with_format(&array_bloques, "%c", '[');
+	for(int i=0; i<(list_size(bloques)-1); i++){
+		string_append(&array_bloques, list_get(bloques, i));
+		if(i != (list_size(bloques)-2)) string_append_with_format(&array_bloques, "%c", ',');
+	}
+	string_append(&array_bloques, "]\n");
+	printf("Blocks: %s\n", array_bloques);
+	fclose(*file_pokemon);
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(pokemon);
+	*file_pokemon = fopen(file_pokemon_path, "wb");
+	fseek(*file_pokemon, 0, SEEK_SET);
+	fputs(anterior, *file_pokemon);
+	fputs(array_bloques, *file_pokemon);
+	fputs(posterior, *file_pokemon);
+	fseek(*file_pokemon, 0, SEEK_SET);
+
+	free(anterior);
+	free(array_bloques);
+	free(posterior);
 }
 
 t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
@@ -394,10 +431,46 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 		bloques_file = reiniciar_bloques_file(bloques_file, bloque_file, bloques);
 		posicionar_en_inicio(bloques_file, *bloque_file);
 	}
-	for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i, list_get(posiciones,i));
+
 	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
 			file_pokemon, ultimo_bloque);
+	printf("Llegué aca\n");
 	actualizar_size_catch_pokemon(posiciones, file_pokemon, catch_pokemon);
+
+	//cerrar_file(file_pokemon);
+	fclose(file_pokemon);
+	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
+	file_pokemon = fopen(file_pokemon_path, "r");
+
+	uint32_t contador = 0;
+	char* posicion_auxiliar;
+	for (int i = 0; i < list_size(posiciones); i++) {
+		posicion_auxiliar = list_get(posiciones, i);
+		for (int j = 0; j < string_length(posicion_auxiliar); j++) {
+			contador++;
+		}
+	}
+	printf("Contador: %d\n", contador);
+	if ((contador / metadata_general->block_size) < list_size(bloques_file)) {
+		printf("Ward1\n");
+		quitar_ultimo_bloque(&file_pokemon, bloques, catch_pokemon->pokemon);
+		printf("Ward2\n");
+		uint32_t numero_de_bloque = atoi(list_get(bloques, list_size(bloques) - 1));
+		printf("Ward3\n");
+		bitarray_clean_bit(bitmap, numero_de_bloque);
+		printf("Ward4\n");
+		list_remove(bloques, list_size(bloques) - 1);
+		printf("Ward5\n");
+		fclose(list_get(bloques_file, list_size(bloques_file) - 1));
+		printf("Ward6\n");
+		list_remove(bloques_file, list_size(bloques_file) - 1);
+		printf("Ward7\n");
+	}
+
+	cerrar_file(file_pokemon);
+	fclose(file_pokemon);
+
+
 	return bloques_file;
 }
 

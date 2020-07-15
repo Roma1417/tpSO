@@ -133,7 +133,7 @@ uint32_t metadata_get_int(FILE* metadata_general_file){
 		caracter = fgetc(metadata_general_file);
 	}
 	caracter = fgetc(metadata_general_file);
-	while(caracter != '\n'){
+	while((caracter != '\n') && (caracter != EOF)){
 		string_append_with_format(&value, "%c", caracter);
 		caracter = fgetc(metadata_general_file);
 	}
@@ -206,6 +206,8 @@ int main(){
 	printf("Empieza el GameCard\n");
 	t_config* config = leer_config();
 	config_gamecard = construir_config_gamecard(config);
+	verificar_existencia_de_carpeta("/Blocks");
+	verificar_existencia_de_carpeta("/Files");
 	logger_gamecard = iniciar_logger();
 	id_cola_get = 0;
 	id_cola_new = 0;

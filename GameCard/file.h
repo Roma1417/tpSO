@@ -85,5 +85,6 @@ t_list* obtener_posiciones_actuales(FILE* file, t_list* bloques_file, t_list* bl
 char* guardar_hasta(char caracter_de_paro, FILE** file);
 char* guardar_hasta_EOF(FILE** file);
 void avanzar_hasta(char caracter_de_paro, FILE** file);
+void retroceder_hasta(char caracter_de_paro, FILE** file);
 
 #endif /* FILE_H_ */
