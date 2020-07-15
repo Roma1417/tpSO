@@ -202,6 +202,12 @@ void crear_archivos(){
 
 }*/
 
+void actualizar_bit_map(){
+	FILE* bitmap_file = fopen(archivo_bitmap_path, "wb+");
+	fwrite(bitmap, sizeof(t_bitarray), 1, bitmap_file);
+	fclose(bitmap_file);
+}
+
 int main(){
 	printf("Empieza el GameCard\n");
 	t_config* config = leer_config();
@@ -217,8 +223,8 @@ int main(){
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
 	char* bitarray = malloc((metadata_general->blocks)/8);
 	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks)/8, LSB_FIRST);
-	//actualizar_bit_map() Preguntar A Karen si es necesario actualizar el archivo cada vez que se haga una modificación en el bitmap
-
+	actualizar_bit_map();
+	//FALTA ACTUALIZAR BITMAP EN TODOS LADOS
 
 	//crear_directorios();
 	//crear_archivos();
