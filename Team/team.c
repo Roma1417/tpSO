@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./team.config");
+	t_config* config = config_create("./teamFinal1.config");
 	return config;
 }
 
@@ -296,6 +296,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		sem_post(&sem_planificado_create);
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance;
@@ -345,9 +346,8 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
-		planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		//planificado = planificado_create(entrenador, pokemon_a_atrapar);
 
-		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
@@ -379,6 +379,8 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 	}
 
 	sem_post(&(termino_de_capturar[entrenador->indice]));
+
+	printf("WARD TEXAS 1 --------- \n");
 
 	return EXIT_SUCCESS;
 }
@@ -442,6 +444,7 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 	}
 
 	sem_post(&(termino_de_capturar[entrenador->indice]));
+
 
 	return EXIT_SUCCESS;
 }
@@ -610,6 +613,7 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appe
 	cambiar_estado(mas_cercano, READY);
 	cambiar_condicion_ready(mas_cercano);
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	enreadyar(planificado);
 	list_add(lista_ready, planificado);
 }
 
@@ -630,6 +634,7 @@ void enreadyar_al_mas_cercano_SJFCD(t_list* entrenadores, t_appeared_pokemon* ap
 	cambiar_estado(mas_cercano, READY);
 	cambiar_condicion_ready(mas_cercano);
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	enreadyar(planificado);
 	list_add(lista_ready, planificado);
 
 	sem_wait(&mutex_largo_lista_ready);
@@ -709,8 +714,6 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 	 char* pokemon = list_get(donador->pokemon_inservibles,i);
 	 printf("pokemon inservibles: %s\n", pokemon);
 	 }*/
-
-	printf("WARD INTERCAMBIAR 1 ------- \n");
 
 	free(auxiliar);
 
@@ -795,6 +798,58 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 	sem_post(&puede_intercambiar);
 }
 
+void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planificado) {
+
+	t_entrenador* donador = planificado->entrenador;
+	t_appeared_pokemon* auxiliar = planificado->pokemon;
+	sem_wait(&(puede_ejecutar[donador->indice]));
+
+	u_int32_t rafaga = distancia(donador->posicion, entrenador->posicion);
+	u_int32_t ciclos = rafaga + INTERCAMBIAR;
+	donador->rafaga = ciclos;
+	donador->ciclos_cpu += ciclos;
+
+	sem_wait(&(mutex_ciclos_cpu_totales));
+	ciclos_cpu_totales += ciclos;
+	sem_post(&(mutex_ciclos_cpu_totales));
+
+	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
+
+	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", donador->indice, donador->posicion->x, donador->posicion->y);
+
+	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
+
+	// Pensar en las rafagas para el intercambio
+	// Deberia modificar las rafagas de ambos entrenadores (entrenador y donador)?
+	// Una solucion es hacerlo solo para el donador.
+	// Ya que se mueve e intercambia.
+	// Seria la rafaga (cantidad de movimientos) + 5 (intercambio)
+
+	// Falta poner sleep tanto aca como en fifo
+
+	intercambiar(entrenador, auxiliar->pokemon, inservible);
+	intercambiar(donador, inservible, auxiliar->pokemon);
+	modificar_estimacion_y_rafaga(donador, ciclos);
+
+	for (int i = 0; i < INTERCAMBIAR; i++) {
+		sleep(config_team->retardo_ciclo_cpu);
+	}
+
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, auxiliar->pokemon, inservible);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, auxiliar->pokemon);
+
+	// Hay un error
+	// El error que estaba en fifo persiste en sjf
+	// seguramente si lo arreglamos en fifo
+	// aca sale rapido
+
+	free(auxiliar);
+
+	sem_post(&puede_intercambiar);
+
+}
+
 t_planificado* buscar_donador(t_entrenador* entrenador) {
 	t_planificado* planificado = NULL;
 	bool encontro_donador = false;
@@ -808,8 +863,6 @@ t_planificado* buscar_donador(t_entrenador* entrenador) {
 			char* obtenido = list_get(donador->pokemon_inservibles, j);
 			encontro_donador = list_elem(obtenido, entrenador->objetivos_faltantes);
 			if (encontro_donador) {
-
-				printf("WARD DONADOR 1 ------ \n");
 
 				t_appeared_pokemon* pokemon = appeared_pokemon_create();
 				cambiar_nombre_pokemon(pokemon, obtenido);
@@ -1038,42 +1091,25 @@ void realizar_intercambios_FIFO() {
 	// Agarro a un entrenador
 
 	while (!list_is_empty(entrenadores_deadlock)) {
-		printf("WARD OnePlus 1 ------- \n");
 		sem_wait(&puede_intercambiar);
-
-		printf("WARD OnePlus 2 ------- \n");
 
 		t_entrenador* entrenador = list_head(entrenadores_deadlock);
 
-		printf("WARD OnePlus 3 ------- \n");
-
 		if (!list_is_empty(entrenadores_deadlock)) {
-			printf("WARD OnePlus 8 ------- \n");
 			t_planificado* planificado = buscar_donador(entrenador);
-
-			printf("WARD OnePlus 9 ------- \n");
 
 			intercambiar_pokemon_FIFO(entrenador, planificado);
 
-			printf("WARD OnePlus 4 ------- \n");
-
 			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
-
-			printf("WARD OnePlus 5 ------- \n");
 
 			if (cumplio_su_objetivo(planificado->entrenador)) sacar_de_los_entrenadores_deadlock(planificado->entrenador);
 
-			printf("WARD OnePlus 6 ------- \n");
 			free(planificado);
 		}
 		//cantidad_deadlocks++;
 	}
 
-	printf("WARD OnePlus 7 ------- \n");
-
 	actualizar_objetivo_global();
-
-	printf("WARD OnePlus 8 ------- \n");
 
 	fin_deadlock = true;
 
@@ -1138,6 +1174,71 @@ void realizar_intercambios_RR() {
  * @NAME: planificar_entrenadores
  * @DESC: pendiente
  */
+void realizar_intercambios_SJF() {
+
+	for (int i = 0; i < list_size(entrenadores); i++) {
+		sem_wait(&(termino_de_capturar[i]));
+	}
+
+	spoiler_alert();
+
+	inicio_deadlock = true;
+	sem_post(&sem_appeared_pokemon);
+
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+
+	while (!list_is_empty(entrenadores_deadlock)) {
+		sem_wait(&puede_intercambiar);
+
+		// Aca deberia cambiar
+		// No deberia seleccionar el primero en deadlock
+		// Deberia seleccionar el que cuyo donador tiene la menor estimacion
+		t_list* donadores = buscar_donadores_para_cada_entrenador();
+		u_int32_t indice = buscar_entrenador_con_donador_con_estimacion_mas_baja(donadores);
+
+		t_entrenador* entrenador = list_remove(entrenadores_deadlock, indice);
+
+		if (!list_is_empty(entrenadores_deadlock)) {
+
+			// En vez de usar cola ready deberia usar lista ready
+			// Aca lo cambie para reutilizar donadores y el indice calculado
+
+			t_planificado* planificado = list_remove(donadores, indice);
+
+			t_entrenador* donador = planificado->entrenador;
+
+			cambiar_estado(donador, READY);
+			cambiar_condicion_ready(donador);
+
+			list_add(lista_ready, planificado);
+			sem_post(&puede_planificar);
+
+			intercambiar_pokemon_SJF(entrenador, planificado);
+
+			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
+			if (cumplio_su_objetivo(donador)) sacar_de_los_entrenadores_deadlock(donador);
+
+			free(planificado);
+		}
+
+		for (int i = 0; i < list_size(donadores) ;i++){
+			t_planificado* planificado = list_get(donadores,i);
+			free(planificado->pokemon);
+			free(planificado);
+		}
+		list_destroy(donadores);
+
+		//cantidad_deadlocks++;
+	}
+
+	actualizar_objetivo_global();
+
+	fin_deadlock = true;
+
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
+}
+
 void planificar_entrenadores() {
 	//Falta un switch para planificar según cada algoritmo
 	if (!queue_is_empty(cola_ready)) {
@@ -1311,62 +1412,6 @@ void sacar_de_los_entrenadores_deadlock(t_entrenador* entrenador) {
 
 }
 
-void realizar_intercambios_SJF() {
-
-	for (int i = 0; i < list_size(entrenadores); i++) {
-		sem_wait(&(termino_de_capturar[i]));
-	}
-
-	spoiler_alert();
-
-	inicio_deadlock = true;
-	sem_post(&sem_appeared_pokemon);
-
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
-
-	while (!list_is_empty(entrenadores_deadlock)) {
-		sem_wait(&puede_intercambiar);
-
-		// Aca deberia cambiar
-		// No deberia seleccionar el primero en deadlock
-		// Deberia seleccionar el que cuyo donador tiene la menor estimacion
-		t_list* donadores = buscar_donadores_para_cada_entrenador();
-		u_int32_t indice = buscar_entrenador_con_donador_con_estimacion_mas_baja(donadores);
-
-		t_entrenador* entrenador = list_remove(entrenadores_deadlock, indice);
-
-		if (!list_is_empty(entrenadores_deadlock)) {
-
-			// En vez de usar cola ready deberia usar lista ready
-			// Aca lo cambie para reutilizar donadores y el indice calculado
-
-			t_planificado* planificado = list_remove(donadores, indice);
-
-			t_entrenador* donador = planificado->entrenador;
-
-			cambiar_estado(donador, READY);
-			cambiar_condicion_ready(donador);
-
-			list_add(lista_ready, planificado);
-			sem_post(&puede_planificar);
-
-			intercambiar_pokemon_SJF(entrenador, planificado);
-
-			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
-			if (cumplio_su_objetivo(donador)) sacar_de_los_entrenadores_deadlock(donador);
-		}
-
-		list_destroy(donadores);
-
-		//cantidad_deadlocks++;
-	}
-
-	fin_deadlock = true;
-
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
-
-}
-
 // No funciona igual al de fifo
 // Es diferente porque no pone en ready al donador
 t_planificado* buscar_donador_SJF(t_entrenador* entrenador) {
@@ -1386,55 +1431,6 @@ t_planificado* buscar_donador_SJF(t_entrenador* entrenador) {
 	}
 
 	return planificado;
-}
-
-void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planificado) {
-
-	t_entrenador* donador = planificado->entrenador;
-	sem_wait(&(puede_ejecutar[donador->indice]));
-
-	u_int32_t rafaga = distancia(donador->posicion, entrenador->posicion);
-	u_int32_t ciclos = rafaga + INTERCAMBIAR;
-	donador->rafaga = ciclos;
-	donador->ciclos_cpu += ciclos;
-
-	sem_wait(&(mutex_ciclos_cpu_totales));
-	ciclos_cpu_totales += ciclos;
-	sem_post(&(mutex_ciclos_cpu_totales));
-
-	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
-
-	log_info(logger_team, "El entrenador %d esta en la posicion (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
-	log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", donador->indice, donador->posicion->x, donador->posicion->y);
-
-	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
-
-	// Pensar en las rafagas para el intercambio
-	// Deberia modificar las rafagas de ambos entrenadores (entrenador y donador)?
-	// Una solucion es hacerlo solo para el donador.
-	// Ya que se mueve e intercambia.
-	// Seria la rafaga (cantidad de movimientos) + 5 (intercambio)
-
-	// Falta poner sleep tanto aca como en fifo
-
-	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	intercambiar(donador, inservible, planificado->pokemon->pokemon);
-	modificar_estimacion_y_rafaga(donador, ciclos);
-
-	for (int i = 0; i < INTERCAMBIAR; i++) {
-		sleep(config_team->retardo_ciclo_cpu);
-	}
-
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
-
-	// Hay un error
-	// El error que estaba en fifo persiste en sjf
-	// seguramente si lo arreglamos en fifo
-	// aca sale rapido
-
-	sem_post(&puede_intercambiar);
-
 }
 
 /*

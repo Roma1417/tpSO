@@ -169,10 +169,10 @@ void entrenador_destroy(t_entrenador* entrenador) {
 	list_destroy(entrenador->pokemon_inservibles);
 	list_destroy(entrenador->pokemon_obtenidos);
 
-	for (int i = 0; i < list_size(entrenador->objetivos); i++) {
+	/*for (int i = 0; i < list_size(entrenador->objetivos); i++) {
 		char* pokemon = list_get(entrenador->objetivos, i);
 		free(pokemon);
-	}
+	}*/
 
 	list_destroy(entrenador->objetivos);
 	list_destroy(entrenador->objetivos_faltantes);

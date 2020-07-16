@@ -483,3 +483,12 @@
 [INFO] 19:25:37:619 gamecard/(10810:15325): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 1 2
 [INFO] 08:54:46:201 gamecard/(31222:31241): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 08:54:46:280 gamecard/(31222:31249): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 20:02:58:144 gamecard/(9229:9243): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 10
+[INFO] 20:03:03:151 gamecard/(9229:9258): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 10
+[INFO] 20:04:51:109 gamecard/(27038:27053): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 20:04:56:113 gamecard/(27038:27069): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 1
+[INFO] 20:07:06:552 gamecard/(7724:7739): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 20:07:11:555 gamecard/(7724:7763): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 1
+[INFO] 20:19:00:576 gamecard/(15649:15667): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 20:21:41:33 gamecard/(14680:14695): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 20:21:46:36 gamecard/(14680:14710): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2

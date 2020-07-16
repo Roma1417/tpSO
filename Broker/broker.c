@@ -25,7 +25,7 @@ int main(void)
 		}
 	generador_id_mensaje = 1;
 
-	config = config_create("./broker.config");
+	config = config_create("./brokerFinal.config");
 
 	uint32_t tamanio_memoria = config_get_int_value(config, "TAMANO_MEMORIA");
 	tamano_minimo_particion = config_get_int_value(config, "TAMANO_MINIMO_PARTICION");

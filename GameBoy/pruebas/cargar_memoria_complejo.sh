@@ -1,3 +1,4 @@
+#!/bin/sh
 ./gameboy BROKER CATCH_POKEMON Pikachu 9 3 #19b
 ./gameboy BROKER CATCH_POKEMON Squirtle 9 3 #20b
 
