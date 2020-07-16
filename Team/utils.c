@@ -137,11 +137,13 @@ void iniciar_servidor(void) {
 bool pokemons_objetivo_fueron_atrapados() {
 	bool objetivo_cumplido = true;
 
+	t_list* objetivos;
 	for (int i = 0; i < list_size(objetivo_global) && objetivo_cumplido; i++) {
-		t_list* objetivos = list_get(objetivo_global, i);
+		objetivos = list_get(objetivo_global, i);
 
 		objetivo_cumplido = list_is_empty(objetivos);
 	}
+
 
 	return objetivo_cumplido;
 }
@@ -496,6 +498,7 @@ int crear_conexion(char *ip, char* puerto) {
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
 		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		freeaddrinfo(server_info);
 		return -1;
 	}
 	else log_info(logger_team, "Se pudo establecer la conexion con el Broker");

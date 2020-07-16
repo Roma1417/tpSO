@@ -443,6 +443,8 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	mensaje[4] = string_itoa(pokemon->posicion->y);
 
 	enviar_mensaje(mensaje, conexion);
+	//for(int i=0;i<5;i++) free(mensaje[i]);
+	//free(mensaje);
 	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
@@ -804,7 +806,7 @@ void quitar_de_objetivos_faltantes(t_planificado* planificado) {
 		pokemon = list_get(planificado->entrenador->objetivos_faltantes, i);
 		se_encontro = (string_equals_ignore_case(pokemon, planificado->pokemon->pokemon));
 		if (se_encontro) {
-			list_remove(planificado->entrenador->objetivos_faltantes, i);
+			list_remove_and_destroy_element(planificado->entrenador->objetivos_faltantes, i, free);
 		}
 	}
 }
@@ -828,7 +830,7 @@ t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* ent
 				t_appeared_pokemon* pokemon = appeared_pokemon_create();
 				cambiar_nombre_pokemon(pokemon, pokemon_faltante);
 				planificado_donador = planificado_create(donador, pokemon);
-				list_remove(donador->pokemon_inservibles, j);
+				list_remove_and_destroy_element(donador->pokemon_inservibles, j, free);
 				quitar_de_objetivos_faltantes(planificado);
 
 				bool es_entrenador_buscado(void* parametro){
@@ -915,6 +917,9 @@ void spoiler_alert(){
 				list_clean(participantes_de_deadlock);
 			}
 		}
+		free(planificado_entrenador->pokemon);
+		free(planificado_entrenador);
+		free(donador);
 	}
 
 	printf("-----------------------\n");
@@ -931,10 +936,11 @@ void spoiler_alert(){
 		entrenador_auxiliar->pokemon_inservibles = sublista2;
 	}
 
-	free(entrenadores_deadlock_fake);
-	free(participantes_de_deadlock);
-	free(pokemons_inservibles);
-	free(objetivos_faltantes);
+
+	list_destroy(entrenadores_deadlock_fake);
+	list_destroy(participantes_de_deadlock);
+	list_destroy(pokemons_inservibles);
+	list_destroy(objetivos_faltantes);
 }
 
 
@@ -1487,9 +1493,7 @@ t_list* obtener_especies() {
  * 		 atrapar por parte de los entrenadores.
  */
 t_list* get_objetivo_global(t_list* entrenadores) {
-
 	return list_map(entrenadores, (void*) get_objetivos_faltantes);
-
 }
 
 /**
@@ -1535,6 +1539,7 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores, t_que
 	destruir_appeared_pokemons();
 
 	list_destroy(entrenadores);
+	list_destroy(entrenadores_deadlock);
 	queue_destroy(cola_ready);
 	list_destroy(objetivo_global);
 
@@ -1559,8 +1564,8 @@ void imprimir(int n) {
 
 // Codigo de prueba
 void liberar_todo(int n) {
-	printf("\n Intento terminar el programa pero... \n"); // Karen ayuda pls
-	list_clean(objetivo_global);
+	list_destroy(entrenadores_deadlock);
+	list_destroy(objetivo_global);
 	exit(1);
 }
 
@@ -1623,13 +1628,13 @@ void suscribirse_a_colas() {
 	 string_append(&mensaje, "LOCALIZED_POKEMON");
 	 pthread_create(&hilo_localized, NULL, suscribirse, (void*) mensaje);*/
 
-	pthread_create(&hilo_appeared, NULL, suscribirse, "LOCALIZED_POKEMON");
+	pthread_create(&hilo_localized, NULL, suscribirse, "LOCALIZED_POKEMON");
 
 	/*mensaje = string_new();
 	 string_append(&mensaje, "CAUGHT_POKEMON");
 	 pthread_create(&hilo_caught, NULL, suscribirse, (void*) mensaje);*/
 
-	pthread_create(&hilo_appeared, NULL, suscribirse, "CAUGHT_POKEMON");
+	pthread_create(&hilo_caught, NULL, suscribirse, "CAUGHT_POKEMON");
 
 }
 
@@ -1672,8 +1677,8 @@ void informar_resultados() {
 int main(void) {
 
 	//signal(SIGTERM, imprimir); // Mostrar
-	//signal(SIGINT,liberar_todo); // Mostrar
-
+	signal(SIGINT,liberar_todo); // Mostrar
+	objetivo_global = NULL;
 	t_config* config = leer_config();
 	ciclos_cpu_totales = 0;
 	cambios_contexto = 0;

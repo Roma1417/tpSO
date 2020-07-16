@@ -136,6 +136,7 @@ t_list* get_objetivos_faltantes(t_entrenador* entrenador) {
 		remover_elemento_repetido(objetivos_faltantes, pokemon);
 	}
 
+	//free(entrenador->objetivos_faltantes);
 	entrenador->objetivos_faltantes = objetivos_faltantes;
 
 	return objetivos_faltantes;
@@ -164,14 +165,16 @@ void entrenador_destroy(t_entrenador* entrenador) {
 		free(pokemon);
 	}
 
+	list_destroy(entrenador->pokemon_inservibles);
 	list_destroy(entrenador->pokemon_obtenidos);
 
-	for (int i = 0; i < list_size(entrenador->objetivos); i++) {
+	/*for (int i = 0; i < list_size(entrenador->objetivos); i++) {
 		char* pokemon = list_get(entrenador->objetivos, i);
 		free(pokemon);
-	}
+	}*/
 
 	list_destroy(entrenador->objetivos);
+	list_destroy(entrenador->objetivos_faltantes);
 
 	pthread_join(entrenador->hilo, NULL); // Esto con cancel da leak
 
