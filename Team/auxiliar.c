@@ -12,6 +12,7 @@ algoritmo_planificacion get_algoritmo_planificacion() {
 	char* algoritmo = config_team->algoritmo_planificacion;
 	if (strcmp(algoritmo, "FIFO") == 0) tipo = FIFO;
 	if (strcmp(algoritmo, "RR") == 0) tipo = RR;
+	if (strcmp(algoritmo, "SJF-SD") == 0) tipo = SJF;
 	if (strcmp(algoritmo, "SJF-CD") == 0) tipo = SJFCD;
 
 	return tipo;
