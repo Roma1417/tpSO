@@ -103,6 +103,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		sem_post(&sem_planificado_create);
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance;
 		entrenador->ciclos_cpu += ciclos;
@@ -155,6 +156,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		sem_post(&sem_planificado_create);
 
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance;
@@ -286,6 +288,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		sem_post(&sem_planificado_create);
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance;
 
@@ -374,6 +377,9 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+		sem_post(&sem_planificado_create);
+
 		u_int32_t rafaga = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
@@ -392,7 +398,6 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
-		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
 
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
@@ -1417,6 +1422,7 @@ void* iniciar_planificador_largo_plazo(void* parametro) {
 	while (!pokemons_objetivo_fueron_atrapados()) {
 		sem_wait(&sem_appeared_pokemon);
 		sem_wait(&sem_entrenadores);
+		sem_wait(&sem_planificado_create);
 
 		if (inicio_deadlock) break;
 
@@ -1655,6 +1661,7 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud) {
 void actualizar_objetivo_global() {
 	t_list* auxiliar = get_objetivo_global(entrenadores);
 	objetivo_global = list_flatten(auxiliar);
+	//for(int i=0;i<list_size(auxiliar);i++) list_destroy(list_get(auxiliar,i));
 	list_destroy(auxiliar);
 }
 
@@ -1676,7 +1683,7 @@ void informar_resultados() {
 // Funcion main
 int main(void) {
 
-	//signal(SIGTERM, imprimir); // Mostrar
+	signal(SIGTERM, liberar_todo); // Mostrar
 	signal(SIGINT,liberar_todo); // Mostrar
 	objetivo_global = NULL;
 	t_config* config = leer_config();
@@ -1704,6 +1711,7 @@ int main(void) {
 	sem_init(&puede_planificar, 0, 1);
 	sem_init(&puede_intercambiar, 0, 1);
 	sem_init(&mutex_ciclos_cpu_totales, 0, 1);
+	sem_init(&sem_planificado_create, 0, 1);
 	puede_ejecutar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 	llega_mensaje_caught = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 

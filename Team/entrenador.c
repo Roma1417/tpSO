@@ -20,7 +20,8 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->posicion = posicion;
 	entrenador->pokemon_obtenidos = pokemon_obtenidos;
 	entrenador->objetivos = objetivos;
-	entrenador->objetivos_faltantes = get_objetivos_faltantes(entrenador);
+	entrenador->objetivos_faltantes = NULL; //get_objetivos_faltantes(entrenador);
+	get_objetivos_faltantes(entrenador);
 	entrenador->estado = NEW;
 	entrenador->hilo = 0;
 	entrenador->indice = indice;
@@ -136,7 +137,7 @@ t_list* get_objetivos_faltantes(t_entrenador* entrenador) {
 		remover_elemento_repetido(objetivos_faltantes, pokemon);
 	}
 
-	//free(entrenador->objetivos_faltantes);
+	if(entrenador->objetivos_faltantes != NULL) list_destroy(entrenador->objetivos_faltantes);
 	entrenador->objetivos_faltantes = objetivos_faltantes;
 
 	return objetivos_faltantes;
