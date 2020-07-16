@@ -223,6 +223,7 @@ void finalizar_gamecard(){
 	pthread_cancel(hilo_get);
 	pthread_cancel(hilo_new);
 	pthread_cancel(hilo_servidor);
+	pthread_cancel(thread);
 	log_destroy(logger_gamecard);
 	config_destroy(config);
 
@@ -240,6 +241,7 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud) {
 
 int main(){
 	signal(SIGINT, finalizar_gamecard);
+	signal(SIGTERM, finalizar_gamecard);
 
 	printf("Empieza el GameCard\n");
 	config = leer_config();

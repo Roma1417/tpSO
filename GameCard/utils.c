@@ -172,6 +172,7 @@ void cargar_datos_new_pokemon(t_new_pokemon* new_pokemon) {
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(
 			new_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	free(file_pokemon_path);
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
 	actualizar_posiciones(file_pokemon, new_pokemon);
 	cerrar_file(file_pokemon);
@@ -303,18 +304,19 @@ void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo) {
 }
 
 void enviar_appeared_pokemon(u_int32_t id_mensaje, t_new_pokemon* new_pokemon) {
-	uint32_t conexion = crear_conexion(config_gamecard->ip_broker,
-			config_gamecard->puerto_broker);
+	uint32_t conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 	char** mensaje_appeared_pokemon = malloc((sizeof(char*)) * 6);
 	mensaje_appeared_pokemon[0] = string_new();
 	string_append(&(mensaje_appeared_pokemon[0]), "BROKER");
 	mensaje_appeared_pokemon[1] = string_new();
 	string_append(&(mensaje_appeared_pokemon[1]), "APPEARED_POKEMON");
-	mensaje_appeared_pokemon[2] = new_pokemon->pokemon;
-	mensaje_appeared_pokemon[3] = string_itoa(new_pokemon->pos_x);
-	mensaje_appeared_pokemon[4] = string_itoa(new_pokemon->pos_y);
-	mensaje_appeared_pokemon[5] = string_itoa(id_mensaje);
+	mensaje_appeared_pokemon[2] = string_itoa(id_mensaje);
+	mensaje_appeared_pokemon[3] = new_pokemon->pokemon;
+	mensaje_appeared_pokemon[4] = string_itoa(new_pokemon->pos_x);
+	mensaje_appeared_pokemon[5] = string_itoa(new_pokemon->pos_y);
 	enviar_mensaje(mensaje_appeared_pokemon, conexion);
+	for(int i=0; i<6; i++) free(mensaje_appeared_pokemon[i]);
+	free(mensaje_appeared_pokemon);
 	liberar_conexion(conexion);
 }
 
@@ -612,6 +614,9 @@ void serve_client(int* cliente_fd) {
 
 		enviar_appeared_pokemon(id_mensaje, new_pokemon);
 
+		//free(new_pokemon->pokemon);
+		free(new_pokemon);
+
 		break;
 	case CATCH_POKEMON:
 		printf("Recibi un mensaje CATCH_POKEMON\n");
@@ -779,8 +784,8 @@ void* generar_stream(char** argumentos, t_paquete* paquete) {
 
 	switch (paquete->codigo_operacion) {
 	case APPEARED_POKEMON:
-		agregar_string(&offset, argumentos[2], &stream);
-		agregar_entero(&offset, argumentos[3], &stream);
+		agregar_entero(&offset, argumentos[2], &stream);
+		agregar_string(&offset, argumentos[3], &stream);
 		agregar_entero(&offset, argumentos[4], &stream);
 		agregar_entero(&offset, argumentos[5], &stream);
 		break;
@@ -829,7 +834,7 @@ u_int32_t obtener_size(char* argumentos[], tipo_mensaje tipo) {
 	u_int32_t size = 0;
 	switch (tipo) {
 	case APPEARED_POKEMON:
-		size = sizeof(u_int32_t) * 4 + strlen(argumentos[2]);
+		size = sizeof(u_int32_t) * 4 + strlen(argumentos[3]);
 		break;
 	case CAUGHT_POKEMON:
 		size = sizeof(u_int32_t) * 2;

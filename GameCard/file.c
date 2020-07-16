@@ -10,6 +10,7 @@ char* generar_pokemon_file_path(char* pokemon) {
 	char* path_beta = string_new();
 	string_append_with_format(&path_beta, "/Files/%s", pokemon);
 	char* path = generar_nombre(path_beta);
+	free(path_beta);
 	return path;
 }
 
@@ -132,6 +133,7 @@ char* obtener_directorio_block_path() {
 	char* path_beta = string_new();
 	string_append(&path_beta, "/Blocks");
 	char* path = generar_nombre(path_beta);
+	free(path_beta);
 	return path;
 }
 
@@ -142,16 +144,20 @@ char* obtener_bloque_path(char* bloque) {
 }
 
 char* obtener_bloque_disponible() {
-	bool encontrado;
-	uint32_t bloque_disponible;
-	for (int i = 0; i < (metadata_general->blocks) && !encontrado; i++) {
-		if (bitarray_test_bit(bitmap, i) == 0) {
+	bool encontrado = false;
+	int bloque_disponible = -1;
+	int cantidad_total_bloques = metadata_general->blocks;
+	printf("Metada_general->blocks: %d\n", cantidad_total_bloques);
+
+	for (int i = 0; (i < cantidad_total_bloques) && (!encontrado); i++) {
+		encontrado = !(bitarray_test_bit(bitmap, i));
+		if (encontrado) {
 			bloque_disponible = i + 1;
 			printf("Bloque_disponible: %d\n", bloque_disponible);
-			encontrado = true;
 			bitarray_set_bit(bitmap, i);
 		}
 	}
+	if(bloque_disponible < 0) exit(1);
 	return string_itoa(bloque_disponible);
 }
 
@@ -207,13 +213,15 @@ void actualizar_size(FILE* file, t_list* bloques_file) {
 	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
 	printf("Ward2.5\n");
-	uint32_t size = string_itoa(obtener_file_size(file, bloques_file));
-	fputs(, file);
+	int size_int = obtener_file_size(file, bloques_file);
+	char* size = string_itoa(size_int);
+	fputs(size, file);
 	printf("Ward3\n");
 	fputc('\n', file);
 	fputs(posterior, file);
 	fseek(file, -string_length(posterior), SEEK_END);
 	free(posterior);
+	free(size);
 }
 
 void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
@@ -246,25 +254,36 @@ void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
 	fputs(bloque_string, file);
 	fputs(posterior, file);
 	free(posterior);
+	free(bloque_string);
 }
 
 void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon, char* bloque) {
 	//Crear nuevo bloque
 	char* ultimo_bloque = obtener_bloque_disponible();
-	FILE* bloque_file = fopen(obtener_bloque_path(ultimo_bloque), "w+b");
-	fputs(string_itoa(new_pokemon->pos_x), bloque_file);
+	char* bloque_path = obtener_bloque_path(ultimo_bloque);
+	FILE* bloque_file = fopen(bloque_path, "w+b");
+	free(bloque_path);
+	char* auxiliar = string_itoa(new_pokemon->pos_x);
+	fputs(auxiliar, bloque_file);
+	free(auxiliar);
 	fputc('-', bloque_file);
-	fputs(string_itoa(new_pokemon->pos_y), bloque_file);
+	auxiliar = string_itoa(new_pokemon->pos_y);
+	fputs(auxiliar, bloque_file);
+	free(auxiliar);
 	fputc('=', bloque_file);
-	fputs(string_itoa(new_pokemon->cantidad), bloque_file);
+	auxiliar = string_itoa(new_pokemon->cantidad);
+	fputs(auxiliar, bloque_file);
+	free(auxiliar);
 	fputc('\n', bloque_file);
 
 	//Actualizar en Metadata
 	actualizar_metadata(bloque_file, file, ultimo_bloque, bloque);
 	fclose(bloque_file);
+	free(ultimo_bloque);
 }
 
 t_list* obtener_bloques_del_pokemon(FILE* file) {
+	char* string_auxiliar;
 	fseek(file, 0, SEEK_SET);
 	avanzar_hasta('K', &file);
 	avanzar_hasta('=', &file);
@@ -278,7 +297,8 @@ t_list* obtener_bloques_del_pokemon(FILE* file) {
 				&& bloques_string[i] != ']')
 			string_append_with_format(&bloque_leido, "%c", bloques_string[i]);
 		else if (bloques_string[i] == ',' || bloques_string[i] == ']') {
-			list_add(bloques, string_duplicate(bloque_leido));
+			string_auxiliar = string_duplicate(bloque_leido);
+			list_add(bloques, string_auxiliar);
 			free(bloque_leido);
 			bloque_leido = string_new();
 		}
@@ -508,8 +528,9 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
 		//Hasta acá supuestamente está liberado
 		actualizar_size(file, bloques_file);
 		cerrar_bloques_file(bloques_file, bloque_file);
-		free(bloques_file);
-		free(bloques);
+		list_destroy(bloques_file);
+		for(int i=0; i<list_size(bloques); i++) free(list_get(bloques,i));
+		list_destroy(bloques);
 		free(ultimo_bloque);
 	} else {
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)

@@ -481,3 +481,5 @@
 [INFO] 19:25:17:101 gamecard/(10810:10861): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
 [INFO] 19:25:19:115 gamecard/(10810:10819): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 2 5
 [INFO] 19:25:37:619 gamecard/(10810:15325): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 1 2
+[INFO] 08:54:46:201 gamecard/(31222:31241): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 08:54:46:280 gamecard/(31222:31249): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
