@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamEsperaCircular.config");
+	t_config* config = config_create("./team.config");
 	return config;
 }
 
@@ -102,7 +102,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 
 	while (puede_seguir_atrapando(entrenador)) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
-
+		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
 		int ciclos = distance;
 		entrenador->ciclos_cpu += ciclos;
@@ -118,7 +118,8 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
-		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+
+		printf("Pokemon_a_atrapar de entrenador %d: %s\n", entrenador->indice, pokemon_a_atrapar->pokemon);
 
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
@@ -515,15 +516,18 @@ void* enviar_get_pokemon(void* parametro) {
 	char* pokemon = parametro;
 	char** mensaje = malloc(sizeof(char*) * 3);
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
-	mensaje[0] = string_new();
-	string_append(&(mensaje[0]), "BROKER");
 
-	mensaje[1] = string_new();
-	string_append(&(mensaje[1]), "GET_POKEMON");
+	if (conexion > 0) {
+		mensaje[0] = string_new();
+		string_append(&(mensaje[0]), "BROKER");
 
-	mensaje[2] = pokemon;
-	enviar_mensaje(mensaje, conexion);
-	liberar_conexion(conexion);
+		mensaje[1] = string_new();
+		string_append(&(mensaje[1]), "GET_POKEMON");
+
+		mensaje[2] = pokemon;
+		enviar_mensaje(mensaje, conexion);
+		liberar_conexion(conexion);
+	}
 
 	return EXIT_SUCCESS;
 }
@@ -807,8 +811,6 @@ void quitar_de_objetivos_faltantes(t_planificado* planificado) {
 
 t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* entrenadores_deadlock_fake, t_list* participantes_de_deadlock) {
 
-
-
 	t_planificado* planificado_donador = NULL;
 	t_entrenador* donador;
 	bool encontro_donador = false;
@@ -877,14 +879,6 @@ void spoiler_alert(){
 		list_add(pokemons_inservibles, sublista_pkm_ins);
 	}
 
-	/*for(int i=0; i<list_size(objetivos_faltantes); i++){
-		t_list* sublista = list_get(objetivos_faltantes, i);
-		for(int j=0;j<list_size(sublista); j++){
-			printf("Pokemon de sublista %d: %s\n", i, list_get(sublista, j));
-	 }
-	 }*/
-
-	//uint32_t cant_deadlocks = 0;
 	if (!list_is_empty(entrenadores_deadlock_fake)) {
 		t_entrenador* entrenador;
 		t_planificado* planificado_entrenador;
@@ -920,7 +914,6 @@ void spoiler_alert(){
 				auxiliar->cantidad_apariciones_deadlock = 0;
 				list_clean(participantes_de_deadlock);
 			}
-			printf("Cantidad de deadlocks parcial: %d\n", cantidad_deadlocks);
 		}
 	}
 
@@ -928,14 +921,20 @@ void spoiler_alert(){
 	printf("CANTIDAD TOTAL DEADLOCKS: %d\n", cantidad_deadlocks);
 	printf("-----------------------\n");
 
-	for (int i; i < list_size(entrenadores_deadlock); i++) {
+	for (int i=0; i < list_size(entrenadores_deadlock); i++) {
 		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
 		t_list* sublista1 = list_get(objetivos_faltantes, i);
+		free(entrenador_auxiliar->objetivos_faltantes);
 		entrenador_auxiliar->objetivos_faltantes = sublista1;
 		t_list* sublista2 = list_get(pokemons_inservibles, i);
+		free(entrenador_auxiliar->pokemon_inservibles);
 		entrenador_auxiliar->pokemon_inservibles = sublista2;
 	}
 
+	free(entrenadores_deadlock_fake);
+	free(participantes_de_deadlock);
+	free(pokemons_inservibles);
+	free(objetivos_faltantes);
 }
 
 
