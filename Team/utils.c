@@ -525,7 +525,10 @@ int crear_y_reintentar_conexion(char *ip, char* puerto) {
 		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
 		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
 		sleep(config_team->tiempo_reconexion);
-		if (inicio_deadlock) return -1;
+		if (inicio_deadlock){
+			freeaddrinfo(server_info);
+			return -1;
+		}
 	}
 
 	log_info(logger_team, "Se pudo establecer la conexion con el Broker");

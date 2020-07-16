@@ -117,27 +117,32 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 		log_info(logger_team, "El entrenador %d se movió a la posición (%d,%d)", entrenador->indice, entrenador->posicion->x, entrenador->posicion->y);
 		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 
+		//appeared_pokemon_destroy(pokemon_a_atrapar);
+
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 
-		printf("Pokemon_a_atrapar de entrenador %d: %s\n", entrenador->indice, pokemon_a_atrapar->pokemon);
+		//printf("Pokemon_a_atrapar de entrenador %d: %s\n", entrenador->indice, pokemon_a_atrapar->pokemon);
 
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
-		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
-			atrapar(entrenador, planificado->pokemon);
-			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			atrapar(entrenador, auxiliar);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
-			agregar_especie_requerida(planificado->pokemon->pokemon);
+			agregar_especie_requerida(auxiliar->pokemon);
 		}
+		free(planificado);
+		appeared_pokemon_destroy2(auxiliar);
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
@@ -214,23 +219,26 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
-		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
+			sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
-			atrapar(entrenador, planificado->pokemon);
+			atrapar(entrenador, auxiliar);
 			entrenador->rafaga--;
-			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
-			agregar_especie_requerida(planificado->pokemon->pokemon);
+			agregar_especie_requerida(auxiliar->pokemon);
 		}
+		free(planificado);
+		appeared_pokemon_destroy2(auxiliar);
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
@@ -339,12 +347,14 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 		sem_post(&puede_planificar);
 		planificado = planificado_create(entrenador, pokemon_a_atrapar);
 
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
+			t_appeared_pokemon* auxiliar = planificado->pokemon;
 			list_add(lista_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 
@@ -353,14 +363,16 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 			modificar_estimacion_y_rafaga(entrenador, 1);
 			entrenador->estimacion_restante = entrenador->estimacion;
 
-			atrapar(entrenador, planificado->pokemon);
-			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			atrapar(entrenador, auxiliar);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
-			agregar_especie_requerida(planificado->pokemon->pokemon);
+			agregar_especie_requerida(auxiliar->pokemon);
 		}
+		free(planificado);
+		appeared_pokemon_destroy2(auxiliar);
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
@@ -399,12 +411,14 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
+			t_appeared_pokemon* auxiliar = planificado->pokemon;
 			list_add(lista_ready, planificado);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 
@@ -412,14 +426,16 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 			// rafaga CPU por atrapar = 1
 			modificar_estimacion_y_rafaga(entrenador, 1);
 
-			atrapar(entrenador, planificado->pokemon);
-			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, planificado->pokemon->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			atrapar(entrenador, auxiliar);
+			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
-			agregar_especie_requerida(planificado->pokemon->pokemon);
+			agregar_especie_requerida(auxiliar->pokemon);
 		}
+		free(planificado);
+		appeared_pokemon_destroy2(auxiliar);
 		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
 		sem_post(&puede_planificar);
 		sem_post(&sem_entrenadores);
@@ -536,6 +552,8 @@ void* enviar_get_pokemon(void* parametro) {
 		liberar_conexion(conexion);
 	}
 
+	free(mensaje);
+
 	return EXIT_SUCCESS;
 }
 
@@ -573,6 +591,7 @@ void enreadyar_al_mas_cercano(t_list* entrenadores, t_appeared_pokemon* appeared
 	cambiar_estado(mas_cercano, READY);
 	cambiar_condicion_ready(mas_cercano);
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
+	enreadyar(planificado);
 	queue_push(cola_ready, planificado);
 }
 
@@ -621,6 +640,7 @@ void enreadyar_al_mas_cercano_SJFCD(t_list* entrenadores, t_appeared_pokemon* ap
 void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planificado) {
 
 	t_entrenador* donador = planificado->entrenador;
+	t_appeared_pokemon* auxiliar = planificado->pokemon;
 
 	sem_wait(&(puede_ejecutar[donador->indice]));
 
@@ -640,16 +660,16 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
-	intercambiar(entrenador, planificado->pokemon->pokemon, inservible);
-	intercambiar(donador, inservible, planificado->pokemon->pokemon);
+	intercambiar(entrenador, auxiliar->pokemon, inservible);
+	intercambiar(donador, inservible, auxiliar->pokemon);
 
 	for (int i = 0; i < INTERCAMBIAR; i++) {
 		sleep(config_team->retardo_ciclo_cpu);
 		donador->rafaga--;
 	}
 
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, planificado->pokemon->pokemon, inservible);
-	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, planificado->pokemon->pokemon);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", entrenador->indice, auxiliar->pokemon, inservible);
+	log_info(logger_team, "Entrenador %d recibio a %s y entrego a %s", donador->indice, inservible, auxiliar->pokemon);
 
 	// Hay un error
 	// No saca los inservibles bien del entrenador
@@ -689,6 +709,10 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 	 char* pokemon = list_get(donador->pokemon_inservibles,i);
 	 printf("pokemon inservibles: %s\n", pokemon);
 	 }*/
+
+	printf("WARD INTERCAMBIAR 1 ------- \n");
+
+	free(auxiliar);
 
 	sem_post(&puede_intercambiar);
 
@@ -771,13 +795,19 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 t_planificado* buscar_donador(t_entrenador* entrenador) {
 	t_planificado* planificado = NULL;
 	bool encontro_donador = false;
+	printf("cantidad de entrenadores en deadlock: %d\n", list_size(entrenadores_deadlock));
 	for (int i = 0; i < list_size(entrenadores_deadlock) && !encontro_donador; i++) {
 		t_entrenador* donador = list_get(entrenadores_deadlock, i);
+
+		printf("cantidad de inservibles del entrenador %d: %d\n", donador->indice, list_size(donador->pokemon_inservibles));
 		for (int j = 0; j < list_size(donador->pokemon_inservibles) && !encontro_donador; j++) {
 
 			char* obtenido = list_get(donador->pokemon_inservibles, j);
 			encontro_donador = list_elem(obtenido, entrenador->objetivos_faltantes);
 			if (encontro_donador) {
+
+				printf("WARD DONADOR 1 ------ \n");
+
 				t_appeared_pokemon* pokemon = appeared_pokemon_create();
 				cambiar_nombre_pokemon(pokemon, obtenido);
 				cambiar_estado(donador, READY);
@@ -811,7 +841,7 @@ void quitar_de_objetivos_faltantes(t_planificado* planificado) {
 		pokemon = list_get(planificado->entrenador->objetivos_faltantes, i);
 		se_encontro = (string_equals_ignore_case(pokemon, planificado->pokemon->pokemon));
 		if (se_encontro) {
-			list_remove_and_destroy_element(planificado->entrenador->objetivos_faltantes, i, free);
+			list_remove(planificado->entrenador->objetivos_faltantes, i);
 		}
 	}
 }
@@ -907,7 +937,10 @@ void spoiler_alert(){
 			donador->entrenador->cantidad_apariciones_deadlock++;
 
 			while (donador->entrenador->indice != planificado_entrenador->entrenador->indice) {
-				donador = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, participantes_de_deadlock);
+				t_planificado* auxiliar = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, participantes_de_deadlock);
+				free(donador->pokemon);
+				free(donador);
+				donador = auxiliar;
 				donador->entrenador->cantidad_apariciones_deadlock++;
 			}
 
@@ -921,10 +954,12 @@ void spoiler_alert(){
 				auxiliar->cantidad_apariciones_deadlock = 0;
 				list_clean(participantes_de_deadlock);
 			}
+
+			free(planificado_entrenador->pokemon);
+			free(planificado_entrenador);
+			free(donador->pokemon);
+			free(donador);
 		}
-		free(planificado_entrenador->pokemon);
-		free(planificado_entrenador);
-		free(donador);
 	}
 
 	printf("-----------------------\n");
@@ -934,13 +969,25 @@ void spoiler_alert(){
 	for (int i=0; i < list_size(entrenadores_deadlock); i++) {
 		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
 		t_list* sublista1 = list_get(objetivos_faltantes, i);
-		free(entrenador_auxiliar->objetivos_faltantes);
+		list_destroy(entrenador_auxiliar->objetivos_faltantes);
 		entrenador_auxiliar->objetivos_faltantes = sublista1;
 		t_list* sublista2 = list_get(pokemons_inservibles, i);
-		free(entrenador_auxiliar->pokemon_inservibles);
+		list_destroy(entrenador_auxiliar->pokemon_inservibles);
 		entrenador_auxiliar->pokemon_inservibles = sublista2;
 	}
 
+	for(int i = 0; i < list_size(entrenadores_deadlock); i++){
+		t_entrenador* entrenador = list_get(entrenadores_deadlock,i);
+		for(int j = 0; j < list_size(entrenador->objetivos_faltantes); j++){
+			char* pokemon = list_get(entrenador->objetivos_faltantes, j);
+			printf("objetivo faltante del entrenador %d: %s\n", entrenador->indice, pokemon);
+		}
+
+		for(int j = 0; j < list_size(entrenador->pokemon_inservibles); j++){
+			char* pokemon = list_get(entrenador->pokemon_inservibles, j);
+			printf("inservible del entrenador %d: %s\n", entrenador->indice, pokemon);
+		}
+	}
 
 	list_destroy(entrenadores_deadlock_fake);
 	list_destroy(participantes_de_deadlock);
@@ -970,24 +1017,60 @@ void realizar_intercambios_FIFO() {
 
 	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
 
+	for(int i = 0; i < list_size(entrenadores_deadlock); i++){
+		t_entrenador* entrenador = list_get(entrenadores_deadlock,i);
+		for(int j = 0; j < list_size(entrenador->objetivos_faltantes); j++){
+			char* pokemon = list_get(entrenador->objetivos_faltantes, j);
+			printf("objetivo faltante del entrenador %d: %s\n", entrenador->indice, pokemon);
+		}
+
+		for(int j = 0; j < list_size(entrenador->pokemon_inservibles); j++){
+			char* pokemon = list_get(entrenador->pokemon_inservibles, j);
+			printf("inservible del entrenador %d: %s\n", entrenador->indice, pokemon);
+		}
+	}
+
+
 	// Ahora vendria lo que dijo ale
 	// Agarro a un entrenador
 
 	while (!list_is_empty(entrenadores_deadlock)) {
+		printf("WARD OnePlus 1 ------- \n");
 		sem_wait(&puede_intercambiar);
+
+		printf("WARD OnePlus 2 ------- \n");
+
 		t_entrenador* entrenador = list_head(entrenadores_deadlock);
 
+		printf("WARD OnePlus 3 ------- \n");
+
 		if (!list_is_empty(entrenadores_deadlock)) {
+			printf("WARD OnePlus 8 ------- \n");
 			t_planificado* planificado = buscar_donador(entrenador);
+
+			printf("WARD OnePlus 9 ------- \n");
+
 			intercambiar_pokemon_FIFO(entrenador, planificado);
 
+			printf("WARD OnePlus 4 ------- \n");
+
 			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
+
+			printf("WARD OnePlus 5 ------- \n");
+
 			if (cumplio_su_objetivo(planificado->entrenador)) sacar_de_los_entrenadores_deadlock(planificado->entrenador);
+
+			printf("WARD OnePlus 6 ------- \n");
+			free(planificado);
 		}
 		//cantidad_deadlocks++;
 	}
 
+	printf("WARD OnePlus 7 ------- \n");
+
 	actualizar_objetivo_global();
+
+	printf("WARD OnePlus 8 ------- \n");
 
 	fin_deadlock = true;
 
@@ -1058,7 +1141,9 @@ void planificar_entrenadores() {
 		pokemon_a_atrapar = planificado->pokemon;
 		cambiar_estado(planificado->entrenador, EXEC);
 		cambios_contexto += 2;
-		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+		t_entrenador* auxiliar = planificado->entrenador;
+		if (!inicio_deadlock && fue_enreadyado(planificado)) free(planificado);
+		sem_post(&(puede_ejecutar[auxiliar->indice]));
 	}
 	//Mover entrenador
 }
@@ -1078,7 +1163,9 @@ void planificar_entrenadores_SJF() {
 		pokemon_a_atrapar = planificado->pokemon;
 		cambiar_estado(planificado->entrenador, EXEC);
 		cambios_contexto += 2;
-		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+		t_entrenador* auxiliar = planificado->entrenador;
+		if (!inicio_deadlock && fue_enreadyado(planificado)) free(planificado);
+		sem_post(&(puede_ejecutar[auxiliar->indice]));
 	}
 }
 
@@ -1089,7 +1176,9 @@ void planificar_entrenadores_SJFCD() {
 		pokemon_a_atrapar = planificado->pokemon;
 		cambiar_estado(planificado->entrenador, EXEC);
 		cambios_contexto += 2;
-		sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
+		t_entrenador* auxiliar = planificado->entrenador;
+		if (!inicio_deadlock && fue_enreadyado(planificado)) free(planificado);
+		sem_post(&(puede_ejecutar[auxiliar->indice]));
 	}
 }
 
@@ -1660,6 +1749,7 @@ sem_t* inicializar_vector_de_semaforos(u_int32_t longitud) {
 
 void actualizar_objetivo_global() {
 	t_list* auxiliar = get_objetivo_global(entrenadores);
+	if(objetivo_global != NULL) list_destroy(objetivo_global);
 	objetivo_global = list_flatten(auxiliar);
 	//for(int i=0;i<list_size(auxiliar);i++) list_destroy(list_get(auxiliar,i));
 	list_destroy(auxiliar);
@@ -1692,6 +1782,7 @@ int main(void) {
 	cantidad_deadlocks = 0;
 	inicio_deadlock = false;
 	fin_deadlock = false;
+	objetivo_global = NULL;
 
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);

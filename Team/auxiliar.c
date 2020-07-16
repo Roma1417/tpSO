@@ -129,10 +129,10 @@ char** get_array_value(char* string) {
 	read_array[0] = string_new();
 
 	int j = 0;
-	for (int i = 1; i <= length_value; i++) {
-		if(i == length_value) string_append_with_format(&(read_array[j]), "%c", '\0');
-		else if (string[i] == ',') {
-			string_append_with_format(&(read_array[j]), "%c", '\0');
+	for (int i = 1; i < length_value; i++) {
+		//if(i == length_value) string_append_with_format(&(read_array[j]), "%c", '\0');
+		if (string[i] == ',') {
+			//string_append_with_format(&(read_array[j]), "%c", '\0');
 			j++;
 			read_array[j] = string_new();
 		}

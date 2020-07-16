@@ -33,6 +33,20 @@ void appeared_pokemon_destroy(t_appeared_pokemon* appeared_pokemon) {
 
 }
 
+void appeared_pokemon_destroy2(t_appeared_pokemon* appeared_pokemon) {
+
+	free(appeared_pokemon->posicion);
+	free(appeared_pokemon);
+
+}
+
+void appeared_pokemon_destroy3(t_appeared_pokemon* appeared_pokemon) {
+
+	free(appeared_pokemon->pokemon);
+	free(appeared_pokemon);
+
+}
+
 /*
  * @NAME: cambiar_size_pokemon
  * @DESC: Dado un appeared_pokemon y un tamanio pasados por parametro,
