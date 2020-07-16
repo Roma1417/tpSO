@@ -13,6 +13,7 @@
 #include <semaphore.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <signal.h>
 #include "utils.h"
 
 
@@ -20,6 +21,8 @@
 pthread_t hilo_new;
 pthread_t hilo_get;
 pthread_t hilo_catch;
+pthread_t hilo_servidor;
+t_config* config;
 
 
 

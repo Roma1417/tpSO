@@ -59,6 +59,8 @@ void* suscribirse(void* cola){
 
 	enviar_mensaje(mensaje, conexion);
 
+	free(msg);
+
 	//Falta esperar la respuesta
 
 	//pthread_t thread_suscriptor;
@@ -208,9 +210,39 @@ void actualizar_bit_map(){
 	fclose(bitmap_file);
 }
 
+void finalizar_gamecard(){
+	//free(config_gamecard->ip_broker);
+	//free(config_gamecard->puerto_broker);
+	//free(config_gamecard->punto_montaje_tallgrass);
+	//free(config_gamecard);
+	destruir_metadata_general(metadata_general);
+	free(archivo_metadata_general_path);
+	free(archivo_bitmap_path);
+	bitarray_destroy(bitmap);
+	pthread_cancel(hilo_catch);
+	pthread_cancel(hilo_get);
+	pthread_cancel(hilo_new);
+	pthread_cancel(hilo_servidor);
+	log_destroy(logger_gamecard);
+	config_destroy(config);
+
+	exit(1);
+}
+
+sem_t* inicializar_vector_de_semaforos(u_int32_t longitud) {
+
+	sem_t* vector = malloc(sizeof(sem_t) * longitud);
+	for (int i = 0; i < longitud; i++) {
+		sem_init(&(vector[i]), 0, 0);
+	}
+	return vector;
+}
+
 int main(){
+	signal(SIGINT, finalizar_gamecard);
+
 	printf("Empieza el GameCard\n");
-	t_config* config = leer_config();
+	config = leer_config();
 	config_gamecard = construir_config_gamecard(config);
 	verificar_existencia_de_carpeta("/Blocks");
 	verificar_existencia_de_carpeta("/Files");
@@ -223,15 +255,15 @@ int main(){
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
 	char* bitarray = malloc((metadata_general->blocks)/8);
 	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks)/8, LSB_FIRST);
-	actualizar_bit_map();
 	//FALTA ACTUALIZAR BITMAP EN TODOS LADOS
+	actualizar_bit_map();
+
 
 	//crear_directorios();
 	//crear_archivos();
 
 	suscribirse_a_colas();
 
-	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 
 	//fclose(archivo_metadata);

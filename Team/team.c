@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./team.config");
+	t_config* config = config_create("./teamEsperaCircular.config");
 	return config;
 }
 
@@ -805,7 +805,10 @@ void quitar_de_objetivos_faltantes(t_planificado* planificado) {
 	}
 }
 
-t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* entrenadores_deadlock_fake, t_list* entrenadores_fin_deadlock) {
+t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* entrenadores_deadlock_fake, t_list* participantes_de_deadlock) {
+
+
+
 	t_planificado* planificado_donador = NULL;
 	t_entrenador* donador;
 	bool encontro_donador = false;
@@ -825,13 +828,22 @@ t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* ent
 				planificado_donador = planificado_create(donador, pokemon);
 				list_remove(donador->pokemon_inservibles, j);
 				quitar_de_objetivos_faltantes(planificado);
+
+				bool es_entrenador_buscado(void* parametro){
+					t_entrenador* entrenador_obtenido = parametro;
+					return (entrenador_obtenido->indice) == (donador->indice);
+				}
+
+				if(!list_any_satisfy(participantes_de_deadlock, es_entrenador_buscado))
+					list_add(participantes_de_deadlock, donador);
+
 			}
 			if((list_size(donador->pokemon_inservibles) == 0) && (list_size(donador->objetivos_faltantes) == 0)){
-				list_add(entrenadores_fin_deadlock, donador);
+				//list_add(entrenadores_fin_deadlock, donador);
 				list_remove(entrenadores_deadlock_fake, i);
 			}
 			if((list_size(planificado->entrenador->pokemon_inservibles) == 0) && (list_size(planificado->entrenador->objetivos_faltantes) == 0)){
-				list_add(entrenadores_fin_deadlock, planificado->entrenador);
+				//list_add(entrenadores_fin_deadlock, planificado->entrenador);
 				quitar_de_deadlock_fake(planificado->entrenador->indice, entrenadores_deadlock_fake);
 			}
 		}
@@ -842,7 +854,7 @@ t_planificado* buscar_donador_simulacion(t_planificado* planificado, t_list* ent
 
 void spoiler_alert(){
 	t_list* entrenadores_deadlock_fake = list_duplicate(entrenadores_deadlock);
-	t_list* entrenadores_fin_deadlock = list_create();
+	t_list* participantes_de_deadlock = list_create();
 	t_list* objetivos_faltantes = list_create();
 	t_list* pokemons_inservibles = list_create();
 	t_entrenador* entrenador_auxiliar;
@@ -869,12 +881,11 @@ void spoiler_alert(){
 		t_list* sublista = list_get(objetivos_faltantes, i);
 		for(int j=0;j<list_size(sublista); j++){
 			printf("Pokemon de sublista %d: %s\n", i, list_get(sublista, j));
-		}
-	}*/
+	 }
+	 }*/
 
-	uint32_t cant_deadlocks = 0;
-
-	if(!list_is_empty(entrenadores_deadlock_fake)){
+	//uint32_t cant_deadlocks = 0;
+	if (!list_is_empty(entrenadores_deadlock_fake)) {
 		t_entrenador* entrenador;
 		t_planificado* planificado_entrenador;
 		char* nombre_pokemon_entrenador;
@@ -882,48 +893,51 @@ void spoiler_alert(){
 		t_planificado* donador;
 		t_entrenador* auxiliar;
 
-		while(!list_is_empty(entrenadores_deadlock_fake)){
+		while (!list_is_empty(entrenadores_deadlock_fake)) {
 			entrenador = list_get(entrenadores_deadlock_fake, 0);
 			nombre_pokemon_entrenador = list_get(entrenador->objetivos_faltantes, 0);
 			pokemon_entrenador = appeared_pokemon_create();
 			cambiar_nombre_pokemon(pokemon_entrenador, nombre_pokemon_entrenador);
 			planificado_entrenador = planificado_create(entrenador, pokemon_entrenador);
 			entrenador->cantidad_apariciones_deadlock++;
+			list_add(participantes_de_deadlock, entrenador);
 
-			donador = buscar_donador_simulacion(planificado_entrenador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
+			donador = buscar_donador_simulacion(planificado_entrenador, entrenadores_deadlock_fake, participantes_de_deadlock);
 			donador->entrenador->cantidad_apariciones_deadlock++;
 
-			while(donador->entrenador->indice != planificado_entrenador->entrenador->indice){
-				donador = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, entrenadores_fin_deadlock);
+			while (donador->entrenador->indice != planificado_entrenador->entrenador->indice) {
+				donador = buscar_donador_simulacion(donador, entrenadores_deadlock_fake, participantes_de_deadlock);
 				donador->entrenador->cantidad_apariciones_deadlock++;
 			}
 
-			for(int i=0;i<list_size(entrenadores_fin_deadlock);i++){
-				entrenador = list_get(entrenadores_fin_deadlock, i);
-				if(entrenador->cantidad_apariciones_deadlock > 1){
-					cant_deadlocks += (entrenador->cantidad_apariciones_deadlock/2);
-					list_remove(entrenadores_fin_deadlock, i);
-				}
-				for(int j=0; j<list_size(entrenadores_deadlock_fake);j++){
-					auxiliar = list_get(entrenadores_deadlock_fake, j);
-					if(auxiliar->cantidad_apariciones_deadlock != 2)
-						auxiliar->cantidad_apariciones_deadlock = 0;
-				}
+			for (int i = 0; i < list_size(participantes_de_deadlock); i++) {
+				entrenador = list_get(participantes_de_deadlock, i);
+				cantidad_deadlocks += (entrenador->cantidad_apariciones_deadlock - 1);
+				list_remove(participantes_de_deadlock, i);
 			}
+			for (int j = 0; j < list_size(entrenadores_deadlock_fake); j++) {
+				auxiliar = list_get(entrenadores_deadlock_fake, j);
+				auxiliar->cantidad_apariciones_deadlock = 0;
+				list_clean(participantes_de_deadlock);
+			}
+			printf("Cantidad de deadlocks parcial: %d\n", cantidad_deadlocks);
 		}
-
-
-
 	}
 
-	for(int i; i<list_size(entrenadores_deadlock); i++){
+	printf("-----------------------\n");
+	printf("CANTIDAD TOTAL DEADLOCKS: %d\n", cantidad_deadlocks);
+	printf("-----------------------\n");
+
+	for (int i; i < list_size(entrenadores_deadlock); i++) {
 		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
 		t_list* sublista1 = list_get(objetivos_faltantes, i);
 		entrenador_auxiliar->objetivos_faltantes = sublista1;
 		t_list* sublista2 = list_get(pokemons_inservibles, i);
 		entrenador_auxiliar->pokemon_inservibles = sublista2;
 	}
+
 }
+
 
 void realizar_intercambios_FIFO() {
 	// Falta implementar en otro hilo
@@ -960,7 +974,7 @@ void realizar_intercambios_FIFO() {
 			if (no_cumplio_su_objetivo(entrenador)) list_add(entrenadores_deadlock, entrenador);
 			if (cumplio_su_objetivo(planificado->entrenador)) sacar_de_los_entrenadores_deadlock(planificado->entrenador);
 		}
-		cantidad_deadlocks++;
+		//cantidad_deadlocks++;
 	}
 
 	actualizar_objetivo_global();
@@ -1011,7 +1025,7 @@ void realizar_intercambios_RR() {
 			if (cumplio_su_objetivo(planificado->entrenador)) sacar_de_los_entrenadores_deadlock(planificado->entrenador);
 		}
 
-		cantidad_deadlocks++;
+		//cantidad_deadlocks++;
 	}
 
 	actualizar_objetivo_global();
@@ -1238,7 +1252,7 @@ void realizar_intercambios_SJF() {
 
 		list_destroy(donadores);
 
-		cantidad_deadlocks++;
+		//cantidad_deadlocks++;
 	}
 
 	fin_deadlock = true;

@@ -13,6 +13,7 @@
 #include <netdb.h>
 #include <sys/stat.h>
 #include <commons/config.h>
+#include <semaphore.h>
 #include <commons/log.h>
 #include "file.h"
 

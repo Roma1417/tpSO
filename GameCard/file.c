@@ -207,7 +207,8 @@ void actualizar_size(FILE* file, t_list* bloques_file) {
 	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
 	printf("Ward2.5\n");
-	fputs(string_itoa(obtener_file_size(file, bloques_file)), file);
+	uint32_t size = string_itoa(obtener_file_size(file, bloques_file));
+	fputs(, file);
 	printf("Ward3\n");
 	fputc('\n', file);
 	fputs(posterior, file);
@@ -284,6 +285,10 @@ t_list* obtener_bloques_del_pokemon(FILE* file) {
 
 		i++;
 	}
+
+	free(bloques_string);
+	free(bloque_leido);
+
 	return bloques;
 }
 
@@ -500,8 +505,12 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
 		crear_nuevo_bloque(file, new_pokemon, ultimo_bloque);
 		bloques = obtener_bloques_del_pokemon(file);
 		bloques_file = obtener_bloques_actuales(file, bloques);
+		//Hasta acá supuestamente está liberado
 		actualizar_size(file, bloques_file);
 		cerrar_bloques_file(bloques_file, bloque_file);
+		free(bloques_file);
+		free(bloques);
+		free(ultimo_bloque);
 	} else {
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
 		char* bloque;
