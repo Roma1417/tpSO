@@ -41,6 +41,7 @@ typedef struct {
 	bool puede_pasar_a_ready;
 	u_int32_t rafaga;
 	u_int32_t ciclos_cpu;
+	char identificador;
 
 	float estimacion;
 	float estimacion_restante;
@@ -51,7 +52,8 @@ typedef struct {
 
 void cambiar_estado(t_entrenador* entrenador, t_estado estado);
 bool puede_ser_planificado(void* parametro);
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice, float estimacion_inicial);
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
+		t_list* objetivos, u_int32_t indice, float estimacion_inicial, char identificador);
 t_list* get_objetivos(t_entrenador* entrenador);
 t_list* get_objetivos_faltantes(t_entrenador* entrenador);
 void entrenador_destroy(t_entrenador* entrenador);
