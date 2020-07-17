@@ -476,3 +476,17 @@
 [INFO] 16:46:18:728 gameboy/(1827:1827): Se ha enviado el mensaje CAUGHT_POKEMON al proceso BROKER
 [INFO] 16:46:27:800 gameboy/(7909:7909): Se realiza una conexión al proceso BROKER
 [INFO] 16:46:27:800 gameboy/(7909:7909): Se ha enviado el mensaje CAUGHT_POKEMON al proceso BROKER
+[INFO] 18:38:29:879 gameboy/(11388:11388): Se realiza una conexión al proceso GAMECARD
+[INFO] 18:38:29:926 gameboy/(11388:11388): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 18:38:51:25 gameboy/(11404:11404): Se realiza una conexión al proceso GAMECARD
+[INFO] 18:38:52:71 gameboy/(11404:11404): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 18:39:04:868 gameboy/(11410:11410): Se realiza una conexión al proceso GAMECARD
+[INFO] 18:39:04:915 gameboy/(11410:11410): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 18:39:45:416 gameboy/(11448:11448): Se realiza una conexión al proceso GAMECARD
+[INFO] 18:39:45:462 gameboy/(11448:11448): Se ha enviado el mensaje NEW_POKEMON al proceso GAMECARD
+[INFO] 18:41:23:691 gameboy/(11471:11471): Se realiza una conexión al proceso GAMECARD
+[INFO] 18:41:23:748 gameboy/(11471:11471): Se ha enviado el mensaje GET_POKEMON al proceso GAMECARD
+[INFO] 18:45:46:679 gameboy/(13418:13418): Se realiza una conexión al proceso BROKER
+[INFO] 18:45:46:788 gameboy/(13418:13418): Se ha enviado el mensaje SUSCRIPTOR al proceso BROKER
+[INFO] 18:45:46:901 gameboy/(13418:13422): Llegó un mensaje de tipo GET_POKEMON
+

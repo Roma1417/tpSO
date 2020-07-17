@@ -1,1 +1,2 @@
-Particion 0: (nil) - 0x40.	[L]	Size: 64b
+Particion 0: (nil) - 0x20.	[X]	Size: 32b	LRU:2	Cola 2	ID:3
+Particion 1: 0x20 - 0x40.	[X]	Size: 32b	LRU:3	Cola 2	ID:4
