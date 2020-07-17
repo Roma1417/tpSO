@@ -172,7 +172,7 @@ void esperar_cliente(int socket_servidor) {
  */
 void recibir_mensaje(int* socket) {
 	int cod_op;
-	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
+	if (!fin_deadlock && recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
 	process_request(cod_op, *socket);
 }
 
@@ -242,16 +242,23 @@ void serve_client(int* socket) {
 void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensaje) {
 	int cliente_fd = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 	char** argv = malloc(sizeof(char*) * 5);
-	for (int i = 0; i < 5; i++) {
-		argv[i] = string_new();
-	}
+
+	for (int i = 0; i < 5; i++) if (i != 2) argv[i] = string_new();
 
 	string_append(&(argv[0]), "BROKER");
 	string_append(&(argv[1]), "CONFIRMAR");
 	argv[2] = mensaje;
-	string_append(&(argv[3]), string_itoa(id_mensaje));
-	string_append(&(argv[4]), string_itoa(id_proceso));
+	char* auxiliar = string_itoa(id_mensaje);
+	string_append(&(argv[3]), auxiliar);
+	free(auxiliar);
+	auxiliar = string_itoa(id_proceso);
+	string_append(&(argv[4]), auxiliar);
+	free(auxiliar);
 	enviar_mensaje(argv, cliente_fd);
+
+	for (int i = 0; i < 5; i++) if (i != 2) free(argv[i]);
+	free(argv);
+
 	liberar_conexion(cliente_fd);
 }
 
@@ -343,8 +350,8 @@ void process_request(int cod_op, int cliente_fd) {
 			for (int i = 0; i < list_size(entrenadores); i++) {
 				t_entrenador* entrenador = list_get(entrenadores, i);
 				if (entrenador->id_caught == id_correlativo) {
-					sem_post(&(llega_mensaje_caught[entrenador->indice]));
 					entrenador->resultado_caught = resultado;
+					sem_post(&(llega_mensaje_caught[entrenador->indice]));
 				}
 			}
 
@@ -416,9 +423,10 @@ void asignar_id_caught(t_entrenador* entrenador, int conexion) {
 		recibir_entero(conexion);
 		recibir_entero(conexion);
 		int size;
-		recibir_cadena(conexion, &size);
+		char* cadena = recibir_cadena(conexion, &size);
 		recibir_entero(conexion);
 		recibir_entero(conexion);
+		free(cadena);
 	}
 	else exit(1);
 	// Ale dijo que no hay que hacer free de los mensajes

@@ -467,8 +467,8 @@ int32_t enviar_catch_pokemon(t_entrenador* entrenador, t_appeared_pokemon* pokem
 	mensaje[4] = string_itoa(pokemon->posicion->y);
 
 	enviar_mensaje(mensaje, conexion);
-	//for(int i=0;i<5;i++) free(mensaje[i]);
-	//free(mensaje);
+	for(int i=0;i<5;i++) if (i != 2) free(mensaje[i]);
+	free(mensaje);
 	asignar_id_caught(entrenador, conexion);
 
 	liberar_conexion(conexion);
@@ -552,6 +552,7 @@ void* enviar_get_pokemon(void* parametro) {
 
 		mensaje[2] = pokemon;
 		enviar_mensaje(mensaje, conexion);
+		for(int i = 0; i < 2; i++) free(mensaje[i]);
 		liberar_conexion(conexion);
 	}
 
@@ -1660,14 +1661,18 @@ void terminar_programa(t_log* logger, t_config* config) {
 }
 
 // Codigo de prueba
-void imprimir(int n) {
-	printf("Eclipse no funciona igual -> F\n");
-}
-
-// Codigo de prueba
 void liberar_todo(int n) {
-	list_destroy(entrenadores_deadlock);
-	list_destroy(objetivo_global);
+	//liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
+	//terminar_programa(logger_team, config);
+
+	pthread_cancel(hilo_servidor);
+	pthread_cancel(hilo_appeared);
+	pthread_cancel(hilo_caught);
+	pthread_cancel(hilo_localized);
+	pthread_cancel(hilo_planificador);
+	pthread_cancel(hilo_intercambiador);
+	pthread_cancel(hilo_planificador_largo_plazo);
+
 	exit(1);
 }
 
@@ -1787,9 +1792,9 @@ void informar_resultados() {
 int main(void) {
 
 	signal(SIGTERM, liberar_todo); // Mostrar
-	signal(SIGINT,liberar_todo); // Mostrar
+	signal(SIGINT, liberar_todo); // Mostrar
 	objetivo_global = NULL;
-	t_config* config = leer_config();
+	config = leer_config();
 	ciclos_cpu_totales = 0;
 	cambios_contexto = 0;
 	cantidad_deadlocks = 0;
@@ -1831,13 +1836,9 @@ int main(void) {
 	especies_requeridas = obtener_especies(objetivo_global);
 
 	enviar_mensajes_get_pokemon();
-	pthread_t hilo_servidor;
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
-	pthread_t hilo_planificador_largo_plazo;
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
-	pthread_t hilo_planificador;
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
-	pthread_t hilo_intercambiador;
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
 	pthread_join(hilo_intercambiador, NULL);
@@ -1848,12 +1849,18 @@ int main(void) {
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");
 
+	/*pthread_join(hilo_servidor, NULL);
 	pthread_join(hilo_appeared, NULL);
 	pthread_join(hilo_caught, NULL);
-	pthread_join(hilo_localized, NULL);
-	pthread_join(hilo_servidor, NULL);
+	pthread_join(hilo_localized, NULL);*/
 
 	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
+
+	pthread_join(hilo_servidor, NULL);
+	//pthread_cancel(hilo_servidor);
+	pthread_cancel(hilo_appeared);
+	pthread_cancel(hilo_caught);
+	pthread_cancel(hilo_localized);
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 

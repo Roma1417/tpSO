@@ -172,6 +172,7 @@ t_list* pasar_a_lista_de_pokemon(t_config* config, char* cadena) {
 		if (string != NULL) {
 			char** pokes = string_split(string, "|");
 			string_iterate_lines(pokes, _a_la_lista);
+			//for(int i = 0; pokes[i] != NULL; i++) free(pokes[i]);
 			free(pokes);
 		}
 		else exit(1);
