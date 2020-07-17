@@ -151,10 +151,11 @@ char* obtener_bloque_disponible() {
 
 	for (int i = 0; (i < cantidad_total_bloques) && (!encontrado); i++) {
 		encontrado = !(bitarray_test_bit(bitmap, i));
+		printf("Bloque %d: %d\n", i+1, encontrado);
 		if (encontrado) {
+			bitarray_set_bit(bitmap, i);
 			bloque_disponible = i + 1;
 			printf("Bloque_disponible: %d\n", bloque_disponible);
-			bitarray_set_bit(bitmap, i);
 		}
 	}
 	if(bloque_disponible < 0) exit(1);

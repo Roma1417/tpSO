@@ -267,6 +267,8 @@ void process_request(int cod_op, int cliente_fd) {
 
 		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
 
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
+
 		enviar_mensaje_localized(pokemon, posiciones, id);
 
 
@@ -612,6 +614,8 @@ void serve_client(int* cliente_fd) {
 
 		cargar_datos_new_pokemon(new_pokemon);
 
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
+
 		enviar_appeared_pokemon(id_mensaje, new_pokemon);
 
 		//free(new_pokemon->pokemon);
@@ -628,6 +632,8 @@ void serve_client(int* cliente_fd) {
 		id_mensaje = recibir_entero(*cliente_fd);
 
 		bool resultado_captura = generar_resultado_captura(catch_pokemon);
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
+
 		enviar_caught_pokemon(id_mensaje, resultado_captura);
 
 		break;
@@ -643,6 +649,8 @@ void serve_client(int* cliente_fd) {
 		t_list* posiciones = obtener_posiciones_del_pokemon(pokemon);
 
 		for(int i=0; i<list_size(posiciones); i++) printf("Posicion %d: %s\n", i+1, list_get(posiciones, i));
+
+		sleep(config_gamecard->tiempo_de_reintento_operacion);
 
 		enviar_mensaje_localized(pokemon, posiciones, id_mensaje);
 

@@ -256,7 +256,8 @@ int main(){
 	metadata_general = construir_metadata_general();
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
 	char* bitarray = malloc((metadata_general->blocks)/8);
-	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks)/8, LSB_FIRST);
+	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks)/8, MSB_FIRST);
+	for(int i=0; i<metadata_general->blocks; i++) bitarray_clean_bit(bitmap, i);
 	//FALTA ACTUALIZAR BITMAP EN TODOS LADOS
 	actualizar_bit_map();
 
