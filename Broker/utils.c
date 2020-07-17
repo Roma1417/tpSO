@@ -177,6 +177,7 @@ void process_request(int cod_op, int cliente_fd) {
 		u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
 		printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
 		t_particion* particion_confirmada = buscar_particion(memoria, id_mensaje);
+		if(particion_confirmada == NULL) break;
 		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(particion_confirmada->atributos->suscriptores_enviados, id_suscriptor_confirmado);
 
 		list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
