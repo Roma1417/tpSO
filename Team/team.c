@@ -1708,9 +1708,12 @@ uint32_t obtener_id_segun_cola(char* cola){
 void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
-	int conexion = crear_y_reintentar_conexion(config_team->ip_broker, config_team->puerto_broker);
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	printf("Conexion: %d\n", conexion);
 
-	if (conexion < 0) return EXIT_SUCCESS;
+	if (conexion < 0){
+		return EXIT_SUCCESS;
+	}
 
 	char** mensaje = malloc(sizeof(char*) * 4);
 
@@ -1823,13 +1826,17 @@ void* iniciar_hilo_verificador_de_conexion(){
 		if(conexion < 0){
 			log_info(logger_team, "No se pudo establecer la conexion con el Broker");
 			log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
-			pthread_detach(hilo_appeared);
-			pthread_detach(hilo_caught);
-			pthread_detach(hilo_localized);
+			pthread_cancel(hilo_appeared);
+			pthread_cancel(hilo_caught);
+			pthread_cancel(hilo_localized);
 			sleep(config_team->tiempo_reconexion);
 			suscribirse_a_colas();
-		}else sleep(config_team->tiempo_reconexion);
-		liberar_conexion(conexion);
+		}else{
+			liberar_conexion(conexion);
+			sleep(config_team->tiempo_reconexion);
+		}
+
+
 	}
 
 	return EXIT_SUCCESS;
