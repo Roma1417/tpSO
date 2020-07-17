@@ -76,6 +76,7 @@ pthread_t hilo_servidor;
 pthread_t hilo_planificador_largo_plazo;
 pthread_t hilo_planificador;
 pthread_t hilo_intercambiador;
+pthread_t hilo_verificador_de_conexion;
 t_config* config;
 t_queue* appeared_pokemons;
 t_list* objetivo_global;

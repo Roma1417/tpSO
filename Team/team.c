@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamFinal2.config");
+	t_config* config = config_create("./team.config");
 	return config;
 }
 
@@ -1676,6 +1676,15 @@ void liberar_todo(int n) {
 	exit(1);
 }
 
+uint32_t obtener_id_segun_cola(char* cola){
+	uint32_t id = 0;
+	if(string_equals_ignore_case(cola, "APPEARED_POKEMON")) id=id_cola_appeared;
+	if(string_equals_ignore_case(cola, "CAUGHT_POKEMON")) id=id_cola_caught;
+	if(string_equals_ignore_case(cola, "LOCALIZED_POKEMON")) id=id_cola_localized;
+
+	return id;
+}
+
 /*
  * @NAME: suscribirse
  * @DESC: Dado el nombre de una cola, se suscribe a esa cola de mensajes del
@@ -1684,7 +1693,7 @@ void liberar_todo(int n) {
 void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
-	int conexion = crear_y_reintentar_conexion(config_team->ip_broker, config_team->puerto_broker);
+	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 
 	if (conexion < 0) return EXIT_SUCCESS;
 
@@ -1698,6 +1707,8 @@ void* suscribirse(void* cola) {
 
 	mensaje[2] = string_new();
 	string_append(&(mensaje[2]), msg);
+
+	//uint32_t id = obtener_id_segun_cola(msg);
 
 	mensaje[3] = string_itoa(id_team);
 
@@ -1788,6 +1799,26 @@ void informar_resultados() {
 
 	log_info(logger_team, "La cantidad de deadlocks fueron: %d\n", cantidad_deadlocks);
 }
+
+void* iniciar_hilo_verificador_de_conexion(){
+	int conexion;
+	while(1){
+		conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+		if(conexion < 0){
+			log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+			log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
+			pthread_detach(hilo_appeared);
+			pthread_detach(hilo_caught);
+			pthread_detach(hilo_localized);
+			sleep(config_team->tiempo_reconexion);
+			suscribirse_a_colas();
+		}else sleep(config_team->tiempo_reconexion);
+		liberar_conexion(conexion);
+	}
+
+	return EXIT_SUCCESS;
+}
+
 // Funcion main
 int main(void) {
 
@@ -1836,6 +1867,7 @@ int main(void) {
 	especies_requeridas = obtener_especies(objetivo_global);
 
 	enviar_mensajes_get_pokemon();
+	pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
@@ -1856,8 +1888,9 @@ int main(void) {
 
 	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
-	pthread_join(hilo_servidor, NULL);
-	//pthread_cancel(hilo_servidor);
+	//pthread_join(hilo_servidor, NULL);
+	pthread_join(hilo_verificador_de_conexion, NULL);
+	pthread_cancel(hilo_servidor);
 	pthread_cancel(hilo_appeared);
 	pthread_cancel(hilo_caught);
 	pthread_cancel(hilo_localized);
@@ -1867,5 +1900,4 @@ int main(void) {
 	terminar_programa(logger_team, config);
 
 	return 0;
-
 }

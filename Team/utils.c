@@ -232,9 +232,13 @@ void serve_client(int* socket) {
 			queue_push(appeared_pokemons, appeared_pokemon);
 
 			sem_post(&sem_appeared_pokemon);
+			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
 		}
-		else appeared_pokemon_destroy(appeared_pokemon);
-		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
+		else{
+			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
+			appeared_pokemon_destroy(appeared_pokemon);
+		}
+
 
 	}
 }
@@ -505,11 +509,11 @@ int crear_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		//log_info(logger_team, "No se pudo establecer la conexion con el Broker");
 		freeaddrinfo(server_info);
 		return -1;
 	}
-	else log_info(logger_team, "Se pudo establecer la conexion con el Broker");
+	else //log_info(logger_team, "Se pudo establecer la conexion con el Broker");
 
 	freeaddrinfo(server_info);
 
