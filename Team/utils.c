@@ -290,6 +290,15 @@ bool ya_recibio_especie(char* pokemon){
 	return false;
 }
 
+bool esta_en_ids_get(uint32_t id){
+	bool encontrado = false;
+	for(int i=0;i<list_size(ids_gets) && !encontrado; i++){
+		uint32_t id_encontrado = (uint32_t) list_get(ids_gets, i);
+		encontrado = (id_encontrado == id);
+	}
+	return encontrado;
+}
+
 /*
  * @NAME: process_request
  * @DESC: Funcion auxilar de iniciar_servidor.
@@ -312,15 +321,12 @@ void process_request(int cod_op, int cliente_fd) {
 			t_posicion* posicion = posicion_create(x, y);
 			cambiar_posicion(appeared_pokemon, posicion);
 
-
 			// Posible uso de semaforos en esta parte
 
 			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d", cadena, x, y, id_correlativo);
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
-				printf("WARD ENTRE AL IF----------------------------\n");
 				recibir_pokemon(appeared_pokemon->pokemon);
-				printf("WARD RECIBI AL POKEMON----------------------------\n");
 				if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);
@@ -380,27 +386,32 @@ void process_request(int cod_op, int cliente_fd) {
 			uint32_t pos_x;
 			uint32_t pos_y;
 
-			//Agregar al log_info las posiciones
-			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d", pokemon, cantidad_posiciones);
+			char* auxiliar = string_new();
 
 
-			if ((list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))) {
-				recibir_pokemon(pokemon);
-				for (int i = 0; i < cantidad_posiciones; i++) {
-					pos_x = recibir_entero(cliente_fd);
-					pos_y = recibir_entero(cliente_fd);
 
-					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
-						printf("Agrego a %s a appeared_pokemons\n", pokemon);
-						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
-						printf("Azul y\n");
-						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
-						printf("Oro\n");
-						sem_post(&sem_appeared_pokemon);
-					}
+			for (int i = 0; i < cantidad_posiciones; i++) {
+				pos_x = recibir_entero(cliente_fd);
+				string_append_with_format(&auxiliar, "%d ", pos_x);
+				pos_y = recibir_entero(cliente_fd);
+				string_append_with_format(&auxiliar, "%d ", pos_y);
+
+
+				if((esta_en_ids_get(id_correlativo)) && (sigue_en_falta_especie(pokemon)) && (list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))){
+					printf("Cumple todo----------------------\n");
+					printf("Agrego a appeared_pokemons\n"); //pokemon);
+					if (get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
+					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+					sem_post(&sem_appeared_pokemon);
 				}
+				printf("Boca campeon\n");
 			}
+			recibir_pokemon(pokemon);
 
+
+
+			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d %s", pokemon, cantidad_posiciones, auxiliar);
+			free(auxiliar);
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;
@@ -430,6 +441,22 @@ void asignar_id_caught(t_entrenador* entrenador, int conexion) {
 		char* cadena = recibir_cadena(conexion, &size);
 		recibir_entero(conexion);
 		recibir_entero(conexion);
+		free(cadena);
+	}
+	else exit(1);
+	// Ale dijo que no hay que hacer free de los mensajes
+}
+
+void asignar_id_get(int conexion) {
+	tipo_mensaje tipo = recibir_entero(conexion);
+	if (tipo == GET_POKEMON) {
+		uint32_t id = recibir_entero(conexion);
+		printf("El id_get recibido fue: %d\n", id);
+		list_add(ids_gets, (void*) id);
+		int size = recibir_entero(conexion); //Buffer size
+		recibir_entero(conexion); //id Correlativo
+		char* cadena = recibir_cadena(conexion, &size);
+
 		free(cadena);
 	}
 	else exit(1);
@@ -571,9 +598,7 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente) {
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
 
 	sem_wait(&(mutex_ciclos_cpu_totales));
-	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	ciclos_cpu_totales += ENVIAR_MENSAJE;
-	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	sem_post(&(mutex_ciclos_cpu_totales));
 
 	int estado = send(socket_cliente, a_enviar, size_serializado, 0);

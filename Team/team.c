@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamFinal1.config");
+	t_config* config = config_create("./teamFinal2.config");
 	return config;
 }
 
@@ -169,9 +169,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		int ciclos = distance;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
-		printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 		ciclos_cpu_totales += ciclos;
-		printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 		sem_post(&(mutex_ciclos_cpu_totales));
 
 		entrenador->rafaga = ciclos;
@@ -236,7 +234,6 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			entrenador->rafaga--;
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
-			printf("WARD YA ACTUALICE EL OBJETIVO GLOBAL----------------------\n");
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
@@ -560,6 +557,8 @@ void* enviar_get_pokemon(void* parametro) {
 		mensaje[2] = pokemon;
 		enviar_mensaje(mensaje, conexion);
 		for(int i = 0; i < 2; i++) free(mensaje[i]);
+		asignar_id_get(conexion);
+
 		liberar_conexion(conexion);
 	}
 
@@ -743,9 +742,7 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 	int quantum_acumulado = 0;
 
 	sem_wait(&(mutex_ciclos_cpu_totales));
-	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	ciclos_cpu_totales += ciclos;
-	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	sem_post(&(mutex_ciclos_cpu_totales));
 	for (int i = 0; i < distance; i++) {
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, donador->posicion);
@@ -1524,21 +1521,13 @@ void* iniciar_planificador_largo_plazo(void* parametro) {
 	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
 
 	while (!pokemons_objetivo_fueron_atrapados()) {
-		printf("WARD 1--------------------------------\n");
 		sem_wait(&sem_appeared_pokemon);
-		printf("WARD 2--------------------------------\n");
 		sem_wait(&sem_entrenadores);
-		printf("WARD 3--------------------------------\n");
 		sem_wait(&sem_planificado_create);
-		printf("WARD 4--------------------------------\n");
 
 		if (inicio_deadlock) break;
 
-		printf("WARD 1 EN LA COLA HAY %d POKEMONS-----------------\n", queue_size(appeared_pokemons));
-
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
-
-		printf("WARD 2 EN LA COLA HAY %d POKEMONS-----------------\n", queue_size(appeared_pokemons));
 
 		switch (algoritmo) {
 			case FIFO:
@@ -1859,6 +1848,7 @@ int main(void) {
 	inicio_deadlock = false;
 	fin_deadlock = false;
 	objetivo_global = NULL;
+	ids_gets = list_create();
 
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);

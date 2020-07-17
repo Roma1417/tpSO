@@ -63,6 +63,7 @@ bool objetivo_global_cumplido();
 bool elem_especies(t_list* especies, char* pokemon);
 t_planificado* buscar_donador(t_entrenador* entrenador);
 void destruir_vectores_de_semaforos();
+void asignar_id_get(int conexion);
 
 t_planificado* elegir_proximo_a_ejecutar_SJFCD();
 
