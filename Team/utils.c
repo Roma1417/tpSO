@@ -225,6 +225,8 @@ void serve_client(int* socket) {
 
 		// Posible uso de semaforos en esta parte
 
+		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
+
 		if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
 			recibir_pokemon(appeared_pokemon->pokemon);
 			if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
@@ -232,12 +234,8 @@ void serve_client(int* socket) {
 			queue_push(appeared_pokemons, appeared_pokemon);
 
 			sem_post(&sem_appeared_pokemon);
-			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
 		}
-		else{
-			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
-			appeared_pokemon_destroy(appeared_pokemon);
-		}
+		else appeared_pokemon_destroy(appeared_pokemon);
 
 
 	}
