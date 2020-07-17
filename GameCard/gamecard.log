@@ -332,7 +332,7 @@
 [INFO] 19:02:07:59 gamecard/(7363:7380): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
 [INFO] 19:16:36:223 gamecard/(6992:7007): No existe el pokemon que se quiere atrapar
 [INFO] 12:21:04:328 gamecard/(16389:16400): Recibí un mensaje de tipo GET_POKEMON y sus datos son: 
-[INFO] 12:21:04:328 gamecard/(16389:16398): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 12:21:04:328 gamecard/(16389:16398): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 12:21:04:329 gamecard/(16389:16402): Recibí un mensaje de tipo NEW_POKEMON y sus datos son:  -1272982824 -1272982824 -1272982824
 [INFO] 12:44:19:299 gamecard/(19837:19848): Recibí un mensaje de tipo GET_POKEMON y sus datos son: 
 [INFO] 12:49:09:68 gamecard/(24867:24878): Recibí un mensaje de tipo GET_POKEMON y sus datos son: 
@@ -352,7 +352,7 @@
 [INFO] 15:38:49:87 gamecard/(5187:12010): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 15:38:49:98 gamecard/(5187:12025): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 15:38:49:99 gamecard/(5187:12036): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 15:38:51:92 gamecard/(5187:5196): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 15:38:51:92 gamecard/(5187:5196): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 15:46:41:922 gamecard/(24074:24085): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 15:46:41:932 gamecard/(24074:24118): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 15:46:41:937 gamecard/(24074:24132): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
@@ -448,33 +448,33 @@
 [INFO] 18:45:04:75 gamecard/(25866:25902): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 18:45:04:88 gamecard/(25866:25916): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 18:45:04:92 gamecard/(25866:25925): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 18:45:06:100 gamecard/(25866:25875): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 18:45:06:100 gamecard/(25866:25875): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 18:47:35:274 gamecard/(12588:12599): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 18:47:35:286 gamecard/(12588:12616): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 18:47:35:293 gamecard/(12588:12630): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 18:47:35:303 gamecard/(12588:12639): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 18:47:37:308 gamecard/(12588:12596): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 18:47:37:308 gamecard/(12588:12596): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 18:51:40:963 gamecard/(20023:20034): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 18:51:40:975 gamecard/(20023:20058): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 18:51:40:983 gamecard/(20023:20072): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 18:51:40:990 gamecard/(20023:20080): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 18:51:43:12 gamecard/(20023:20033): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 18:51:43:12 gamecard/(20023:20033): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 18:53:54:61 gamecard/(2520:2531): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 18:53:54:77 gamecard/(2520:2580): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 18:53:54:89 gamecard/(2520:2594): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 18:53:54:91 gamecard/(2520:2602): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 18:53:56:100 gamecard/(2520:2529): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
+[INFO] 18:53:56:100 gamecard/(2520:2529): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1256197272
 [INFO] 18:57:10:438 gamecard/(9245:9256): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 18:57:10:465 gamecard/(9245:9272): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 18:57:10:474 gamecard/(9245:9290): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 18:57:10:477 gamecard/(9245:9299): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 18:57:12:484 gamecard/(9245:9253): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
+[INFO] 18:57:12:484 gamecard/(9245:9253): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
 [INFO] 19:19:05:865 gamecard/(1347:1361): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 19:19:05:871 gamecard/(1347:1402): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 19:19:05:881 gamecard/(1347:1416): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
 [INFO] 19:19:05:886 gamecard/(1347:1425): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 19:19:07:901 gamecard/(1347:1358): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
-[INFO] 19:19:59:801 gamecard/(1347:6124): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
+[INFO] 19:19:07:901 gamecard/(1347:1358): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
+[INFO] 19:19:59:801 gamecard/(1347:6124): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: �� 4001536 -1257245848
 [INFO] 19:25:17:77 gamecard/(10810:10821): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
 [INFO] 19:25:17:92 gamecard/(10810:10838): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 [INFO] 19:25:17:96 gamecard/(10810:10852): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
@@ -572,13 +572,69 @@
 [INFO] 10:38:30:220 gamecard/(1649:14493): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
 [INFO] 10:38:30:311 gamecard/(1649:14574): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
 [INFO] 10:38:35:324 gamecard/(1649:19466): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
-[INFO] 14:29:35:453 gamecard/(4918:4932): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
-[INFO] 14:29:40:459 gamecard/(4918:8070): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
-[INFO] 14:29:45:462 gamecard/(4918:11222): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
-[INFO] 14:29:50:469 gamecard/(4918:14392): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
-[INFO] 14:30:47:556 gamecard/(4918:4930): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
-[INFO] 14:30:52:558 gamecard/(4918:25002): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 6 7
-[INFO] 14:30:57:561 gamecard/(4918:28139): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
-[INFO] 14:31:02:567 gamecard/(4918:31272): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
-[INFO] 14:31:07:582 gamecard/(4918:1965): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 5
-[INFO] 14:37:10:793 gamecard/(4918:4931): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 17:38:01:111 gamecard/(16391:16395): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:01:111 gamecard/(16391:16395): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:11:112 gamecard/(16391:16395): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:11:113 gamecard/(16391:16395): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:48:823 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:48:823 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:58:823 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:58:823 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:39:08:824 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:39:08:824 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:39:18:825 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:39:18:825 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:01:303 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:01:303 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:41:306 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:41:306 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:51:306 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:51:306 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:28:58 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:28:58 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:48:60 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:48:60 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:58:61 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:58:61 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:08:61 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:08:61 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:18:62 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:18:63 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:28:63 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:28:63 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:38:64 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:38:64 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:48:65 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:48:65 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:45:57:954 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:45:57:954 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:18:280 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:18:280 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:28:281 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:28:282 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:38:282 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:38:282 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:50:54:583 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:50:54:583 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:04:584 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:04:584 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:24:586 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:24:586 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:34:586 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:34:586 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:44:587 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:44:587 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:54:587 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:54:587 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:04:588 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:04:588 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:14:588 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:14:589 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:24:589 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:24:589 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:44:590 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:44:590 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 18:36:37:270 gamecard/(11334:11340): No se pudo establecer la conexion con el Broker
+[INFO] 18:36:37:270 gamecard/(11334:11340): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 18:41:27:291 gamecard/(11334:11340): No se pudo establecer la conexion con el Broker
+[INFO] 18:41:27:291 gamecard/(11334:11340): Se inicia el proceso de reintento de comunicacion con el Broker

@@ -165,7 +165,9 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		int ciclos = distance;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
+		printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 		ciclos_cpu_totales += ciclos;
+		printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 		sem_post(&(mutex_ciclos_cpu_totales));
 
 		entrenador->rafaga = ciclos;
@@ -708,7 +710,9 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 	int quantum_acumulado = 0;
 
 	sem_wait(&(mutex_ciclos_cpu_totales));
+	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	ciclos_cpu_totales += ciclos;
+	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	sem_post(&(mutex_ciclos_cpu_totales));
 	for (int i = 0; i < distance; i++) {
 		u_int32_t distancia_x = distancia_en_x(entrenador->posicion, donador->posicion);

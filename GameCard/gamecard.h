@@ -22,6 +22,7 @@ pthread_t hilo_new;
 pthread_t hilo_get;
 pthread_t hilo_catch;
 pthread_t hilo_servidor;
+pthread_t hilo_verificador_de_conexion;
 t_config* config;
 
 

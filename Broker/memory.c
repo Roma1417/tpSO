@@ -243,10 +243,12 @@ void consolidar_particiones_bs(t_list* particiones, uint32_t indice){
 
 
 	if (particion_siguiente != NULL && !particion_siguiente->ocupada && particion->tamanio == particion_siguiente->tamanio && ((particion->base - particion_inicial->base) ^ (particion->tamanio)) == (particion_siguiente->base - particion_inicial->base)){
+		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d", particion->tamanio, particion->base - particion_inicial->base, particion_siguiente->base - particion_inicial->base);
 		combinar_particiones(particiones, indice);
 		consolidar_particiones_bs(particiones, indice);
 	}
 	if (particion_anterior != NULL && !particion_anterior->ocupada && particion->tamanio == particion_anterior->tamanio && ((particion->base - particion_inicial->base) ^ (particion->tamanio)) == (particion_anterior->base - particion_inicial->base)){
+		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d", particion->tamanio, particion_anterior->base - particion_inicial->base, particion->base - particion_inicial->base);
 		combinar_particiones(particiones, indice - 1);
 		consolidar_particiones_bs(particiones, indice - 1);
 	}
