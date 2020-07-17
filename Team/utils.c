@@ -318,7 +318,9 @@ void process_request(int cod_op, int cliente_fd) {
 			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d", cadena, x, y, id_correlativo);
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
+				printf("WARD ENTRE AL IF----------------------------\n");
 				recibir_pokemon(appeared_pokemon->pokemon);
+				printf("WARD RECIBI AL POKEMON----------------------------\n");
 				if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 				queue_push(appeared_pokemons, appeared_pokemon);
 				sem_post(&sem_appeared_pokemon);

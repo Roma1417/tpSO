@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./team.config");
+	t_config* config = config_create("./teamFinal1.config");
 	return config;
 }
 
@@ -164,6 +164,8 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		sem_post(&sem_planificado_create);
 
 		int distance = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		printf("POSICION ENTRENADOR: %d %d----------------------\n", entrenador->posicion->x, entrenador->posicion->y);
+		printf("POSICION POKEMON: %d %d----------------------\n", pokemon_a_atrapar->posicion->x, pokemon_a_atrapar->posicion->y);
 		int ciclos = distance;
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
@@ -232,6 +234,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			entrenador->rafaga--;
 			log_info(logger_team, "El entrenador %d atrapo a %s en la posicion (%d,%d)", entrenador->indice, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
+			printf("WARD YA ACTUALICE EL OBJETIVO GLOBAL----------------------\n");
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
 		else {
@@ -239,9 +242,11 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		}
 		free(planificado);
 		appeared_pokemon_destroy2(auxiliar);
-		if (puede_seguir_atrapando(entrenador)) cambiar_condicion_ready(entrenador);
+		if (puede_seguir_atrapando(entrenador)){
+			cambiar_condicion_ready(entrenador);
+			sem_post(&sem_entrenadores);
+		}
 		sem_post(&puede_planificar);
-		sem_post(&sem_entrenadores);
 	}
 
 	// wait semaforo todos
@@ -1169,6 +1174,8 @@ void realizar_intercambios_RR() {
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
+	sem_post(&(sem_entrenadores));
+
 }
 
 /*
@@ -1513,13 +1520,21 @@ void* iniciar_planificador_largo_plazo(void* parametro) {
 	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
 
 	while (!pokemons_objetivo_fueron_atrapados()) {
+		printf("WARD 1--------------------------------\n");
 		sem_wait(&sem_appeared_pokemon);
+		printf("WARD 2--------------------------------\n");
 		sem_wait(&sem_entrenadores);
+		printf("WARD 3--------------------------------\n");
 		sem_wait(&sem_planificado_create);
+		printf("WARD 4--------------------------------\n");
 
 		if (inicio_deadlock) break;
 
+		printf("WARD 1 EN LA COLA HAY %d POKEMONS-----------------\n", queue_size(appeared_pokemons));
+
 		t_appeared_pokemon* appeared_pokemon = queue_pop(appeared_pokemons);
+
+		printf("WARD 2 EN LA COLA HAY %d POKEMONS-----------------\n", queue_size(appeared_pokemons));
 
 		switch (algoritmo) {
 			case FIFO:
@@ -1693,7 +1708,7 @@ uint32_t obtener_id_segun_cola(char* cola){
 void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
-	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	int conexion = crear_y_reintentar_conexion(config_team->ip_broker, config_team->puerto_broker);
 
 	if (conexion < 0) return EXIT_SUCCESS;
 
@@ -1782,6 +1797,7 @@ void actualizar_objetivo_global() {
 	objetivo_global = list_flatten(auxiliar);
 	//for(int i=0;i<list_size(auxiliar);i++) list_destroy(list_get(auxiliar,i));
 	list_destroy(auxiliar);
+	printf("WARD OBJETIVO GLOBAL 2 --------------------\n");
 }
 
 bool objetivo_global_cumplido() {
@@ -1867,7 +1883,7 @@ int main(void) {
 	especies_requeridas = obtener_especies(objetivo_global);
 
 	enviar_mensajes_get_pokemon();
-	pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
+	//pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
