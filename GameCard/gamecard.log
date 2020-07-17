@@ -572,3 +572,65 @@
 [INFO] 10:38:30:220 gamecard/(1649:14493): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
 [INFO] 10:38:30:311 gamecard/(1649:14574): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
 [INFO] 10:38:35:324 gamecard/(1649:19466): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
+[INFO] 17:38:01:111 gamecard/(16391:16395): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:01:111 gamecard/(16391:16395): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:11:112 gamecard/(16391:16395): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:11:113 gamecard/(16391:16395): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:48:823 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:48:823 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:38:58:823 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:38:58:823 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:39:08:824 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:39:08:824 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:39:18:825 gamecard/(14485:14489): No se pudo establecer la conexion con el Broker
+[INFO] 17:39:18:825 gamecard/(14485:14489): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:01:303 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:01:303 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:41:306 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:41:306 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:40:51:306 gamecard/(20486:20490): No se pudo establecer la conexion con el Broker
+[INFO] 17:40:51:306 gamecard/(20486:20490): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:28:58 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:28:58 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:48:60 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:48:60 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:43:58:61 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:43:58:61 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:08:61 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:08:61 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:18:62 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:18:63 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:28:63 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:28:63 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:38:64 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:38:64 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:44:48:65 gamecard/(18006:18010): No se pudo establecer la conexion con el Broker
+[INFO] 17:44:48:65 gamecard/(18006:18010): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:45:57:954 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:45:57:954 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:18:280 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:18:280 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:28:281 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:28:282 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:46:38:282 gamecard/(32459:32463): No se pudo establecer la conexion con el Broker
+[INFO] 17:46:38:282 gamecard/(32459:32463): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:50:54:583 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:50:54:583 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:04:584 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:04:584 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:24:586 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:24:586 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:34:586 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:34:586 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:44:587 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:44:587 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:51:54:587 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:51:54:587 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:04:588 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:04:588 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:14:588 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:14:589 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:24:589 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:24:589 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 17:52:44:590 gamecard/(6500:6504): No se pudo establecer la conexion con el Broker
+[INFO] 17:52:44:590 gamecard/(6500:6504): Se inicia el proceso de reintento de comunicacion con el Broker

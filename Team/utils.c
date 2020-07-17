@@ -571,7 +571,9 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente) {
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);
 
 	sem_wait(&(mutex_ciclos_cpu_totales));
+	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	ciclos_cpu_totales += ENVIAR_MENSAJE;
+	printf("Ciclos de ejecutar: %d-------------\n", ciclos_cpu_totales);
 	sem_post(&(mutex_ciclos_cpu_totales));
 
 	int estado = send(socket_cliente, a_enviar, size_serializado, 0);
