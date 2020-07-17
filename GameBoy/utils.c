@@ -45,6 +45,7 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
+
 void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
@@ -62,10 +63,10 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente){
 
 	send(socket_cliente, a_enviar, size_serializado, 0);
 
-	//free(paquete->buffer->stream);
-	//free(paquete->buffer);
-	//free(paquete);
-	//free(a_enviar);
+	free(paquete->buffer->stream);
+	free(paquete->buffer);
+	free(paquete);
+	free(a_enviar);
 }
 
 void agregar_string(int* offset, char* string, void** stream){

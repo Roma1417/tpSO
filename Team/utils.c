@@ -397,12 +397,23 @@ void process_request(int cod_op, int cliente_fd) {
 				string_append_with_format(&auxiliar, "%d ", pos_y);
 
 
+
 				if((esta_en_ids_get(id_correlativo)) && (sigue_en_falta_especie(pokemon)) && (list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))){
 					printf("Cumple todo----------------------\n");
 					printf("Agrego a appeared_pokemons\n"); //pokemon);
 					if (get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
 					sem_post(&sem_appeared_pokemon);
+
+					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
+						printf("Agrego a %s a appeared_pokemons\n", pokemon);
+						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
+						printf("Azul y\n");
+						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
+						printf("Rojo\n");
+						sem_post(&sem_appeared_pokemon);
+					}
+
 				}
 				printf("Boca campeon\n");
 			}
@@ -536,11 +547,11 @@ int crear_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		//log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
 		freeaddrinfo(server_info);
 		return -1;
 	}
-	else //log_info(logger_team, "Se pudo establecer la conexion con el Broker");
+	else log_info(logger_team, "Se pudo establecer la conexion con el Broker");
 
 	freeaddrinfo(server_info);
 

@@ -67,7 +67,7 @@ char* obtener_key(char* parametro, char* destino){
 void obtener_parametro(char ** parametro, char* string_parametro, char* destino, t_config* config){
 	char* parametro_key = obtener_key(string_parametro, destino);
 	*parametro = config_get_string_value(config, parametro_key);
-	//free(parametro_key);
+	free(parametro_key);
 }
 
 char** caso_suscriptor(char** argv){

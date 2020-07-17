@@ -13,7 +13,8 @@
  *        una lista con los objetivos y un hilo,
  *        crea y devuelve un puntero a una estructura t_entrenador.
  */
-t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos, t_list* objetivos, u_int32_t indice, float estimacion_inicial) {
+t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
+		t_list* objetivos, u_int32_t indice, float estimacion_inicial, char identificador) {
 
 	t_entrenador* entrenador = malloc(sizeof(t_entrenador));
 
@@ -33,6 +34,7 @@ t_entrenador* entrenador_create(t_posicion* posicion, t_list* pokemon_obtenidos,
 	entrenador->pokemon_inservibles = list_create();
 	entrenador->rafaga = 0;
 	entrenador->ciclos_cpu = 0;
+	entrenador->identificador = identificador;
 
 	// Agrego cosas para SJF sin desalojo (para discutirlas)
 	entrenador->estimacion = estimacion_inicial;
