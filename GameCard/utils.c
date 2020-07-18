@@ -538,6 +538,12 @@ t_list* obtener_posiciones_del_pokemon(char* pokemon) {
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
 
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
+	char* auxiliar = list_get(bloques,0);
+	printf("Auxiliar: %s\n", auxiliar);
+	if(string_equals_ignore_case(auxiliar,"")) {
+		fclose(file_pokemon);
+		return list_create();
+	}
 	t_list* bloques_file = obtener_bloques_actuales(file_pokemon, bloques);
 	t_list* posiciones = obtener_posiciones_actuales(file_pokemon, bloques_file, bloques);
 	FILE* bloque_file = NULL;
