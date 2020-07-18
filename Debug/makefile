@@ -12,9 +12,7 @@ RM := rm -rf
 -include Team/subdir.mk
 -include GameCard/Debug/subdir.mk
 -include GameCard/subdir.mk
--include GameBoy/Debug/subdir.mk
 -include GameBoy/subdir.mk
--include Broker/Debug/subdir.mk
 -include Broker/subdir.mk
 -include subdir.mk
 -include objects.mk

@@ -13,6 +13,7 @@
 #include <commons/log.h>
 #include <commons/string.h>
 #include <commons/config.h>
+#include <string.h>
 #include <commons/collections/list.h>
 #include "posicion.h"
 #include "appeared_pokemon.h"

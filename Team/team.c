@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto2.config");
+	t_config* config = config_create("./teamCompleto1.config");
 	return config;
 }
 
@@ -1161,6 +1161,7 @@ void realizar_intercambios_SJF() {
 			if (cumplio_su_objetivo(donador)) sacar_de_los_entrenadores_deadlock(donador);
 
 			free(planificado);
+
 		}
 
 		for (int i = 0; i < list_size(donadores); i++) {
@@ -1168,6 +1169,7 @@ void realizar_intercambios_SJF() {
 			free(planificado->pokemon);
 			free(planificado);
 		}
+
 		list_destroy(donadores);
 
 		//cantidad_deadlocks++;

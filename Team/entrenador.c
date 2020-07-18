@@ -82,7 +82,7 @@ void atrapar(t_entrenador* entrenador, t_appeared_pokemon* appeared_pokemon) {
 void intercambiar(t_entrenador* entrenador, char* objetivo, char* inservible) {
 	bool _es_el_inservible(void* parametro) {
 		char* auxiliar = parametro;
-		return string_equals_ignore_case(auxiliar, inservible);
+		return auxiliar == inservible;
 	}
 	if (!le_sirve(entrenador, objetivo)) list_add(entrenador->pokemon_inservibles, objetivo);
 	else list_add(entrenador->pokemon_obtenidos, objetivo);

@@ -1300,3 +1300,296 @@
 [INFO] 04:11:20:642 gamecard/(8346:23744): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
 [INFO] 04:11:24:662 gamecard/(8346:26287): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
 [INFO] 04:11:29:665 gamecard/(8346:29505): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
+[INFO] 11:21:29:553 gamecard/(4271:4293): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 11:21:29:567 gamecard/(4271:4291): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 11:33:55:887 gamecard/(10459:10482): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 11:33:55:899 gamecard/(10459:10476): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 11:34:00:966 gamecard/(10459:10498): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 11:34:05:990 gamecard/(10459:10503): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 11:34:17:776 gamecard/(10459:10480): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+[INFO] 11:34:22:786 gamecard/(10459:13324): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Jolteon
+[INFO] 11:34:27:808 gamecard/(10459:16090): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Flareon
+[INFO] 11:34:28:815 gamecard/(10459:10481): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Flareon 6 3
+[INFO] 11:34:32:819 gamecard/(10459:18421): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Umbreon
+[INFO] 11:34:37:827 gamecard/(10459:20616): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Espeon
+[INFO] 11:35:14:624 gamecard/(10459:10508): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 11:35:19:636 gamecard/(10459:9560): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 11:35:24:657 gamecard/(10459:12061): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 11:35:29:685 gamecard/(10459:14755): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 11:35:34:699 gamecard/(10459:17457): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 11:35:39:709 gamecard/(10459:19881): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 11:39:40:155 gamecard/(10459:10470): No se pudo establecer la conexion con el Broker
+[INFO] 11:39:43:948 gamecard/(10459:10470): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 12:18:15:537 gamecard/(31019:31037): Recibí un mensaje de tipo NEW_POKEMON y sus datos son:  385875968 0 117440512
+[INFO] 12:20:10:153 gamecard/(31263:31275): Recibí un mensaje de tipo NEW_POKEMON y sus datos son:  0 0 0
+[INFO] 12:20:56:150 gamecard/(26998:28410): No se pudo establecer la conexion con el Broker
+[INFO] 12:20:56:165 gamecard/(26998:28410): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 12:21:06:169 gamecard/(26998:28410): No se pudo establecer la conexion con el Broker
+[INFO] 12:21:06:169 gamecard/(26998:28410): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 12:44:22:208 gamecard/(10935:10950): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 1 1
+[INFO] 12:44:22:284 gamecard/(10935:10976): Recibí un mensaje de tipo GET_POKEMON y sus datos son: 
+[INFO] 12:44:27:310 gamecard/(10935:10989): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son:  7 1918987334
+[INFO] 12:46:07:656 gamecard/(11026:11039): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 12:46:12:712 gamecard/(11026:11067): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 12:46:17:721 gamecard/(11026:11074): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 12:46:22:736 gamecard/(11026:11078): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 12:46:31:225 gamecard/(11026:11044): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+[INFO] 12:46:34:244 gamecard/(11026:11045): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Flareon 4 6
+[INFO] 12:46:36:234 gamecard/(11026:14271): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Jolteon
+[INFO] 12:46:41:246 gamecard/(11026:17470): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Flareon
+[INFO] 12:46:42:259 gamecard/(11026:11043): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Jolteon 2 2
+[INFO] 12:46:46:254 gamecard/(11026:20680): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Umbreon
+[INFO] 12:46:51:256 gamecard/(11026:23892): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Espeon
+[INFO] 12:47:17:314 gamecard/(11026:11083): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 12:47:22:320 gamecard/(11026:11731): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 12:47:27:331 gamecard/(11026:14950): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 12:47:32:351 gamecard/(11026:18174): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 12:47:37:355 gamecard/(11026:21386): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 12:47:41:363 gamecard/(11026:16223): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Umbreon 10 6
+[INFO] 12:47:42:359 gamecard/(11026:24583): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 12:47:46:383 gamecard/(11026:27154): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
+[INFO] 12:47:51:399 gamecard/(11026:30364): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
+[INFO] 12:50:57:372 gamecard/(1101:1122): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 12:50:57:382 gamecard/(1101:1120): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 12:51:02:439 gamecard/(1101:1137): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 12:51:07:445 gamecard/(1101:1240): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 12:51:23:854 gamecard/(1101:1119): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+[INFO] 12:51:26:877 gamecard/(1101:1114): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son:  7 1918987334
+[INFO] 12:57:40:164 gamecard/(13898:13918): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 12:57:45:166 gamecard/(13898:13933): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 12:57:50:174 gamecard/(13898:14036): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 12:57:55:184 gamecard/(13898:14044): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 12:57:58:108 gamecard/(13898:13916): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+[INFO] 12:57:59:117 gamecard/(13898:13914): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Jolteon 2 2
+[INFO] 12:58:03:110 gamecard/(13898:16661): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Jolteon
+[INFO] 12:58:04:119 gamecard/(13898:18225): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Flareon 4 6
+[INFO] 12:58:08:115 gamecard/(13898:20625): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Flareon
+[INFO] 12:58:13:122 gamecard/(13898:24497): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Umbreon
+[INFO] 12:58:18:125 gamecard/(13898:28972): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Espeon
+[INFO] 12:58:23:135 gamecard/(13898:1354): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 12:58:28:138 gamecard/(13898:6374): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 12:58:30:162 gamecard/(13898:21275): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 12:58:33:144 gamecard/(13898:12428): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 12:58:35:164 gamecard/(13898:15017): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 12:58:38:147 gamecard/(13898:19738): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 12:58:48:182 gamecard/(13898:22956): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:15:56:841 gamecard/(16696:16716): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 13:16:01:842 gamecard/(16696:16731): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 13:16:06:843 gamecard/(16696:16735): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 13:16:11:846 gamecard/(16696:16744): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 13:16:20:11 gamecard/(16696:16714): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 13:16:25:14 gamecard/(16696:19921): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 13:16:27:23 gamecard/(16696:16712): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:16:30:18 gamecard/(16696:20751): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 13:16:32:25 gamecard/(16696:8014): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:16:35:20 gamecard/(16696:6998): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 13:16:45:35 gamecard/(16696:18636): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:17:03:743 gamecard/(16696:16750): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 13:17:08:748 gamecard/(16696:7762): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 13:17:13:751 gamecard/(16696:10966): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 13:17:17:758 gamecard/(16696:27995): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 13:17:18:755 gamecard/(16696:28353): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 13:17:22:763 gamecard/(16696:30917): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 13:17:23:758 gamecard/(16696:31552): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 13:17:28:763 gamecard/(16696:2379): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 13:24:28:928 gamecard/(31300:31320): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 13:24:33:929 gamecard/(31300:31333): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 13:24:38:938 gamecard/(31300:31337): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 13:24:43:948 gamecard/(31300:31341): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 13:24:56:822 gamecard/(31300:31318): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 13:25:01:823 gamecard/(31300:2155): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 13:25:04:830 gamecard/(31300:31316): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:25:06:827 gamecard/(31300:25292): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 13:25:09:835 gamecard/(31300:15239): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:25:11:828 gamecard/(31300:6734): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 13:25:22:846 gamecard/(31300:27076): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:25:37:211 gamecard/(31300:31346): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 13:25:42:216 gamecard/(31300:838): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 13:25:47:222 gamecard/(31300:4255): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 13:25:51:228 gamecard/(31300:24062): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 13:25:52:226 gamecard/(31300:15494): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 13:25:56:230 gamecard/(31300:18065): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 13:25:57:235 gamecard/(31300:18698): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 13:26:02:243 gamecard/(31300:21910): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 13:28:25:269 gamecard/(24961:24981): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 13:28:30:272 gamecard/(24961:25002): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 13:28:35:274 gamecard/(24961:25006): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 13:28:40:276 gamecard/(24961:25010): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 13:28:51:22 gamecard/(24961:24979): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 13:28:56:24 gamecard/(24961:28204): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 13:28:59:30 gamecard/(24961:24977): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:29:01:27 gamecard/(24961:5836): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 13:29:04:35 gamecard/(24961:15921): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:29:06:28 gamecard/(24961:29631): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 13:29:17:42 gamecard/(24961:27761): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:29:27:695 gamecard/(24961:25014): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 13:29:32:698 gamecard/(24961:24443): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 13:29:37:703 gamecard/(24961:27664): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 13:29:41:711 gamecard/(24961:17684): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 13:29:42:707 gamecard/(24961:20604): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 13:29:46:714 gamecard/(24961:23186): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 13:29:47:711 gamecard/(24961:23830): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 13:29:52:714 gamecard/(24961:27056): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 13:38:26:775 gamecard/(18933:18940): No se pudo establecer la conexion con el Broker
+[INFO] 13:38:26:775 gamecard/(18933:18940): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 13:40:55:528 gamecard/(19725:19745): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 13:41:00:531 gamecard/(19725:19758): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 13:41:05:533 gamecard/(19725:19762): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 13:41:10:535 gamecard/(19725:19772): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 13:41:16:591 gamecard/(19725:19743): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 13:41:21:595 gamecard/(19725:22975): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 13:41:26:597 gamecard/(19725:18403): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 13:41:31:600 gamecard/(19725:11119): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 13:41:36:598 gamecard/(19725:19741): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:41:56:618 gamecard/(19725:4043): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:43:06:626 gamecard/(19725:12075): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:43:18:715 gamecard/(19725:19776): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 13:43:23:718 gamecard/(19725:22581): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 13:43:28:726 gamecard/(19725:25806): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 13:43:33:728 gamecard/(19725:13064): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 13:43:38:729 gamecard/(19725:29143): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 13:43:43:731 gamecard/(19725:15159): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 13:44:08:727 gamecard/(19725:14778): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 13:44:33:734 gamecard/(19725:10288): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 13:55:00:739 gamecard/(15706:15726): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 13:55:05:742 gamecard/(15706:15744): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 13:55:10:749 gamecard/(15706:15749): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 13:55:15:755 gamecard/(15706:15753): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 13:55:19:347 gamecard/(15706:15723): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 13:55:22:358 gamecard/(15706:15722): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 13:55:24:351 gamecard/(15706:18959): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 13:55:29:354 gamecard/(15706:22172): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 13:55:34:358 gamecard/(15706:25386): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 13:55:40:363 gamecard/(15706:20892): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 13:55:43:99 gamecard/(15706:16677): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 13:55:48:103 gamecard/(15706:1803): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 13:55:53:107 gamecard/(15706:5176): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 13:55:53:109 gamecard/(15706:32439): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 13:55:58:111 gamecard/(15706:8377): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 13:56:01:130 gamecard/(15706:8379): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 13:56:03:115 gamecard/(15706:12434): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 13:56:08:122 gamecard/(15706:15683): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 13:58:38:550 gamecard/(14363:14372): No se pudo establecer la conexion con el Broker
+[INFO] 13:58:38:557 gamecard/(14363:14372): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 13:58:48:559 gamecard/(14363:14372): No se pudo establecer la conexion con el Broker
+[INFO] 13:58:48:559 gamecard/(14363:14372): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 13:58:58:559 gamecard/(14363:14372): No se pudo establecer la conexion con el Broker
+[INFO] 13:58:58:559 gamecard/(14363:14372): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 14:00:12:227 gamecard/(24597:24617): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:00:17:229 gamecard/(24597:24632): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:00:22:235 gamecard/(24597:24638): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:00:27:241 gamecard/(24597:24643): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:00:40:584 gamecard/(24597:24647): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:00:44:644 gamecard/(24597:24615): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:00:45:591 gamecard/(24597:25275): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:00:49:644 gamecard/(24597:27862): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:00:50:591 gamecard/(24597:13483): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:00:50:595 gamecard/(24597:24613): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:00:54:651 gamecard/(24597:21362): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:00:55:593 gamecard/(24597:21965): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:00:55:602 gamecard/(24597:21971): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:00:59:655 gamecard/(24597:28164): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:01:00:601 gamecard/(24597:28766): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:01:00:606 gamecard/(24597:28771): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:01:05:607 gamecard/(24597:29462): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 14:01:05:611 gamecard/(24597:29465): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:01:15:622 gamecard/(24597:14054): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:03:02:263 gamecard/(2525:2550): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:03:07:265 gamecard/(2525:2574): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:03:12:267 gamecard/(2525:2578): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:03:17:270 gamecard/(2525:2583): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:03:22:835 gamecard/(2525:2547): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:03:27:839 gamecard/(2525:5906): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:03:30:847 gamecard/(2525:2542): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:03:32:843 gamecard/(2525:28675): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:03:35:851 gamecard/(2525:17656): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:03:37:845 gamecard/(2525:5587): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:03:48:859 gamecard/(2525:24135): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:04:00:425 gamecard/(2525:2592): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:04:05:432 gamecard/(2525:16284): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:04:10:434 gamecard/(2525:19499): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:04:14:442 gamecard/(2525:8814): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:04:15:439 gamecard/(2525:4743): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:04:19:447 gamecard/(2525:7317): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:04:20:443 gamecard/(2525:7958): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:04:25:447 gamecard/(2525:11166): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 14:06:59:779 gamecard/(9133:9152): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:07:04:781 gamecard/(9133:9165): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:07:09:788 gamecard/(9133:9169): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:07:14:795 gamecard/(9133:9173): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:07:19:771 gamecard/(9133:9150): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:07:22:791 gamecard/(9133:9148): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:07:24:774 gamecard/(9133:12385): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:07:29:783 gamecard/(9133:15641): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:07:34:786 gamecard/(9133:18870): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:07:40:790 gamecard/(9133:14326): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:07:48:111 gamecard/(9133:9222): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:07:53:112 gamecard/(9133:30689): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:07:58:119 gamecard/(9133:1515): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:07:58:123 gamecard/(9133:25973): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:08:03:121 gamecard/(9133:4900): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:08:06:130 gamecard/(9133:4907): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:08:08:130 gamecard/(9133:17572): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:08:13:139 gamecard/(9133:20784): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 14:09:51:943 gamecard/(10688:10696): No se pudo establecer la conexion con el Broker
+[INFO] 14:09:51:943 gamecard/(10688:10696): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 14:11:11:872 gamecard/(21968:21988): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:11:16:874 gamecard/(21968:22008): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:11:21:881 gamecard/(21968:22020): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:11:26:886 gamecard/(21968:22023): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:11:30:831 gamecard/(21968:21986): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:11:33:842 gamecard/(21968:21984): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:11:35:835 gamecard/(21968:25217): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:11:40:837 gamecard/(21968:28409): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:11:45:840 gamecard/(21968:31623): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:11:51:843 gamecard/(21968:27131): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:12:02:848 gamecard/(21968:22721): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:12:07:850 gamecard/(21968:13522): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:12:12:854 gamecard/(21968:16772): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:12:12:859 gamecard/(21968:6463): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:12:17:859 gamecard/(21968:19984): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:12:20:867 gamecard/(21968:19995): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:12:22:863 gamecard/(21968:23422): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:12:27:866 gamecard/(21968:26630): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 14:13:39:169 gamecard/(21968:21975): No se pudo establecer la conexion con el Broker
+[INFO] 14:13:39:169 gamecard/(21968:21975): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 14:14:53:668 gamecard/(6190:6210): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:14:58:670 gamecard/(6190:6224): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:15:03:672 gamecard/(6190:6229): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:15:08:678 gamecard/(6190:6233): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:15:18:547 gamecard/(6190:6208): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:15:23:550 gamecard/(6190:9427): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:15:26:562 gamecard/(6190:6206): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:15:28:555 gamecard/(6190:16699): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:15:31:563 gamecard/(6190:28440): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:15:33:557 gamecard/(6190:8452): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:15:44:574 gamecard/(6190:14267): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:15:54:213 gamecard/(6190:6237): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:15:59:221 gamecard/(6190:2034): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:16:04:227 gamecard/(6190:5398): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:16:08:234 gamecard/(6190:28254): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:16:09:231 gamecard/(6190:26153): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:16:13:239 gamecard/(6190:28743): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:16:14:234 gamecard/(6190:29381): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:16:19:238 gamecard/(6190:32579): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+[INFO] 14:17:52:117 gamecard/(5940:5949): No se pudo establecer la conexion con el Broker
+[INFO] 14:17:52:117 gamecard/(5940:5949): Se inicia el proceso de reintento de comunicacion con el Broker
+[INFO] 14:19:09:917 gamecard/(1483:1511): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+[INFO] 14:19:14:920 gamecard/(1483:1524): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+[INFO] 14:19:19:923 gamecard/(1483:1532): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+[INFO] 14:19:24:924 gamecard/(1483:1537): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+[INFO] 14:19:34:160 gamecard/(1483:1509): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+[INFO] 14:19:39:163 gamecard/(1483:4894): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+[INFO] 14:19:44:165 gamecard/(1483:5084): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+[INFO] 14:19:44:168 gamecard/(1483:1507): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:19:49:166 gamecard/(1483:547): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+[INFO] 14:19:49:171 gamecard/(1483:556): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+[INFO] 14:20:00:187 gamecard/(1483:26875): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+[INFO] 14:20:11:460 gamecard/(1483:1542): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+[INFO] 14:20:16:467 gamecard/(1483:9357): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+[INFO] 14:20:21:469 gamecard/(1483:12559): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+[INFO] 14:20:26:471 gamecard/(1483:852): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+[INFO] 14:20:28:479 gamecard/(1483:1965): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+[INFO] 14:20:31:474 gamecard/(1483:13631): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+[INFO] 14:20:33:480 gamecard/(1483:14923): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+[INFO] 14:20:36:479 gamecard/(1483:16877): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
