@@ -99,6 +99,7 @@ sem_t* llega_mensaje_caught;
 sem_t mutex_ciclos_cpu_totales;
 sem_t sem_planificado_create;
 sem_t mutex_fin_deadlock;
+sem_t entrenador_en_ready;
 t_appeared_pokemon* pokemon_a_atrapar;
 u_int32_t id_cola_localized;
 u_int32_t id_cola_caught;

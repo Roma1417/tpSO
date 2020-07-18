@@ -109,8 +109,8 @@ void iniciar_servidor(void) {
 		break;
 	}
 
-	int flags = fcntl(socket_servidor, F_GETFL, 0);
-	fcntl(socket_servidor, F_SETFL, flags | O_NONBLOCK);
+/*	int flags = fcntl(socket_servidor, F_GETFL, 0);
+	fcntl(socket_servidor, F_SETFL, flags | O_NONBLOCK);*/
 
 	listen(socket_servidor, SOMAXCONN);
 
@@ -207,7 +207,11 @@ void recibir_pokemon(char* pokemon){
 void serve_client(int* socket) {
 	int cod_op;
 
-	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
+	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)	cod_op = -1;
+
+	printf("El codigo de operacion es: %d\n", cod_op);
+
+	/*if(cod_op == -1) pthread_exit(NULL);*/
 
 	if (cod_op == APPEARED_POKEMON) {
 		t_appeared_pokemon* appeared_pokemon = appeared_pokemon_create();
@@ -240,6 +244,7 @@ void serve_client(int* socket) {
 
 	}
 }
+
 
 void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensaje) {
 	int cliente_fd = crear_conexion(config_team->ip_broker, config_team->puerto_broker);

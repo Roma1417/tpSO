@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1.config");
+	t_config* config = config_create("./teamCompleto1(FIFO).config");
 	return config;
 }
 
@@ -604,6 +604,7 @@ void enreadyar_al_mas_cercano(t_list* entrenadores, t_appeared_pokemon* appeared
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
 	enreadyar(planificado);
 	queue_push(cola_ready, planificado);
+	sem_post(&entrenador_en_ready);
 }
 
 void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon) {
@@ -623,6 +624,7 @@ void enreadyar_al_mas_cercano_SJF(t_list* entrenadores, t_appeared_pokemon* appe
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
 	enreadyar(planificado);
 	list_add(lista_ready, planificado);
+	sem_post(&entrenador_en_ready);
 }
 
 void enreadyar_al_mas_cercano_SJFCD(t_list* entrenadores, t_appeared_pokemon* appeared_pokemon) {
@@ -644,6 +646,7 @@ void enreadyar_al_mas_cercano_SJFCD(t_list* entrenadores, t_appeared_pokemon* ap
 	t_planificado* planificado = planificado_create(mas_cercano, appeared_pokemon);
 	enreadyar(planificado);
 	list_add(lista_ready, planificado);
+	sem_post(&entrenador_en_ready);
 
 	sem_wait(&mutex_largo_lista_ready);
 	largo_lista_ready = list_size(lista_ready);
@@ -1171,6 +1174,7 @@ void realizar_intercambios_SJF() {
 		}
 
 		list_destroy(donadores);
+		printf("Ya pase el list_destroy------------------\n");
 
 		//cantidad_deadlocks++;
 	}
@@ -1186,6 +1190,7 @@ void realizar_intercambios_SJF() {
 }
 
 void planificar_entrenadores() {
+	sem_wait(&entrenador_en_ready);
 	//Falta un switch para planificar según cada algoritmo
 	if (!queue_is_empty(cola_ready)) {
 		sem_wait(&puede_planificar);
@@ -1611,12 +1616,12 @@ void liberar_todo(int n) {
 	//terminar_programa(logger_team, config);
 
 	pthread_cancel(hilo_servidor);
-	pthread_cancel(hilo_appeared);
-	pthread_cancel(hilo_caught);
-	pthread_cancel(hilo_localized);
-	pthread_cancel(hilo_planificador);
-	pthread_cancel(hilo_intercambiador);
-	pthread_cancel(hilo_planificador_largo_plazo);
+//	pthread_cancel(hilo_appeared);
+//	pthread_cancel(hilo_caught);
+//	pthread_cancel(hilo_localized);
+//	pthread_cancel(hilo_planificador);
+//	pthread_cancel(hilo_intercambiador);
+//	pthread_cancel(hilo_planificador_largo_plazo);
 
 	exit(1);
 }
@@ -1799,10 +1804,11 @@ int main(void) {
 	id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
-	sem_init(&puede_planificar, 0, 1);
+	sem_init(&puede_planificar, 0, 0);
 	sem_init(&puede_intercambiar, 0, 1);
 	sem_init(&mutex_ciclos_cpu_totales, 0, 1);
 	sem_init(&sem_planificado_create, 0, 1);
+	sem_init(&entrenador_en_ready, 0, 0);
 	puede_ejecutar = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 	llega_mensaje_caught = inicializar_vector_de_semaforos(list_size(config_team->posiciones_entrenadores));
 
@@ -1838,7 +1844,6 @@ int main(void) {
 
 	//printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
-	//pthread_join(hilo_servidor, NULL);
 	pthread_join(hilo_verificador_de_conexion, NULL);
 	pthread_cancel(hilo_servidor);
 	pthread_cancel(hilo_appeared);

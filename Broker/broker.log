@@ -8527,3 +8527,11 @@
 [INFO] 14:20:45:776 Broker/(1482:1482): Se ha conectado un proceso al servidor (Socket: 100)
 [INFO] 14:20:55:776 Broker/(1482:1482): Se ha conectado un proceso al servidor (Socket: 101)
 [INFO] 14:21:05:777 Broker/(1482:1482): Se ha conectado un proceso al servidor (Socket: 102)
+[INFO] 17:45:40:380 Broker/(13303:13303): Se ha conectado un proceso al servidor (Socket: 7)
+[INFO] 17:45:40:394 Broker/(13303:13303): Se ha conectado un proceso al servidor (Socket: 8)
+[INFO] 17:45:40:394 Broker/(13303:13316): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+[INFO] 17:45:40:395 Broker/(13303:13303): Se ha conectado un proceso al servidor (Socket: 9)
+[INFO] 17:45:40:395 Broker/(13303:13318): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+[INFO] 17:45:40:395 Broker/(13303:13303): Se ha conectado un proceso al servidor (Socket: 10)
+[INFO] 17:45:40:396 Broker/(13303:13320): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+[INFO] 17:46:10:382 Broker/(13303:13303): Se ha conectado un proceso al servidor (Socket: 11)
