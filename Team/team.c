@@ -15,7 +15,6 @@ t_log* iniciar_logger(char* path) {
 
 	t_log* logger = log_create(path, "team", true, LOG_LEVEL_INFO);
 	if (logger == NULL) {
-		printf("No pude crear el logger\n");
 		exit(1);
 	}
 	return logger;
@@ -381,8 +380,6 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 	}
 
 	sem_post(&(termino_de_capturar[entrenador->indice]));
-
-	printf("WARD TEXAS 1 --------- \n");
 
 	return EXIT_SUCCESS;
 }
@@ -990,10 +987,6 @@ void spoiler_alert() {
 			free(donador);
 		}
 	}
-
-	printf("-----------------------\n");
-	printf("CANTIDAD TOTAL DEADLOCKS: %d\n", cantidad_deadlocks);
-	printf("-----------------------\n");
 
 	for (int i = 0; i < list_size(entrenadores_deadlock); i++) {
 		entrenador_auxiliar = list_get(entrenadores_deadlock, i);
@@ -1644,8 +1637,6 @@ void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
-	printf("YA ME SUSCRIBI A LA COLA DE %s---------------\n", msg);
-
 	if (conexion < 0) {
 		return EXIT_SUCCESS;
 	}
@@ -1831,13 +1822,9 @@ int main(void) {
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
-	printf("NO PASE JOIN INTERCAMBIADOR -----------------------\n");
 	pthread_join(hilo_intercambiador, NULL);
-	printf("YA PASO JOIN INTERCAMBIADOR -----------------------\n");
 	pthread_join(hilo_planificador_largo_plazo, NULL);
-	printf("YA PASO JOIN PLANIFICADOR LARGO PLAZO -----------------------\n");
 	pthread_join(hilo_planificador, NULL);
-	printf("YA PASO JOIN PLANIFICADOR -----------------------\n");
 
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");
@@ -1847,7 +1834,7 @@ int main(void) {
 	 pthread_join(hilo_caught, NULL);
 	 pthread_join(hilo_localized, NULL);*/
 
-	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
+	//printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
 	//pthread_join(hilo_servidor, NULL);
 	pthread_join(hilo_verificador_de_conexion, NULL);

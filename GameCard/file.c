@@ -54,7 +54,6 @@ void cerrar_file(FILE* file) {
 void retroceder_hasta(char caracter_de_paro, FILE** file) {
 	char caracter = fgetc(*file);
 	while (caracter != caracter_de_paro) {
-		printf("Caracter: %c\n", caracter);
 		fseek(*file, -2, SEEK_CUR);
 		caracter = fgetc(*file);
 	}
@@ -94,9 +93,7 @@ bool* llego_al_final) {
 	while (caracter != caracter_de_paro && caracter != EOF) {
 		string_append_with_format(&cadena_guardada, "%c", caracter);
 		caracter = fgetc(*file);
-		printf("Caracter: %c\n", caracter);
 	}
-	printf("Cadena_guardada: %s\n", cadena_guardada);
 	(*llego_al_final) = (caracter == EOF);
 	if (*llego_al_final)
 		fseek(*file, -1, SEEK_CUR);
@@ -147,15 +144,13 @@ char* obtener_bloque_disponible() {
 	bool encontrado = false;
 	int bloque_disponible = -1;
 	int cantidad_total_bloques = metadata_general->blocks;
-	printf("Metada_general->blocks: %d\n", cantidad_total_bloques);
 
 	for (int i = 0; (i < cantidad_total_bloques) && (!encontrado); i++) {
 		encontrado = !(bitarray_test_bit(bitmap, i));
-		printf("Bloque %d: %d\n", i+1, encontrado);
 		if (encontrado) {
 			bitarray_set_bit(bitmap, i);
+			actualizar_bit_map();
 			bloque_disponible = i + 1;
-			printf("Bloque_disponible: %d\n", bloque_disponible);
 		}
 	}
 	if(bloque_disponible < 0) exit(1);
@@ -169,7 +164,6 @@ uint32_t file_size(FILE* file) {
 	while (caracter != EOF) {
 		contador++;
 		caracter = fgetc(file);
-		printf("Caracter_leido: %c\n", caracter);
 	}
 	return contador;
 }
@@ -190,17 +184,12 @@ void guardar_posterior(FILE* file, char** posterior) {
 uint32_t obtener_file_size(FILE* file, t_list* bloques_file){
 	FILE* bloque_file = NULL;
 	uint32_t size_total = 0;
-	printf("Ward4\n");
 	posicionar_en_inicio(bloques_file, bloque_file);
-	printf("Ward4.1\n");
 	for(int i=0; i<list_size(bloques_file); i++){
 		bloque_file = list_get(bloques_file, i);
 		size_total += file_size(bloque_file);
-		printf("Bloque %d size: %d\n", i,file_size(bloque_file));
 	}
-	printf("Ward4.2\n");
 	posicionar_en_inicio(bloques_file, bloque_file);
-	printf("Size_total: %d\n", size_total);
 
 	return size_total;
 }
@@ -208,16 +197,12 @@ uint32_t obtener_file_size(FILE* file, t_list* bloques_file){
 void actualizar_size(FILE* file, t_list* bloques_file) {
 	char* posterior = string_new();
 	fseek(file, 16, SEEK_SET);
-	printf("Ward1\n");
 	guardar_posterior(file, &posterior);
-	printf("Ward2\n");
 	//printf("Posterior: %s", posterior);
 	fseek(file, 17, SEEK_SET);
-	printf("Ward2.5\n");
 	int size_int = obtener_file_size(file, bloques_file);
 	char* size = string_itoa(size_int);
 	fputs(size, file);
-	printf("Ward3\n");
 	fputc('\n', file);
 	fputs(posterior, file);
 	fseek(file, -string_length(posterior), SEEK_END);
@@ -239,7 +224,6 @@ void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
 	caracter = fgetc(file);
 	while (caracter != ']') {
 		caracter = fgetc(file);
-		printf("Caracter_imp: %c\n", caracter);
 	}
 	/*while (caracter != ',' && caracter != '[' ) {
 	 fseek(file, -2, SEEK_CUR);
@@ -247,7 +231,6 @@ void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
 	 //printf("Char: %c\n", caracter);
 	 }*/
 	fseek(file, -1, SEEK_CUR);
-	printf("Bloque: %s\n", bloque);
 	//printf("Resultado: %d\n", bloque);
 	if (!string_equals_ignore_case(bloque, ""))
 		fputc(',', file);
@@ -291,7 +274,6 @@ t_list* obtener_bloques_del_pokemon(FILE* file) {
 	char* bloques_string = guardar_hasta('\n', &file);
 	t_list* bloques = list_create();
 	char* bloque_leido = string_new();
-	printf("Bloques: %s\n", bloques_string);
 	int i = 0;
 	while (bloques_string[i] != '\0') {
 		if (bloques_string[i] != ',' && bloques_string[i] != '['
@@ -329,14 +311,9 @@ bool no_entra_en_bloque(FILE* file, t_new_pokemon* new_pokemon,
 			string_itoa(new_pokemon->cantidad));
 	char* bloque_path = obtener_bloque_path(ultimo_bloque);
 	FILE* bloque_file = fopen(bloque_path, "r+");
-	printf("Block_size: %d\n", metadata_general->block_size);
-	printf("File_size: %d\n", file_size(bloque_file));
-	printf("String_length: %d\n", string_length(cadena_a_agregar));
 	int diferencia_de_sizes = (metadata_general->block_size
 			- (file_size(bloque_file) + string_length(cadena_a_agregar)));
-	printf("Diferencia_de_sizes: %d\n", diferencia_de_sizes);
 	bool entra_en_bloque = (diferencia_de_sizes >= 0);
-	printf("Entra_en_bloque: %d\n", entra_en_bloque);
 	fclose(bloque_file);
 	return !entra_en_bloque;
 }
@@ -394,7 +371,6 @@ t_list* obtener_bloques_actuales(FILE* file, t_list* bloques) {
 	FILE* bloque_file;
 	for (int i = 0; i < list_size(bloques); i++) {
 		bloque_path = obtener_bloque_path(list_get(bloques, i));
-		printf("Bloque_path: %s\n", bloque_path);
 		bloque_file = fopen(bloque_path, "r+");
 		list_add(bloques_file, bloque_file);
 		free(bloque_path);
@@ -432,13 +408,10 @@ char* cargar_nueva_posicion(uint32_t cantidad, char* posicion) {
 }
 
 FILE* posicionar_en_inicio(t_list* bloques_file, FILE* bloque_file) {
-	printf("Size_bloques_file= %d\n", list_size(bloques_file));
 	for (int i = 0; i < list_size(bloques_file); i++) {
 		bloque_file = list_get(bloques_file, i);
-		printf("Ward5.5\n");
 		fseek(bloque_file, 0, SEEK_SET);
 	}
-	printf("Ward6\n");
 	return bloque_file;
 }
 
@@ -489,20 +462,16 @@ FILE* cargar_posiciones_inexistentes(int contador, char* posicion_a_agregar,
 		t_list* bloques_file) {
 
 	for (int j = 0; j < string_length(posicion_a_agregar); j++) {
-		printf("Contador: %d\n", contador);
 		if (contador < (metadata_general->block_size)) {
 			fputc(posicion_a_agregar[j], bloque_file);
-			printf("Puse caracter %c\n", posicion_a_agregar[j]);
 			contador++;
 
 		} else {
 			contador = 0;
 			//Crear nuevo bloque y ponerlo ahí
 			bloque = obtener_bloque_disponible();
-			printf("Bloque_disp: %s\n", bloque);
 			actualizar_metadata(bloque_file, file, bloque, ultimo_bloque);
 			//actualizar_size(file, bloques_file);
-			printf("Bloque_path: %s\n", obtener_bloque_path(bloque));
 			//fclose(bloque_file);
 			bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
 			//free(bloque);

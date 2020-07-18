@@ -35,7 +35,6 @@ int main(int argc, char* argv[]){
 t_log* iniciar_logger(void){
 	t_log* logger = log_create("gameboy.log","gameboy", false, LOG_LEVEL_INFO);
 	if(logger == NULL){
-		 printf("No pude crear el logger\n");
 		 exit(1);
 	}
 	return logger;
@@ -44,7 +43,6 @@ t_log* iniciar_logger(void){
 t_config* leer_config(void){
 	t_config* config = config_create("./gameboy.config");
 	if (config == NULL){
-		printf("No pude leer la config\n");
 		exit(1);
 	}
 	return config;

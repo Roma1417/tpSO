@@ -154,7 +154,6 @@ void confirmar_recepcion(u_int32_t id_mensaje, u_int32_t id_proceso, char* mensa
 	string_append(&(argv[3]), string_itoa(id_mensaje));
 	string_append(&(argv[4]), string_itoa(id_proceso));
 	enviar_mensaje(argv, cliente_fd);
-	printf("Mandé confirmación\n");
 	liberar_conexion(cliente_fd);
 }
 
@@ -192,16 +191,13 @@ void process_request(int cod_op, int cliente_fd) {
 	uint32_t id_correlativo;
 	u_int32_t posicion_x;
 	u_int32_t posicion_y;
-	printf("Cod_op: %d\n", cod_op);
 	switch (cod_op) {
-		case NEW_POKEMON:
-			printf("Recibi un mensaje NEW_POKEMON\n");
+		case NEW_POKEMON:{
 			t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
 			id = recibir_entero(cliente_fd);
 			size = recibir_entero(cliente_fd);
 			id_correlativo = recibir_entero(cliente_fd);
 			new_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Pokemon: %s\n", new_pokemon->pokemon);
 			new_pokemon->pos_x = recibir_entero(cliente_fd);
 			new_pokemon->pos_y = recibir_entero(cliente_fd);
 			new_pokemon->cantidad = recibir_entero(cliente_fd);
@@ -220,22 +216,17 @@ void process_request(int cod_op, int cliente_fd) {
 			enviar_appeared_pokemon(id, new_pokemon);
 
 			break;
-		case CATCH_POKEMON:
+		}
+		case CATCH_POKEMON:{
 			;
 			//printf("Recibi un mensaje CATCH_POKEMON\n");
 			t_catch_pokemon* catch_pokemon = malloc(sizeof(t_catch_pokemon));
 			id = recibir_entero(cliente_fd);
-			printf("id: %d\n", id);
 			size = recibir_entero(cliente_fd);
-			printf("size: %d\n", size);
 			id_correlativo = recibir_entero(cliente_fd);
-			printf("id_correlativo: %d\n", id_correlativo);
 			catch_pokemon->pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("catch_pokemon->pokemon : %s\n", catch_pokemon->pokemon);
 			catch_pokemon->pos_x = recibir_entero(cliente_fd);
-			printf("catch_pokemon->pos_x : %d\n", catch_pokemon->pos_x);
 			catch_pokemon->pos_y = recibir_entero(cliente_fd);
-			printf("catch_pokemon->pos_y : %d\n", catch_pokemon->pos_y);
 
 			log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d", catch_pokemon->pokemon, catch_pokemon->pos_x, catch_pokemon->pos_y);
 
@@ -247,16 +238,13 @@ void process_request(int cod_op, int cliente_fd) {
 			enviar_caught_pokemon(id, resultado_captura);
 
 			break;
-		case GET_POKEMON:
+		}
+		case GET_POKEMON:{
 			//printf("Recibi un mensaje GET_POKEMON\n");
 			id = recibir_entero(cliente_fd);
-			printf("id: %d\n", id);
 			size = recibir_entero(cliente_fd);
-			printf("size: %d\n", size);
 			id_correlativo = recibir_entero(cliente_fd);
-			printf("id_correlativo: %d\n", id_correlativo);
 			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
 
 			log_info(logger_gamecard,
 							"Recibí un mensaje de tipo GET_POKEMON y sus datos son: %s",
@@ -266,15 +254,13 @@ void process_request(int cod_op, int cliente_fd) {
 
 			t_list* posiciones = obtener_posiciones_del_pokemon(pokemon);
 
-			for (int i = 0; i < list_size(posiciones); i++)
-				printf("Posicion %d: %s\n", i + 1, list_get(posiciones, i));
 
 			sleep(config_gamecard->tiempo_de_reintento_operacion);
 
 			enviar_mensaje_localized(pokemon, posiciones, id);
 
 			break;
-
+		}
 		case SUSCRIPTOR: {
 			u_int32_t id_cola = recibir_entero(cliente_fd);
 			u_int32_t size_2 = recibir_entero(cliente_fd);
@@ -349,7 +335,6 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE** file_pokemon, t_ca
 		size_total += string_length(list_get(posiciones, i));
 	}
 	string_append(&contenido, string_itoa(size_total));
-	printf("Llegué hasta acá\n");
 	avanzar_hasta('\n', file_pokemon);
 	string_append(&contenido, "\n");
 	auxiliar = guardar_hasta_EOF(file_pokemon);
@@ -358,9 +343,7 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE** file_pokemon, t_ca
 	fclose(*file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	*file_pokemon = fopen(file_pokemon_path, "wb");
-	printf("Contenido: %s\n", contenido);
 	fputs(contenido, *file_pokemon);
-	printf("Y hasta acá\n");
 	//cerrar_file(file_pokemon);
 	//fclose(file_pokemon);
 }
@@ -373,7 +356,6 @@ t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
 	char* bloque_path;
 	for (int i = 0; i < list_size(bloques); i++) {
 		bloque_path = obtener_bloque_path(list_get(bloques, i));
-		printf("Bloque_path: %s\n", bloque_path);
 		*bloque_file = fopen(bloque_path, "wb");
 		list_add(bloques_file, *bloque_file);
 		free(bloque_path);
@@ -383,17 +365,12 @@ t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
 
 void quitar_ultimo_bloque(FILE** file_pokemon, t_list* bloques, char* pokemon) {
 	fseek(*file_pokemon, 0, SEEK_SET);
-	printf("WardA\n");
 	char* anterior = guardar_hasta('B', file_pokemon);
-	printf("WardB\n");
 	string_append_with_format(&anterior, "%c", 'B');
 	string_append(&anterior, guardar_hasta('=', file_pokemon));
-	printf("WardC\n");
 	string_append_with_format(&anterior, "%c", '=');
-	printf("Anterior: %s\n", anterior);
 	avanzar_hasta('\n', file_pokemon);
 	char* posterior = guardar_hasta_EOF(file_pokemon);
-	printf("Posterior: %s\n", posterior);
 	fseek(*file_pokemon, -string_length(posterior), SEEK_CUR);
 	retroceder_hasta('=', file_pokemon);
 	char* array_bloques = string_new();
@@ -404,7 +381,6 @@ void quitar_ultimo_bloque(FILE** file_pokemon, t_list* bloques, char* pokemon) {
 			string_append_with_format(&array_bloques, "%c", ',');
 	}
 	string_append(&array_bloques, "]\n");
-	printf("Blocks: %s\n", array_bloques);
 	fclose(*file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(pokemon);
 	*file_pokemon = fopen(file_pokemon_path, "wb");
@@ -441,7 +417,6 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 
 	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
 					file_pokemon, ultimo_bloque);
-	printf("Llegué aca\n");
 	actualizar_size_catch_pokemon(posiciones, &file_pokemon, catch_pokemon);
 
 	cerrar_file(file_pokemon);
@@ -457,9 +432,7 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 			contador++;
 		}
 	}
-	printf("Contador: %d\n", contador);
 	float division = contador / metadata_general->block_size;
-	printf("NUMERO: %2.f\n", division);
 	if (division <= (list_size(bloques_file) - 1)) {
 		quitar_ultimo_bloque(&file_pokemon, bloques, catch_pokemon->pokemon);
 		uint32_t numero_de_bloque = atoi(list_get(bloques, list_size(bloques) - 1)) - 1;
@@ -478,14 +451,11 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 }
 
 bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
-	printf("Llegué a la función\n");
 	if (!existe_directorio_pokemon(catch_pokemon->pokemon))
 		return false;
-	printf("Existe el archivo\n");
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
-	printf("Pude abrir el archivo\n");
 
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
 	char* auxiliar = list_get(bloques,0);
@@ -501,7 +471,6 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 
 	if (!posicion_ya_cargada(posicion_actual, posiciones))
 		return false;
-	printf("Existe la posicion buscada\n");
 
 	bloques_file = capturar_pokemon(file_pokemon, posiciones, posicion_actual, bloques_file, &bloque_file, bloques, catch_pokemon);
 	cerrar_bloques_file(bloques_file, bloque_file);
@@ -525,7 +494,6 @@ void enviar_caught_pokemon(uint32_t id_mensaje, bool resultado_catch) {
 char* quitar_cantidad(char* posicion) {
 	char** posicion_en_partes = string_split(posicion, "=");
 	posicion = posicion_en_partes[0];
-	printf("Posicion sin cantidad: %s\n", posicion);
 	return posicion;
 }
 
@@ -538,7 +506,6 @@ t_list* obtener_posiciones_del_pokemon(char* pokemon) {
 
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
 	char* auxiliar = list_get(bloques,0);
-	printf("Auxiliar: %s\n", auxiliar);
 	if(string_equals_ignore_case(auxiliar,"")) {
 		fclose(file_pokemon);
 		return list_create();
@@ -554,7 +521,6 @@ t_list* obtener_posiciones_del_pokemon(char* pokemon) {
 
 void enviar_mensaje_localized(char* pokemon, t_list* posiciones, uint32_t id) {
 	uint32_t cantidad_posiciones = list_size(posiciones);
-	printf("Cantidad de posiciones: %d\n", cantidad_posiciones);
 	char* pos_x;
 	char* pos_y;
 	char* posicion_actual;
@@ -571,13 +537,11 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones, uint32_t id) {
 	int k = 5;
 	for (int i = 0; i < cantidad_posiciones; i++) {
 		posicion_actual = list_get(posiciones, i);
-		printf("Posicion_actual: %s\n", posicion_actual);
 		mensaje_localized_pokemon[k] = string_new();
 		mensaje_localized_pokemon[k + 1] = string_new();
 
 		int j = 0;
 		for (; posicion_actual[j] != '-'; j++) {
-			printf("Caracter_cargado: %c\n", posicion_actual[j]);
 			string_append_with_format(&(mensaje_localized_pokemon[k]), "%c", posicion_actual[j]);
 		}
 		j++;
@@ -587,11 +551,7 @@ void enviar_mensaje_localized(char* pokemon, t_list* posiciones, uint32_t id) {
 		k += 2;
 	}
 
-	for (int i = 0; i < (5 + cantidad_posiciones * 2); i++)
-		printf("Mensaje[%d]: %s\n", i, mensaje_localized_pokemon[i]);
-
 	enviar_mensaje(mensaje_localized_pokemon, conexion);
-	printf("Envié localized_pokemon\n");
 	liberar_conexion(conexion);
 }
 
@@ -610,12 +570,10 @@ void serve_client(int* cliente_fd) {
 	u_int32_t id_mensaje;
 
 	switch (cod_op) {
-		case NEW_POKEMON:
-			printf("Recibi un mensaje NEW_POKEMON\n");
+		case NEW_POKEMON:{
 			t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
 			size = recibir_entero(*cliente_fd);
 			new_pokemon->pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
-			printf("Pokemon recibido: %s\n", new_pokemon->pokemon);
 			new_pokemon->pos_x = recibir_entero(*cliente_fd);
 			new_pokemon->pos_y = recibir_entero(*cliente_fd);
 			new_pokemon->cantidad = recibir_entero(*cliente_fd);
@@ -631,8 +589,8 @@ void serve_client(int* cliente_fd) {
 			free(new_pokemon);
 
 			break;
-		case CATCH_POKEMON:
-			printf("Recibi un mensaje CATCH_POKEMON\n");
+		}
+		case CATCH_POKEMON: {
 			t_catch_pokemon* catch_pokemon = malloc(sizeof(t_catch_pokemon));
 			size = recibir_entero(*cliente_fd);
 			catch_pokemon->pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
@@ -646,25 +604,20 @@ void serve_client(int* cliente_fd) {
 			enviar_caught_pokemon(id_mensaje, resultado_captura);
 
 			break;
-		case GET_POKEMON:
-			printf("Recibi un mensaje GET_POKEMON\n");
+		}
+		case GET_POKEMON:{
 			size = recibir_entero(*cliente_fd);
-			printf("size: %d\n", size);
 			pokemon = recibir_cadena(*cliente_fd, &size_pokemon);
-			printf("size_Pokemon: %d\n", size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
 			id_mensaje = recibir_entero(*cliente_fd);
 
 			t_list* posiciones = obtener_posiciones_del_pokemon(pokemon);
-
-			for (int i = 0; i < list_size(posiciones); i++)
-				printf("Posicion %d: %s\n", i + 1, list_get(posiciones, i));
 
 			sleep(config_gamecard->tiempo_de_reintento_operacion);
 
 			enviar_mensaje_localized(pokemon, posiciones, id_mensaje);
 
 			break;
+		}
 		default:
 			break;
 	}
@@ -753,13 +706,11 @@ void enviar_mensaje(char* argv[], u_int32_t socket_cliente) {
 	tipo_mensaje tipo = obtener_tipo_mensaje(argv[1]);
 	t_paquete * paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = tipo;
-	printf("Cod_op: %d\n", tipo);
 	paquete->buffer = malloc(sizeof(t_buffer));
 	u_int32_t size = obtener_size(argv, tipo);
 	paquete->buffer->size = size;
 	void* stream = generar_stream(argv, paquete);
 	paquete->buffer->stream = stream;
-	printf("SIZE: %d\n", size);
 	u_int32_t size_serializado;
 
 	void* a_enviar = serializar_paquete(paquete, &size_serializado);

@@ -45,8 +45,9 @@ int main(void)
 
 
 
-	logger = log_create("./broker.log", "Broker", 0, LOG_LEVEL_INFO);
-
+	logger = log_create("./broker.log", "Broker", 1, LOG_LEVEL_INFO);
+	logger_auxiliar = log_create("./broker_auxiliar.log", "Broker Auxiliar", 1, LOG_LEVEL_INFO);
+	log_info(logger_auxiliar, "El ID del proceso es: %d\n",process_getpid());
 
 
 

@@ -38,7 +38,7 @@ int crear_conexion(char *ip, char* puerto){
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-		printf("error");
+		log_info(logger, "Fallo al intentar establecer la conexion");
 
 	freeaddrinfo(server_info);
 
@@ -206,7 +206,7 @@ char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
 	return "DESCONOCIDO";
 }
 
-void validar_argumentos(char** argumentos, int cantidad){
+/*void validar_argumentos(char** argumentos, int cantidad){
 	tipo_mensaje tipo = obtener_tipo_mensaje(argumentos[2]);
 	if((strcasecmp(argumentos[1],"BROKER") == 0) && (tipo == DESCONOCIDO)){
 		printf("No se puede mandar el mensaje %s al proceso Broker\n", argumentos[2]);
@@ -220,7 +220,7 @@ void validar_argumentos(char** argumentos, int cantidad){
 		printf("No se puede mandar el mensaje %s al proceso GameCard\n", argumentos[2]);
 		exit(1);
 	}
-}
+}*/
 
 void* recibir_cadena(int socket_cliente, int* size)
 {

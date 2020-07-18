@@ -100,16 +100,11 @@ t_particion* agregar_particion(t_list* particiones, uint32_t indice, void* strea
 }
 
 
-void mostrar_memoria(t_memoria* memoria){
+/*void mostrar_memoria(t_memoria* memoria){
 	for (uint32_t i = 0; i < list_size(memoria->particiones); i++){
 		t_particion* particion_actual = list_get(memoria->particiones, i);
-		printf("\nParticion %d:\n", i);
-		printf("Base: %d\n", (int) particion_actual->base);
-		printf("Tamanio: %d\n", particion_actual->tamanio);
-		printf("Está ocupada: %d\n", particion_actual->ocupada);
-		printf("Contenido: %s\n", (char*) particion_actual->base);
 	}
-}
+}*/
 
 
 void* liberar_particion(t_memoria* memoria, uint32_t indice, bool loguear){
@@ -168,7 +163,6 @@ void limpiar_particion(t_list* particiones, uint32_t indice, uint32_t tamanio){
 
 void compactar_memoria(t_memoria* memoria){
 	t_list* particiones = memoria->particiones;
-	printf("Compactando \n");
 	for (uint32_t i = 0; i < list_size(particiones); i++){
 		t_particion* particion_actual = list_get(particiones, i);
 		if(particion_actual->ocupada == true){
@@ -227,7 +221,6 @@ uint32_t potencia_de_2_mas_cercana(uint32_t numero){
 t_particion* obtener_particion_ajustada(t_list* particiones, uint32_t indice, uint32_t tamanio){
 	t_particion* particion_seleccionada = list_get(particiones, indice);
 	while(particion_seleccionada->tamanio != potencia_de_2_mas_cercana(tamanio)){
-		printf("%d\t%d\n", potencia_de_2_mas_cercana(tamanio), particion_seleccionada->tamanio);
 		//sleep(2);
 		particion_seleccionada = dividir_particion(indice, particiones);
 	}

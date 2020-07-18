@@ -15,7 +15,6 @@ t_log* iniciar_logger() {
 
 	t_log* logger = log_create("gamecard.log", "gamecard", true, LOG_LEVEL_INFO);
 	if (logger == NULL) {
-		printf("No pude crear el logger\n");
 		exit(1);
 	}
 	return logger;
@@ -177,7 +176,7 @@ char* metadata_get_string(FILE* metadata_general_file) {
 		caracter = fgetc(metadata_general_file);
 	}
 	caracter = fgetc(metadata_general_file);
-	while (caracter != '\n') {
+	while ((caracter != '\n') && (caracter != EOF)) {
 		string_append_with_format(&value, "%c", caracter);
 		caracter = fgetc(metadata_general_file);
 	}
@@ -200,39 +199,17 @@ void destruir_metadata_general(t_metadata_general* metadata_general) {
 	free(metadata_general);
 }
 
-/*void crear_directorios(){
- printf("Ward1\n");
-
- mkdir(config_gamecard->punto_montaje_tallgrass, 0777);
- char* nombre_directorio = generar_nombre("/Metadata");
- mkdir(nombre_directorio, 0777);
- free(nombre_directorio);
- nombre_directorio = generar_nombre("/Files");
- mkdir(nombre_directorio, 0777);
- free(nombre_directorio);
- nombre_directorio = generar_nombre("/Blocks");
- mkdir(nombre_directorio, 0777);
- free(nombre_directorio);
- printf("Ward2\n");
- }
-
- void crear_archivos(){
- char* nombre_archivo = generar_nombre("/Metadata/Metadata.bin");
- archivo_metadata = fopen(nombre_archivo, "r+b");
- free(nombre_archivo);
- //fputs("BLOCK_SIZE=64\n", archivo_metadata);
- //fputs("BLOCKS=5192\n", archivo_metadata);
- //fputs("MAGIC_NUMBER=TALL_GRASS\n", archivo_metadata);
- nombre_archivo = generar_nombre("/Metadata/Bitmap.bin");
- archivo_bitmap = fopen(nombre_archivo, "w+b");
- free(nombre_archivo);
-
- }*/
-
 void actualizar_bit_map() {
-	FILE* bitmap_file = fopen(archivo_bitmap_path, "wb+");
-	fwrite(bitmap, sizeof(t_bitarray), 1, bitmap_file);
+
+	FILE* bitmap_file = fopen(archivo_bitmap_path, "w");
+	fwrite(bitmap->bitarray, metadata_general->blocks / 8, 1, bitmap_file);
 	fclose(bitmap_file);
+
+	/*FILE* bitmap_file = fopen(archivo_bitmap_path, "wb+");
+	 fwrite(bitmap, metadata_general->blocks / 8, 1, bitmap_file);
+	 fclose(bitmap_file);
+	 printf("Bit 0:%d --------------\n", bitarray_test_bit(bitmap, 0));
+	 printf("YA ACTUALICE EL BITMAP--------------\n");*/
 }
 
 void finalizar_gamecard() {
@@ -268,7 +245,6 @@ int main() {
 	signal(SIGINT, finalizar_gamecard);
 	signal(SIGTERM, finalizar_gamecard);
 
-	printf("Empieza el GameCard\n");
 	config = leer_config();
 	config_gamecard = construir_config_gamecard(config);
 	verificar_existencia_de_carpeta("/Blocks");
@@ -280,18 +256,36 @@ int main() {
 	archivo_metadata_general_path = generar_nombre("/Metadata/Metadata.bin");
 	metadata_general = construir_metadata_general();
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
-	char* bitarray = malloc((metadata_general->blocks) / 8);
 	FILE* bitmap_file = fopen(archivo_bitmap_path, "r");
 
 	if (bitmap_file == NULL) {
-		bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks) / 8, MSB_FIRST);
-		for (int i = 0; i < metadata_general->blocks; i++)
-			bitarray_clean_bit(bitmap, i);
+
+		u_int32_t size = metadata_general->blocks / 8;
+		bitmap = bitarray_create_with_mode(string_repeat('\0', size), size, MSB_FIRST);
 		actualizar_bit_map();
+
+		/*char* bitarray = malloc((metadata_general->blocks) / 8);
+		 bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks) / 8, MSB_FIRST);
+		 for (int i = 0; i < metadata_general->blocks; i++)
+		 bitarray_clean_bit(bitmap, i);
+		 actualizar_bit_map();*/
 	}
 	else {
-		fread(bitmap, sizeof(t_bitarray), 1, bitmap_file);
+
+		struct stat stats;
+		fstat(fileno(bitmap_file), &stats);
+		char* data = malloc(stats.st_size);
+		fread(data, stats.st_size, 1, bitmap_file);
 		fclose(bitmap_file);
+		bitmap = bitarray_create_with_mode(data, stats.st_size, MSB_FIRST);
+
+		/*u_int32_t size = metadata_general->blocks / 8;
+		 char* data = malloc(size);
+		 fread(data, size, 1, bitmap_file);
+		 printf("SOY EL CHAR DATA: %s\n",data);
+		 printf("ENTRE AL ELSE PORQUE ESTOY CREADO----------------\n");
+		 fclose(bitmap_file);
+		 bitmap = bitarray_create_with_mode(data, size, MSB_FIRST);*/
 	}
 
 	suscribirse_a_colas();

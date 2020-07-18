@@ -68,7 +68,6 @@ t_particion* buscar_particion(t_memoria* memoria, uint32_t id_mensaje){
 
 t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_mensajes, uint32_t id_mensaje, uint32_t id_correlativo, uint32_t stream_size){
 	t_atributos_particion* atributos = malloc(sizeof(t_atributos_particion));
-	printf("Ward1\n");
 	atributos->lru = lru;
 	atributos->cola_mensajes = cola_mensajes;
 	atributos->id_mensaje = id_mensaje;
@@ -76,7 +75,6 @@ t_atributos_particion* crear_atributos_particion(uint32_t lru, uint32_t cola_men
 	atributos->stream_size = stream_size;
 	atributos->suscriptores_enviados = list_create();
 	atributos->suscriptores_confirmados = list_create();
-	printf("Ward2\n");
 	return atributos;
 }
 
@@ -120,7 +118,6 @@ t_suscriptor* buscar_suscriptor(t_list* lista_suscriptores, u_int32_t id_suscrip
 		if(aux_suscriptor->id == id_suscriptor) return aux_suscriptor;
 	}
 
-	printf("Error buscando al suscriptor\n");
 
 	return NULL;
 }

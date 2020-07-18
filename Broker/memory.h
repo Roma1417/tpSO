@@ -51,6 +51,7 @@ uint32_t frecuencia_compactacion;
 char* log_file;
 t_config* config;
 t_log* logger;
+t_log* logger_auxiliar;
 t_queue* cola_victimas;
 uint32_t timer_lru;
 uint32_t clock_compactacion;

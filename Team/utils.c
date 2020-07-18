@@ -371,18 +371,11 @@ void process_request(int cod_op, int cliente_fd) {
 		}
 		case LOCALIZED_POKEMON:{
 			id = recibir_entero(cliente_fd);
-			printf("id: %d\n", id);
-			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
 			size = recibir_entero(cliente_fd);
-			printf("size: %d\n", size);
 			id_correlativo = recibir_entero(cliente_fd);
-			printf("id_correlativo: %d\n", id_correlativo);
 			uint32_t size_pokemon;
 			char* pokemon = recibir_cadena(cliente_fd, &size_pokemon);
-			printf("Size_pokemon: %d\n", size_pokemon);
-			printf("Pokemon: %s\n", pokemon);
 			uint32_t cantidad_posiciones = recibir_entero(cliente_fd);
-			printf("Cantidad pos: %d\n", cantidad_posiciones);
 			uint32_t pos_x;
 			uint32_t pos_y;
 
@@ -399,23 +392,17 @@ void process_request(int cod_op, int cliente_fd) {
 
 
 				if((esta_en_ids_get(id_correlativo)) && (sigue_en_falta_especie(pokemon)) && (list_elem(pokemon, objetivo_global)) && (!ya_recibio_especie(pokemon))){
-					printf("Cumple todo----------------------\n");
-					printf("Agrego a appeared_pokemons\n"); //pokemon);
 					if (get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
 					sem_post(&sem_appeared_pokemon);
 
 					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
-						printf("Agrego a %s a appeared_pokemons\n", pokemon);
 						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
-						printf("Azul y\n");
 						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
-						printf("Rojo\n");
 						sem_post(&sem_appeared_pokemon);
 					}
 
 				}
-				printf("Boca campeon\n");
 			}
 			recibir_pokemon(pokemon);
 
@@ -433,8 +420,6 @@ void process_request(int cod_op, int cliente_fd) {
 			u_int32_t id_correlativo = recibir_entero(cliente_fd);
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
 			asignar_id_cola_de_mensajes(id_cola, tipo);
-
-			printf("ME SUSCRIBI A LA COLA DE TIPO: %d--------------\n", tipo);
 
 			break;
 		}
@@ -465,7 +450,6 @@ void asignar_id_get(int conexion) {
 	tipo_mensaje tipo = recibir_entero(conexion);
 	if (tipo == GET_POKEMON) {
 		uint32_t id = recibir_entero(conexion);
-		printf("El id_get recibido fue: %d\n", id);
 		list_add(ids_gets, (void*) id);
 		int size = recibir_entero(conexion); //Buffer size
 		recibir_entero(conexion); //id Correlativo
