@@ -369,7 +369,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			break;
 		}
-		case LOCALIZED_POKEMON:
+		case LOCALIZED_POKEMON:{
 			id = recibir_entero(cliente_fd);
 			printf("id: %d\n", id);
 			printf("Recibí un mensaje de tipo LOCALIZED_POKEMON\n");
@@ -426,6 +426,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
 			break;
+		}
 		case SUSCRIPTOR: {
 			u_int32_t id_cola = recibir_entero(cliente_fd);
 			u_int32_t size_2 = recibir_entero(cliente_fd);

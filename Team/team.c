@@ -563,8 +563,6 @@ void* enviar_get_pokemon(void* parametro) {
 
 		asignar_id_get(conexion);
 
-		for (int i = 0; i < 2; i++) free(mensaje[i]);
-
 		liberar_conexion(conexion);
 	}
 
