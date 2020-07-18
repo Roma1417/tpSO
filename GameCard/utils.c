@@ -461,19 +461,13 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 	float division = contador / metadata_general->block_size;
 	printf("NUMERO: %2.f\n", division);
 	if (division <= (list_size(bloques_file) - 1)) {
-		printf("Ward1\n");
 		quitar_ultimo_bloque(&file_pokemon, bloques, catch_pokemon->pokemon);
-		printf("Ward2\n");
 		uint32_t numero_de_bloque = atoi(list_get(bloques, list_size(bloques) - 1)) - 1;
-		printf("Ward3\n");
 		bitarray_clean_bit(bitmap, numero_de_bloque);
-		printf("Ward4\n");
+		actualizar_bit_map();
 		list_remove(bloques, list_size(bloques) - 1);
-		printf("Ward5\n");
 		fclose(list_get(bloques_file, list_size(bloques_file) - 1));
-		printf("Ward6\n");
 		list_remove(bloques_file, list_size(bloques_file) - 1);
-		printf("Ward7\n");
 
 	}
 

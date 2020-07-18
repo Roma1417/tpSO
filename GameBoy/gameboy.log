@@ -1,0 +1,208 @@
+[INFO] 23:14:41:97 gameboy/(31128:31128): Se realiza una conexión al proceso BROKER
+[INFO] 23:14:41:97 gameboy/(31128:31128): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:14:41:105 gameboy/(31132:31132): Se realiza una conexión al proceso BROKER
+[INFO] 23:14:41:106 gameboy/(31132:31132): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:14:41:110 gameboy/(31135:31135): Se realiza una conexión al proceso BROKER
+[INFO] 23:14:41:111 gameboy/(31135:31135): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:14:41:115 gameboy/(31137:31137): Se realiza una conexión al proceso BROKER
+[INFO] 23:14:41:115 gameboy/(31137:31137): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:887 gameboy/(28807:28807): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:887 gameboy/(28807:28807): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:895 gameboy/(28813:28813): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:895 gameboy/(28813:28813): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:901 gameboy/(28819:28819): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:901 gameboy/(28819:28819): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:908 gameboy/(28824:28824): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:909 gameboy/(28824:28824): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:913 gameboy/(28828:28828): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:913 gameboy/(28828:28828): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:17:35:919 gameboy/(28832:28832): Se realiza una conexión al proceso BROKER
+[INFO] 23:17:35:919 gameboy/(28832:28832): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:32:48:905 gameboy/(14097:14097): Se realiza una conexión al proceso BROKER
+[INFO] 23:32:48:906 gameboy/(14097:14097): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:32:48:915 gameboy/(14099:14099): Se realiza una conexión al proceso BROKER
+[INFO] 23:32:48:915 gameboy/(14099:14099): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:32:48:921 gameboy/(14103:14103): Se realiza una conexión al proceso BROKER
+[INFO] 23:32:48:922 gameboy/(14103:14103): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:32:48:924 gameboy/(14105:14105): Se realiza una conexión al proceso BROKER
+[INFO] 23:32:48:924 gameboy/(14105:14105): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:958 gameboy/(5111:5111): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:958 gameboy/(5111:5111): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:965 gameboy/(5118:5118): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:965 gameboy/(5118:5118): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:973 gameboy/(5123:5123): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:973 gameboy/(5123:5123): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:978 gameboy/(5128:5128): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:978 gameboy/(5128:5128): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:982 gameboy/(5132:5132): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:982 gameboy/(5132:5132): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:35:30:993 gameboy/(5136:5136): Se realiza una conexión al proceso BROKER
+[INFO] 23:35:30:995 gameboy/(5136:5136): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:41:37:363 gameboy/(10526:10526): Se realiza una conexión al proceso BROKER
+[INFO] 23:41:37:363 gameboy/(10526:10526): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:41:37:367 gameboy/(10528:10528): Se realiza una conexión al proceso BROKER
+[INFO] 23:41:37:367 gameboy/(10528:10528): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:41:37:370 gameboy/(10532:10532): Se realiza una conexión al proceso BROKER
+[INFO] 23:41:37:370 gameboy/(10532:10532): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:41:37:373 gameboy/(10536:10536): Se realiza una conexión al proceso BROKER
+[INFO] 23:41:37:373 gameboy/(10536:10536): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:44:35:150 gameboy/(618:618): Se realiza una conexión al proceso BROKER
+[INFO] 23:44:35:151 gameboy/(618:618): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:44:35:159 gameboy/(622:622): Se realiza una conexión al proceso BROKER
+[INFO] 23:44:35:162 gameboy/(622:622): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:44:35:165 gameboy/(625:625): Se realiza una conexión al proceso BROKER
+[INFO] 23:44:35:166 gameboy/(625:625): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:44:35:173 gameboy/(627:627): Se realiza una conexión al proceso BROKER
+[INFO] 23:44:35:173 gameboy/(627:627): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:51:54:165 gameboy/(29661:29661): Se realiza una conexión al proceso BROKER
+[INFO] 23:51:54:165 gameboy/(29661:29661): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:51:54:179 gameboy/(29663:29663): Se realiza una conexión al proceso BROKER
+[INFO] 23:51:54:179 gameboy/(29663:29663): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:51:54:184 gameboy/(29666:29666): Se realiza una conexión al proceso BROKER
+[INFO] 23:51:54:184 gameboy/(29666:29666): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:51:54:192 gameboy/(29669:29669): Se realiza una conexión al proceso BROKER
+[INFO] 23:51:54:192 gameboy/(29669:29669): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:623 gameboy/(17370:17370): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:623 gameboy/(17370:17370): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:631 gameboy/(17376:17376): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:632 gameboy/(17376:17376): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:637 gameboy/(17383:17383): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:637 gameboy/(17383:17383): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:654 gameboy/(17387:17387): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:655 gameboy/(17387:17387): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:660 gameboy/(17392:17392): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:660 gameboy/(17392:17392): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:54:32:663 gameboy/(17395:17395): Se realiza una conexión al proceso BROKER
+[INFO] 23:54:32:664 gameboy/(17395:17395): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:57:48:540 gameboy/(21686:21686): Se realiza una conexión al proceso BROKER
+[INFO] 23:57:48:540 gameboy/(21686:21686): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:57:48:548 gameboy/(21688:21688): Se realiza una conexión al proceso BROKER
+[INFO] 23:57:48:548 gameboy/(21688:21688): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:57:48:551 gameboy/(21691:21691): Se realiza una conexión al proceso BROKER
+[INFO] 23:57:48:551 gameboy/(21691:21691): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 23:57:48:556 gameboy/(21693:21693): Se realiza una conexión al proceso BROKER
+[INFO] 23:57:48:556 gameboy/(21693:21693): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:03:25:940 gameboy/(25839:25839): Se realiza una conexión al proceso BROKER
+[INFO] 00:03:25:943 gameboy/(25839:25839): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:03:25:951 gameboy/(25841:25841): Se realiza una conexión al proceso BROKER
+[INFO] 00:03:25:951 gameboy/(25841:25841): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:03:25:957 gameboy/(25844:25844): Se realiza una conexión al proceso BROKER
+[INFO] 00:03:25:957 gameboy/(25844:25844): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:03:25:963 gameboy/(25846:25846): Se realiza una conexión al proceso BROKER
+[INFO] 00:03:25:963 gameboy/(25846:25846): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:20:23:345 gameboy/(29617:29617): Se realiza una conexión al proceso BROKER
+[INFO] 00:20:23:345 gameboy/(29617:29617): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:20:23:352 gameboy/(29620:29620): Se realiza una conexión al proceso BROKER
+[INFO] 00:20:23:352 gameboy/(29620:29620): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:20:23:355 gameboy/(29622:29622): Se realiza una conexión al proceso BROKER
+[INFO] 00:20:23:356 gameboy/(29622:29622): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:20:23:358 gameboy/(29624:29624): Se realiza una conexión al proceso BROKER
+[INFO] 00:20:23:359 gameboy/(29624:29624): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:129 gameboy/(29844:29844): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:129 gameboy/(29844:29844): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:136 gameboy/(29850:29850): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:136 gameboy/(29850:29850): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:154 gameboy/(29854:29854): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:155 gameboy/(29854:29854): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:160 gameboy/(29862:29862): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:160 gameboy/(29862:29862): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:164 gameboy/(29866:29866): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:165 gameboy/(29866:29866): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:22:43:167 gameboy/(29871:29871): Se realiza una conexión al proceso BROKER
+[INFO] 00:22:43:169 gameboy/(29871:29871): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:30:56:602 gameboy/(13004:13004): Se realiza una conexión al proceso BROKER
+[INFO] 00:30:56:603 gameboy/(13004:13004): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:30:56:612 gameboy/(13008:13008): Se realiza una conexión al proceso BROKER
+[INFO] 00:30:56:612 gameboy/(13008:13008): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:30:56:614 gameboy/(13011:13011): Se realiza una conexión al proceso BROKER
+[INFO] 00:30:56:614 gameboy/(13011:13011): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:30:56:616 gameboy/(13013:13013): Se realiza una conexión al proceso BROKER
+[INFO] 00:30:56:616 gameboy/(13013:13013): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:462 gameboy/(9566:9566): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:462 gameboy/(9566:9566): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:468 gameboy/(9570:9570): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:468 gameboy/(9570:9570): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:480 gameboy/(9574:9574): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:481 gameboy/(9574:9574): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:486 gameboy/(9579:9579): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:486 gameboy/(9579:9579): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:493 gameboy/(9583:9583): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:493 gameboy/(9583:9583): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:31:54:495 gameboy/(9588:9588): Se realiza una conexión al proceso BROKER
+[INFO] 00:31:54:495 gameboy/(9588:9588): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:37:48:894 gameboy/(26239:26239): Se realiza una conexión al proceso BROKER
+[INFO] 00:37:48:895 gameboy/(26239:26239): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:37:48:903 gameboy/(26241:26241): Se realiza una conexión al proceso BROKER
+[INFO] 00:37:48:904 gameboy/(26241:26241): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:37:48:907 gameboy/(26244:26244): Se realiza una conexión al proceso BROKER
+[INFO] 00:37:48:907 gameboy/(26244:26244): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:37:48:913 gameboy/(26246:26246): Se realiza una conexión al proceso BROKER
+[INFO] 00:37:48:913 gameboy/(26246:26246): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:39:54:228 gameboy/(5276:5276): Se realiza una conexión al proceso BROKER
+[INFO] 00:39:54:229 gameboy/(5276:5276): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:39:54:232 gameboy/(5279:5279): Se realiza una conexión al proceso BROKER
+[INFO] 00:39:54:232 gameboy/(5279:5279): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:39:54:247 gameboy/(5282:5282): Se realiza una conexión al proceso BROKER
+[INFO] 00:39:54:247 gameboy/(5282:5282): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:39:54:249 gameboy/(5284:5284): Se realiza una conexión al proceso BROKER
+[INFO] 00:39:54:250 gameboy/(5284:5284): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:226 gameboy/(22343:22343): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:226 gameboy/(22343:22343): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:235 gameboy/(22349:22349): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:236 gameboy/(22349:22349): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:242 gameboy/(22354:22354): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:242 gameboy/(22354:22354): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:245 gameboy/(22358:22358): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:251 gameboy/(22358:22358): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:255 gameboy/(22363:22363): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:255 gameboy/(22363:22363): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:41:03:261 gameboy/(22367:22367): Se realiza una conexión al proceso BROKER
+[INFO] 00:41:03:261 gameboy/(22367:22367): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:44:16:988 gameboy/(4588:4588): Se realiza una conexión al proceso BROKER
+[INFO] 00:44:16:988 gameboy/(4588:4588): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:44:16:997 gameboy/(4590:4590): Se realiza una conexión al proceso BROKER
+[INFO] 00:44:16:997 gameboy/(4590:4590): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:44:16:1 gameboy/(4593:4593): Se realiza una conexión al proceso BROKER
+[INFO] 00:44:16:1 gameboy/(4593:4593): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:44:16:5 gameboy/(4595:4595): Se realiza una conexión al proceso BROKER
+[INFO] 00:44:16:5 gameboy/(4595:4595): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:50:50:922 gameboy/(12482:12482): Se realiza una conexión al proceso BROKER
+[INFO] 00:50:50:922 gameboy/(12482:12482): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:50:50:932 gameboy/(12484:12484): Se realiza una conexión al proceso BROKER
+[INFO] 00:50:50:932 gameboy/(12484:12484): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:50:50:934 gameboy/(12488:12488): Se realiza una conexión al proceso BROKER
+[INFO] 00:50:50:934 gameboy/(12488:12488): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:50:50:937 gameboy/(12490:12490): Se realiza una conexión al proceso BROKER
+[INFO] 00:50:50:937 gameboy/(12490:12490): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:342 gameboy/(4419:4419): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:344 gameboy/(4419:4419): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:352 gameboy/(4425:4425): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:353 gameboy/(4425:4425): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:358 gameboy/(4432:4432): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:358 gameboy/(4432:4432): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:361 gameboy/(4436:4436): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:361 gameboy/(4436:4436): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:367 gameboy/(4440:4440): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:368 gameboy/(4440:4440): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 00:53:33:370 gameboy/(4443:4443): Se realiza una conexión al proceso BROKER
+[INFO] 00:53:33:370 gameboy/(4443:4443): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:01:35:956 gameboy/(1345:1345): Se realiza una conexión al proceso BROKER
+[INFO] 01:01:35:957 gameboy/(1345:1345): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:01:35:969 gameboy/(1348:1348): Se realiza una conexión al proceso BROKER
+[INFO] 01:01:35:970 gameboy/(1348:1348): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:01:35:972 gameboy/(1353:1353): Se realiza una conexión al proceso BROKER
+[INFO] 01:01:35:972 gameboy/(1353:1353): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:01:35:975 gameboy/(1355:1355): Se realiza una conexión al proceso BROKER
+[INFO] 01:01:35:975 gameboy/(1355:1355): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:847 gameboy/(30580:30580): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:847 gameboy/(30580:30580): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:858 gameboy/(30590:30590): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:859 gameboy/(30590:30590): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:866 gameboy/(30597:30597): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:866 gameboy/(30597:30597): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:871 gameboy/(30605:30605): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:871 gameboy/(30605:30605): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:874 gameboy/(30610:30610): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:874 gameboy/(30610:30610): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
+[INFO] 01:04:18:884 gameboy/(30616:30616): Se realiza una conexión al proceso BROKER
+[INFO] 01:04:18:884 gameboy/(30616:30616): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER

@@ -27,7 +27,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamFinal2.config");
+	t_config* config = config_create("./teamCompleto1.config");
 	return config;
 }
 
@@ -1060,6 +1060,8 @@ void realizar_intercambios_FIFO() {
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
+	sem_post(&(sem_entrenadores));
+
 }
 
 void realizar_intercambios_RR() {
@@ -1398,7 +1400,7 @@ void* iniciar_intercambiador() {
 
 	algoritmo_planificacion algoritmo = get_algoritmo_planificacion(config_team);
 
-	while (!objetivo_global_cumplido()) {
+	while (!fin_deadlock) {
 
 		switch (algoritmo) {
 			case (FIFO):
@@ -1642,6 +1644,7 @@ void* suscribirse(void* cola) {
 	char* msg = (char *) cola;
 
 	int conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
+	printf("YA ME SUSCRIBI A LA COLA DE %s---------------\n", msg);
 
 	if (conexion < 0) {
 		return EXIT_SUCCESS;
@@ -1752,7 +1755,7 @@ void informar_resultados() {
 
 void* iniciar_hilo_verificador_de_conexion() {
 	int conexion;
-	while (1) {
+	while (!fin_deadlock) {
 		conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 		if (conexion < 0) {
 			log_info(logger_team, "No se pudo establecer la conexion con el Broker");
@@ -1822,16 +1825,19 @@ int main(void) {
 	especies_requeridas = obtener_especies(objetivo_global);
 
 	enviar_mensajes_get_pokemon();
-	//pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
+	pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
 	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
+	printf("NO PASE JOIN INTERCAMBIADOR -----------------------\n");
 	pthread_join(hilo_intercambiador, NULL);
-
+	printf("YA PASO JOIN INTERCAMBIADOR -----------------------\n");
 	pthread_join(hilo_planificador_largo_plazo, NULL);
+	printf("YA PASO JOIN PLANIFICADOR LARGO PLAZO -----------------------\n");
 	pthread_join(hilo_planificador, NULL);
+	printf("YA PASO JOIN PLANIFICADOR -----------------------\n");
 
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");

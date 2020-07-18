@@ -7,8 +7,6 @@
 
 #include "utils.h"
 
-
-
 void iniciar_servidor(void)
 {
 	int socket_servidor;
@@ -20,11 +18,10 @@ void iniciar_servidor(void)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-
 	getaddrinfo(ip, puerto, &hints, &servinfo);
 
-	for (p=servinfo; p != NULL; p = p->ai_next)
-	{
+	for (p = servinfo; p != NULL; p = p->ai_next)
+					{
 		if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
 			continue;
 
@@ -39,10 +36,9 @@ void iniciar_servidor(void)
 
 	freeaddrinfo(servinfo);
 
-	while(1)
+	while (1)
 		esperar_cliente(socket_servidor);
 }
-
 
 void esperar_cliente(int socket_servidor)
 {
@@ -52,148 +48,145 @@ void esperar_cliente(int socket_servidor)
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
-	if(socket_cliente != -1){
-	log_info(logger, "Se ha conectado un proceso al servidor (Socket: %d)", socket_cliente);
+	if (socket_cliente != -1) {
+		log_info(logger, "Se ha conectado un proceso al servidor (Socket: %d)", socket_cliente);
 	}
 
-	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
+	pthread_create(&thread, NULL, (void*) serve_client, &socket_cliente);
 	pthread_join(thread, NULL);
 
 }
 
-
 void serve_client(int* socket)
 {
 	int cod_op;
-	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
 		cod_op = -1;
 	process_request(cod_op, *socket);
 }
-
 
 void process_request(int cod_op, int cliente_fd) {
 	u_int32_t id_mensaje;
 
 	switch (cod_op) {
-	case NEW_POKEMON:
-	case APPEARED_POKEMON:
-	case CATCH_POKEMON:
-	case CAUGHT_POKEMON:
-	case GET_POKEMON:
-	case LOCALIZED_POKEMON:
-		printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
-		log_info(logger, "Se ha recibido un mensaje del tipo %d(%s).", cod_op, obtener_tipo_mensaje_string(cod_op));
+			case NEW_POKEMON:
+			case APPEARED_POKEMON:
+			case CATCH_POKEMON:
+			case CAUGHT_POKEMON:
+			case GET_POKEMON:
+			case LOCALIZED_POKEMON:
+			printf("Recibí un mensaje de tipo %s\n", obtener_tipo_mensaje_string(cod_op));
+			log_info(logger, "Se ha recibido un mensaje del tipo %d(%s).", cod_op, obtener_tipo_mensaje_string(cod_op));
 
-		int32_t size;
-		void* stream = (void*)recibir_cadena(cliente_fd, &size);
+			int32_t size;
+			void* stream = (void*) recibir_cadena(cliente_fd, &size);
 
-		printf("La size recibida fue: %d\n", size);
+			printf("La size recibida fue: %d\n", size);
 
-		id_mensaje = generar_id_mensaje();
+			id_mensaje = generar_id_mensaje();
 
-		printf("La id recibida fue: %d\n", id_mensaje);
+			printf("La id recibida fue: %d\n", id_mensaje);
 
-		uint32_t id_correlativo = 0;
+			uint32_t id_correlativo = 0;
 
-		void* stream_a_agregar;
+			void* stream_a_agregar;
 
-		if (es_cola_correlativa(cod_op)) {
-			size -= sizeof(uint32_t);
-			memcpy(&id_correlativo, stream, sizeof(uint32_t));
-			stream_a_agregar = stream + sizeof(uint32_t);
-		} else{
-			stream_a_agregar = stream;
-		}
+			if (es_cola_correlativa(cod_op)) {
+				size -= sizeof(uint32_t);
+				memcpy(&id_correlativo, stream, sizeof(uint32_t));
+				stream_a_agregar = stream + sizeof(uint32_t);
+			} else {
+				stream_a_agregar = stream;
+			}
 
-		printf("Id algortimo memoria: %s\n", algoritmo_memoria);
+			printf("Id algortimo memoria: %s\n", algoritmo_memoria);
 
-		t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo, size);
-		t_particion* particion_agregada = agregar_stream(memoria, stream_a_agregar, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
+			t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo, size);
+			t_particion* particion_agregada = agregar_stream(memoria, stream_a_agregar, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
 
-		printf("Id correlativo: %d\n", id_correlativo);
+			printf("Id correlativo: %d\n", id_correlativo);
 
-		t_paquete* paquete = generar_paquete(particion_agregada);
-		/*t_paquete* paquete = malloc(sizeof(t_paquete));
-		paquete->tipo_mensaje = cod_op;
-		printf("tipo_mensaje_paquete: %d\n", paquete->tipo_mensaje);
-		paquete->id_mensaje = id_mensaje;
-		paquete->id_correlativo = id_correlativo;
-		paquete->buffer = malloc(sizeof(t_buffer));
-		paquete->buffer->size = size;
-		paquete->buffer->stream = malloc(size);
-		memcpy(paquete->buffer->stream, particion_agregada->base, size);*/
+			t_paquete* paquete = generar_paquete(particion_agregada);
+			/*t_paquete* paquete = malloc(sizeof(t_paquete));
+			 paquete->tipo_mensaje = cod_op;
+			 printf("tipo_mensaje_paquete: %d\n", paquete->tipo_mensaje);
+			 paquete->id_mensaje = id_mensaje;
+			 paquete->id_correlativo = id_correlativo;
+			 paquete->buffer = malloc(sizeof(t_buffer));
+			 paquete->buffer->size = size;
+			 paquete->buffer->stream = malloc(size);
+			 memcpy(paquete->buffer->stream, particion_agregada->base, size);*/
 
+			printf("p tipo_mensaje: %d\n", paquete->tipo_mensaje);
+			printf("p id mensaje: %d\n", paquete->id_mensaje);
+			printf("p id correlativo: %d\n", paquete->id_correlativo);
+			printf("p size buffer: %d\n", paquete->buffer->size);
 
-		printf("p tipo_mensaje: %d\n", paquete->tipo_mensaje);
-		printf("p id mensaje: %d\n", paquete->id_mensaje);
-		printf("p id correlativo: %d\n", paquete->id_correlativo);
-		printf("p size buffer: %d\n", paquete->buffer->size);
+			enviar_mensaje(paquete, cliente_fd);
+			printf("Casi envie todo\n");
+			enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
+			printf("Envie todo\n");
 
-
-		enviar_mensaje(paquete, cliente_fd);
-		printf("Casi envie todo\n");
-		enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
-		printf("Envie todo\n");
-
-		destruir_paquete(paquete);
-		free(stream);
-		break;
-
-	case SUSCRIPTOR:
-
-		printf("Recibí un mensaje de tipo SUSCRIPTOR\n");
-
-		size = recibir_entero(cliente_fd);
-		printf("La size recibida fue: %d\n", size);
-
-		int32_t cola_size;
-		char* cola_nombre = recibir_string(cliente_fd, &cola_size);
-		printf("La cola recibida fue: %s\n", cola_nombre);
-
-		u_int32_t id_suscriptor = recibir_entero(cliente_fd);
-		printf("La id recibida fue: %d\n", id_suscriptor);
+			destruir_paquete(paquete);
+			free(stream);
+			break;
 
 
+		case SUSCRIPTOR:
 
-		if(id_suscriptor == 0){
-			agregar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre));
-		} else {
-			actualizar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre), id_suscriptor);
-		}
-		printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(obtener_lista_suscriptores(obtener_tipo_mensaje(cola_nombre))));
+			printf("Recibí un mensaje de tipo SUSCRIPTOR\n");
 
-		free(cola_nombre);
-		break;
+			size = recibir_entero(cliente_fd);
+			printf("La size recibida fue: %d\n", size);
 
-	case CONFIRMAR:
+			int32_t cola_size;
+			char* cola_nombre = recibir_string(cliente_fd, &cola_size);
+			printf("La cola recibida fue: %s\n", cola_nombre);
 
-		printf("Recibí un mensaje de tipo CONFIRMAR\n");
-		size = recibir_entero(cliente_fd);
-		printf("La size recibida fue: %d\n", size);
-		u_int32_t id_cola_mensajes = recibir_entero(cliente_fd);
-		printf("La cola recibida fue: %d\n", id_cola_mensajes);
-		id_mensaje = recibir_entero(cliente_fd);
-		printf("La mensaje recibida fue: %d\n", id_mensaje);
-		u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
-		printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
-		t_particion* particion_confirmada = buscar_particion(memoria, id_mensaje);
-		if(particion_confirmada == NULL) break;
-		t_suscriptor* suscriptor_confirmado = buscar_suscriptor(particion_confirmada->atributos->suscriptores_enviados, id_suscriptor_confirmado);
+			u_int32_t id_suscriptor = recibir_entero(cliente_fd);
+			printf("La id recibida fue: %d\n", id_suscriptor);
 
-		list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
+			if (id_suscriptor == 0) {
+				agregar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre));
+			} else {
+				actualizar_suscriptor(cliente_fd, obtener_tipo_mensaje(cola_nombre), id_suscriptor);
+			}
+			printf("Cantidad de subs en la cola %s: %d\n", cola_nombre, list_size(obtener_lista_suscriptores(obtener_tipo_mensaje(cola_nombre))));
 
-		log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
+			free(cola_nombre);
+			break;
 
-		break;
-	case 0:
-		pthread_exit(NULL);
-	case -1:
-		pthread_exit(NULL);
+
+		case CONFIRMAR:
+
+			printf("Recibí un mensaje de tipo CONFIRMAR\n");
+			size = recibir_entero(cliente_fd);
+			printf("La size recibida fue: %d\n", size);
+			u_int32_t id_cola_mensajes = recibir_entero(cliente_fd);
+			printf("La cola recibida fue: %d\n", id_cola_mensajes);
+			id_mensaje = recibir_entero(cliente_fd);
+			printf("La mensaje recibida fue: %d\n", id_mensaje);
+			u_int32_t id_suscriptor_confirmado = recibir_entero(cliente_fd);
+			printf("La suscriptor recibida fue: %d\n", id_suscriptor_confirmado);
+			t_particion* particion_confirmada = buscar_particion(memoria, id_mensaje);
+			if (particion_confirmada == NULL)
+				break;
+			t_suscriptor* suscriptor_confirmado = buscar_suscriptor(particion_confirmada->atributos->suscriptores_enviados, id_suscriptor_confirmado);
+
+			list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
+
+			log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
+
+			break;
+
+		case 0:
+			pthread_exit(NULL);
+		case -1:
+			pthread_exit(NULL);
 	}
 }
 
-
-int recibir_entero(int socket_cliente){
+int recibir_entero(int socket_cliente) {
 
 	int entero;
 
@@ -201,7 +194,6 @@ int recibir_entero(int socket_cliente){
 
 	return entero;
 }
-
 
 void* recibir_cadena(int socket_cliente, int* size)
 {
@@ -214,47 +206,58 @@ void* recibir_cadena(int socket_cliente, int* size)
 	return cadena;
 }
 
-
 char* recibir_string(int socket_cliente, u_int32_t* size)
 {
 	char * cadena;
 
 	recv(socket_cliente, size, sizeof(u_int32_t), MSG_WAITALL);
 	printf("Size: %d\n", *size);
-	cadena = malloc((*size)+1);
+	cadena = malloc((*size) + 1);
 	recv(socket_cliente, cadena, *size, MSG_WAITALL);
 	cadena[(*size)] = '\0';
 	printf("Cadena: %s\n", (char*) cadena);
 	return cadena;
 }
 
-
-tipo_mensaje obtener_tipo_mensaje(char* tipo){
-	if(string_equals_ignore_case(tipo,"NEW_POKEMON")) return NEW_POKEMON;
-	if(string_equals_ignore_case(tipo,"APPEARED_POKEMON")) return APPEARED_POKEMON;
-	if(string_equals_ignore_case(tipo,"CATCH_POKEMON")) return CATCH_POKEMON;
-	if(string_equals_ignore_case(tipo,"CAUGHT_POKEMON")) return CAUGHT_POKEMON;
-	if(string_equals_ignore_case(tipo,"GET_POKEMON")) return GET_POKEMON;
-	if(string_equals_ignore_case(tipo, "LOCALIZED_POKEMON")) return LOCALIZED_POKEMON;
-	if(string_equals_ignore_case(tipo,"CONFIRMAR")) return CONFIRMAR;
+tipo_mensaje obtener_tipo_mensaje(char* tipo) {
+	if (string_equals_ignore_case(tipo, "NEW_POKEMON"))
+		return NEW_POKEMON;
+	if (string_equals_ignore_case(tipo, "APPEARED_POKEMON"))
+		return APPEARED_POKEMON;
+	if (string_equals_ignore_case(tipo, "CATCH_POKEMON"))
+		return CATCH_POKEMON;
+	if (string_equals_ignore_case(tipo, "CAUGHT_POKEMON"))
+		return CAUGHT_POKEMON;
+	if (string_equals_ignore_case(tipo, "GET_POKEMON"))
+		return GET_POKEMON;
+	if (string_equals_ignore_case(tipo, "LOCALIZED_POKEMON"))
+		return LOCALIZED_POKEMON;
+	if (string_equals_ignore_case(tipo, "CONFIRMAR"))
+		return CONFIRMAR;
 	return -1;
 }
 
-
-char* obtener_tipo_mensaje_string(tipo_mensaje tipo){
-	if(tipo == NEW_POKEMON) return "NEW_POKEMON";
-	if(tipo == APPEARED_POKEMON) return "APPEARED_POKEMON";
-	if(tipo == CATCH_POKEMON) return "CATCH_POKEMON";
-	if(tipo == CAUGHT_POKEMON) return "CAUGHT_POKEMON";
-	if(tipo == GET_POKEMON) return "GET_POKEMON";
-	if(tipo == LOCALIZED_POKEMON) return "LOCALIZED";
-	if(tipo == SUSCRIPTOR) return "SUSCRIPTOR";
-	if(tipo == CONFIRMAR) return "CONFIRMAR";
+char* obtener_tipo_mensaje_string(tipo_mensaje tipo) {
+	if (tipo == NEW_POKEMON)
+		return "NEW_POKEMON";
+	if (tipo == APPEARED_POKEMON)
+		return "APPEARED_POKEMON";
+	if (tipo == CATCH_POKEMON)
+		return "CATCH_POKEMON";
+	if (tipo == CAUGHT_POKEMON)
+		return "CAUGHT_POKEMON";
+	if (tipo == GET_POKEMON)
+		return "GET_POKEMON";
+	if (tipo == LOCALIZED_POKEMON)
+		return "LOCALIZED";
+	if (tipo == SUSCRIPTOR)
+		return "SUSCRIPTOR";
+	if (tipo == CONFIRMAR)
+		return "CONFIRMAR";
 	return "DESCONOCIDO";
 }
 
-
-void* serializar_paquete(t_paquete* paquete, size_t bytes){
+void* serializar_paquete(t_paquete* paquete, size_t bytes) {
 	void* magic = malloc(bytes);
 	int desplazamiento = 0;
 
@@ -272,13 +275,12 @@ void* serializar_paquete(t_paquete* paquete, size_t bytes){
 	printf("id_correlativo: %d\n", paquete->id_correlativo);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
 	desplazamiento += paquete->buffer->size;
-	printf("Buffer->stream: %s\n", ((char*) paquete->buffer->stream)+4);
+	printf("Buffer->stream: %s\n", ((char*) paquete->buffer->stream) + 4);
 
 	return magic;
 }
 
-
-void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje){ //envio al suscriptor un mensaje de argumentos (id, SUSCRIPTOR, cola)
+void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje) { //envio al suscriptor un mensaje de argumentos (id, SUSCRIPTOR, cola)
 	void* stream = malloc(sizeof(tipo_mensaje));
 	memcpy(stream, &tipo_mensaje, sizeof(tipo_mensaje));
 	t_buffer* buffer = crear_buffer(sizeof(tipo_mensaje), stream);
@@ -290,9 +292,8 @@ void notificar_id_suscriptor(t_suscriptor* suscriptor, tipo_mensaje tipo_mensaje
 	destruir_paquete(paquete);
 }
 
-
-u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
-	size_t bytes = paquete->buffer->size + 4*sizeof(int32_t);
+u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket) {
+	size_t bytes = paquete->buffer->size + 4 * sizeof(int32_t);
 	printf("Paquete_tipo_mensaje: %d\n", paquete->tipo_mensaje);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	printf("Se envio un mensaje.\n");
@@ -303,8 +304,7 @@ u_int32_t enviar_mensaje(t_paquete* paquete, u_int32_t socket){
 	return envio;
 }
 
-
-void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor){
+void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor) {
 
 	t_paquete* paquete = generar_paquete(particion);
 
@@ -318,25 +318,24 @@ void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor){
 	destruir_paquete(paquete);
 }
 
-void esperar_confirmacion(t_suscriptor* suscriptor){
+void esperar_confirmacion(t_suscriptor* suscriptor) {
 	pthread_t nuevo;
-	pthread_create(&nuevo,NULL,(void*)serve_client,&suscriptor->numero_socket);
+	pthread_create(&nuevo, NULL, (void*) serve_client, &suscriptor->numero_socket);
 	pthread_join(nuevo, NULL);
 }
 
-void enviar_a_suscriptores(t_particion* particion, t_list* suscriptores){
-	for (u_int32_t i = 0; i < list_size(suscriptores); i++){
-		t_suscriptor* suscriptor = (void*)list_get(suscriptores, i);
+void enviar_a_suscriptores(t_particion* particion, t_list* suscriptores) {
+	for (u_int32_t i = 0; i < list_size(suscriptores); i++) {
+		t_suscriptor* suscriptor = (void*) list_get(suscriptores, i);
 		enviar_a_suscriptor(particion, suscriptor);
 		list_add(particion->atributos->suscriptores_enviados, suscriptor);
 	}
 
 }
 
-void agregar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes){
+void agregar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes) {
 
-
-	t_suscriptor* suscriptor = generar_suscriptor(socket,id_cola_mensajes);
+	t_suscriptor* suscriptor = generar_suscriptor(socket, id_cola_mensajes);
 	printf("Asignada ID a nuevo suscriptor:%d\n", suscriptor->id);
 	notificar_id_suscriptor(suscriptor, id_cola_mensajes);
 
@@ -346,31 +345,30 @@ void agregar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes){
 	t_list* particiones = memoria->particiones;
 	t_particion* particion_actual;
 
-	for(int i = 0; i < list_size(particiones); i++){
+	for (int i = 0; i < list_size(particiones); i++) {
 		particion_actual = list_get(particiones, i);
-		if(particion_actual->atributos->cola_mensajes == id_cola_mensajes){
+		if (particion_actual->atributos->cola_mensajes == id_cola_mensajes && particion_actual->ocupada) {
 			enviar_a_suscriptor(particion_actual, suscriptor);
 			particion_actual->atributos->lru = timer_lru++;
 		}
 	}
 }
 
-t_suscriptor* actualizar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes, u_int32_t id_suscriptor){
+t_suscriptor* actualizar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes, u_int32_t id_suscriptor) {
 
 	t_suscriptor* suscriptor = buscar_suscriptor(obtener_lista_suscriptores(id_cola_mensajes), id_suscriptor);
 	suscriptor->numero_socket = socket;
 	printf("Actualizado el socket del suscriptor %d: %d\n", suscriptor->id, suscriptor->numero_socket);
-
 
 	t_list* particiones = memoria->particiones;
 
 	t_particion* particion_actual;
 	;
 
-	for(uint32_t i = 0; i < list_size(particiones); i++){
+	for (uint32_t i = 0; i < list_size(particiones); i++) {
 		particion_actual = list_get(particiones, i);
-		if(particion_actual->atributos->cola_mensajes == id_cola_mensajes){
-			if(!confirmo_mensaje(suscriptor, particion_actual)){
+		if (particion_actual->atributos->cola_mensajes == id_cola_mensajes && particion_actual->ocupada) {
+			if (!confirmo_mensaje(suscriptor, particion_actual)) {
 				enviar_a_suscriptor(particion_actual, suscriptor);
 				particion_actual->atributos->lru = timer_lru++;
 			}
@@ -381,24 +379,23 @@ t_suscriptor* actualizar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes,
 
 }
 
-
-bool confirmo_mensaje(t_suscriptor* suscriptor, t_particion* particion){
+bool confirmo_mensaje(t_suscriptor* suscriptor, t_particion* particion) {
 	t_list* confirmados = particion->atributos->suscriptores_confirmados;
-	for(uint32_t i = 0; i < list_size(confirmados); i++){
-		if (suscriptor == list_get(confirmados, i)) return true;
+	for (uint32_t i = 0; i < list_size(confirmados); i++) {
+		if (suscriptor == list_get(confirmados, i))
+			return true;
 	}
 	return false;
 }
 
-bool es_cola_correlativa(tipo_mensaje tipo){
+bool es_cola_correlativa(tipo_mensaje tipo) {
 	return tipo == 2 || tipo == 4 || tipo == 6;
 }
 
-
-void finalizar_servidor(){
+void finalizar_servidor() {
 	generar_dump(memoria);
 
-	for(uint32_t i = 0; i < 6; i++){
+	for (uint32_t i = 0; i < 6; i++) {
 		list_destroy_and_destroy_elements(lista_suscriptores[i], destruir_suscriptor);
 	}
 	destruir_memoria(memoria);

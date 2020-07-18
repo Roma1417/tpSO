@@ -172,7 +172,7 @@ void esperar_cliente(int socket_servidor) {
  */
 void recibir_mensaje(int* socket) {
 	int cod_op;
-	if (!fin_deadlock && recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
+	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) cod_op = -1;
 	process_request(cod_op, *socket);
 }
 
@@ -433,6 +433,8 @@ void process_request(int cod_op, int cliente_fd) {
 			u_int32_t id_correlativo = recibir_entero(cliente_fd);
 			tipo_mensaje tipo = recibir_entero(cliente_fd);
 			asignar_id_cola_de_mensajes(id_cola, tipo);
+
+			printf("ME SUSCRIBI A LA COLA DE TIPO: %d--------------\n", tipo);
 
 			break;
 		}
