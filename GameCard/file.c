@@ -101,11 +101,12 @@ bool* llego_al_final) {
 }
 
 void verificar_estado_de_apertura_de_archivo_pokemon(FILE* file) {
-	while (esta_abierto(file))
-		//cambiar por semáforo
+	while(esta_abierto(file))
 		sleep(config_gamecard->tiempo_de_reintento_operacion);
+		//cambiar por semáforo
 
 	abrir_file(file);
+	//alarm(config_gamecard->tiempo_de_reintento_operacion);
 }
 
 char* obtener_ultimo_bloque(FILE* file) {

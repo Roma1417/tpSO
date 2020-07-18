@@ -172,6 +172,14 @@ void cargar_datos_new_pokemon(t_new_pokemon* new_pokemon) {
 					new_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
 	free(file_pokemon_path);
+
+	/*void _verificar() {
+		verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
+	}*/
+
+	/*alarm(config_gamecard->tiempo_de_reintento_operacion);
+	signal(SIGALRM, _verificar);*/
+
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
 	actualizar_posiciones(file_pokemon, new_pokemon);
 	cerrar_file(file_pokemon);

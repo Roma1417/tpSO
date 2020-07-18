@@ -18,6 +18,7 @@
 #include <stdint.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <signal.h>
 
 typedef struct
 {
