@@ -1,5 +1,6 @@
-Particion 0: (nil) - 0x20.	[X]	Size: 32b	LRU:51	Cola 3	ID:49
-Particion 1: 0x20 - 0x24.	[X]	Size: 4b	LRU:52	Cola 4	ID:50
-Particion 2: 0x24 - 0x28.	[L]	Size: 4b
-Particion 3: 0x28 - 0x30.	[L]	Size: 8b
-Particion 4: 0x30 - 0x40.	[L]	Size: 16b
+Particion 0: (nil) - 0x20.	[X]	Size: 32b	LRU:59	Cola 3	ID:57
+Particion 1: 0x20 - 0x24.	[X]	Size: 4b	LRU:60	Cola 4	ID:58
+Particion 2: 0x24 - 0x28.	[X]	Size: 4b	LRU:55	Cola 4	ID:53
+Particion 3: 0x28 - 0x2c.	[X]	Size: 4b	LRU:56	Cola 4	ID:54
+Particion 4: 0x2c - 0x30.	[X]	Size: 4b	LRU:58	Cola 4	ID:56
+Particion 5: 0x30 - 0x40.	[X]	Size: 16b	LRU:57	Cola 3	ID:55

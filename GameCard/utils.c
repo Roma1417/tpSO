@@ -488,6 +488,11 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 	printf("Pude abrir el archivo\n");
 
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
+	char* auxiliar = list_get(bloques,0);
+	if(string_equals_ignore_case(auxiliar, "")){
+		fclose(file_pokemon);
+		return false;
+	}
 	t_list* bloques_file = obtener_bloques_actuales(file_pokemon, bloques);
 	t_list* posiciones = obtener_posiciones_actuales(file_pokemon, bloques_file, bloques);
 	FILE* bloque_file = NULL;

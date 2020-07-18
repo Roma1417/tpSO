@@ -281,16 +281,18 @@ int main() {
 	metadata_general = construir_metadata_general();
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
 	char* bitarray = malloc((metadata_general->blocks) / 8);
+	FILE* bitmap_file = fopen(archivo_bitmap_path, "r");
 
-//	if()
-	bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks) / 8, MSB_FIRST);
-	for (int i = 0; i < metadata_general->blocks; i++)
-		bitarray_clean_bit(bitmap, i);
-	//FALTA ACTUALIZAR BITMAP EN TODOS LADOS
-	actualizar_bit_map();
-
-	//crear_directorios();
-	//crear_archivos();
+	if (bitmap_file == NULL) {
+		bitmap = bitarray_create_with_mode(bitarray, (metadata_general->blocks) / 8, MSB_FIRST);
+		for (int i = 0; i < metadata_general->blocks; i++)
+			bitarray_clean_bit(bitmap, i);
+		actualizar_bit_map();
+	}
+	else {
+		fread(bitmap, sizeof(t_bitarray), 1, bitmap_file);
+		fclose(bitmap_file);
+	}
 
 	suscribirse_a_colas();
 
