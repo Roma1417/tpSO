@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1(FIFO).config");
+	t_config* config = config_create("./teamCompleto1_SJF-SD.config");
 	return config;
 }
 
@@ -129,6 +129,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, planificado);
+			sem_post(&entrenador_en_ready);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, auxiliar);
 			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
@@ -185,6 +186,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", entrenador->identificador);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
+					sem_post(&entrenador_en_ready);
 					sem_post(&(puede_planificar));
 					sem_wait(&puede_ejecutar[entrenador->indice]);
 					quantum_acumulado = 0;
@@ -203,6 +205,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", entrenador->identificador);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
+					sem_post(&entrenador_en_ready);
 					sem_post(&(puede_planificar));
 					sem_wait(&puede_ejecutar[entrenador->indice]);
 					quantum_acumulado = 0;
@@ -224,6 +227,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
 			queue_push(cola_ready, planificado);
+			sem_post(&entrenador_en_ready);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, auxiliar);
 			entrenador->rafaga--;
@@ -273,6 +277,7 @@ void verificar_llegada_de_entrenador(t_planificado* planificado_actual, u_int32_
 			pokemon_a_atrapar = planificado->pokemon;
 			list_remove(lista_ready, list_size(lista_ready) - 1);
 			list_add(lista_ready, planificado_actual);
+			sem_post(&entrenador_en_ready);
 			sem_post(&(puede_ejecutar[planificado->entrenador->indice]));
 			sem_post(&puede_ser_pusheado); // Ale cree que si
 			sem_wait(&(puede_ejecutar[planificado_actual->entrenador->indice]));
@@ -355,6 +360,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 			cambiar_estado(entrenador, READY);
 			t_appeared_pokemon* auxiliar = planificado->pokemon;
 			list_add(lista_ready, planificado);
+			sem_post(&entrenador_en_ready);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 
 			// Comentar si en esta parte hay que calcular la estimacion para
@@ -395,9 +401,14 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 		sem_wait(&(puede_ejecutar[entrenador->indice]));
 
 		t_planificado* planificado = planificado_create(entrenador, pokemon_a_atrapar);
+
+		t_appeared_pokemon* auxiliar = planificado->pokemon;
+
+		printf("ENTRENADOR %c, POKEMON A ATRAPAR: %s --------------------------- \n", entrenador->identificador, pokemon_a_atrapar->pokemon);
+
 		sem_post(&sem_planificado_create);
 
-		u_int32_t rafaga = distancia(entrenador->posicion, pokemon_a_atrapar->posicion);
+		u_int32_t rafaga = distancia(entrenador->posicion, auxiliar->posicion);
 
 		sem_wait(&(mutex_ciclos_cpu_totales));
 		ciclos_cpu_totales += rafaga;
@@ -405,26 +416,25 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 
 		entrenador->ciclos_cpu += rafaga;
 
-		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
+		mover_de_posicion(entrenador->posicion, auxiliar->posicion, config_team);
 
 		modificar_estimacion_y_rafaga(entrenador, rafaga);
 
 		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
 
-		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
+		int32_t conexion_catch = enviar_catch_pokemon(entrenador, auxiliar);
 
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
 
-		t_appeared_pokemon* auxiliar = planificado->pokemon;
 		if (conexion_catch == 0) // Karen, esto es culpa de Ale
 		sem_wait(&(llega_mensaje_caught[entrenador->indice]));
 		else entrenador->resultado_caught = 1;
 
 		if (entrenador->resultado_caught) {
 			cambiar_estado(entrenador, READY);
-			t_appeared_pokemon* auxiliar = planificado->pokemon;
 			list_add(lista_ready, planificado);
+			sem_post(&entrenador_en_ready);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 
 			// Comentar si en esta parte hay que calcular la estimacion para
@@ -844,6 +854,7 @@ t_planificado* buscar_donador(t_entrenador* entrenador) {
 				cambiar_condicion_ready(donador);
 				planificado = planificado_create(donador, pokemon);
 				queue_push(cola_ready, planificado);
+				sem_post(&entrenador_en_ready);
 				sem_post(&puede_planificar);
 			}
 		}
@@ -1056,6 +1067,8 @@ void realizar_intercambios_FIFO() {
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
+	sem_post(&entrenador_en_ready);
+
 	sem_post(&(sem_entrenadores));
 
 }
@@ -1111,6 +1124,8 @@ void realizar_intercambios_RR() {
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
 
+	sem_post(&entrenador_en_ready);
+
 	sem_post(&(sem_entrenadores));
 
 }
@@ -1156,6 +1171,7 @@ void realizar_intercambios_SJF() {
 			cambiar_condicion_ready(donador);
 
 			list_add(lista_ready, planificado);
+			sem_post(&entrenador_en_ready);
 			sem_post(&puede_planificar);
 
 			intercambiar_pokemon_SJF(entrenador, planificado);
@@ -1184,6 +1200,8 @@ void realizar_intercambios_SJF() {
 	fin_deadlock = true;
 
 	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+
+	sem_post(&entrenador_en_ready);
 
 	sem_post(&(sem_entrenadores));
 
@@ -1214,6 +1232,7 @@ void planificar_entrenadores() {
 //               No se tiene en cuenta la estimacion (actua como FIFO).
 //               Para mi tiene sentido pero por si las moscas lo digo jajaja
 void planificar_entrenadores_SJF() {
+	sem_wait(&entrenador_en_ready);
 	if (!list_is_empty(lista_ready)) {
 		sem_wait(&puede_planificar);
 		t_planificado* planificado = elegir_proximo_a_ejecutar_SJF();
@@ -1227,6 +1246,7 @@ void planificar_entrenadores_SJF() {
 }
 
 void planificar_entrenadores_SJFCD() {
+	sem_wait(&entrenador_en_ready);
 	if (!list_is_empty(lista_ready)) {
 		sem_wait(&puede_planificar);
 		t_planificado* planificado = elegir_proximo_a_ejecutar_SJFCD();
@@ -1804,7 +1824,7 @@ int main(void) {
 	id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
-	sem_init(&puede_planificar, 0, 0);
+	sem_init(&puede_planificar, 0, 1);
 	sem_init(&puede_intercambiar, 0, 1);
 	sem_init(&mutex_ciclos_cpu_totales, 0, 1);
 	sem_init(&sem_planificado_create, 0, 1);
@@ -1830,9 +1850,13 @@ int main(void) {
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
+	printf("WARD NEGRO 1 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_intercambiador, NULL);
+	printf("WARD NEGRO 2 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_planificador_largo_plazo, NULL);
+	printf("WARD NEGRO 3 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_planificador, NULL);
+	printf("WARD NEGRO 4 - EL OCTAVO PASAJERO ------- \n");
 
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");
@@ -1844,11 +1868,17 @@ int main(void) {
 
 	//printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
-	pthread_join(hilo_verificador_de_conexion, NULL);
+	printf("WARD NARANJA 1 - EL REGRESO ------- \n");
+	pthread_join(hilo_verificador_de_conexion,NULL);
+	printf("WARD NARANJA 2 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_servidor);
+	printf("WARD NARANJA 3 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_appeared);
+	printf("WARD NARANJA 4 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_caught);
+	printf("WARD NARANJA 5 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_localized);
+	printf("WARD NARANJA 6 - EL REGRESO ------- \n");
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 

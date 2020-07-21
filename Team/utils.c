@@ -209,7 +209,7 @@ void serve_client(int* socket) {
 
 	if (recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)	cod_op = -1;
 
-	printf("El codigo de operacion es: %d\n", cod_op);
+	//printf("El codigo de operacion es: %d\n", cod_op);
 
 	/*if(cod_op == -1) pthread_exit(NULL);*/
 
@@ -401,11 +401,11 @@ void process_request(int cod_op, int cliente_fd) {
 					queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
 					sem_post(&sem_appeared_pokemon);
 
-					if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
+					/*if (sigue_en_falta_especie(pokemon)) { //&& (!ya_recibio_especie())
 						if(get_algoritmo_planificacion() == SJFCD) sem_wait(&puede_ser_pusheado);
 						queue_push(appeared_pokemons, crear_localized_pokemon(pokemon, pos_x, pos_y));
 						sem_post(&sem_appeared_pokemon);
-					}
+					}*/
 
 				}
 			}
