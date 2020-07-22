@@ -8,9 +8,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include Team/Debug/subdir.mk
 -include Team/subdir.mk
--include GameCard/Debug/subdir.mk
 -include GameCard/subdir.mk
 -include GameBoy/subdir.mk
 -include Broker/subdir.mk

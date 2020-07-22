@@ -229,7 +229,7 @@ void serve_client(int* socket) {
 
 		// Posible uso de semaforos en esta parte
 
-		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d", cadena, x, y);
+		log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d\n", cadena, x, y);
 
 		if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
 			recibir_pokemon(appeared_pokemon->pokemon);
@@ -328,7 +328,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			// Posible uso de semaforos en esta parte
 
-			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d", cadena, x, y, id_correlativo);
+			log_info(logger_team, "Recibí un mensaje de tipo APPEARED_POKEMON y sus datos son: %s %d %d %d\n", cadena, x, y, id_correlativo);
 
 			if (list_elem(appeared_pokemon->pokemon, objetivo_global) && sigue_en_falta_especie(appeared_pokemon->pokemon)) {
 				recibir_pokemon(appeared_pokemon->pokemon);
@@ -358,7 +358,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			char* cadena = obtener_resultado(resultado);
 
-			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %s", id_correlativo, cadena);
+			log_info(logger_team, "Recibí un mensaje de tipo CAUGHT_POKEMON y sus datos son: %d %s\n", id_correlativo, cadena);
 
 			free(cadena);
 
@@ -413,7 +413,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 
 
-			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d %s", pokemon, cantidad_posiciones, auxiliar);
+			log_info(logger_team, "Recibí un mensaje de tipo LOCALIZED_POKEMON y sus datos son: %s %d %s\n", pokemon, cantidad_posiciones, auxiliar);
 			free(auxiliar);
 
 			confirmar_recepcion(id, id_cola_localized, "LOCALIZED_POKEMON");
@@ -539,11 +539,11 @@ int crear_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
+		log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
 		freeaddrinfo(server_info);
 		return -1;
 	}
-	else log_info(logger_team, "Se pudo establecer la conexion con el Broker");
+	else log_info(logger_team, "Se pudo establecer la conexion con el Broker\n");
 
 	freeaddrinfo(server_info);
 
@@ -564,8 +564,8 @@ int crear_y_reintentar_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	while (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_team, "No se pudo establecer la conexion con el Broker");
-		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
+		log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
+		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
 		sleep(config_team->tiempo_reconexion);
 		if (inicio_deadlock){
 			freeaddrinfo(server_info);
@@ -573,7 +573,7 @@ int crear_y_reintentar_conexion(char *ip, char* puerto) {
 		}
 	}
 
-	log_info(logger_team, "Se pudo establecer la conexion con el Broker");
+	log_info(logger_team, "Se pudo establecer la conexion con el Broker\n");
 
 	freeaddrinfo(server_info);
 

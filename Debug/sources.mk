@@ -15,8 +15,6 @@ C_DEPS :=
 SUBDIRS := \
 Broker \
 GameBoy \
-GameCard/Debug \
 GameCard \
-Team/Debug \
 Team \
 

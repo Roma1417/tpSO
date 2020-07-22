@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1_SJF-SD.config");
+	t_config* config = config_create("./teamCompleto2_SJF-CD.config");
 	return config;
 }
 
@@ -113,7 +113,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 		sem_post(&(mutex_ciclos_cpu_totales));
 
 		mover_de_posicion(entrenador->posicion, pokemon_a_atrapar->posicion, config_team);
-		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
 		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 
 		//appeared_pokemon_destroy(pokemon_a_atrapar);
@@ -132,7 +132,7 @@ void* ejecutar_entrenador_FIFO(void* parametro) {
 			sem_post(&entrenador_en_ready);
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, auxiliar);
-			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)\n", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
@@ -170,7 +170,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 		entrenador->rafaga = ciclos;
 		entrenador->ciclos_cpu += ciclos;
-		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %c es: %d", entrenador->identificador, distance);
+		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %c es: %d\n", entrenador->identificador, distance);
 
 		for (int i = 0; i < distance; i++) {
 			u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
@@ -183,7 +183,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 				entrenador->rafaga--;
 
 				if (quantum_acumulado == quantum) {
-					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", entrenador->identificador);
+					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum\n", entrenador->identificador);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
 					sem_post(&entrenador_en_ready);
@@ -202,7 +202,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 				entrenador->rafaga--;
 
 				if (quantum_acumulado == quantum) {
-					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", entrenador->identificador);
+					log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum\n", entrenador->identificador);
 					cambiar_estado(entrenador, READY);
 					queue_push(cola_ready, planificado);
 					sem_post(&entrenador_en_ready);
@@ -214,7 +214,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 
 		}
 
-		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
 		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 		cambiar_estado(entrenador, BLOCK);
 		sem_post(&puede_planificar);
@@ -231,7 +231,7 @@ void* ejecutar_entrenador_RR(void* parametro) {
 			sem_wait(&(puede_ejecutar[entrenador->indice]));
 			atrapar(entrenador, auxiliar);
 			entrenador->rafaga--;
-			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)\n", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
@@ -270,7 +270,7 @@ void verificar_llegada_de_entrenador(t_planificado* planificado_actual, u_int32_
 		float estimacion_restante_entrenador = planificado->entrenador->estimacion_restante;
 
 		if (estimacion_restante_entrenador < planificado_actual->entrenador->estimacion_restante) {
-			log_info(logger_team, "El entrenador %c se desaloja para poner en ejecucion al entrenador %c", planificado_actual->entrenador->identificador, planificado->entrenador->identificador);
+			log_info(logger_team, "El entrenador %c se desaloja para poner en ejecucion al entrenador %c\n", planificado_actual->entrenador->identificador, planificado->entrenador->identificador);
 			cambiar_estado(planificado_actual->entrenador, READY);
 			cambiar_estado(planificado->entrenador, EXEC);
 			t_planificado* planificado = elegir_proximo_a_ejecutar_SJFCD();
@@ -313,7 +313,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 
 		entrenador->rafaga = ciclos;
 		entrenador->ciclos_cpu += ciclos;
-		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %c es: %d", entrenador->identificador, distance);
+		log_info(logger_team, "La cantidad de ciclos de CPU necesarios del entrenador %c es: %d\n", entrenador->identificador, distance);
 		for (int i = 0; i < distance; i++) {
 			u_int32_t distancia_x = distancia_en_x(entrenador->posicion, pokemon_a_atrapar->posicion);
 			for (int i = 0; i < distancia_x; i++) {
@@ -344,7 +344,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 		modificar_estimacion_y_rafaga(entrenador, distance);
 		entrenador->estimacion_restante = entrenador->estimacion;
 
-		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
 
 		int32_t conexion_catch = enviar_catch_pokemon(entrenador, pokemon_a_atrapar);
 
@@ -369,7 +369,7 @@ void* ejecutar_entrenador_SJFCD(void* parametro) {
 			entrenador->estimacion_restante = entrenador->estimacion;
 
 			atrapar(entrenador, auxiliar);
-			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)\n", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
@@ -404,7 +404,7 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 
 		t_appeared_pokemon* auxiliar = planificado->pokemon;
 
-		printf("ENTRENADOR %c, POKEMON A ATRAPAR: %s --------------------------- \n", entrenador->identificador, pokemon_a_atrapar->pokemon);
+		//printf("ENTRENADOR %c, POKEMON A ATRAPAR: %s --------------------------- \n", entrenador->identificador, pokemon_a_atrapar->pokemon);
 
 		sem_post(&sem_planificado_create);
 
@@ -420,7 +420,7 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 
 		modificar_estimacion_y_rafaga(entrenador, rafaga);
 
-		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+		log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
 
 		int32_t conexion_catch = enviar_catch_pokemon(entrenador, auxiliar);
 
@@ -442,7 +442,7 @@ void* ejecutar_entrenador_SJF(void* parametro) {
 			modificar_estimacion_y_rafaga(entrenador, 1);
 
 			atrapar(entrenador, auxiliar);
-			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
+			log_info(logger_team, "El entrenador %c atrapo a %s en la posicion (%d,%d)\n", entrenador->identificador, auxiliar->pokemon, entrenador->posicion->x, entrenador->posicion->y);
 			actualizar_objetivo_global();
 			entrenadores_deadlock = filtrar_entrenadores_con_objetivos(entrenadores_deadlock);
 		}
@@ -683,8 +683,8 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 
 	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
 
-	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
-	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", donador->identificador, donador->posicion->x, donador->posicion->y);
+	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", donador->identificador, donador->posicion->x, donador->posicion->y);
 
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
@@ -696,8 +696,8 @@ void intercambiar_pokemon_FIFO(t_entrenador* entrenador, t_planificado* planific
 		donador->rafaga--;
 	}
 
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", entrenador->identificador, auxiliar->pokemon, inservible);
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", donador->identificador, inservible, auxiliar->pokemon);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", entrenador->identificador, auxiliar->pokemon, inservible);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", donador->identificador, inservible, auxiliar->pokemon);
 
 	free(auxiliar);
 
@@ -734,7 +734,7 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 			donador->rafaga--;
 
 			if (quantum_acumulado == quantum) {
-				log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", donador->identificador);
+				log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum\n", donador->identificador);
 				quantum_acumulado = 0;
 			}
 		}
@@ -748,15 +748,15 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 			donador->rafaga--;
 
 			if (quantum_acumulado == quantum) {
-				log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum", donador->identificador);
+				log_info(logger_team, "El entrenador %c vuelve al fin de la cola de ready por fin de quantum\n", donador->identificador);
 				quantum_acumulado = 0;
 			}
 		}
 
 	}
 
-	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
-	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", donador->identificador, donador->posicion->x, donador->posicion->y);
+	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", donador->identificador, donador->posicion->x, donador->posicion->y);
 
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
@@ -776,8 +776,8 @@ void intercambiar_pokemon_RR(t_entrenador* entrenador, t_planificado* planificad
 
 	intercambiar(donador, inservible, auxiliar->pokemon);
 
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", entrenador->identificador, auxiliar->pokemon, inservible);
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", donador->identificador, inservible, auxiliar->pokemon);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", entrenador->identificador, auxiliar->pokemon, inservible);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", donador->identificador, inservible, auxiliar->pokemon);
 
 	free(auxiliar);
 
@@ -801,8 +801,8 @@ void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planifica
 
 	mover_de_posicion(donador->posicion, entrenador->posicion, config_team);
 
-	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
-	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)", donador->identificador, donador->posicion->x, donador->posicion->y);
+	log_info(logger_team, "El entrenador %c esta en la posicion (%d,%d)\n", entrenador->identificador, entrenador->posicion->x, entrenador->posicion->y);
+	log_info(logger_team, "El entrenador %c se movió a la posición (%d,%d)\n", donador->identificador, donador->posicion->x, donador->posicion->y);
 
 	char* inservible = find_first(donador->objetivos_faltantes, entrenador->pokemon_inservibles);
 
@@ -822,8 +822,8 @@ void intercambiar_pokemon_SJF(t_entrenador* entrenador, t_planificado* planifica
 		sleep(config_team->retardo_ciclo_cpu);
 	}
 
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", entrenador->identificador, auxiliar->pokemon, inservible);
-	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s", donador->identificador, inservible, auxiliar->pokemon);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", entrenador->identificador, auxiliar->pokemon, inservible);
+	log_info(logger_team, "Entrenador %c recibio a %s y entrego a %s\n", donador->identificador, inservible, auxiliar->pokemon);
 
 	// Hay un error
 	// El error que estaba en fifo persiste en sjf
@@ -1037,7 +1037,7 @@ void realizar_intercambios_FIFO() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	// Ahora vendria lo que dijo ale
 	// Agarro a un entrenador
@@ -1065,7 +1065,7 @@ void realizar_intercambios_FIFO() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1092,7 +1092,7 @@ void realizar_intercambios_RR() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	// Ahora vendria lo que dijo ale
 	// Agarro a un entrenador
@@ -1122,7 +1122,7 @@ void realizar_intercambios_RR() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1145,7 +1145,7 @@ void realizar_intercambios_SJF() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	while (!list_is_empty(entrenadores_deadlock)) {
 		sem_wait(&puede_intercambiar);
@@ -1190,7 +1190,6 @@ void realizar_intercambios_SJF() {
 		}
 
 		list_destroy(donadores);
-		printf("Ya pase el list_destroy------------------\n");
 
 		//cantidad_deadlocks++;
 	}
@@ -1199,7 +1198,7 @@ void realizar_intercambios_SJF() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock...");
+	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1776,8 +1775,8 @@ void* iniciar_hilo_verificador_de_conexion() {
 	while (!fin_deadlock) {
 		conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 		if (conexion < 0) {
-			log_info(logger_team, "No se pudo establecer la conexion con el Broker");
-			log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker");
+			log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
+			log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
 			pthread_cancel(hilo_appeared);
 			pthread_cancel(hilo_caught);
 			pthread_cancel(hilo_localized);

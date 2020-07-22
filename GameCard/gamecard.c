@@ -116,8 +116,8 @@ void* iniciar_hilo_verificador_de_conexion() {
 	while (1) {
 		int conexion = crear_conexion(config_gamecard->ip_broker, config_gamecard->puerto_broker);
 		if (conexion < 0) {
-			log_info(logger_gamecard, "No se pudo establecer la conexion con el Broker");
-			log_info(logger_gamecard, "Se inicia el proceso de reintento de comunicacion con el Broker");
+			log_info(logger_gamecard, "No se pudo establecer la conexion con el Broker\n");
+			log_info(logger_gamecard, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
 			pthread_cancel(hilo_catch);
 			pthread_cancel(hilo_get);
 			pthread_cancel(hilo_new);

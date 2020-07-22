@@ -5818,3 +5818,935 @@
 
 [INFO] 18:10:52:873 Broker Auxiliar/(10437:10653): Mande todo
 
+[INFO] 20:00:28:728 Broker Auxiliar/(4348:4348): El ID del proceso es: 4348
+
+[INFO] 20:03:41:489 Broker Auxiliar/(4472:4472): El ID del proceso es: 4472
+
+[INFO] 20:06:57:143 Broker Auxiliar/(4757:4757): El ID del proceso es: 4757
+
+[INFO] 20:07:49:547 Broker Auxiliar/(4757:4804): La id recibida fue: 1
+
+[INFO] 20:07:49:548 Broker Auxiliar/(4757:4804): Mande todo
+
+[INFO] 20:07:49:554 Broker Auxiliar/(4757:4809): La id recibida fue: 2
+
+[INFO] 20:07:49:555 Broker Auxiliar/(4757:4809): Mande todo
+
+[INFO] 20:07:49:557 Broker Auxiliar/(4757:4811): La id recibida fue: 3
+
+[INFO] 20:07:49:557 Broker Auxiliar/(4757:4811): Mande todo
+
+[INFO] 20:07:49:560 Broker Auxiliar/(4757:4813): La id recibida fue: 4
+
+[INFO] 20:07:49:560 Broker Auxiliar/(4757:4813): Mande todo
+
+[INFO] 20:07:54:551 Broker Auxiliar/(4757:4815): La id recibida fue: 5
+
+[INFO] 20:07:54:558 Broker Auxiliar/(4757:4815): Mande todo
+
+[INFO] 20:07:59:583 Broker Auxiliar/(4757:4839): La id recibida fue: 6
+
+[INFO] 20:07:59:586 Broker Auxiliar/(4757:4839): Mande todo
+
+[INFO] 20:08:04:582 Broker Auxiliar/(4757:4844): La id recibida fue: 7
+
+[INFO] 20:08:04:586 Broker Auxiliar/(4757:4844): Mande todo
+
+[INFO] 20:08:09:593 Broker Auxiliar/(4757:4847): La id recibida fue: 8
+
+[INFO] 20:08:09:595 Broker Auxiliar/(4757:4847): Mande todo
+
+[INFO] 20:08:19:99 Broker Auxiliar/(4757:4858): La id recibida fue: 9
+
+[INFO] 20:08:19:100 Broker Auxiliar/(4757:4858): Mande todo
+
+[INFO] 20:08:19:102 Broker Auxiliar/(4757:4870): La id recibida fue: 10
+
+[INFO] 20:08:19:103 Broker Auxiliar/(4757:4870): Mande todo
+
+[INFO] 20:08:19:104 Broker Auxiliar/(4757:4874): La id recibida fue: 11
+
+[INFO] 20:08:19:105 Broker Auxiliar/(4757:4874): Mande todo
+
+[INFO] 20:08:19:105 Broker Auxiliar/(4757:4876): La id recibida fue: 12
+
+[INFO] 20:08:19:109 Broker Auxiliar/(4757:4876): Mande todo
+
+[INFO] 20:08:24:116 Broker Auxiliar/(4757:4884): La id recibida fue: 13
+
+[INFO] 20:08:24:117 Broker Auxiliar/(4757:4884): Mande todo
+
+[INFO] 20:08:27:122 Broker Auxiliar/(4757:4891): La id recibida fue: 14
+
+[INFO] 20:08:27:124 Broker Auxiliar/(4757:4891): Mande todo
+
+[INFO] 20:08:29:121 Broker Auxiliar/(4757:4895): La id recibida fue: 15
+
+[INFO] 20:08:29:122 Broker Auxiliar/(4757:4895): Mande todo
+
+[INFO] 20:08:32:129 Broker Auxiliar/(4757:4905): La id recibida fue: 16
+
+[INFO] 20:08:32:130 Broker Auxiliar/(4757:4905): Mande todo
+
+[INFO] 20:08:34:125 Broker Auxiliar/(4757:4912): La id recibida fue: 17
+
+[INFO] 20:08:34:126 Broker Auxiliar/(4757:4912): Mande todo
+
+[INFO] 20:08:39:129 Broker Auxiliar/(4757:4940): La id recibida fue: 18
+
+[INFO] 20:08:39:131 Broker Auxiliar/(4757:4940): Mande todo
+
+[INFO] 20:08:39:999 Broker Auxiliar/(4757:4961): La id recibida fue: 19
+
+[INFO] 20:08:39:0 Broker Auxiliar/(4757:4961): Mande todo
+
+[INFO] 20:08:39:3 Broker Auxiliar/(4757:4972): La id recibida fue: 20
+
+[INFO] 20:08:39:4 Broker Auxiliar/(4757:4972): Mande todo
+
+[INFO] 20:08:39:4 Broker Auxiliar/(4757:4974): La id recibida fue: 21
+
+[INFO] 20:08:40:8 Broker Auxiliar/(4757:4974): Mande todo
+
+[INFO] 20:08:40:9 Broker Auxiliar/(4757:4976): La id recibida fue: 22
+
+[INFO] 20:08:40:10 Broker Auxiliar/(4757:4976): Mande todo
+
+[INFO] 20:08:40:10 Broker Auxiliar/(4757:4978): La id recibida fue: 23
+
+[INFO] 20:08:40:11 Broker Auxiliar/(4757:4978): Mande todo
+
+[INFO] 20:08:42:132 Broker Auxiliar/(4757:18474): La id recibida fue: 24
+
+[INFO] 20:08:42:134 Broker Auxiliar/(4757:18474): Mande todo
+
+[INFO] 20:08:44:0 Broker Auxiliar/(4757:29236): La id recibida fue: 25
+
+[INFO] 20:08:45:1 Broker Auxiliar/(4757:29236): Mande todo
+
+[INFO] 20:08:47:135 Broker Auxiliar/(4757:11136): La id recibida fue: 26
+
+[INFO] 20:08:47:136 Broker Auxiliar/(4757:11136): Mande todo
+
+[INFO] 20:08:49:1 Broker Auxiliar/(4757:28566): La id recibida fue: 27
+
+[INFO] 20:08:49:2 Broker Auxiliar/(4757:28566): Mande todo
+
+[INFO] 20:08:50:3 Broker Auxiliar/(4757:26999): La id recibida fue: 28
+
+[INFO] 20:08:50:4 Broker Auxiliar/(4757:26999): Mande todo
+
+[INFO] 20:08:54:4 Broker Auxiliar/(4757:20501): La id recibida fue: 29
+
+[INFO] 20:08:55:5 Broker Auxiliar/(4757:20501): Mande todo
+
+[INFO] 20:08:55:5 Broker Auxiliar/(4757:24940): La id recibida fue: 30
+
+[INFO] 20:08:56:6 Broker Auxiliar/(4757:24940): Mande todo
+
+[INFO] 20:08:58:7 Broker Auxiliar/(4757:2964): La id recibida fue: 31
+
+[INFO] 20:08:58:8 Broker Auxiliar/(4757:2964): Mande todo
+
+[INFO] 20:08:59:5 Broker Auxiliar/(4757:11482): La id recibida fue: 32
+
+[INFO] 20:09:00:6 Broker Auxiliar/(4757:11482): Mande todo
+
+[INFO] 20:09:03:9 Broker Auxiliar/(4757:26169): La id recibida fue: 33
+
+[INFO] 20:09:03:10 Broker Auxiliar/(4757:26169): Mande todo
+
+[INFO] 20:09:05:6 Broker Auxiliar/(4757:5320): La id recibida fue: 34
+
+[INFO] 20:09:05:7 Broker Auxiliar/(4757:5320): Mande todo
+
+[INFO] 20:09:39:460 Broker Auxiliar/(4757:793): La id recibida fue: 35
+
+[INFO] 20:09:39:462 Broker Auxiliar/(4757:793): Mande todo
+
+[INFO] 20:09:39:462 Broker Auxiliar/(4757:797): La id recibida fue: 36
+
+[INFO] 20:09:39:465 Broker Auxiliar/(4757:797): Mande todo
+
+[INFO] 20:09:39:466 Broker Auxiliar/(4757:803): La id recibida fue: 37
+
+[INFO] 20:09:39:467 Broker Auxiliar/(4757:803): Mande todo
+
+[INFO] 20:09:39:468 Broker Auxiliar/(4757:807): La id recibida fue: 38
+
+[INFO] 20:09:39:468 Broker Auxiliar/(4757:807): Mande todo
+
+[INFO] 20:09:39:469 Broker Auxiliar/(4757:810): La id recibida fue: 39
+
+[INFO] 20:09:39:470 Broker Auxiliar/(4757:810): Mande todo
+
+[INFO] 20:09:39:471 Broker Auxiliar/(4757:814): La id recibida fue: 40
+
+[INFO] 20:09:39:471 Broker Auxiliar/(4757:814): Mande todo
+
+[INFO] 20:09:44:463 Broker Auxiliar/(4757:22651): La id recibida fue: 41
+
+[INFO] 20:09:44:464 Broker Auxiliar/(4757:22651): Mande todo
+
+[INFO] 20:09:49:471 Broker Auxiliar/(4757:21366): La id recibida fue: 42
+
+[INFO] 20:09:49:471 Broker Auxiliar/(4757:21366): Mande todo
+
+[INFO] 20:09:50:466 Broker Auxiliar/(4757:25126): La id recibida fue: 43
+
+[INFO] 20:09:50:468 Broker Auxiliar/(4757:25126): Mande todo
+
+[INFO] 20:09:54:478 Broker Auxiliar/(4757:6268): La id recibida fue: 44
+
+[INFO] 20:09:54:479 Broker Auxiliar/(4757:6268): Mande todo
+
+[INFO] 20:09:55:467 Broker Auxiliar/(4757:7425): La id recibida fue: 45
+
+[INFO] 20:09:55:468 Broker Auxiliar/(4757:7425): Mande todo
+
+[INFO] 20:09:55:468 Broker Auxiliar/(4757:7431): La id recibida fue: 46
+
+[INFO] 20:09:55:474 Broker Auxiliar/(4757:7431): Mande todo
+
+[INFO] 20:09:59:481 Broker Auxiliar/(4757:1201): La id recibida fue: 47
+
+[INFO] 20:09:59:482 Broker Auxiliar/(4757:1201): Mande todo
+
+[INFO] 20:10:00:474 Broker Auxiliar/(4757:28730): La id recibida fue: 48
+
+[INFO] 20:10:00:474 Broker Auxiliar/(4757:28730): Mande todo
+
+[INFO] 20:10:03:473 Broker Auxiliar/(4757:18208): La id recibida fue: 49
+
+[INFO] 20:10:03:474 Broker Auxiliar/(4757:18208): Mande todo
+
+[INFO] 20:10:03:488 Broker Auxiliar/(4757:18915): La id recibida fue: 50
+
+[INFO] 20:10:03:489 Broker Auxiliar/(4757:18915): Mande todo
+
+[INFO] 20:10:04:483 Broker Auxiliar/(4757:10503): La id recibida fue: 51
+
+[INFO] 20:10:04:484 Broker Auxiliar/(4757:10503): Mande todo
+
+[INFO] 20:10:07:485 Broker Auxiliar/(4757:10329): La id recibida fue: 52
+
+[INFO] 20:10:07:486 Broker Auxiliar/(4757:10329): Mande todo
+
+[INFO] 20:10:08:475 Broker Auxiliar/(4757:9886): La id recibida fue: 53
+
+[INFO] 20:10:08:476 Broker Auxiliar/(4757:9886): Mande todo
+
+[INFO] 20:10:09:481 Broker Auxiliar/(4757:7075): La id recibida fue: 54
+
+[INFO] 20:10:09:482 Broker Auxiliar/(4757:7075): Mande todo
+
+[INFO] 20:10:12:484 Broker Auxiliar/(4757:6672): La id recibida fue: 55
+
+[INFO] 20:10:12:484 Broker Auxiliar/(4757:6672): Mande todo
+
+[INFO] 20:10:13:481 Broker Auxiliar/(4757:4923): La id recibida fue: 56
+
+[INFO] 20:10:13:482 Broker Auxiliar/(4757:4923): Mande todo
+
+[INFO] 20:10:18:762 Broker Auxiliar/(4757:10148): La id recibida fue: 57
+
+[INFO] 20:10:18:763 Broker Auxiliar/(4757:10148): Mande todo
+
+[INFO] 20:10:23:769 Broker Auxiliar/(4757:2653): La id recibida fue: 58
+
+[INFO] 20:10:23:770 Broker Auxiliar/(4757:2653): Mande todo
+
+[INFO] 20:15:33:316 Broker Auxiliar/(3361:3361): El ID del proceso es: 3361
+
+[INFO] 20:15:58:613 Broker Auxiliar/(3361:3403): La id recibida fue: 1
+
+[INFO] 20:15:58:615 Broker Auxiliar/(3361:3403): Mande todo
+
+[INFO] 20:15:58:617 Broker Auxiliar/(3361:3407): La id recibida fue: 2
+
+[INFO] 20:15:58:617 Broker Auxiliar/(3361:3407): Mande todo
+
+[INFO] 20:15:58:619 Broker Auxiliar/(3361:3408): La id recibida fue: 3
+
+[INFO] 20:15:58:620 Broker Auxiliar/(3361:3408): Mande todo
+
+[INFO] 20:15:58:625 Broker Auxiliar/(3361:3410): La id recibida fue: 4
+
+[INFO] 20:15:58:626 Broker Auxiliar/(3361:3410): Mande todo
+
+[INFO] 20:16:03:617 Broker Auxiliar/(3361:3412): La id recibida fue: 5
+
+[INFO] 20:16:03:618 Broker Auxiliar/(3361:3412): Mande todo
+
+[INFO] 20:16:08:624 Broker Auxiliar/(3361:3415): La id recibida fue: 6
+
+[INFO] 20:16:08:626 Broker Auxiliar/(3361:3415): Mande todo
+
+[INFO] 20:16:13:634 Broker Auxiliar/(3361:3421): La id recibida fue: 7
+
+[INFO] 20:16:13:635 Broker Auxiliar/(3361:3421): Mande todo
+
+[INFO] 20:16:18:635 Broker Auxiliar/(3361:3424): La id recibida fue: 8
+
+[INFO] 20:16:18:636 Broker Auxiliar/(3361:3424): Mande todo
+
+[INFO] 20:16:20:694 Broker Auxiliar/(3361:3442): La id recibida fue: 9
+
+[INFO] 20:16:20:695 Broker Auxiliar/(3361:3442): Mande todo
+
+[INFO] 20:16:20:697 Broker Auxiliar/(3361:3447): La id recibida fue: 10
+
+[INFO] 20:16:20:697 Broker Auxiliar/(3361:3447): Mande todo
+
+[INFO] 20:16:20:698 Broker Auxiliar/(3361:3451): La id recibida fue: 11
+
+[INFO] 20:16:20:699 Broker Auxiliar/(3361:3451): Mande todo
+
+[INFO] 20:16:20:699 Broker Auxiliar/(3361:3453): La id recibida fue: 12
+
+[INFO] 20:16:20:703 Broker Auxiliar/(3361:3453): Mande todo
+
+[INFO] 20:16:20:704 Broker Auxiliar/(3361:3455): La id recibida fue: 13
+
+[INFO] 20:16:20:704 Broker Auxiliar/(3361:3455): Mande todo
+
+[INFO] 20:16:23:710 Broker Auxiliar/(3361:3463): La id recibida fue: 14
+
+[INFO] 20:16:23:715 Broker Auxiliar/(3361:3463): Mande todo
+
+[INFO] 20:16:25:703 Broker Auxiliar/(3361:3465): La id recibida fue: 15
+
+[INFO] 20:16:25:705 Broker Auxiliar/(3361:3465): Mande todo
+
+[INFO] 20:16:28:718 Broker Auxiliar/(3361:3478): La id recibida fue: 16
+
+[INFO] 20:16:28:721 Broker Auxiliar/(3361:3478): Mande todo
+
+[INFO] 20:16:30:707 Broker Auxiliar/(3361:3484): La id recibida fue: 17
+
+[INFO] 20:16:30:708 Broker Auxiliar/(3361:3484): Mande todo
+
+[INFO] 20:16:31:715 Broker Auxiliar/(3361:3512): La id recibida fue: 18
+
+[INFO] 20:16:31:717 Broker Auxiliar/(3361:3512): Mande todo
+
+[INFO] 20:16:35:717 Broker Auxiliar/(3361:3525): La id recibida fue: 19
+
+[INFO] 20:16:35:719 Broker Auxiliar/(3361:3525): Mande todo
+
+[INFO] 20:16:36:719 Broker Auxiliar/(3361:3532): La id recibida fue: 20
+
+[INFO] 20:16:36:722 Broker Auxiliar/(3361:3532): Mande todo
+
+[INFO] 20:16:40:720 Broker Auxiliar/(3361:3562): La id recibida fue: 21
+
+[INFO] 20:16:40:722 Broker Auxiliar/(3361:3562): Mande todo
+
+[INFO] 20:16:42:245 Broker Auxiliar/(3361:3576): La id recibida fue: 22
+
+[INFO] 20:16:42:245 Broker Auxiliar/(3361:3576): Mande todo
+
+[INFO] 20:16:42:248 Broker Auxiliar/(3361:3589): La id recibida fue: 23
+
+[INFO] 20:16:42:249 Broker Auxiliar/(3361:3589): Mande todo
+
+[INFO] 20:16:42:250 Broker Auxiliar/(3361:3594): La id recibida fue: 24
+
+[INFO] 20:16:42:251 Broker Auxiliar/(3361:3594): Mande todo
+
+[INFO] 20:16:42:255 Broker Auxiliar/(3361:3597): La id recibida fue: 25
+
+[INFO] 20:16:42:256 Broker Auxiliar/(3361:3597): Mande todo
+
+[INFO] 20:16:45:724 Broker Auxiliar/(3361:10424): La id recibida fue: 26
+
+[INFO] 20:16:45:725 Broker Auxiliar/(3361:10424): Mande todo
+
+[INFO] 20:16:50:725 Broker Auxiliar/(3361:20723): La id recibida fue: 27
+
+[INFO] 20:16:50:727 Broker Auxiliar/(3361:20723): Mande todo
+
+[INFO] 20:16:53:728 Broker Auxiliar/(3361:23744): La id recibida fue: 28
+
+[INFO] 20:16:53:729 Broker Auxiliar/(3361:23744): Mande todo
+
+[INFO] 20:16:55:726 Broker Auxiliar/(3361:32759): La id recibida fue: 29
+
+[INFO] 20:16:55:727 Broker Auxiliar/(3361:32759): Mande todo
+
+[INFO] 20:16:58:729 Broker Auxiliar/(3361:18929): La id recibida fue: 30
+
+[INFO] 20:16:58:730 Broker Auxiliar/(3361:18929): Mande todo
+
+[INFO] 20:17:00:727 Broker Auxiliar/(3361:23844): La id recibida fue: 31
+
+[INFO] 20:17:00:728 Broker Auxiliar/(3361:23844): Mande todo
+
+[INFO] 20:17:05:728 Broker Auxiliar/(3361:17271): La id recibida fue: 32
+
+[INFO] 20:17:05:729 Broker Auxiliar/(3361:17271): Mande todo
+
+[INFO] 20:17:08:731 Broker Auxiliar/(3361:21874): La id recibida fue: 33
+
+[INFO] 20:17:08:733 Broker Auxiliar/(3361:21874): Mande todo
+
+[INFO] 20:17:13:733 Broker Auxiliar/(3361:16033): La id recibida fue: 34
+
+[INFO] 20:17:13:734 Broker Auxiliar/(3361:16033): Mande todo
+
+[INFO] 20:17:49:441 Broker Auxiliar/(3361:12919): La id recibida fue: 35
+
+[INFO] 20:17:49:443 Broker Auxiliar/(3361:12919): Mande todo
+
+[INFO] 20:17:49:445 Broker Auxiliar/(3361:12926): La id recibida fue: 36
+
+[INFO] 20:17:49:445 Broker Auxiliar/(3361:12926): Mande todo
+
+[INFO] 20:17:49:446 Broker Auxiliar/(3361:12928): La id recibida fue: 37
+
+[INFO] 20:17:49:446 Broker Auxiliar/(3361:12928): Mande todo
+
+[INFO] 20:17:49:447 Broker Auxiliar/(3361:12931): La id recibida fue: 38
+
+[INFO] 20:17:49:448 Broker Auxiliar/(3361:12931): Mande todo
+
+[INFO] 20:17:49:449 Broker Auxiliar/(3361:12935): La id recibida fue: 39
+
+[INFO] 20:17:49:449 Broker Auxiliar/(3361:12935): Mande todo
+
+[INFO] 20:17:49:454 Broker Auxiliar/(3361:12938): La id recibida fue: 40
+
+[INFO] 20:17:49:454 Broker Auxiliar/(3361:12938): Mande todo
+
+[INFO] 20:17:54:444 Broker Auxiliar/(3361:30590): La id recibida fue: 41
+
+[INFO] 20:17:54:445 Broker Auxiliar/(3361:30590): Mande todo
+
+[INFO] 20:17:59:445 Broker Auxiliar/(3361:13524): La id recibida fue: 42
+
+[INFO] 20:17:59:446 Broker Auxiliar/(3361:13524): Mande todo
+
+[INFO] 20:18:00:448 Broker Auxiliar/(3361:17945): La id recibida fue: 43
+
+[INFO] 20:18:00:449 Broker Auxiliar/(3361:17945): Mande todo
+
+[INFO] 20:18:04:446 Broker Auxiliar/(3361:17206): La id recibida fue: 44
+
+[INFO] 20:18:04:447 Broker Auxiliar/(3361:17206): Mande todo
+
+[INFO] 20:18:05:449 Broker Auxiliar/(3361:21216): La id recibida fue: 45
+
+[INFO] 20:18:05:450 Broker Auxiliar/(3361:21216): Mande todo
+
+[INFO] 20:18:05:450 Broker Auxiliar/(3361:21220): La id recibida fue: 46
+
+[INFO] 20:18:05:463 Broker Auxiliar/(3361:21220): Mande todo
+
+[INFO] 20:18:09:447 Broker Auxiliar/(3361:7373): La id recibida fue: 47
+
+[INFO] 20:18:09:448 Broker Auxiliar/(3361:7373): Mande todo
+
+[INFO] 20:18:10:461 Broker Auxiliar/(3361:11120): La id recibida fue: 48
+
+[INFO] 20:18:10:462 Broker Auxiliar/(3361:11120): Mande todo
+
+[INFO] 20:18:13:450 Broker Auxiliar/(3361:22965): La id recibida fue: 49
+
+[INFO] 20:18:13:452 Broker Auxiliar/(3361:22965): Mande todo
+
+[INFO] 20:18:13:459 Broker Auxiliar/(3361:23548): La id recibida fue: 50
+
+[INFO] 20:18:13:467 Broker Auxiliar/(3361:23548): Mande todo
+
+[INFO] 20:18:14:448 Broker Auxiliar/(3361:21171): La id recibida fue: 51
+
+[INFO] 20:18:14:449 Broker Auxiliar/(3361:21171): Mande todo
+
+[INFO] 20:18:17:451 Broker Auxiliar/(3361:23691): La id recibida fue: 52
+
+[INFO] 20:18:17:451 Broker Auxiliar/(3361:23691): Mande todo
+
+[INFO] 20:18:18:452 Broker Auxiliar/(3361:23025): La id recibida fue: 53
+
+[INFO] 20:18:18:453 Broker Auxiliar/(3361:23025): Mande todo
+
+[INFO] 20:18:19:449 Broker Auxiliar/(3361:22568): La id recibida fue: 54
+
+[INFO] 20:18:19:450 Broker Auxiliar/(3361:22568): Mande todo
+
+[INFO] 20:18:22:453 Broker Auxiliar/(3361:24918): La id recibida fue: 55
+
+[INFO] 20:18:22:453 Broker Auxiliar/(3361:24918): Mande todo
+
+[INFO] 20:18:23:454 Broker Auxiliar/(3361:24472): La id recibida fue: 56
+
+[INFO] 20:18:23:456 Broker Auxiliar/(3361:24472): Mande todo
+
+[INFO] 20:18:28:457 Broker Auxiliar/(3361:14767): La id recibida fue: 57
+
+[INFO] 20:18:28:458 Broker Auxiliar/(3361:14767): Mande todo
+
+[INFO] 20:18:33:460 Broker Auxiliar/(3361:25223): La id recibida fue: 58
+
+[INFO] 20:18:33:461 Broker Auxiliar/(3361:25223): Mande todo
+
+[INFO] 21:14:47:828 Broker Auxiliar/(27119:27119): El ID del proceso es: 27119
+
+[INFO] 21:15:25:766 Broker Auxiliar/(27119:27168): La id recibida fue: 1
+
+[INFO] 21:15:25:766 Broker Auxiliar/(27119:27168): Mande todo
+
+[INFO] 21:15:25:772 Broker Auxiliar/(27119:27172): La id recibida fue: 2
+
+[INFO] 21:15:25:773 Broker Auxiliar/(27119:27172): Mande todo
+
+[INFO] 21:15:25:776 Broker Auxiliar/(27119:27175): La id recibida fue: 3
+
+[INFO] 21:15:25:777 Broker Auxiliar/(27119:27175): Mande todo
+
+[INFO] 21:15:25:788 Broker Auxiliar/(27119:27177): La id recibida fue: 4
+
+[INFO] 21:15:25:789 Broker Auxiliar/(27119:27177): Mande todo
+
+[INFO] 21:15:30:770 Broker Auxiliar/(27119:27178): La id recibida fue: 5
+
+[INFO] 21:15:30:773 Broker Auxiliar/(27119:27178): Mande todo
+
+[INFO] 21:15:35:787 Broker Auxiliar/(27119:27188): La id recibida fue: 6
+
+[INFO] 21:15:35:789 Broker Auxiliar/(27119:27188): Mande todo
+
+[INFO] 21:15:40:804 Broker Auxiliar/(27119:27198): La id recibida fue: 7
+
+[INFO] 21:15:40:805 Broker Auxiliar/(27119:27198): Mande todo
+
+[INFO] 21:15:44:940 Broker Auxiliar/(27119:27216): La id recibida fue: 8
+
+[INFO] 21:15:44:941 Broker Auxiliar/(27119:27216): Mande todo
+
+[INFO] 21:15:44:959 Broker Auxiliar/(27119:27222): La id recibida fue: 9
+
+[INFO] 21:15:44:960 Broker Auxiliar/(27119:27222): Mande todo
+
+[INFO] 21:15:44:975 Broker Auxiliar/(27119:27225): La id recibida fue: 10
+
+[INFO] 21:15:44:976 Broker Auxiliar/(27119:27225): Mande todo
+
+[INFO] 21:15:44:982 Broker Auxiliar/(27119:27228): La id recibida fue: 11
+
+[INFO] 21:15:44:985 Broker Auxiliar/(27119:27228): Mande todo
+
+[INFO] 21:15:45:815 Broker Auxiliar/(27119:27238): La id recibida fue: 12
+
+[INFO] 21:15:45:824 Broker Auxiliar/(27119:27238): Mande todo
+
+[INFO] 21:15:48:53 Broker Auxiliar/(27119:27241): La id recibida fue: 13
+
+[INFO] 21:15:48:60 Broker Auxiliar/(27119:27241): Mande todo
+
+[INFO] 21:15:49:944 Broker Auxiliar/(27119:27243): La id recibida fue: 14
+
+[INFO] 21:15:49:957 Broker Auxiliar/(27119:27243): Mande todo
+
+[INFO] 21:15:53:62 Broker Auxiliar/(27119:27251): La id recibida fue: 15
+
+[INFO] 21:15:53:68 Broker Auxiliar/(27119:27251): Mande todo
+
+[INFO] 21:15:54:962 Broker Auxiliar/(27119:27257): La id recibida fue: 16
+
+[INFO] 21:15:54:966 Broker Auxiliar/(27119:27257): Mande todo
+
+[INFO] 21:15:59:964 Broker Auxiliar/(27119:27267): La id recibida fue: 17
+
+[INFO] 21:15:59:970 Broker Auxiliar/(27119:27267): Mande todo
+
+[INFO] 21:16:04:973 Broker Auxiliar/(27119:27292): La id recibida fue: 18
+
+[INFO] 21:16:04:980 Broker Auxiliar/(27119:27292): Mande todo
+
+[INFO] 21:16:05:978 Broker Auxiliar/(27119:27296): La id recibida fue: 19
+
+[INFO] 21:16:05:983 Broker Auxiliar/(27119:27296): Mande todo
+
+[INFO] 21:16:09:754 Broker Auxiliar/(27119:27317): La id recibida fue: 20
+
+[INFO] 21:16:09:755 Broker Auxiliar/(27119:27317): Mande todo
+
+[INFO] 21:16:09:772 Broker Auxiliar/(27119:27323): La id recibida fue: 21
+
+[INFO] 21:16:09:773 Broker Auxiliar/(27119:27323): Mande todo
+
+[INFO] 21:16:09:780 Broker Auxiliar/(27119:27325): La id recibida fue: 22
+
+[INFO] 21:16:09:780 Broker Auxiliar/(27119:27325): Mande todo
+
+[INFO] 21:16:09:792 Broker Auxiliar/(27119:27328): La id recibida fue: 23
+
+[INFO] 21:16:09:793 Broker Auxiliar/(27119:27328): Mande todo
+
+[INFO] 21:16:09:798 Broker Auxiliar/(27119:27331): La id recibida fue: 24
+
+[INFO] 21:16:09:801 Broker Auxiliar/(27119:27331): Mande todo
+
+[INFO] 21:16:10:983 Broker Auxiliar/(27119:4493): La id recibida fue: 25
+
+[INFO] 21:16:10:992 Broker Auxiliar/(27119:4493): Mande todo
+
+[INFO] 21:16:14:756 Broker Auxiliar/(27119:26487): La id recibida fue: 26
+
+[INFO] 21:16:14:761 Broker Auxiliar/(27119:26487): Mande todo
+
+[INFO] 21:16:19:758 Broker Auxiliar/(27119:14085): La id recibida fue: 27
+
+[INFO] 21:16:19:768 Broker Auxiliar/(27119:14085): Mande todo
+
+[INFO] 21:16:20:849 Broker Auxiliar/(27119:18711): La id recibida fue: 28
+
+[INFO] 21:16:20:850 Broker Auxiliar/(27119:18711): Mande todo
+
+[INFO] 21:16:24:760 Broker Auxiliar/(27119:2249): La id recibida fue: 29
+
+[INFO] 21:16:24:774 Broker Auxiliar/(27119:2249): Mande todo
+
+[INFO] 21:16:25:851 Broker Auxiliar/(27119:6274): La id recibida fue: 30
+
+[INFO] 21:16:25:864 Broker Auxiliar/(27119:6274): Mande todo
+
+[INFO] 21:16:27:904 Broker Auxiliar/(27119:13311): La id recibida fue: 31
+
+[INFO] 21:16:27:905 Broker Auxiliar/(27119:13311): Mande todo
+
+[INFO] 21:16:29:762 Broker Auxiliar/(27119:19765): La id recibida fue: 32
+
+[INFO] 21:16:29:768 Broker Auxiliar/(27119:19765): Mande todo
+
+[INFO] 21:16:32:906 Broker Auxiliar/(27119:29728): La id recibida fue: 33
+
+[INFO] 21:16:32:916 Broker Auxiliar/(27119:29728): Mande todo
+
+[INFO] 21:16:34:769 Broker Auxiliar/(27119:2670): La id recibida fue: 34
+
+[INFO] 21:16:34:776 Broker Auxiliar/(27119:2670): Mande todo
+
+[INFO] 21:16:53:935 Broker Auxiliar/(27119:16090): La id recibida fue: 35
+
+[INFO] 21:16:53:937 Broker Auxiliar/(27119:16090): Mande todo
+
+[INFO] 21:16:53:939 Broker Auxiliar/(27119:16094): La id recibida fue: 36
+
+[INFO] 21:16:53:939 Broker Auxiliar/(27119:16094): Mande todo
+
+[INFO] 21:16:53:945 Broker Auxiliar/(27119:16100): La id recibida fue: 37
+
+[INFO] 21:16:53:946 Broker Auxiliar/(27119:16100): Mande todo
+
+[INFO] 21:16:53:956 Broker Auxiliar/(27119:16103): La id recibida fue: 38
+
+[INFO] 21:16:53:957 Broker Auxiliar/(27119:16103): Mande todo
+
+[INFO] 21:16:53:959 Broker Auxiliar/(27119:16108): La id recibida fue: 39
+
+[INFO] 21:16:53:960 Broker Auxiliar/(27119:16108): Mande todo
+
+[INFO] 21:16:53:962 Broker Auxiliar/(27119:16111): La id recibida fue: 40
+
+[INFO] 21:16:53:963 Broker Auxiliar/(27119:16111): Mande todo
+
+[INFO] 21:16:58:938 Broker Auxiliar/(27119:25434): La id recibida fue: 41
+
+[INFO] 21:16:58:944 Broker Auxiliar/(27119:25434): Mande todo
+
+[INFO] 21:17:03:944 Broker Auxiliar/(27119:1096): La id recibida fue: 42
+
+[INFO] 21:17:03:945 Broker Auxiliar/(27119:1096): Mande todo
+
+[INFO] 21:17:03:950 Broker Auxiliar/(27119:1106): La id recibida fue: 43
+
+[INFO] 21:17:03:961 Broker Auxiliar/(27119:1106): Mande todo
+
+[INFO] 21:17:08:955 Broker Auxiliar/(27119:9661): La id recibida fue: 44
+
+[INFO] 21:17:08:962 Broker Auxiliar/(27119:9661): Mande todo
+
+[INFO] 21:17:08:971 Broker Auxiliar/(27119:9667): La id recibida fue: 45
+
+[INFO] 21:17:08:975 Broker Auxiliar/(27119:9667): Mande todo
+
+[INFO] 21:17:11:957 Broker Auxiliar/(27119:13973): La id recibida fue: 46
+
+[INFO] 21:17:11:962 Broker Auxiliar/(27119:13973): Mande todo
+
+[INFO] 21:17:13:972 Broker Auxiliar/(27119:16794): La id recibida fue: 47
+
+[INFO] 21:17:13:989 Broker Auxiliar/(27119:16794): Mande todo
+
+[INFO] 21:17:16:961 Broker Auxiliar/(27119:20825): La id recibida fue: 48
+
+[INFO] 21:17:16:974 Broker Auxiliar/(27119:20825): Mande todo
+
+[INFO] 21:17:18:264 Broker Auxiliar/(27119:22341): La id recibida fue: 49
+
+[INFO] 21:17:18:265 Broker Auxiliar/(27119:22341): Mande todo
+
+[INFO] 21:17:19:5 Broker Auxiliar/(27119:23247): La id recibida fue: 50
+
+[INFO] 21:17:19:22 Broker Auxiliar/(27119:23247): Mande todo
+
+[INFO] 21:17:22:245 Broker Auxiliar/(27119:27252): La id recibida fue: 51
+
+[INFO] 21:17:22:245 Broker Auxiliar/(27119:27252): Mande todo
+
+[INFO] 21:17:23:267 Broker Auxiliar/(27119:28449): La id recibida fue: 52
+
+[INFO] 21:17:23:282 Broker Auxiliar/(27119:28449): Mande todo
+
+[INFO] 21:17:24:5 Broker Auxiliar/(27119:29264): La id recibida fue: 53
+
+[INFO] 21:17:24:22 Broker Auxiliar/(27119:29264): Mande todo
+
+[INFO] 21:17:27:280 Broker Auxiliar/(27119:713): La id recibida fue: 54
+
+[INFO] 21:17:27:281 Broker Auxiliar/(27119:713): Mande todo
+
+[INFO] 21:17:28:292 Broker Auxiliar/(27119:2054): La id recibida fue: 55
+
+[INFO] 21:17:28:300 Broker Auxiliar/(27119:2054): Mande todo
+
+[INFO] 21:17:33:312 Broker Auxiliar/(27119:8126): La id recibida fue: 56
+
+[INFO] 21:17:33:327 Broker Auxiliar/(27119:8126): Mande todo
+
+[INFO] 21:21:22:706 Broker Auxiliar/(25610:25610): El ID del proceso es: 25610
+
+[INFO] 21:21:34:715 Broker Auxiliar/(25610:25633): La id recibida fue: 1
+
+[INFO] 21:21:34:717 Broker Auxiliar/(25610:25633): Mande todo
+
+[INFO] 21:21:34:718 Broker Auxiliar/(25610:25637): La id recibida fue: 2
+
+[INFO] 21:21:34:718 Broker Auxiliar/(25610:25637): Mande todo
+
+[INFO] 21:21:34:720 Broker Auxiliar/(25610:25638): La id recibida fue: 3
+
+[INFO] 21:21:34:721 Broker Auxiliar/(25610:25638): Mande todo
+
+[INFO] 21:21:34:723 Broker Auxiliar/(25610:25640): La id recibida fue: 4
+
+[INFO] 21:21:34:724 Broker Auxiliar/(25610:25640): Mande todo
+
+[INFO] 21:21:39:721 Broker Auxiliar/(25610:25643): La id recibida fue: 5
+
+[INFO] 21:21:39:722 Broker Auxiliar/(25610:25643): Mande todo
+
+[INFO] 21:21:44:727 Broker Auxiliar/(25610:25645): La id recibida fue: 6
+
+[INFO] 21:21:44:729 Broker Auxiliar/(25610:25645): Mande todo
+
+[INFO] 21:21:49:731 Broker Auxiliar/(25610:25650): La id recibida fue: 7
+
+[INFO] 21:21:49:733 Broker Auxiliar/(25610:25650): Mande todo
+
+[INFO] 21:21:54:739 Broker Auxiliar/(25610:25654): La id recibida fue: 8
+
+[INFO] 21:21:54:741 Broker Auxiliar/(25610:25654): Mande todo
+
+[INFO] 21:22:10:567 Broker Auxiliar/(25610:25672): La id recibida fue: 9
+
+[INFO] 21:22:10:569 Broker Auxiliar/(25610:25672): Mande todo
+
+[INFO] 21:22:10:612 Broker Auxiliar/(25610:25678): La id recibida fue: 10
+
+[INFO] 21:22:10:614 Broker Auxiliar/(25610:25678): Mande todo
+
+[INFO] 21:22:10:627 Broker Auxiliar/(25610:25680): La id recibida fue: 11
+
+[INFO] 21:22:10:629 Broker Auxiliar/(25610:25680): Mande todo
+
+[INFO] 21:22:10:634 Broker Auxiliar/(25610:25682): La id recibida fue: 12
+
+[INFO] 21:22:10:635 Broker Auxiliar/(25610:25682): Mande todo
+
+[INFO] 21:22:15:574 Broker Auxiliar/(25610:25693): La id recibida fue: 13
+
+[INFO] 21:22:15:581 Broker Auxiliar/(25610:25693): Mande todo
+
+[INFO] 21:22:18:657 Broker Auxiliar/(25610:25705): La id recibida fue: 14
+
+[INFO] 21:22:18:658 Broker Auxiliar/(25610:25705): Mande todo
+
+[INFO] 21:22:20:577 Broker Auxiliar/(25610:25710): La id recibida fue: 15
+
+[INFO] 21:22:20:593 Broker Auxiliar/(25610:25710): Mande todo
+
+[INFO] 21:22:23:665 Broker Auxiliar/(25610:25716): La id recibida fue: 16
+
+[INFO] 21:22:23:675 Broker Auxiliar/(25610:25716): Mande todo
+
+[INFO] 21:22:25:600 Broker Auxiliar/(25610:25739): La id recibida fue: 17
+
+[INFO] 21:22:25:607 Broker Auxiliar/(25610:25739): Mande todo
+
+[INFO] 21:22:29:243 Broker Auxiliar/(25610:25761): La id recibida fue: 18
+
+[INFO] 21:22:29:243 Broker Auxiliar/(25610:25761): Mande todo
+
+[INFO] 21:22:29:272 Broker Auxiliar/(25610:25766): La id recibida fue: 19
+
+[INFO] 21:22:29:273 Broker Auxiliar/(25610:25766): Mande todo
+
+[INFO] 21:22:29:282 Broker Auxiliar/(25610:25772): La id recibida fue: 20
+
+[INFO] 21:22:29:290 Broker Auxiliar/(25610:25772): Mande todo
+
+[INFO] 21:22:29:295 Broker Auxiliar/(25610:25776): La id recibida fue: 21
+
+[INFO] 21:22:29:295 Broker Auxiliar/(25610:25776): Mande todo
+
+[INFO] 21:22:29:296 Broker Auxiliar/(25610:25778): La id recibida fue: 22
+
+[INFO] 21:22:29:301 Broker Auxiliar/(25610:25778): Mande todo
+
+[INFO] 21:22:30:601 Broker Auxiliar/(25610:4057): La id recibida fue: 23
+
+[INFO] 21:22:30:607 Broker Auxiliar/(25610:4057): Mande todo
+
+[INFO] 21:22:33:593 Broker Auxiliar/(25610:24530): La id recibida fue: 24
+
+[INFO] 21:22:33:602 Broker Auxiliar/(25610:24530): Mande todo
+
+[INFO] 21:22:35:602 Broker Auxiliar/(25610:4328): La id recibida fue: 25
+
+[INFO] 21:22:35:608 Broker Auxiliar/(25610:4328): Mande todo
+
+[INFO] 21:22:38:603 Broker Auxiliar/(25610:19196): La id recibida fue: 26
+
+[INFO] 21:22:38:609 Broker Auxiliar/(25610:19196): Mande todo
+
+[INFO] 21:22:40:610 Broker Auxiliar/(25610:27679): La id recibida fue: 27
+
+[INFO] 21:22:40:626 Broker Auxiliar/(25610:27679): Mande todo
+
+[INFO] 21:22:41:690 Broker Auxiliar/(25610:31701): La id recibida fue: 28
+
+[INFO] 21:22:41:691 Broker Auxiliar/(25610:31701): Mande todo
+
+[INFO] 21:22:45:627 Broker Auxiliar/(25610:14019): La id recibida fue: 29
+
+[INFO] 21:22:45:646 Broker Auxiliar/(25610:14019): Mande todo
+
+[INFO] 21:22:46:692 Broker Auxiliar/(25610:17481): La id recibida fue: 30
+
+[INFO] 21:22:46:698 Broker Auxiliar/(25610:17481): Mande todo
+
+[INFO] 21:22:48:720 Broker Auxiliar/(25610:23491): La id recibida fue: 31
+
+[INFO] 21:22:48:720 Broker Auxiliar/(25610:23491): Mande todo
+
+[INFO] 21:22:50:628 Broker Auxiliar/(25610:29069): La id recibida fue: 32
+
+[INFO] 21:22:50:634 Broker Auxiliar/(25610:29069): Mande todo
+
+[INFO] 21:22:53:721 Broker Auxiliar/(25610:5128): La id recibida fue: 33
+
+[INFO] 21:22:53:734 Broker Auxiliar/(25610:5128): Mande todo
+
+[INFO] 21:22:55:630 Broker Auxiliar/(25610:10138): La id recibida fue: 34
+
+[INFO] 21:22:55:637 Broker Auxiliar/(25610:10138): Mande todo
+
+[INFO] 21:23:09:51 Broker Auxiliar/(25610:6616): La id recibida fue: 35
+
+[INFO] 21:23:09:54 Broker Auxiliar/(25610:6616): Mande todo
+
+[INFO] 21:23:09:54 Broker Auxiliar/(25610:6620): La id recibida fue: 36
+
+[INFO] 21:23:09:55 Broker Auxiliar/(25610:6620): Mande todo
+
+[INFO] 21:23:09:60 Broker Auxiliar/(25610:6624): La id recibida fue: 37
+
+[INFO] 21:23:09:61 Broker Auxiliar/(25610:6624): Mande todo
+
+[INFO] 21:23:09:64 Broker Auxiliar/(25610:6628): La id recibida fue: 38
+
+[INFO] 21:23:09:64 Broker Auxiliar/(25610:6628): Mande todo
+
+[INFO] 21:23:09:66 Broker Auxiliar/(25610:6632): La id recibida fue: 39
+
+[INFO] 21:23:09:67 Broker Auxiliar/(25610:6632): Mande todo
+
+[INFO] 21:23:09:69 Broker Auxiliar/(25610:6635): La id recibida fue: 40
+
+[INFO] 21:23:09:70 Broker Auxiliar/(25610:6635): Mande todo
+
+[INFO] 21:23:14:55 Broker Auxiliar/(25610:15947): La id recibida fue: 41
+
+[INFO] 21:23:14:63 Broker Auxiliar/(25610:15947): Mande todo
+
+[INFO] 21:23:19:57 Broker Auxiliar/(25610:24266): La id recibida fue: 42
+
+[INFO] 21:23:19:65 Broker Auxiliar/(25610:24266): Mande todo
+
+[INFO] 21:23:20:62 Broker Auxiliar/(25610:26009): La id recibida fue: 43
+
+[INFO] 21:23:20:63 Broker Auxiliar/(25610:26009): Mande todo
+
+[INFO] 21:23:24:59 Broker Auxiliar/(25610:32741): La id recibida fue: 44
+
+[INFO] 21:23:24:64 Broker Auxiliar/(25610:32741): Mande todo
+
+[INFO] 21:23:25:64 Broker Auxiliar/(25610:1873): La id recibida fue: 45
+
+[INFO] 21:23:25:70 Broker Auxiliar/(25610:1873): Mande todo
+
+[INFO] 21:23:25:73 Broker Auxiliar/(25610:1878): La id recibida fue: 46
+
+[INFO] 21:23:25:80 Broker Auxiliar/(25610:1878): Mande todo
+
+[INFO] 21:23:29:60 Broker Auxiliar/(25610:8306): La id recibida fue: 47
+
+[INFO] 21:23:29:79 Broker Auxiliar/(25610:8306): Mande todo
+
+[INFO] 21:23:30:80 Broker Auxiliar/(25610:9634): La id recibida fue: 48
+
+[INFO] 21:23:30:86 Broker Auxiliar/(25610:9634): Mande todo
+
+[INFO] 21:23:33:79 Broker Auxiliar/(25610:13791): La id recibida fue: 49
+
+[INFO] 21:23:33:84 Broker Auxiliar/(25610:13791): Mande todo
+
+[INFO] 21:23:33:196 Broker Auxiliar/(25610:13827): La id recibida fue: 50
+
+[INFO] 21:23:33:197 Broker Auxiliar/(25610:13827): Mande todo
+
+[INFO] 21:23:34:61 Broker Auxiliar/(25610:14972): La id recibida fue: 51
+
+[INFO] 21:23:34:82 Broker Auxiliar/(25610:14972): Mande todo
+
+[INFO] 21:23:37:196 Broker Auxiliar/(25610:19127): La id recibida fue: 52
+
+[INFO] 21:23:37:197 Broker Auxiliar/(25610:19127): Mande todo
+
+[INFO] 21:23:38:83 Broker Auxiliar/(25610:20235): La id recibida fue: 53
+
+[INFO] 21:23:38:98 Broker Auxiliar/(25610:20235): Mande todo
+
+[INFO] 21:23:39:63 Broker Auxiliar/(25610:21365): La id recibida fue: 54
+
+[INFO] 21:23:39:82 Broker Auxiliar/(25610:21365): Mande todo
+
+[INFO] 21:23:42:212 Broker Auxiliar/(25610:25139): La id recibida fue: 55
+
+[INFO] 21:23:42:212 Broker Auxiliar/(25610:25139): Mande todo
+
+[INFO] 21:23:43:100 Broker Auxiliar/(25610:26272): La id recibida fue: 56
+
+[INFO] 21:23:43:119 Broker Auxiliar/(25610:26272): Mande todo
+
+[INFO] 21:23:48:119 Broker Auxiliar/(25610:32330): La id recibida fue: 57
+
+[INFO] 21:23:48:135 Broker Auxiliar/(25610:32330): Mande todo
+
+[INFO] 21:23:53:137 Broker Auxiliar/(25610:5948): La id recibida fue: 58
+
+[INFO] 21:23:53:150 Broker Auxiliar/(25610:5948): Mande todo
+

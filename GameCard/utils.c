@@ -211,7 +211,7 @@ void process_request(int cod_op, int cliente_fd) {
 			new_pokemon->cantidad = recibir_entero(cliente_fd);
 
 			log_info(logger_gamecard,
-							"Recibí un mensaje de tipo NEW_POKEMON y sus datos son: %s %d %d %d",
+							"Recibí un mensaje de tipo NEW_POKEMON y sus datos son: %s %d %d %d\n",
 							new_pokemon->pokemon, new_pokemon->pos_x, new_pokemon->pos_y,
 							new_pokemon->cantidad);
 
@@ -236,7 +236,7 @@ void process_request(int cod_op, int cliente_fd) {
 			catch_pokemon->pos_x = recibir_entero(cliente_fd);
 			catch_pokemon->pos_y = recibir_entero(cliente_fd);
 
-			log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d", catch_pokemon->pokemon, catch_pokemon->pos_x, catch_pokemon->pos_y);
+			log_info(logger_gamecard, "Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: %s %d %d\n", catch_pokemon->pokemon, catch_pokemon->pos_x, catch_pokemon->pos_y);
 
 			confirmar_recepcion(id, id_cola_catch, "CATCH_POKEMON");
 
@@ -255,7 +255,7 @@ void process_request(int cod_op, int cliente_fd) {
 			pokemon = recibir_cadena(cliente_fd, &size_pokemon);
 
 			log_info(logger_gamecard,
-							"Recibí un mensaje de tipo GET_POKEMON y sus datos son: %s",
+							"Recibí un mensaje de tipo GET_POKEMON y sus datos son: %s\n",
 							pokemon);
 
 			confirmar_recepcion(id, id_cola_get, "GET_POKEMON");
