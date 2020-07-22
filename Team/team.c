@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto2_SJF-CD.config");
+	t_config* config = config_create("./teamCompleto1_FIFO.config");
 	return config;
 }
 
@@ -1844,7 +1844,7 @@ int main(void) {
 
 	enviar_mensajes_get_pokemon();
 	pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
-	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
+	//pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
@@ -1865,7 +1865,7 @@ int main(void) {
 	 pthread_join(hilo_caught, NULL);
 	 pthread_join(hilo_localized, NULL);*/
 
-	//printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
+	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
 	printf("WARD NARANJA 1 - EL REGRESO ------- \n");
 	pthread_join(hilo_verificador_de_conexion,NULL);

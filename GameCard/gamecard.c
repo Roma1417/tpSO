@@ -220,6 +220,7 @@ void finalizar_gamecard() {
 	destruir_metadata_general(metadata_general);
 	free(archivo_metadata_general_path);
 	free(archivo_bitmap_path);
+	free(bitmap->bitarray);
 	bitarray_destroy(bitmap);
 	pthread_cancel(hilo_catch);
 	pthread_cancel(hilo_get);
@@ -261,7 +262,8 @@ int main() {
 	if (bitmap_file == NULL) {
 
 		u_int32_t size = metadata_general->blocks / 8;
-		bitmap = bitarray_create_with_mode(string_repeat('\0', size), size, MSB_FIRST);
+		char* auxiliar = string_repeat('\0', size);
+		bitmap = bitarray_create_with_mode(auxiliar, size, MSB_FIRST);
 		actualizar_bit_map();
 
 		/*char* bitarray = malloc((metadata_general->blocks) / 8);

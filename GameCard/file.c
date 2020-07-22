@@ -36,7 +36,7 @@ void verificar_existencia_de_carpeta(char* nombre) {
 }
 
 bool esta_abierto(FILE* file) {
-	fseek(file, -sizeof(char), SEEK_END);
+	fseek(file, -1, SEEK_END);
 	char abierto = (char) fgetc(file);
 	return (abierto == 'Y');
 }
@@ -337,6 +337,7 @@ t_list* obtener_posiciones_actuales(FILE* file, t_list* bloques_file,
 			bloque_file = list_get(bloques_file, i);
 			auxiliar = guardar_hasta('\n', &bloque_file);
 			string_append_with_format(&posicion, auxiliar);
+			free(auxiliar);
 		}
 		string_append(&posicion, "\n");
 		list_add(posiciones, posicion);
@@ -363,7 +364,10 @@ uint32_t obtener_cantidad(char* posicion) {
 		caracter = posicion[i];
 	}
 
-	return atoi(cantidad);
+	uint32_t cantidad_entero = atoi(cantidad);
+	free(cantidad);
+
+	return cantidad_entero;
 }
 
 t_list* obtener_bloques_actuales(FILE* file, t_list* bloques) {
@@ -393,8 +397,11 @@ int obtener_indice_del_encontrado(int* indice_del_encontrado,
 
 char* obtener_posicion_actual(t_new_pokemon* new_pokemon) {
 	char* posicion_actual = string_new();
-	string_append_with_format(&posicion_actual, "%s-%s=",
-			string_itoa(new_pokemon->pos_x), string_itoa(new_pokemon->pos_y));
+	char* pos_x = string_itoa(new_pokemon->pos_x);
+	char* pos_y = string_itoa(new_pokemon->pos_y);
+	string_append_with_format(&posicion_actual, "%s-%s=", pos_x, pos_y);
+	free(pos_x);
+	free(pos_y);
 	return posicion_actual;
 }
 
@@ -470,17 +477,21 @@ FILE* cargar_posiciones_inexistentes(int contador, char* posicion_a_agregar,
 		} else {
 			contador = 0;
 			//Crear nuevo bloque y ponerlo ahí
+			if(bloque != NULL) free(bloque);
 			bloque = obtener_bloque_disponible();
 			actualizar_metadata(bloque_file, file, bloque, ultimo_bloque);
 			//actualizar_size(file, bloques_file);
 			//fclose(bloque_file);
-			bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
+			char* path_auxiliar = obtener_bloque_path(bloque);
+			bloque_file = fopen(path_auxiliar, "w+b");
+			free(path_auxiliar);
 			//free(bloque);
 			list_add(bloques_file, bloque_file);
 			fputc(posicion_a_agregar[j], bloque_file);
 		}
 
 	}
+	if(bloque != NULL) free(bloque);
 	actualizar_size(file, bloques_file);
 	return bloque_file;
 }
@@ -505,12 +516,11 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
 		free(ultimo_bloque);
 	} else {
 		//Actualizar ultimo_bloque (Validar que no supere BLOCK_SIZE)
-		char* bloque;
+		char* bloque = NULL;
 		char* posicion_actual = obtener_posicion_actual(new_pokemon);
 		bloques = obtener_bloques_del_pokemon(file);
 		bloques_file = obtener_bloques_actuales(file, bloques);
-		t_list* posiciones = obtener_posiciones_actuales(file, bloques_file,
-				bloques);
+		t_list* posiciones = obtener_posiciones_actuales(file, bloques_file, bloques);
 
 		if (posicion_ya_cargada(posicion_actual, posiciones)) {
 			int indice_del_encontrado = 0;
@@ -535,11 +545,25 @@ void actualizar_posiciones(FILE* file, t_new_pokemon* new_pokemon) {
 			bloque_file = list_get(bloques_file, list_size(bloques_file)-1);
 			int contador = file_size(bloque_file);
 			char* posicion_a_agregar = string_new();
-			string_append_with_format(&posicion_a_agregar, "%s-%s=%s\n",string_itoa(new_pokemon->pos_x),string_itoa(new_pokemon->pos_y),string_itoa(new_pokemon->cantidad));
+			char* pos_x = string_itoa(new_pokemon->pos_x);
+			char* pos_y = string_itoa(new_pokemon->pos_y);
+			char* cantidad = string_itoa(new_pokemon->cantidad);
+			string_append_with_format(&posicion_a_agregar, "%s-%s=%s\n",pos_x,pos_y,cantidad);
+			free(pos_x);
+			free(pos_y);
+			free(cantidad);
 			fseek(bloque_file, 0, SEEK_END);
 			bloque_file = cargar_posiciones_inexistentes(contador,posicion_a_agregar, bloque_file, bloque, file, ultimo_bloque, bloques_file);
+			free(posicion_a_agregar);
 		}
 		cerrar_bloques_file(bloques_file, bloque_file);
+		list_destroy(bloques_file);
+		for(int i=0; i<list_size(posiciones); i++) free(list_get(posiciones, i));
+		list_destroy(posiciones);
+		for(int i=0; i<list_size(bloques); i++) free(list_get(bloques,i));
+		list_destroy(bloques);
+		free(posicion_actual);
+		free(ultimo_bloque);
 	}
 
 }
