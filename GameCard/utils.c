@@ -246,21 +246,17 @@ void process_request(int cod_op, int cliente_fd) {
 
 			confirmar_recepcion(id, id_cola_catch, "CATCH_POKEMON");
 
-			printf("PASE EL CONFIRMAR\n");
 
 			bool resultado_captura = generar_resultado_captura(catch_pokemon);
 
-			printf("PASE EL RESULTADO_CAPTURA\n");
 
 			sleep(config_gamecard->tiempo_de_reintento_operacion);
 			enviar_caught_pokemon(id, resultado_captura);
 
-			printf("PASE EL ENVIAR CAUGHT\n");
 
 			//free(catch_pokemon->pokemon);
 			free(catch_pokemon);
 
-			printf("PASE EL FREE\n");
 
 			break;
 		}
@@ -442,24 +438,18 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 	char* auxiliar = NULL;
 	if (nueva_cantidad == 0) {
 		auxiliar = list_remove(posiciones, indice_del_encontrado);
-		printf("ANTES DE FREE REMOVE\n");
 		free(auxiliar);
-		printf("DESPUES DE FREE REMOVE\n");
 		bloques_file = reiniciar_bloques_file(bloques_file, bloque_file, bloques);
 	} else {
 		posicion = cargar_nueva_posicion(nueva_cantidad, posicion);
 		auxiliar = list_replace(posiciones, indice_del_encontrado, posicion);
-		printf("ANTES DE FREE REPLACE\n");
 		//free(auxiliar);
-		printf("DESPUES DE FREE REPLACE\n");
 		bloques_file = reiniciar_bloques_file(bloques_file, bloque_file, bloques);
 		posicionar_en_inicio(bloques_file, *bloque_file);
 	}
 
-	printf("ANTES DEL ACTUALIZAR_POSICIONES\n");
 	actualizar_posiciones_ya_cargadas(posiciones, *bloque_file, bloques_file,
 					file_pokemon, ultimo_bloque);
-	printf("DESPUES DEL ACTUALIZAR_POSICIONES\n");
 	actualizar_size_catch_pokemon(posiciones, &file_pokemon, catch_pokemon);
 
 	cerrar_file(file_pokemon);
@@ -506,7 +496,6 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 	t_list* bloques = obtener_bloques_del_pokemon(file_pokemon);
 	char* auxiliar = list_get(bloques,0);
 	if(string_equals_ignore_case(auxiliar, "")){
-		printf("WARD NARANJA (ENTRE AL IF)--------\n");
 		for(int i=0; i<list_size(bloques); i++) free(list_get(bloques, i));
 		list_destroy(bloques);
 		fclose(file_pokemon);
@@ -531,24 +520,15 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 		free(posicion_actual);
 		return false;
 	}
-	printf("ANTES DEL CAPTURAR_POKEMON\n");
 	bloques_file = capturar_pokemon(file_pokemon, posiciones, posicion_actual, bloques_file, &bloque_file, bloques, catch_pokemon);
-	printf("DESPUES DEL CAPTURAR_POKEMON\n");
 	cerrar_bloques_file(bloques_file, bloque_file);
 
-	printf("WARD NARANJA 1------------\n");
 	for(int i=0; i<list_size(posiciones); i++) free(list_get(posiciones, i));
-	printf("WARD NARANJA 2------------\n");
 	list_destroy(posiciones);
-	printf("WARD NARANJA 3------------\n");
 	for(int i=0; i<list_size(bloques); i++) free(list_get(bloques, i));
-	printf("WARD NARANJA 4------------\n");
 	list_destroy(bloques);
-	printf("WARD NARANJA 5------------\n");
 	list_destroy(bloques_file);
-	printf("WARD NARANJA 6------------\n");
 	free(posicion_actual);
-	printf("WARD NARANJA 7-1------------\n");
 
 	return true;
 }

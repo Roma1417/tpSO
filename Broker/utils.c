@@ -49,7 +49,7 @@ void esperar_cliente(int socket_servidor)
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	if (socket_cliente != -1) {
-		log_info(logger, "Se ha conectado un proceso al servidor (Socket: %d)", socket_cliente);
+		log_info(logger, "Se ha conectado un proceso al servidor (Socket: %d)\n", socket_cliente);
 	}
 
 	pthread_create(&thread, NULL, (void*) serve_client, &socket_cliente);
@@ -75,7 +75,7 @@ void process_request(int cod_op, int cliente_fd) {
 			case CAUGHT_POKEMON:
 			case GET_POKEMON:
 			case LOCALIZED_POKEMON:
-			log_info(logger, "Se ha recibido un mensaje del tipo %d(%s).", cod_op, obtener_tipo_mensaje_string(cod_op));
+			log_info(logger, "Se ha recibido un mensaje del tipo %d(%s).\n", cod_op, obtener_tipo_mensaje_string(cod_op));
 
 			int32_t size;
 			void* stream = (void*) recibir_cadena(cliente_fd, &size);
@@ -143,7 +143,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
 
-			log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
+			log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).\n", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
 			break;
 
@@ -267,7 +267,7 @@ void enviar_a_suscriptor(t_particion* particion, t_suscriptor* suscriptor) {
 	uint32_t envio = enviar_mensaje(paquete, suscriptor->numero_socket);
 
 	list_add(particion->atributos->suscriptores_enviados, suscriptor);
-	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)", particion->atributos->id_mensaje, suscriptor->id, envio);
+	log_info(logger, "Se envio el mensaje de ID %d al suscriptor %d. (Socket: %d)\n", particion->atributos->id_mensaje, suscriptor->id, envio);
 	//esperar_confirmacion(suscriptor);
 
 	destruir_paquete(paquete);
@@ -294,7 +294,7 @@ void agregar_suscriptor(u_int32_t socket, uint32_t id_cola_mensajes) {
 	notificar_id_suscriptor(suscriptor, id_cola_mensajes);
 
 	list_add(obtener_lista_suscriptores(id_cola_mensajes), suscriptor);
-	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).", suscriptor->id, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
+	log_info(logger, "El suscriptor %d ha sido agregado a la cola %d (%s).\n", suscriptor->id, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
 	t_list* particiones = memoria->particiones;
 	t_particion* particion_actual;

@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1_FIFO.config");
+	t_config* config = config_create("./teamCompleto2_RR.config");
 	return config;
 }
 
@@ -1844,18 +1844,14 @@ int main(void) {
 
 	enviar_mensajes_get_pokemon();
 	pthread_create(&hilo_verificador_de_conexion, NULL, iniciar_hilo_verificador_de_conexion, NULL);
-	//pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
+	pthread_create(&hilo_servidor, NULL, mantener_servidor, NULL);
 	pthread_create(&hilo_planificador_largo_plazo, NULL, iniciar_planificador_largo_plazo, (void*) entrenadores);
 	pthread_create(&hilo_planificador, NULL, iniciar_planificador, NULL);
 	pthread_create(&hilo_intercambiador, NULL, iniciar_intercambiador, NULL);
 
-	printf("WARD NEGRO 1 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_intercambiador, NULL);
-	printf("WARD NEGRO 2 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_planificador_largo_plazo, NULL);
-	printf("WARD NEGRO 3 - EL OCTAVO PASAJERO ------- \n");
 	pthread_join(hilo_planificador, NULL);
-	printf("WARD NEGRO 4 - EL OCTAVO PASAJERO ------- \n");
 
 	informar_resultados();
 	log_info(logger_team, "El objetivo global fue cumplido \n");
@@ -1865,19 +1861,13 @@ int main(void) {
 	 pthread_join(hilo_caught, NULL);
 	 pthread_join(hilo_localized, NULL);*/
 
-	printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
+	//printf("LLEGASTE PAPA TE ESTABAMOS ESPERANDO \n");
 
-	printf("WARD NARANJA 1 - EL REGRESO ------- \n");
 	pthread_join(hilo_verificador_de_conexion,NULL);
-	printf("WARD NARANJA 2 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_servidor);
-	printf("WARD NARANJA 3 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_appeared);
-	printf("WARD NARANJA 4 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_caught);
-	printf("WARD NARANJA 5 - EL REGRESO ------- \n");
 	pthread_cancel(hilo_localized);
-	printf("WARD NARANJA 6 - EL REGRESO ------- \n");
 
 	liberar_estructuras(config_team, entrenadores, cola_ready, objetivo_global, especies_requeridas);
 
