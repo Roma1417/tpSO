@@ -6,6 +6,19 @@
  */
 #include "file.h"
 
+void actualizar_bit_map() {
+
+	FILE* bitmap_file = fopen(archivo_bitmap_path, "w");
+	fwrite(bitmap->bitarray, metadata_general->blocks / 8, 1, bitmap_file);
+	fclose(bitmap_file);
+
+	/*FILE* bitmap_file = fopen(archivo_bitmap_path, "wb+");
+	 fwrite(bitmap, metadata_general->blocks / 8, 1, bitmap_file);
+	 fclose(bitmap_file);
+	 printf("Bit 0:%d --------------\n", bitarray_test_bit(bitmap, 0));
+	 printf("YA ACTUALICE EL BITMAP--------------\n");*/
+}
+
 char* generar_pokemon_file_path(char* pokemon) {
 	char* path_beta = string_new();
 	string_append_with_format(&path_beta, "/Files/%s", pokemon);

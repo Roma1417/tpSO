@@ -199,18 +199,7 @@ void destruir_metadata_general(t_metadata_general* metadata_general) {
 	free(metadata_general);
 }
 
-void actualizar_bit_map() {
 
-	FILE* bitmap_file = fopen(archivo_bitmap_path, "w");
-	fwrite(bitmap->bitarray, metadata_general->blocks / 8, 1, bitmap_file);
-	fclose(bitmap_file);
-
-	/*FILE* bitmap_file = fopen(archivo_bitmap_path, "wb+");
-	 fwrite(bitmap, metadata_general->blocks / 8, 1, bitmap_file);
-	 fclose(bitmap_file);
-	 printf("Bit 0:%d --------------\n", bitarray_test_bit(bitmap, 0));
-	 printf("YA ACTUALICE EL BITMAP--------------\n");*/
-}
 
 void finalizar_gamecard() {
 	//free(config_gamecard->ip_broker);

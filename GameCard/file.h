@@ -19,6 +19,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/stat.h>
 
 typedef struct
 {
@@ -56,6 +57,7 @@ t_metadata_general* metadata_general;
 t_bitarray* bitmap;
 
 
+void actualizar_bit_map();
 char* generar_pokemon_file_path(char* pokemon);
 void verificar_existencia_de_archivo(char* pokemon);
 bool esta_abierto(FILE* file);
