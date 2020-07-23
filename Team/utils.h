@@ -26,7 +26,7 @@
 #include "auxiliar.h"
 
 #define IP "127.0.0.3"
-#define PUERTO "37223"
+#define PUERTO "37229"
 #define ATRAPAR 1
 #define INTERCAMBIAR 5
 #define ENVIAR_MENSAJE 1

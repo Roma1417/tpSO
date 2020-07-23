@@ -313,6 +313,9 @@ void process_request(int cod_op, int cliente_fd) {
 	void* msg;
 	u_int32_t id;
 	u_int32_t id_correlativo;
+	printf("Cod op: %d\n", cod_op);
+	if(cod_op < 0) 	sleep(config_team->tiempo_reconexion);
+
 	switch (cod_op) {
 		case APPEARED_POKEMON: {
 			id = recibir_entero(cliente_fd);
