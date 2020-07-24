@@ -38,7 +38,7 @@ int crear_conexion(char *ip, char* puerto){
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-		log_info(logger, "Fallo al intentar establecer la conexion");
+		log_info(logger, "Fallo al intentar establecer la conexion\n");
 
 	freeaddrinfo(server_info);
 

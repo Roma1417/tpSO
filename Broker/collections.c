@@ -46,7 +46,9 @@ t_particion* crear_particion(void* base, uint32_t tamanio, bool ocupada, t_atrib
 	return particion;
 }
 
-void destruir_particion(t_particion* particion){
+void destruir_particion(void* puntero_particion){
+	t_particion* particion = puntero_particion;
+
 	if (particion != NULL){
 	destruir_atributos_particion(particion->atributos);
 	}

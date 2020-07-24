@@ -19,12 +19,12 @@ int main(int argc, char* argv[]){
 	obtener_parametro(&puerto, "PUERTO_", argv[1], config);
 
 	conexion = crear_conexion(ip,puerto);
-	log_info(logger, "Se realiza una conexión al proceso %s", argv[1]);
+	log_info(logger, "Se realiza una conexión al proceso %s\n", argv[1]);
 
 	char** p=argv+1;
 
 	enviar_mensaje(p, conexion);
-	log_info(logger, "Se ha enviado el mensaje %s al proceso %s", argv[2], argv[1]);
+	log_info(logger, "Se ha enviado el mensaje %s al proceso %s\n", argv[2], argv[1]);
 
 	if(string_equals_ignore_case(argv[2], "SUSCRIPTOR"))
 		evaluar_suscripcion(argv, conexion);

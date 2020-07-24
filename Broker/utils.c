@@ -83,7 +83,7 @@ void process_request(int cod_op, int cliente_fd) {
 
 			id_mensaje = generar_id_mensaje();
 
-			log_info(logger_auxiliar,"La id recibida fue: %d\n", id_mensaje);
+			log_warning(logger_auxiliar,"La id recibida fue: %d\n", id_mensaje);
 
 			uint32_t id_correlativo = 0;
 
@@ -97,6 +97,27 @@ void process_request(int cod_op, int cliente_fd) {
 				stream_a_agregar = stream;
 			}
 
+			if(size > memoria->tamanio){
+				log_warning(logger_auxiliar, "Se ha descartado el mensaje por ser demadiado grande (Como Boquita)\n");
+				free(stream);
+				pthread_exit(NULL);
+			}
+
+			t_particion* particion_auxiliar;
+			if(id_correlativo != 0){
+				for(uint32_t i = 0; i <list_size(memoria->particiones); i++){
+					particion_auxiliar = list_get(memoria->particiones, i);
+					if(particion_auxiliar->atributos->id_correlativo == id_correlativo){
+					log_warning(logger_auxiliar, "Se ha descartado el mensaje por tener ID correlativo repetido\n");
+					free(stream);
+					pthread_exit(NULL);
+					}
+				}
+			}
+
+
+
+
 			t_atributos_particion* atributos = crear_atributos_particion(timer_lru++, cod_op, id_mensaje, id_correlativo, size);
 			t_particion* particion_agregada = agregar_stream(memoria, stream_a_agregar, size, obtener_id_particion_libre(algoritmo_particion_libre), atributos, true);
 
@@ -105,7 +126,7 @@ void process_request(int cod_op, int cliente_fd) {
 			enviar_mensaje(paquete, cliente_fd);
 			enviar_a_suscriptores(particion_agregada, obtener_lista_suscriptores(cod_op));
 
-			log_info(logger_auxiliar,"Mande todo\n" );
+			log_warning(logger_auxiliar,"Mande todo\n" );
 			destruir_paquete(paquete);
 			free(stream);
 			break;
@@ -142,6 +163,11 @@ void process_request(int cod_op, int cliente_fd) {
 			t_suscriptor* suscriptor_confirmado = buscar_suscriptor(particion_confirmada->atributos->suscriptores_enviados, id_suscriptor_confirmado);
 
 			list_add(particion_confirmada->atributos->suscriptores_confirmados, suscriptor_confirmado);
+
+			/*if(list_size(particion_confirmada->atributos->suscriptores_confirmados) == list_size(particion_confirmada->atributos->suscriptores_enviados)){
+				log_warning(logger_auxiliar, "Se ha liberado el mensaje %d por haber sido confirmado por todos los suscriptores a los que se envio.\n", particion_confirmada->atributos->id_mensaje);
+				particion_confirmada->ocupada = false;
+			}*/
 
 			log_info(logger, "El suscriptor %d confirmo confirmó haber recibido el mensaje %d de la cola %d (%s).\n", id_suscriptor_confirmado, id_mensaje, id_cola_mensajes, obtener_tipo_mensaje_string(id_cola_mensajes));
 
@@ -184,6 +210,7 @@ char* recibir_string(int socket_cliente, u_int32_t* size)
 	cadena[(*size)] = '\0';
 	return cadena;
 }
+
 
 tipo_mensaje obtener_tipo_mensaje(char* tipo) {
 	if (string_equals_ignore_case(tipo, "NEW_POKEMON"))

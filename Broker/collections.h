@@ -34,7 +34,6 @@ typedef enum{
 	CONFIRMAR = 8,
 }tipo_mensaje;
 
-
 typedef struct{
 	u_int32_t id;
 	int numero_socket;
@@ -86,7 +85,7 @@ t_memoria* crear_memoria(uint32_t);
 
 t_particion* crear_particion(void*, uint32_t, bool, t_atributos_particion*);
 t_particion* buscar_particion(t_memoria*, uint32_t);
-void destruir_particion(t_particion* particion);
+void destruir_particion(void* particion);
 
 t_atributos_particion* crear_atributos_particion(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 void destruir_atributos_particion(t_atributos_particion* atributos_particion);

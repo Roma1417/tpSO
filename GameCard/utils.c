@@ -756,7 +756,7 @@ int crear_conexion(char *ip, char* puerto) {
 					server_info->ai_socktype, server_info->ai_protocol);
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_gamecard, "No se pudo establecer la conexion con el Broker\n");
+		log_info(logger_gamecard, "No se pudo establecer la conexion con el Broker\n\n");
 		freeaddrinfo(server_info);
 		return -1;
 	}

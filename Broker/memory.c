@@ -93,7 +93,7 @@ t_particion* agregar_particion(t_list* particiones, uint32_t indice, void* strea
 
 	if (loguear) {
 		queue_push(cola_victimas, (void*) particion_seleccionada->atributos->id_mensaje);
-		log_info(logger, "Se ha almacenado un mensaje dentro de la memoria. (Base: %d)", particion_seleccionada->base - particion_inicial->base);
+		log_info(logger, "Se ha almacenado un mensaje dentro de la memoria. (Base: %d)\n", particion_seleccionada->base - particion_inicial->base);
 	}
 
 	return particion_seleccionada;
@@ -138,7 +138,7 @@ void* liberar_particion(t_memoria* memoria, uint32_t indice, bool loguear){
 
 
 
-	if (loguear) log_info(logger, "Se ha liberado un mensaje de la memoria. (Base: %d)", base_particion_liberada - memoria->base);
+	if (loguear) log_info(logger, "Se ha liberado un mensaje de la memoria. (Base: %d)\n", base_particion_liberada - memoria->base);
 	return stream;
 }
 
@@ -174,7 +174,7 @@ void compactar_memoria(t_memoria* memoria){
 		}
 	}
 
-	log_info(logger, "Se ha ejecutado una compactación de memoria.");
+	log_info(logger, "Se ha ejecutado una compactación de memoria.\n");
 
 }
 
@@ -236,12 +236,12 @@ void consolidar_particiones_bs(t_list* particiones, uint32_t indice){
 
 
 	if (particion_siguiente != NULL && !particion_siguiente->ocupada && particion->tamanio == particion_siguiente->tamanio && ((particion->base - particion_inicial->base) ^ (particion->tamanio)) == (particion_siguiente->base - particion_inicial->base)){
-		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d", particion->tamanio, particion->base - particion_inicial->base, particion_siguiente->base - particion_inicial->base);
+		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d\n", particion->tamanio, particion->base - particion_inicial->base, particion_siguiente->base - particion_inicial->base);
 		combinar_particiones(particiones, indice);
 		consolidar_particiones_bs(particiones, indice);
 	}
 	if (particion_anterior != NULL && !particion_anterior->ocupada && particion->tamanio == particion_anterior->tamanio && ((particion->base - particion_inicial->base) ^ (particion->tamanio)) == (particion_anterior->base - particion_inicial->base)){
-		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d", particion->tamanio, particion_anterior->base - particion_inicial->base, particion->base - particion_inicial->base);
+		log_info(logger, "Se han consolidado los buddies de tamaño %d de base %d y %d\n", particion->tamanio, particion_anterior->base - particion_inicial->base, particion->base - particion_inicial->base);
 		combinar_particiones(particiones, indice - 1);
 		consolidar_particiones_bs(particiones, indice - 1);
 	}
