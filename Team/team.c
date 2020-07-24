@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto2_RR.config");
+	t_config* config = config_create("./teamCompleto1_FIFO.config");
 	return config;
 }
 
@@ -1779,8 +1779,8 @@ void* iniciar_hilo_verificador_de_conexion() {
 	while (!fin_deadlock) {
 		conexion = crear_conexion(config_team->ip_broker, config_team->puerto_broker);
 		if (conexion < 0) {
-			log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
-			log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
+			log_error(logger_team, "No se pudo establecer la conexion con el Broker\n");
+			log_warning(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
 			pthread_cancel(hilo_appeared);
 			pthread_cancel(hilo_caught);
 			pthread_cancel(hilo_localized);

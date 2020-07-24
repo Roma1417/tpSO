@@ -471,10 +471,8 @@ void asignar_id_get(int conexion) {
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo) {
 	char* auxiliar;
-	printf("ID_A_ASIGNAR: %d\n", id_a_asignar);
 	switch (tipo) {
 		case APPEARED_POKEMON:
-			printf("APPEARED\n");
 			id_cola_appeared = id_a_asignar;
 			auxiliar = string_itoa(id_a_asignar);
 			config_set_value(config, "ID_COLA_APPEARED", auxiliar);
@@ -557,7 +555,7 @@ int crear_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
+		log_error(logger_team, "No se pudo establecer la conexion con el Broker\n");
 		freeaddrinfo(server_info);
 		return -1;
 	}
@@ -582,8 +580,8 @@ int crear_y_reintentar_conexion(char *ip, char* puerto) {
 	u_int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	while (connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) < 0) {
-		log_info(logger_team, "No se pudo establecer la conexion con el Broker\n");
-		log_info(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
+		log_error(logger_team, "No se pudo establecer la conexion con el Broker\n");
+		log_warning(logger_team, "Se inicia el proceso de reintento de comunicacion con el Broker\n");
 		sleep(config_team->tiempo_reconexion);
 		if (inicio_deadlock){
 			freeaddrinfo(server_info);

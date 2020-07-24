@@ -13819,3 +13819,37 @@
 
 [WARNING] 11:18:45:740 Broker Auxiliar/(24561:7536): Mande todo
 
+[WARNING] 12:46:02:839 Broker Auxiliar/(5409:5409): El ID del proceso es: 5409
+
+[WARNING] 12:46:45:593 Broker Auxiliar/(5488:5488): El ID del proceso es: 5488
+
+[WARNING] 12:47:32:161 Broker Auxiliar/(5536:5536): El ID del proceso es: 5536
+
+[WARNING] 12:48:57:368 Broker Auxiliar/(5818:5818): El ID del proceso es: 5818
+
+[WARNING] 12:49:01:745 Broker Auxiliar/(5818:5827): La id recibida fue: 1
+
+[WARNING] 12:49:01:745 Broker Auxiliar/(5818:5827): Mande todo
+
+[WARNING] 12:49:01:747 Broker Auxiliar/(5818:5838): La id recibida fue: 2
+
+[WARNING] 12:49:01:747 Broker Auxiliar/(5818:5838): Mande todo
+
+[WARNING] 12:49:01:747 Broker Auxiliar/(5818:5840): La id recibida fue: 3
+
+[WARNING] 12:49:01:748 Broker Auxiliar/(5818:5840): Mande todo
+
+[WARNING] 12:49:01:748 Broker Auxiliar/(5818:5842): La id recibida fue: 4
+
+[WARNING] 12:49:01:748 Broker Auxiliar/(5818:5842): Mande todo
+
+[WARNING] 12:52:14:985 Broker Auxiliar/(5938:5938): El ID del proceso es: 5938
+
+[WARNING] 12:53:10:188 Broker Auxiliar/(6008:6008): El ID del proceso es: 6008
+
+[WARNING] 12:53:13:46 Broker Auxiliar/(6008:6017): La id recibida fue: 1
+
+[WARNING] 12:53:13:47 Broker Auxiliar/(6008:6017): Mande todo
+
+[WARNING] 12:53:30:29 Broker Auxiliar/(6040:6040): El ID del proceso es: 6040
+
