@@ -313,7 +313,7 @@ void process_request(int cod_op, int cliente_fd) {
 	void* msg;
 	u_int32_t id;
 	u_int32_t id_correlativo;
-	printf("Cod op: %d\n", cod_op);
+	//printf("Cod op: %d\n", cod_op);
 	if(cod_op < 0) 	sleep(config_team->tiempo_reconexion);
 
 	switch (cod_op) {
@@ -470,15 +470,30 @@ void asignar_id_get(int conexion) {
 }
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo) {
+	char* auxiliar;
+	printf("ID_A_ASIGNAR: %d\n", id_a_asignar);
 	switch (tipo) {
 		case APPEARED_POKEMON:
+			printf("APPEARED\n");
 			id_cola_appeared = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_APPEARED", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		case LOCALIZED_POKEMON:
 			id_cola_localized = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_LOCALIZED", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		case CAUGHT_POKEMON:
 			id_cola_caught = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_CAUGHT", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		default:
 			break;

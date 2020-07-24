@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1_SJF-SD.config");
+	t_config* config = config_create("./teamCompleto2_RR.config");
 	return config;
 }
 
@@ -1625,6 +1625,10 @@ void liberar_estructuras(t_config_team* config_team, t_list* entrenadores, t_que
  * @DESC: Destruye las estructuras t_log y t_config pasadas por parametro.
  */
 void terminar_programa(t_log* logger, t_config* config) {
+	config_set_value(config, "ID_COLA_CAUGHT", "0");
+	config_set_value(config, "ID_COLA_APPEARED", "0");
+	config_set_value(config, "ID_COLA_LOCALIZED", "0");
+	config_save(config);
 	if (logger != NULL) log_destroy(logger);
 	if (config != NULL) config_destroy(config);
 }
@@ -1678,9 +1682,9 @@ void* suscribirse(void* cola) {
 	mensaje[2] = string_new();
 	string_append(&(mensaje[2]), msg);
 
-	//uint32_t id = obtener_id_segun_cola(msg);
+	uint32_t id = obtener_id_segun_cola(msg);
 
-	mensaje[3] = string_itoa(id_team);
+	mensaje[3] = string_itoa(id);
 
 	enviar_mensaje(mensaje, conexion);
 
@@ -1781,6 +1785,9 @@ void* iniciar_hilo_verificador_de_conexion() {
 			pthread_cancel(hilo_caught);
 			pthread_cancel(hilo_localized);
 			sleep(config_team->tiempo_reconexion);
+			id_cola_appeared=0;
+			id_cola_localized=0;
+			id_cola_caught=0;
 			suscribirse_a_colas();
 		}
 		else {
@@ -1807,6 +1814,9 @@ int main(void) {
 	fin_deadlock = false;
 	objetivo_global = NULL;
 	ids_gets = list_create();
+	id_cola_caught = config_get_int_value(config, "ID_COLA_CAUGHT");
+	id_cola_localized = config_get_int_value(config, "ID_COLA_LOCALIZED");
+	id_cola_appeared = config_get_int_value(config, "ID_COLA_APPEARED");
 
 	config_team = construir_config_team(config);
 	logger_team = iniciar_logger(config_team->log_file);
@@ -1820,7 +1830,7 @@ int main(void) {
 
 	appeared_pokemons = queue_create();
 	entrenadores_deadlock = list_create();
-	id_team = 0;
+	//id_team = 0;
 
 	sem_init(&sem_appeared_pokemon, 0, 0);
 	sem_init(&puede_planificar, 0, 1);

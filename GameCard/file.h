@@ -20,6 +20,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/stat.h>
+#include <commons/log.h>
+
+t_log* logger_gamecard;
 
 typedef struct
 {
@@ -56,7 +59,7 @@ char* archivo_metadata_general_path;
 t_metadata_general* metadata_general;
 t_bitarray* bitmap;
 
-
+void verificar_validez_de_path(FILE* file);
 void actualizar_bit_map();
 char* generar_pokemon_file_path(char* pokemon);
 void verificar_existencia_de_archivo(char* pokemon);

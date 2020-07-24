@@ -9,6 +9,7 @@
 void actualizar_bit_map() {
 
 	FILE* bitmap_file = fopen(archivo_bitmap_path, "w");
+	verificar_validez_de_path(bitmap_file);
 	fwrite(bitmap->bitarray, metadata_general->blocks / 8, 1, bitmap_file);
 	fclose(bitmap_file);
 
@@ -255,11 +256,19 @@ void actualizar_metadata(FILE* bloque_file, FILE* file, char* ultimo_bloque,
 	free(bloque_string);
 }
 
+void verificar_validez_de_path(FILE* file){
+	if(file < 0){
+		log_error(logger_gamecard, "PATH INEXISTENTE\n");
+		exit(1);
+	}
+}
+
 void crear_nuevo_bloque(FILE* file, t_new_pokemon* new_pokemon, char* bloque) {
 	//Crear nuevo bloque
 	char* ultimo_bloque = obtener_bloque_disponible();
 	char* bloque_path = obtener_bloque_path(ultimo_bloque);
 	FILE* bloque_file = fopen(bloque_path, "w+b");
+	verificar_validez_de_path(bloque_file);
 	free(bloque_path);
 	char* auxiliar = string_itoa(new_pokemon->pos_x);
 	fputs(auxiliar, bloque_file);
@@ -325,6 +334,7 @@ bool no_entra_en_bloque(FILE* file, t_new_pokemon* new_pokemon,
 			string_itoa(new_pokemon->cantidad));
 	char* bloque_path = obtener_bloque_path(ultimo_bloque);
 	FILE* bloque_file = fopen(bloque_path, "r+");
+	verificar_validez_de_path(bloque_file);
 	int diferencia_de_sizes = (metadata_general->block_size
 			- (file_size(bloque_file) + string_length(cadena_a_agregar)));
 	bool entra_en_bloque = (diferencia_de_sizes >= 0);
@@ -390,6 +400,7 @@ t_list* obtener_bloques_actuales(FILE* file, t_list* bloques) {
 	for (int i = 0; i < list_size(bloques); i++) {
 		bloque_path = obtener_bloque_path(list_get(bloques, i));
 		bloque_file = fopen(bloque_path, "r+");
+		verificar_validez_de_path(bloque_file);
 		list_add(bloques_file, bloque_file);
 		free(bloque_path);
 	}
@@ -461,6 +472,7 @@ void actualizar_posiciones_ya_cargadas(t_list* posiciones, FILE* bloque_file,
 				bloque = obtener_bloque_disponible();
 				actualizar_metadata(bloque_file, file, bloque, ultimo_bloque);
 				bloque_file = fopen(obtener_bloque_path(bloque), "w+b");
+				verificar_validez_de_path(bloque_file);
 				free(ultimo_bloque);
 				list_add(bloques_file, bloque_file);
 				k++;
@@ -497,6 +509,7 @@ FILE* cargar_posiciones_inexistentes(int contador, char* posicion_a_agregar,
 			//fclose(bloque_file);
 			char* path_auxiliar = obtener_bloque_path(bloque);
 			bloque_file = fopen(path_auxiliar, "w+b");
+			verificar_validez_de_path(bloque_file);
 			free(path_auxiliar);
 			//free(bloque);
 			list_add(bloques_file, bloque_file);
@@ -597,6 +610,7 @@ char* generar_pokemon_metadata_bin_path(char* pokemon) {
 void generar_metadata_bin(char* pokemon) {
 	char* metadata_bin_path = generar_pokemon_metadata_bin_path(pokemon);
 	FILE* metadata_file = fopen(metadata_bin_path, "w+b");
+	verificar_validez_de_path(metadata_file);
 	fputs("DIRECTORY=N\n", metadata_file);
 	fputs("SIZE=0\n", metadata_file);
 	fputs("BLOCKS=[]\n", metadata_file);

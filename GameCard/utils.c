@@ -177,6 +177,7 @@ void cargar_datos_new_pokemon(t_new_pokemon* new_pokemon) {
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(
 					new_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	verificar_validez_de_path(file_pokemon);
 	free(file_pokemon_path);
 
 	/*void _verificar() {
@@ -205,6 +206,9 @@ void process_request(int cod_op, int cliente_fd) {
 	uint32_t id_correlativo;
 	u_int32_t posicion_x;
 	u_int32_t posicion_y;
+
+	if(cod_op < 0) 	sleep(config_gamecard->tiempo_de_reintento_conexion);
+
 	switch (cod_op) {
 		case NEW_POKEMON:{
 			t_new_pokemon* new_pokemon = malloc(sizeof(t_new_pokemon));
@@ -296,15 +300,28 @@ void process_request(int cod_op, int cliente_fd) {
 }
 
 void asignar_id_cola_de_mensajes(u_int32_t id_a_asignar, tipo_mensaje tipo) {
+	char* auxiliar;
 	switch (tipo) {
 		case NEW_POKEMON:
 			id_cola_new = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_NEW", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		case GET_POKEMON:
 			id_cola_get = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_GET", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		case CATCH_POKEMON:
 			id_cola_catch = id_a_asignar;
+			auxiliar = string_itoa(id_a_asignar);
+			config_set_value(config, "ID_COLA_CATCH", auxiliar);
+			config_save(config);
+			free(auxiliar);
 			break;
 		default:
 			break;
@@ -368,6 +385,7 @@ void actualizar_size_catch_pokemon(t_list* posiciones, FILE** file_pokemon, t_ca
 	fclose(*file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	*file_pokemon = fopen(file_pokemon_path, "wb");
+	verificar_validez_de_path(*file_pokemon);
 	free(file_pokemon_path);
 	fputs(contenido, *file_pokemon);
 	free(contenido);
@@ -384,6 +402,7 @@ t_list* reiniciar_bloques_file(t_list* bloques_file, FILE** bloque_file,
 	for (int i = 0; i < list_size(bloques); i++) {
 		bloque_path = obtener_bloque_path(list_get(bloques, i));
 		*bloque_file = fopen(bloque_path, "wb");
+		verificar_validez_de_path(*bloque_file);
 		list_add(bloques_file, *bloque_file);
 		free(bloque_path);
 	}
@@ -413,6 +432,7 @@ void quitar_ultimo_bloque(FILE** file_pokemon, t_list* bloques, char* pokemon) {
 	fclose(*file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(pokemon);
 	*file_pokemon = fopen(file_pokemon_path, "wb");
+	verificar_validez_de_path(*file_pokemon);
 	free(file_pokemon_path);
 	fseek(*file_pokemon, 0, SEEK_SET);
 	fputs(anterior, *file_pokemon);
@@ -456,6 +476,7 @@ t_list* capturar_pokemon(FILE* file_pokemon, t_list* posiciones,
 	fclose(file_pokemon);
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	file_pokemon = fopen(file_pokemon_path, "r");
+	verificar_validez_de_path(file_pokemon);
 	free(file_pokemon_path);
 
 	float contador = 0;
@@ -490,6 +511,7 @@ bool generar_resultado_captura(t_catch_pokemon* catch_pokemon) {
 		return false;
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(catch_pokemon->pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	verificar_validez_de_path(file_pokemon);
 	free(file_pokemon_path);
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);
 
@@ -560,6 +582,7 @@ t_list* obtener_posiciones_del_pokemon(char* pokemon) {
 		return list_create();
 	char* file_pokemon_path = generar_pokemon_metadata_bin_path(pokemon);
 	FILE* file_pokemon = fopen(file_pokemon_path, "r+");
+	verificar_validez_de_path(file_pokemon);
 	free(file_pokemon_path);
 	//if(file_pokemon == NULL)
 	verificar_estado_de_apertura_de_archivo_pokemon(file_pokemon);

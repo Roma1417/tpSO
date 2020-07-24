@@ -122,6 +122,9 @@ void* iniciar_hilo_verificador_de_conexion() {
 			pthread_cancel(hilo_get);
 			pthread_cancel(hilo_new);
 			sleep(config_gamecard->tiempo_de_reintento_conexion);
+			id_cola_get=0;
+			id_cola_catch=0;
+			id_cola_new=0;
 			suscribirse_a_colas();
 		} else {
 			liberar_conexion(conexion);
@@ -186,6 +189,7 @@ char* metadata_get_string(FILE* metadata_general_file) {
 t_metadata_general* construir_metadata_general() {
 	t_metadata_general* metadata_general = malloc(sizeof(t_metadata_general));
 	FILE* metadata_general_file = fopen(archivo_metadata_general_path, "r");
+	verificar_validez_de_path(metadata_general_file);
 	fseek(metadata_general_file, 0, SEEK_SET);
 	metadata_general->block_size = metadata_get_int(metadata_general_file);
 	metadata_general->blocks = metadata_get_int(metadata_general_file);
@@ -240,13 +244,14 @@ int main() {
 	verificar_existencia_de_carpeta("/Blocks");
 	verificar_existencia_de_carpeta("/Files");
 	logger_gamecard = iniciar_logger();
-	id_cola_get = 0;
-	id_cola_new = 0;
-	id_cola_catch = 0;
+	id_cola_new = config_get_int_value(config, "ID_COLA_NEW");
+	id_cola_catch = config_get_int_value(config, "ID_COLA_CATCH");
+	id_cola_get = config_get_int_value(config, "ID_COLA_GET");
 	archivo_metadata_general_path = generar_nombre("/Metadata/Metadata.bin");
 	metadata_general = construir_metadata_general();
 	archivo_bitmap_path = generar_nombre("/Metadata/Bitmap.bin");
 	FILE* bitmap_file = fopen(archivo_bitmap_path, "r");
+	verificar_validez_de_path(bitmap_file);
 
 	if (bitmap_file == NULL) {
 

@@ -14,7 +14,6 @@
 #include <sys/stat.h>
 #include <commons/config.h>
 #include <semaphore.h>
-#include <commons/log.h>
 #include "file.h"
 
 #define IP "127.0.0.2"
@@ -36,7 +35,7 @@ u_int32_t id_cola_get;
 u_int32_t id_cola_new;
 u_int32_t id_cola_catch;
 //t_list* archivos_creados;
-t_log* logger_gamecard;
+t_config* config;
 
 typedef struct
 {

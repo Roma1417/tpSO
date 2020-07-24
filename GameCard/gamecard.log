@@ -4294,3 +4294,591 @@
 
 [INFO] 07:15:27:620 gamecard/(18156:18229): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
 
+[INFO] 10:24:37:206 gamecard/(5260:5264): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:24:37:206 gamecard/(5260:5264): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:24:37:207 gamecard/(5260:5264): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:53:04:31 gamecard/(9296:9314): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+
+[INFO] 10:53:09:32 gamecard/(9296:9403): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+
+[INFO] 10:53:14:33 gamecard/(9296:9415): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+
+[INFO] 10:53:19:36 gamecard/(9296:9426): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+
+[INFO] 10:54:41:752 gamecard/(9296:9312): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+
+[INFO] 10:54:46:754 gamecard/(9296:9628): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+
+[INFO] 10:54:49:767 gamecard/(9296:9310): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+
+[INFO] 10:54:51:758 gamecard/(9296:9639): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+
+[INFO] 10:54:56:759 gamecard/(9296:9657): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+
+[INFO] 10:55:03:427 gamecard/(9296:9677): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+
+[INFO] 10:55:04:765 gamecard/(9296:9653): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+
+[INFO] 10:55:08:428 gamecard/(9296:9755): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Jolteon
+
+[INFO] 10:55:13:428 gamecard/(9296:9778): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Flareon
+
+[INFO] 10:55:14:431 gamecard/(9296:9762): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Jolteon 2 2
+
+[INFO] 10:55:18:432 gamecard/(9296:9796): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Umbreon
+
+[INFO] 10:55:21:433 gamecard/(9296:9803): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Flareon 4 6
+
+[INFO] 10:55:23:433 gamecard/(9296:9818): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Espeon
+
+[INFO] 10:56:12:882 gamecard/(9296:9436): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+
+[INFO] 10:56:17:884 gamecard/(9296:9944): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+
+[INFO] 10:56:22:885 gamecard/(9296:9958): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+
+[INFO] 10:56:23:886 gamecard/(9296:9826): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+
+[INFO] 10:56:27:890 gamecard/(9296:9975): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+
+[INFO] 10:56:28:890 gamecard/(9296:9982): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+
+[INFO] 10:56:32:894 gamecard/(9296:9997): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+
+[INFO] 10:56:36:894 gamecard/(9296:10005): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 5
+
+[INFO] 10:56:37:897 gamecard/(9296:10022): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+
+[INFO] 10:56:41:899 gamecard/(9296:10037): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Umbreon 10 6
+
+[INFO] 10:56:46:903 gamecard/(9296:10060): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
+
+[INFO] 10:56:51:905 gamecard/(9296:10074): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
+
+[INFO] 10:57:16:399 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:57:16:399 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:57:16:399 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:57:26:399 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:57:26:399 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:57:26:400 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:57:36:400 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:57:36:400 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:57:36:400 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:57:46:401 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:57:46:401 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:57:46:401 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:57:56:402 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:57:56:403 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:57:56:403 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:06:403 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:06:403 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:06:403 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:16:404 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:16:404 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:16:404 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:26:405 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:26:405 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:26:405 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:36:405 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:36:406 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:36:406 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:46:406 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:46:406 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:46:406 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:56:407 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:56:407 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:58:56:407 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:58:56:407 gamecard/(9296:5717): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:56:407 gamecard/(9296:5716): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:58:56:407 gamecard/(9296:5715): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:06:408 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:06:409 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:59:06:409 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:59:26:410 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:26:410 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:59:26:410 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:59:36:411 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:36:411 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:59:36:411 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:59:46:413 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:46:414 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:59:46:414 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 10:59:56:414 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 10:59:56:415 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 10:59:56:415 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:06:415 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:06:415 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:06:415 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:16:415 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:16:415 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:16:416 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:26:416 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:26:416 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:26:416 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:36:417 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:36:417 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:36:417 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:46:418 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:46:418 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:46:418 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:00:56:418 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:00:56:418 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:00:56:418 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:06:419 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:06:419 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:06:419 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:06:419 gamecard/(9296:16633): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:16:419 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:16:420 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:16:420 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:26:420 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:26:420 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:26:420 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:36:420 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:36:421 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:36:421 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:46:421 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:46:421 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:46:421 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:01:56:422 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:01:56:422 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:01:56:422 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:06:422 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:06:422 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:06:422 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:16:423 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:16:423 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:16:423 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:26:424 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:26:424 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:26:424 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:36:424 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:36:424 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:36:424 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:46:425 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:46:426 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:46:426 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:02:56:426 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:02:56:426 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:02:56:426 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:06:427 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:06:427 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:06:427 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:16:427 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:16:427 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:16:427 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:26:429 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:26:429 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:26:430 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:36:430 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:36:431 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:36:431 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:46:431 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:46:431 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:46:431 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:03:56:432 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:03:56:432 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:03:56:432 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:06:432 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:06:432 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:06:433 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:16:433 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:16:434 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:16:434 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:26:434 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:26:434 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:26:435 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:36:435 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:36:435 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:36:436 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:46:436 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:46:436 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:46:436 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:04:56:436 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:04:56:436 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:04:56:436 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:05:06:437 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:05:06:437 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:05:06:437 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:05:16:439 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:05:16:439 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:05:16:439 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:05:26:440 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:05:26:440 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:05:26:441 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:05:36:441 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:05:36:441 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:05:36:441 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:05:46:442 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:05:46:442 gamecard/(9296:9302): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:05:46:443 gamecard/(9296:9302): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:09:21:158 gamecard/(23957:23974): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+
+[INFO] 11:09:26:160 gamecard/(23957:24005): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+
+[INFO] 11:09:31:164 gamecard/(23957:24016): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+
+[INFO] 11:09:36:174 gamecard/(23957:24028): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+
+[INFO] 11:09:41:180 gamecard/(23957:24039): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+
+[INFO] 11:09:46:185 gamecard/(23957:24051): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+
+[INFO] 11:10:05:5 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:05:5 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:05:5 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:10:15:5 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:15:5 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:15:6 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:10:25:6 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:25:6 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:25:6 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:10:35:6 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:35:7 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:35:7 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:10:45:7 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:45:7 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:45:7 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:10:55:7 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:10:55:7 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:10:55:7 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:05:11 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:05:12 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:05:12 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:15:13 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:15:13 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:15:13 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:25:13 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:25:13 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:25:13 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:35:14 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:35:14 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:35:14 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:45:14 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:45:15 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:45:15 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:11:55:15 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+
+[INFO] 11:11:55:15 gamecard/(23957:23962): No se pudo establecer la conexion con el Broker
+
+[INFO] 11:11:55:15 gamecard/(23957:23962): Se inicia el proceso de reintento de comunicacion con el Broker
+
+[INFO] 11:14:48:155 gamecard/(24570:24586): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Pikachu 9 9 1
+
+[INFO] 11:14:53:156 gamecard/(24570:24614): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 2 2
+
+[INFO] 11:14:58:167 gamecard/(24570:24626): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Jolteon 2 2 3
+
+[INFO] 11:15:03:169 gamecard/(24570:24637): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Flareon 4 6 4
+
+[INFO] 11:16:26:695 gamecard/(24570:24584): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Squirtle
+
+[INFO] 11:16:31:702 gamecard/(24570:24866): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Pikachu
+
+[INFO] 11:16:34:705 gamecard/(24570:24582): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 2
+
+[INFO] 11:16:36:711 gamecard/(24570:24886): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Gengar
+
+[INFO] 11:16:41:712 gamecard/(24570:24924): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Onix
+
+[INFO] 11:16:46:715 gamecard/(24570:30659): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Vaporeon
+
+[INFO] 11:16:49:721 gamecard/(24570:24905): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Pikachu 9 9
+
+[INFO] 11:16:51:722 gamecard/(24570:12111): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Jolteon
+
+[INFO] 11:16:56:735 gamecard/(24570:1597): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Flareon
+
+[INFO] 11:16:57:742 gamecard/(24570:23663): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Jolteon 2 2
+
+[INFO] 11:17:01:738 gamecard/(24570:24876): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Umbreon
+
+[INFO] 11:17:04:749 gamecard/(24570:32003): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Flareon 4 6
+
+[INFO] 11:17:06:740 gamecard/(24570:27151): Recibí un mensaje de tipo GET_POKEMON y sus datos son: Espeon
+
+[INFO] 11:18:01:708 gamecard/(24570:24650): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Onix 2 8 1
+
+[INFO] 11:18:06:726 gamecard/(24570:15826): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Gengar 6 6 1
+
+[INFO] 11:18:11:728 gamecard/(24570:24716): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Squirtle 5 5 1
+
+[INFO] 11:18:12:717 gamecard/(24570:11315): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Onix 2 8
+
+[INFO] 11:18:16:730 gamecard/(24570:16291): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Umbreon 10 6 1
+
+[INFO] 11:18:17:720 gamecard/(24570:22239): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Gengar 6 6
+
+[INFO] 11:18:21:736 gamecard/(24570:15289): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Espeon 7 1 1
+
+[INFO] 11:18:25:730 gamecard/(24570:25378): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Squirtle 5 5
+
+[INFO] 11:18:26:749 gamecard/(24570:30978): Recibí un mensaje de tipo NEW_POKEMON y sus datos son: Vaporeon 4 10 1
+
+[INFO] 11:18:30:731 gamecard/(24570:29787): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Umbreon 10 6
+
+[INFO] 11:18:35:735 gamecard/(24570:22820): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Espeon 7 1
+
+[INFO] 11:18:40:737 gamecard/(24570:9276): Recibí un mensaje de tipo CATCH_POKEMON y sus datos son: Vaporeon 4 10
+

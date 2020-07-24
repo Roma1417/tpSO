@@ -116,7 +116,9 @@ void* liberar_particion(t_memoria* memoria, uint32_t indice, bool loguear){
 	void* stream = malloc(particion->tamanio);
 	memcpy(stream, particion->base, particion->tamanio);
 
-
+	printf("WARD AZUL\n");
+	uint32_t id_mensaje = particion->atributos->id_mensaje;
+	printf("WARD ORO\n");
 
 	switch(obtener_id_algoritmo_memoria(algoritmo_memoria)){
 	case PD:;
@@ -138,7 +140,7 @@ void* liberar_particion(t_memoria* memoria, uint32_t indice, bool loguear){
 
 
 
-	if (loguear) log_info(logger, "Se ha liberado un mensaje de la memoria. (Base: %d)\n", base_particion_liberada - memoria->base);
+	if (loguear) log_info(logger, "Se ha liberado el mensaje %d de la memoria. (Base: %d)\n",id_mensaje , base_particion_liberada - memoria->base);
 	return stream;
 }
 
