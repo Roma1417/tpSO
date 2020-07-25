@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamCompleto1_FIFO.config");
+	t_config* config = config_create("./teamFinal1.config");
 	return config;
 }
 

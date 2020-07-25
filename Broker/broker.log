@@ -38119,3 +38119,19 @@
 
 [INFO] 12:53:13:48 Broker/(6008:6008): Se ha conectado un proceso al servidor (Socket: 9)
 
+[INFO] 14:41:51:243 Broker/(3826:3826): Se ha conectado un proceso al servidor (Socket: 7)
+
+[INFO] 14:41:51:253 Broker/(3826:3826): Se ha conectado un proceso al servidor (Socket: 8)
+
+[INFO] 14:41:51:254 Broker/(3826:3850): El suscriptor 1 ha sido agregado a la cola 4 (CAUGHT_POKEMON).
+
+[INFO] 14:41:51:256 Broker/(3826:3826): Se ha conectado un proceso al servidor (Socket: 9)
+
+[INFO] 14:41:51:256 Broker/(3826:3852): El suscriptor 1 ha sido agregado a la cola 6 (LOCALIZED).
+
+[INFO] 14:41:51:256 Broker/(3826:3826): Se ha conectado un proceso al servidor (Socket: 10)
+
+[INFO] 14:41:51:257 Broker/(3826:3854): El suscriptor 1 ha sido agregado a la cola 2 (APPEARED_POKEMON).
+
+[INFO] 14:42:21:244 Broker/(3826:3826): Se ha conectado un proceso al servidor (Socket: 11)
+

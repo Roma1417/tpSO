@@ -2419,3 +2419,167 @@
 
 [INFO] 11:18:01:721 gameboy/(15290:15290): Se ha enviado el mensaje NEW_POKEMON al proceso BROKER
 
+[INFO] 14:40:53:528 gameboy/(3629:3629): Fallo al intentar establecer la conexion
+
+[INFO] 14:40:53:529 gameboy/(3629:3629): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:40:53:530 gameboy/(3630:3630): Fallo al intentar establecer la conexion
+
+[INFO] 14:40:53:530 gameboy/(3630:3630): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:40:53:531 gameboy/(3631:3631): Fallo al intentar establecer la conexion
+
+[INFO] 14:40:53:531 gameboy/(3631:3631): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:40:53:532 gameboy/(3632:3632): Fallo al intentar establecer la conexion
+
+[INFO] 14:40:53:532 gameboy/(3632:3632): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:40:53:533 gameboy/(3633:3633): Fallo al intentar establecer la conexion
+
+[INFO] 14:40:53:533 gameboy/(3633:3633): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:42:11:49 gameboy/(3862:3862): Fallo al intentar establecer la conexion
+
+[INFO] 14:42:11:49 gameboy/(3862:3862): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:42:11:50 gameboy/(3863:3863): Fallo al intentar establecer la conexion
+
+[INFO] 14:42:11:50 gameboy/(3863:3863): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:42:11:51 gameboy/(3864:3864): Fallo al intentar establecer la conexion
+
+[INFO] 14:42:11:51 gameboy/(3864:3864): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:42:11:52 gameboy/(3865:3865): Fallo al intentar establecer la conexion
+
+[INFO] 14:42:11:52 gameboy/(3865:3865): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:42:11:53 gameboy/(3866:3866): Fallo al intentar establecer la conexion
+
+[INFO] 14:42:11:53 gameboy/(3866:3866): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:46:34:118 gameboy/(4310:4310): Fallo al intentar establecer la conexion
+
+[INFO] 14:46:34:119 gameboy/(4310:4310): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:46:34:119 gameboy/(4311:4311): Fallo al intentar establecer la conexion
+
+[INFO] 14:46:34:119 gameboy/(4311:4311): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:46:34:120 gameboy/(4312:4312): Fallo al intentar establecer la conexion
+
+[INFO] 14:46:34:120 gameboy/(4312:4312): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:46:34:120 gameboy/(4313:4313): Fallo al intentar establecer la conexion
+
+[INFO] 14:46:34:120 gameboy/(4313:4313): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:46:34:121 gameboy/(4314:4314): Fallo al intentar establecer la conexion
+
+[INFO] 14:46:34:121 gameboy/(4314:4314): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:47:00:530 gameboy/(4321:4321): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:530 gameboy/(4321:4321): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:47:00:531 gameboy/(4322:4322): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:531 gameboy/(4322:4322): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:47:00:532 gameboy/(4323:4323): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:532 gameboy/(4323:4323): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:47:00:533 gameboy/(4324:4324): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:533 gameboy/(4324:4324): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:47:00:534 gameboy/(4325:4325): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:534 gameboy/(4325:4325): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:47:00:535 gameboy/(4326:4326): Fallo al intentar establecer la conexion
+
+[INFO] 14:47:00:535 gameboy/(4326:4326): Se realiza una conexión al proceso BROKER
+
+[INFO] 14:48:21:323 gameboy/(4382:4382): Fallo al intentar establecer la conexion
+
+[INFO] 14:48:21:323 gameboy/(4382:4382): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:21:324 gameboy/(4383:4383): Fallo al intentar establecer la conexion
+
+[INFO] 14:48:21:324 gameboy/(4383:4383): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:21:325 gameboy/(4384:4384): Fallo al intentar establecer la conexion
+
+[INFO] 14:48:21:325 gameboy/(4384:4384): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:21:326 gameboy/(4385:4385): Fallo al intentar establecer la conexion
+
+[INFO] 14:48:21:326 gameboy/(4385:4385): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:21:327 gameboy/(4386:4386): Fallo al intentar establecer la conexion
+
+[INFO] 14:48:21:327 gameboy/(4386:4386): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:101 gameboy/(4439:4439): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:102 gameboy/(4439:4439): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:48:40:103 gameboy/(4441:4441): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:103 gameboy/(4441:4441): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:48:40:104 gameboy/(4443:4443): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:104 gameboy/(4443:4443): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:48:40:104 gameboy/(4445:4445): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:104 gameboy/(4445:4445): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:48:40:105 gameboy/(4447:4447): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:48:40:105 gameboy/(4447:4447): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:51:43:235 gameboy/(4555:4555): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:51:43:235 gameboy/(4555:4555): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:51:43:236 gameboy/(4557:4557): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:51:43:236 gameboy/(4557:4557): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:51:43:237 gameboy/(4559:4559): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:51:43:237 gameboy/(4559:4559): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:51:43:239 gameboy/(4561:4561): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:51:43:239 gameboy/(4561:4561): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:51:43:240 gameboy/(4563:4563): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:51:43:240 gameboy/(4563:4563): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:53:42:239 gameboy/(4657:4657): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:53:42:240 gameboy/(4657:4657): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:53:42:241 gameboy/(4659:4659): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:53:42:241 gameboy/(4659:4659): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:53:42:241 gameboy/(4661:4661): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:53:42:241 gameboy/(4661:4661): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:53:42:242 gameboy/(4663:4663): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:53:42:242 gameboy/(4663:4663): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
+[INFO] 14:53:42:242 gameboy/(4665:4665): Se realiza una conexión al proceso TEAM
+
+[INFO] 14:53:42:242 gameboy/(4665:4665): Se ha enviado el mensaje APPEARED_POKEMON al proceso TEAM
+
