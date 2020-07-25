@@ -13855,3 +13855,475 @@
 
 [WARNING] 14:41:39:545 Broker Auxiliar/(3826:3826): El ID del proceso es: 3826
 
+[WARNING] 10:00:14:675 Broker Auxiliar/(5309:5309): El ID del proceso es: 5309
+
+[WARNING] 10:02:22:706 Broker Auxiliar/(5392:5392): El ID del proceso es: 5392
+
+[WARNING] 10:03:40:655 Broker Auxiliar/(5455:5455): El ID del proceso es: 5455
+
+[WARNING] 10:03:51:661 Broker Auxiliar/(5455:5476): La id recibida fue: 1
+
+[WARNING] 10:03:51:661 Broker Auxiliar/(5455:5476): Mande todo
+
+[WARNING] 10:03:51:665 Broker Auxiliar/(5455:5481): La id recibida fue: 2
+
+[WARNING] 10:03:51:665 Broker Auxiliar/(5455:5481): Mande todo
+
+[WARNING] 10:03:51:665 Broker Auxiliar/(5455:5482): La id recibida fue: 3
+
+[WARNING] 10:03:51:666 Broker Auxiliar/(5455:5482): Mande todo
+
+[WARNING] 10:03:51:667 Broker Auxiliar/(5455:5484): La id recibida fue: 4
+
+[WARNING] 10:03:51:667 Broker Auxiliar/(5455:5484): Mande todo
+
+[WARNING] 10:03:56:663 Broker Auxiliar/(5455:5486): La id recibida fue: 5
+
+[WARNING] 10:03:56:664 Broker Auxiliar/(5455:5486): Mande todo
+
+[WARNING] 10:04:01:674 Broker Auxiliar/(5455:5491): La id recibida fue: 6
+
+[WARNING] 10:04:01:675 Broker Auxiliar/(5455:5491): Mande todo
+
+[WARNING] 10:04:06:689 Broker Auxiliar/(5455:5495): La id recibida fue: 7
+
+[WARNING] 10:04:06:691 Broker Auxiliar/(5455:5495): Mande todo
+
+[WARNING] 10:04:11:704 Broker Auxiliar/(5455:5500): La id recibida fue: 8
+
+[WARNING] 10:04:11:706 Broker Auxiliar/(5455:5500): Mande todo
+
+[WARNING] 10:04:15:691 Broker Auxiliar/(5455:5510): La id recibida fue: 9
+
+[WARNING] 10:04:15:692 Broker Auxiliar/(5455:5510): Mande todo
+
+[WARNING] 10:04:15:696 Broker Auxiliar/(5455:5523): La id recibida fue: 10
+
+[WARNING] 10:04:15:697 Broker Auxiliar/(5455:5523): Mande todo
+
+[WARNING] 10:04:15:699 Broker Auxiliar/(5455:5528): La id recibida fue: 11
+
+[WARNING] 10:04:15:700 Broker Auxiliar/(5455:5528): Mande todo
+
+[WARNING] 10:04:15:701 Broker Auxiliar/(5455:5530): La id recibida fue: 12
+
+[WARNING] 10:04:15:701 Broker Auxiliar/(5455:5530): Mande todo
+
+[WARNING] 10:04:20:692 Broker Auxiliar/(5455:5538): La id recibida fue: 13
+
+[WARNING] 10:04:20:693 Broker Auxiliar/(5455:5538): Mande todo
+
+[WARNING] 10:04:23:696 Broker Auxiliar/(5455:5543): La id recibida fue: 14
+
+[WARNING] 10:04:23:697 Broker Auxiliar/(5455:5543): Mande todo
+
+[WARNING] 10:04:25:695 Broker Auxiliar/(5455:5547): La id recibida fue: 15
+
+[WARNING] 10:04:25:703 Broker Auxiliar/(5455:5547): Mande todo
+
+[WARNING] 10:04:28:699 Broker Auxiliar/(5455:5555): La id recibida fue: 16
+
+[WARNING] 10:04:28:702 Broker Auxiliar/(5455:5555): Mande todo
+
+[WARNING] 10:04:30:704 Broker Auxiliar/(5455:5560): La id recibida fue: 17
+
+[WARNING] 10:04:30:710 Broker Auxiliar/(5455:5560): Mande todo
+
+[WARNING] 10:04:35:711 Broker Auxiliar/(5455:5575): La id recibida fue: 18
+
+[WARNING] 10:04:35:713 Broker Auxiliar/(5455:5575): Mande todo
+
+[WARNING] 10:04:38:705 Broker Auxiliar/(5455:5581): La id recibida fue: 19
+
+[WARNING] 10:04:38:707 Broker Auxiliar/(5455:5581): Mande todo
+
+[WARNING] 10:04:43:711 Broker Auxiliar/(5455:5587): La id recibida fue: 20
+
+[WARNING] 10:04:43:714 Broker Auxiliar/(5455:5587): Mande todo
+
+[WARNING] 10:04:47:315 Broker Auxiliar/(5455:5627): La id recibida fue: 21
+
+[WARNING] 10:04:47:317 Broker Auxiliar/(5455:5627): Mande todo
+
+[WARNING] 10:04:47:318 Broker Auxiliar/(5455:5637): La id recibida fue: 22
+
+[WARNING] 10:04:47:321 Broker Auxiliar/(5455:5637): Mande todo
+
+[WARNING] 10:04:47:321 Broker Auxiliar/(5455:5639): La id recibida fue: 23
+
+[WARNING] 10:04:47:321 Broker Auxiliar/(5455:5639): Mande todo
+
+[WARNING] 10:04:47:322 Broker Auxiliar/(5455:5641): La id recibida fue: 24
+
+[WARNING] 10:04:47:322 Broker Auxiliar/(5455:5641): Mande todo
+
+[WARNING] 10:04:47:323 Broker Auxiliar/(5455:5643): La id recibida fue: 25
+
+[WARNING] 10:04:47:323 Broker Auxiliar/(5455:5643): Mande todo
+
+[WARNING] 10:04:52:319 Broker Auxiliar/(5455:5650): La id recibida fue: 26
+
+[WARNING] 10:04:52:322 Broker Auxiliar/(5455:5650): Mande todo
+
+[WARNING] 10:04:57:323 Broker Auxiliar/(5455:5656): La id recibida fue: 27
+
+[WARNING] 10:04:57:329 Broker Auxiliar/(5455:5656): Mande todo
+
+[WARNING] 10:04:58:331 Broker Auxiliar/(5455:5661): La id recibida fue: 28
+
+[WARNING] 10:04:58:335 Broker Auxiliar/(5455:5661): Mande todo
+
+[WARNING] 10:05:02:330 Broker Auxiliar/(5455:5664): La id recibida fue: 29
+
+[WARNING] 10:05:02:332 Broker Auxiliar/(5455:5664): Mande todo
+
+[WARNING] 10:05:03:335 Broker Auxiliar/(5455:5668): La id recibida fue: 30
+
+[WARNING] 10:05:03:336 Broker Auxiliar/(5455:5668): Mande todo
+
+[WARNING] 10:05:05:334 Broker Auxiliar/(5455:5675): La id recibida fue: 31
+
+[WARNING] 10:05:05:337 Broker Auxiliar/(5455:5675): Mande todo
+
+[WARNING] 10:05:07:333 Broker Auxiliar/(5455:5678): La id recibida fue: 32
+
+[WARNING] 10:05:07:337 Broker Auxiliar/(5455:5678): Mande todo
+
+[WARNING] 10:05:10:337 Broker Auxiliar/(5455:5682): La id recibida fue: 33
+
+[WARNING] 10:05:10:340 Broker Auxiliar/(5455:5682): Mande todo
+
+[WARNING] 10:05:12:338 Broker Auxiliar/(5455:5689): La id recibida fue: 34
+
+[WARNING] 10:05:12:339 Broker Auxiliar/(5455:5689): Mande todo
+
+[WARNING] 10:05:30:564 Broker Auxiliar/(5455:5701): La id recibida fue: 35
+
+[WARNING] 10:05:30:567 Broker Auxiliar/(5455:5701): Mande todo
+
+[WARNING] 10:05:30:571 Broker Auxiliar/(5455:5706): La id recibida fue: 36
+
+[WARNING] 10:05:30:572 Broker Auxiliar/(5455:5706): Mande todo
+
+[WARNING] 10:05:30:574 Broker Auxiliar/(5455:5708): La id recibida fue: 37
+
+[WARNING] 10:05:30:576 Broker Auxiliar/(5455:5708): Mande todo
+
+[WARNING] 10:05:30:583 Broker Auxiliar/(5455:5710): La id recibida fue: 38
+
+[WARNING] 10:05:30:584 Broker Auxiliar/(5455:5710): Mande todo
+
+[WARNING] 10:05:30:585 Broker Auxiliar/(5455:5712): La id recibida fue: 39
+
+[WARNING] 10:05:30:585 Broker Auxiliar/(5455:5712): Mande todo
+
+[WARNING] 10:05:30:587 Broker Auxiliar/(5455:5714): La id recibida fue: 40
+
+[WARNING] 10:05:30:587 Broker Auxiliar/(5455:5714): Mande todo
+
+[WARNING] 10:05:35:567 Broker Auxiliar/(5455:5721): La id recibida fue: 41
+
+[WARNING] 10:05:35:570 Broker Auxiliar/(5455:5721): Mande todo
+
+[WARNING] 10:05:40:574 Broker Auxiliar/(5455:5729): La id recibida fue: 42
+
+[WARNING] 10:05:40:580 Broker Auxiliar/(5455:5729): Mande todo
+
+[WARNING] 10:05:41:573 Broker Auxiliar/(5455:5736): La id recibida fue: 43
+
+[WARNING] 10:05:41:577 Broker Auxiliar/(5455:5736): Mande todo
+
+[WARNING] 10:05:45:580 Broker Auxiliar/(5455:5740): La id recibida fue: 44
+
+[WARNING] 10:05:45:596 Broker Auxiliar/(5455:5740): Mande todo
+
+[WARNING] 10:05:46:578 Broker Auxiliar/(5455:5749): La id recibida fue: 45
+
+[WARNING] 10:05:46:581 Broker Auxiliar/(5455:5749): Mande todo
+
+[WARNING] 10:05:46:581 Broker Auxiliar/(5455:5753): La id recibida fue: 46
+
+[WARNING] 10:05:46:586 Broker Auxiliar/(5455:5753): Mande todo
+
+[WARNING] 10:05:50:604 Broker Auxiliar/(5455:5760): La id recibida fue: 47
+
+[WARNING] 10:05:50:606 Broker Auxiliar/(5455:5760): Mande todo
+
+[WARNING] 10:05:51:587 Broker Auxiliar/(5455:5767): La id recibida fue: 48
+
+[WARNING] 10:05:51:592 Broker Auxiliar/(5455:5767): Mande todo
+
+[WARNING] 10:05:54:588 Broker Auxiliar/(5455:5774): La id recibida fue: 49
+
+[WARNING] 10:05:54:594 Broker Auxiliar/(5455:5774): Mande todo
+
+[WARNING] 10:05:54:608 Broker Auxiliar/(5455:5776): La id recibida fue: 50
+
+[WARNING] 10:05:54:609 Broker Auxiliar/(5455:5776): Mande todo
+
+[WARNING] 10:05:55:607 Broker Auxiliar/(5455:5777): La id recibida fue: 51
+
+[WARNING] 10:05:55:621 Broker Auxiliar/(5455:5777): Mande todo
+
+[WARNING] 10:05:58:625 Broker Auxiliar/(5455:5785): La id recibida fue: 52
+
+[WARNING] 10:05:58:629 Broker Auxiliar/(5455:5785): Mande todo
+
+[WARNING] 10:05:59:596 Broker Auxiliar/(5455:5786): La id recibida fue: 53
+
+[WARNING] 10:05:59:600 Broker Auxiliar/(5455:5786): Mande todo
+
+[WARNING] 10:06:00:623 Broker Auxiliar/(5455:5795): La id recibida fue: 54
+
+[WARNING] 10:06:00:625 Broker Auxiliar/(5455:5795): Mande todo
+
+[WARNING] 10:06:03:629 Broker Auxiliar/(5455:5800): La id recibida fue: 55
+
+[WARNING] 10:06:03:630 Broker Auxiliar/(5455:5800): Mande todo
+
+[WARNING] 10:06:04:620 Broker Auxiliar/(5455:5802): La id recibida fue: 56
+
+[WARNING] 10:06:04:638 Broker Auxiliar/(5455:5802): Mande todo
+
+[WARNING] 10:06:09:642 Broker Auxiliar/(5455:5811): La id recibida fue: 57
+
+[WARNING] 10:06:09:655 Broker Auxiliar/(5455:5811): Mande todo
+
+[WARNING] 10:06:14:662 Broker Auxiliar/(5455:5820): La id recibida fue: 58
+
+[WARNING] 10:06:14:665 Broker Auxiliar/(5455:5820): Mande todo
+
+[WARNING] 10:13:20:623 Broker Auxiliar/(6048:6048): El ID del proceso es: 6048
+
+[WARNING] 10:13:36:679 Broker Auxiliar/(6048:6073): La id recibida fue: 1
+
+[WARNING] 10:13:36:680 Broker Auxiliar/(6048:6073): Mande todo
+
+[WARNING] 10:13:36:680 Broker Auxiliar/(6048:6077): La id recibida fue: 2
+
+[WARNING] 10:13:36:681 Broker Auxiliar/(6048:6077): Mande todo
+
+[WARNING] 10:13:36:681 Broker Auxiliar/(6048:6078): La id recibida fue: 3
+
+[WARNING] 10:13:36:682 Broker Auxiliar/(6048:6078): Mande todo
+
+[WARNING] 10:13:36:683 Broker Auxiliar/(6048:6080): La id recibida fue: 4
+
+[WARNING] 10:13:36:683 Broker Auxiliar/(6048:6080): Mande todo
+
+[WARNING] 10:13:41:680 Broker Auxiliar/(6048:6082): La id recibida fue: 5
+
+[WARNING] 10:13:41:681 Broker Auxiliar/(6048:6082): Mande todo
+
+[WARNING] 10:13:46:681 Broker Auxiliar/(6048:6086): La id recibida fue: 6
+
+[WARNING] 10:13:46:682 Broker Auxiliar/(6048:6086): Mande todo
+
+[WARNING] 10:13:51:682 Broker Auxiliar/(6048:6089): La id recibida fue: 7
+
+[WARNING] 10:13:51:683 Broker Auxiliar/(6048:6089): Mande todo
+
+[WARNING] 10:13:56:685 Broker Auxiliar/(6048:6093): La id recibida fue: 8
+
+[WARNING] 10:13:56:686 Broker Auxiliar/(6048:6093): Mande todo
+
+[WARNING] 10:13:58:125 Broker Auxiliar/(6048:6113): La id recibida fue: 9
+
+[WARNING] 10:13:58:126 Broker Auxiliar/(6048:6113): Mande todo
+
+[WARNING] 10:13:58:129 Broker Auxiliar/(6048:6119): La id recibida fue: 10
+
+[WARNING] 10:13:58:132 Broker Auxiliar/(6048:6119): Mande todo
+
+[WARNING] 10:13:58:133 Broker Auxiliar/(6048:6124): La id recibida fue: 11
+
+[WARNING] 10:13:58:134 Broker Auxiliar/(6048:6124): Mande todo
+
+[WARNING] 10:13:58:135 Broker Auxiliar/(6048:6126): La id recibida fue: 12
+
+[WARNING] 10:13:58:136 Broker Auxiliar/(6048:6126): Mande todo
+
+[WARNING] 10:13:58:136 Broker Auxiliar/(6048:6128): La id recibida fue: 13
+
+[WARNING] 10:13:58:137 Broker Auxiliar/(6048:6128): Mande todo
+
+[WARNING] 10:14:01:139 Broker Auxiliar/(6048:6135): La id recibida fue: 14
+
+[WARNING] 10:14:01:141 Broker Auxiliar/(6048:6135): Mande todo
+
+[WARNING] 10:14:02:140 Broker Auxiliar/(6048:6139): La id recibida fue: 15
+
+[WARNING] 10:14:02:141 Broker Auxiliar/(6048:6139): Mande todo
+
+[WARNING] 10:14:03:127 Broker Auxiliar/(6048:6141): La id recibida fue: 16
+
+[WARNING] 10:14:03:128 Broker Auxiliar/(6048:6141): Mande todo
+
+[WARNING] 10:14:06:141 Broker Auxiliar/(6048:6149): La id recibida fue: 17
+
+[WARNING] 10:14:06:143 Broker Auxiliar/(6048:6149): Mande todo
+
+[WARNING] 10:14:08:138 Broker Auxiliar/(6048:6155): La id recibida fue: 18
+
+[WARNING] 10:14:08:142 Broker Auxiliar/(6048:6155): Mande todo
+
+[WARNING] 10:14:11:143 Broker Auxiliar/(6048:6162): La id recibida fue: 19
+
+[WARNING] 10:14:11:146 Broker Auxiliar/(6048:6162): Mande todo
+
+[WARNING] 10:14:13:140 Broker Auxiliar/(6048:6167): La id recibida fue: 20
+
+[WARNING] 10:14:13:141 Broker Auxiliar/(6048:6167): Mande todo
+
+[WARNING] 10:14:18:155 Broker Auxiliar/(6048:6177): La id recibida fue: 21
+
+[WARNING] 10:14:18:156 Broker Auxiliar/(6048:6177): Mande todo
+
+[WARNING] 10:14:23:15 Broker Auxiliar/(6048:6209): La id recibida fue: 22
+
+[WARNING] 10:14:23:15 Broker Auxiliar/(6048:6209): Mande todo
+
+[WARNING] 10:14:23:18 Broker Auxiliar/(6048:6221): La id recibida fue: 23
+
+[WARNING] 10:14:23:19 Broker Auxiliar/(6048:6221): Mande todo
+
+[WARNING] 10:14:23:21 Broker Auxiliar/(6048:6228): La id recibida fue: 24
+
+[WARNING] 10:14:23:22 Broker Auxiliar/(6048:6228): Mande todo
+
+[WARNING] 10:14:23:22 Broker Auxiliar/(6048:6230): La id recibida fue: 25
+
+[WARNING] 10:14:23:25 Broker Auxiliar/(6048:6230): Mande todo
+
+[WARNING] 10:14:23:158 Broker Auxiliar/(6048:6238): La id recibida fue: 26
+
+[WARNING] 10:14:23:159 Broker Auxiliar/(6048:6238): Mande todo
+
+[WARNING] 10:14:28:159 Broker Auxiliar/(6048:6249): La id recibida fue: 27
+
+[WARNING] 10:14:28:161 Broker Auxiliar/(6048:6249): Mande todo
+
+[WARNING] 10:14:31:166 Broker Auxiliar/(6048:6255): La id recibida fue: 28
+
+[WARNING] 10:14:31:168 Broker Auxiliar/(6048:6255): Mande todo
+
+[WARNING] 10:14:33:163 Broker Auxiliar/(6048:6257): La id recibida fue: 29
+
+[WARNING] 10:14:33:165 Broker Auxiliar/(6048:6257): Mande todo
+
+[WARNING] 10:14:36:169 Broker Auxiliar/(6048:6270): La id recibida fue: 30
+
+[WARNING] 10:14:36:170 Broker Auxiliar/(6048:6270): Mande todo
+
+[WARNING] 10:14:38:164 Broker Auxiliar/(6048:6277): La id recibida fue: 31
+
+[WARNING] 10:14:38:165 Broker Auxiliar/(6048:6277): Mande todo
+
+[WARNING] 10:14:43:165 Broker Auxiliar/(6048:6283): La id recibida fue: 32
+
+[WARNING] 10:14:43:167 Broker Auxiliar/(6048:6283): Mande todo
+
+[WARNING] 10:14:46:171 Broker Auxiliar/(6048:6290): La id recibida fue: 33
+
+[WARNING] 10:14:46:172 Broker Auxiliar/(6048:6290): Mande todo
+
+[WARNING] 10:14:51:173 Broker Auxiliar/(6048:6293): La id recibida fue: 34
+
+[WARNING] 10:14:51:173 Broker Auxiliar/(6048:6293): Mande todo
+
+[WARNING] 10:15:09:308 Broker Auxiliar/(6048:6305): La id recibida fue: 35
+
+[WARNING] 10:15:09:309 Broker Auxiliar/(6048:6305): Mande todo
+
+[WARNING] 10:15:09:310 Broker Auxiliar/(6048:6309): La id recibida fue: 36
+
+[WARNING] 10:15:09:311 Broker Auxiliar/(6048:6309): Mande todo
+
+[WARNING] 10:15:09:312 Broker Auxiliar/(6048:6310): La id recibida fue: 37
+
+[WARNING] 10:15:09:313 Broker Auxiliar/(6048:6310): Mande todo
+
+[WARNING] 10:15:09:314 Broker Auxiliar/(6048:6312): La id recibida fue: 38
+
+[WARNING] 10:15:09:315 Broker Auxiliar/(6048:6312): Mande todo
+
+[WARNING] 10:15:09:316 Broker Auxiliar/(6048:6314): La id recibida fue: 39
+
+[WARNING] 10:15:09:320 Broker Auxiliar/(6048:6314): Mande todo
+
+[WARNING] 10:15:09:321 Broker Auxiliar/(6048:6316): La id recibida fue: 40
+
+[WARNING] 10:15:09:321 Broker Auxiliar/(6048:6316): Mande todo
+
+[WARNING] 10:15:14:311 Broker Auxiliar/(6048:6319): La id recibida fue: 41
+
+[WARNING] 10:15:14:312 Broker Auxiliar/(6048:6319): Mande todo
+
+[WARNING] 10:15:19:312 Broker Auxiliar/(6048:6326): La id recibida fue: 42
+
+[WARNING] 10:15:19:313 Broker Auxiliar/(6048:6326): Mande todo
+
+[WARNING] 10:15:20:314 Broker Auxiliar/(6048:6332): La id recibida fue: 43
+
+[WARNING] 10:15:20:316 Broker Auxiliar/(6048:6332): Mande todo
+
+[WARNING] 10:15:24:314 Broker Auxiliar/(6048:6337): La id recibida fue: 44
+
+[WARNING] 10:15:24:316 Broker Auxiliar/(6048:6337): Mande todo
+
+[WARNING] 10:15:25:316 Broker Auxiliar/(6048:6343): La id recibida fue: 45
+
+[WARNING] 10:15:25:317 Broker Auxiliar/(6048:6343): Mande todo
+
+[WARNING] 10:15:25:318 Broker Auxiliar/(6048:6349): La id recibida fue: 46
+
+[WARNING] 10:15:25:319 Broker Auxiliar/(6048:6349): Mande todo
+
+[WARNING] 10:15:29:316 Broker Auxiliar/(6048:6355): La id recibida fue: 47
+
+[WARNING] 10:15:29:317 Broker Auxiliar/(6048:6355): Mande todo
+
+[WARNING] 10:15:30:319 Broker Auxiliar/(6048:6362): La id recibida fue: 48
+
+[WARNING] 10:15:30:320 Broker Auxiliar/(6048:6362): Mande todo
+
+[WARNING] 10:15:33:319 Broker Auxiliar/(6048:6368): La id recibida fue: 49
+
+[WARNING] 10:15:33:321 Broker Auxiliar/(6048:6368): Mande todo
+
+[WARNING] 10:15:33:323 Broker Auxiliar/(6048:6370): La id recibida fue: 50
+
+[WARNING] 10:15:33:325 Broker Auxiliar/(6048:6370): Mande todo
+
+[WARNING] 10:15:34:320 Broker Auxiliar/(6048:6373): La id recibida fue: 51
+
+[WARNING] 10:15:34:321 Broker Auxiliar/(6048:6373): Mande todo
+
+[WARNING] 10:15:37:323 Broker Auxiliar/(6048:6379): La id recibida fue: 52
+
+[WARNING] 10:15:37:324 Broker Auxiliar/(6048:6379): Mande todo
+
+[WARNING] 10:15:38:321 Broker Auxiliar/(6048:6380): La id recibida fue: 53
+
+[WARNING] 10:15:38:322 Broker Auxiliar/(6048:6380): Mande todo
+
+[WARNING] 10:15:39:321 Broker Auxiliar/(6048:6388): La id recibida fue: 54
+
+[WARNING] 10:15:39:322 Broker Auxiliar/(6048:6388): Mande todo
+
+[WARNING] 10:15:42:329 Broker Auxiliar/(6048:6393): La id recibida fue: 55
+
+[WARNING] 10:15:42:330 Broker Auxiliar/(6048:6393): Mande todo
+
+[WARNING] 10:15:43:323 Broker Auxiliar/(6048:6394): La id recibida fue: 56
+
+[WARNING] 10:15:43:328 Broker Auxiliar/(6048:6394): Mande todo
+
+[WARNING] 10:15:48:326 Broker Auxiliar/(6048:6402): La id recibida fue: 57
+
+[WARNING] 10:15:48:327 Broker Auxiliar/(6048:6402): Mande todo
+
+[WARNING] 10:15:53:329 Broker Auxiliar/(6048:6410): La id recibida fue: 58
+
+[WARNING] 10:15:53:330 Broker Auxiliar/(6048:6410): Mande todo
+

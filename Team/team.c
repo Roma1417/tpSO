@@ -13,7 +13,7 @@
  */
 t_log* iniciar_logger(char* path) {
 
-	t_log* logger = log_create(path, "team", true, LOG_LEVEL_INFO);
+	t_log* logger = log_create(path, "team", true, LOG_LEVEL_TRACE);
 	if (logger == NULL) {
 		exit(1);
 	}
@@ -26,7 +26,7 @@ t_log* iniciar_logger(char* path) {
  * @DESC: Crea y devuelve un puntero a una estructura t_config.
  */
 t_config* leer_config(void) {
-	t_config* config = config_create("./teamFinal1.config");
+	t_config* config = config_create("./teamCompleto1_FIFO.config");
 	return config;
 }
 
@@ -1037,7 +1037,7 @@ void realizar_intercambios_FIFO() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
+	log_warning(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	// Ahora vendria lo que dijo ale
 	// Agarro a un entrenador
@@ -1065,7 +1065,7 @@ void realizar_intercambios_FIFO() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
+	log_debug(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1092,7 +1092,7 @@ void realizar_intercambios_RR() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
+	log_warning(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	// Ahora vendria lo que dijo ale
 	// Agarro a un entrenador
@@ -1122,7 +1122,7 @@ void realizar_intercambios_RR() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
+	log_debug(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1145,7 +1145,7 @@ void realizar_intercambios_SJF() {
 	inicio_deadlock = true;
 	sem_post(&sem_appeared_pokemon);
 
-	log_info(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
+	log_warning(logger_team, "Iniciando el algoritmo de deteccion de Deadlock...\n");
 
 	while (!list_is_empty(entrenadores_deadlock)) {
 		sem_wait(&puede_intercambiar);
@@ -1198,7 +1198,7 @@ void realizar_intercambios_SJF() {
 
 	fin_deadlock = true;
 
-	log_info(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
+	log_debug(logger_team, "Fin del algoritmo de deteccion de Deadlock.\n");
 
 	sem_post(&entrenador_en_ready);
 
@@ -1864,7 +1864,7 @@ int main(void) {
 	pthread_join(hilo_planificador, NULL);
 
 	informar_resultados();
-	log_info(logger_team, "El objetivo global fue cumplido \n");
+	log_debug(logger_team, "El objetivo global fue cumplido \n");
 
 	/*pthread_join(hilo_servidor, NULL);
 	 pthread_join(hilo_appeared, NULL);

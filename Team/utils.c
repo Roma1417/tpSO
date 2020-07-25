@@ -559,7 +559,7 @@ int crear_conexion(char *ip, char* puerto) {
 		freeaddrinfo(server_info);
 		return -1;
 	}
-	else log_info(logger_team, "Se pudo establecer la conexion con el Broker\n");
+	else log_trace(logger_team, "Se pudo establecer la conexion con el Broker\n");
 
 	freeaddrinfo(server_info);
 
